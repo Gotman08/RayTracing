@@ -1,0 +1,60 @@
+# Build directories
+build/
+out/
+cmake-build-*/
+
+# Output files
+output/*.ppm
+output/*.png
+output/*.jpg
+output/*.exr
+!output/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Compiled objects
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# CUDA specific
+*.cubin
+*.ptx
+*.fatbin
+*.gpu
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# SLURM output
+*.out
+*.err
+slurm-*.out
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+tmp/
+temp/
+*.tmp
+*.log
+
+# User textures and HDRI (keep .gitkeep)
+textures/*
+!textures/.gitkeep
+hdri/*
+!hdri/.gitkeep
