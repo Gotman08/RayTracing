@@ -7,6 +7,10 @@
 
 namespace rt {
 
+// Constants for random sampling (avoid circular dependency with cuda_utils.cuh)
+constexpr float VEC3_PI = 3.14159265358979323846f;
+constexpr float VEC3_TWO_PI = 2.0f * VEC3_PI;
+
 class Vec3 {
 public:
     float x, y, z;
@@ -130,16 +134,19 @@ __device__ inline Vec3 random_vec3(float min, float max, curandState* rand_state
     );
 }
 
-__device__ inline Vec3 random_in_unit_sphere(curandState* rand_state) {
-    while (true) {
-        Vec3 p = random_vec3(-1.0f, 1.0f, rand_state);
-        if (p.length_squared() < 1.0f)
-            return p;
-    }
+// Rejection-free uniform sampling on unit sphere
+__device__ inline Vec3 random_unit_vector(curandState* rand_state) {
+    float z = 2.0f * curand_uniform(rand_state) - 1.0f;
+    float r = sqrtf(fmaxf(0.0f, 1.0f - z * z));
+    float phi = VEC3_TWO_PI * curand_uniform(rand_state);
+    return Vec3(r * cosf(phi), r * sinf(phi), z);
 }
 
-__device__ inline Vec3 random_unit_vector(curandState* rand_state) {
-    return random_in_unit_sphere(rand_state).normalized();
+// Rejection-free uniform sampling inside unit sphere
+__device__ inline Vec3 random_in_unit_sphere(curandState* rand_state) {
+    Vec3 dir = random_unit_vector(rand_state);
+    float r = cbrtf(curand_uniform(rand_state));  // cube root for uniform volume
+    return dir * r;
 }
 
 __device__ inline Vec3 random_on_hemisphere(const Vec3& normal, curandState* rand_state) {
@@ -150,16 +157,11 @@ __device__ inline Vec3 random_on_hemisphere(const Vec3& normal, curandState* ran
         return -on_unit_sphere;
 }
 
+// Rejection-free uniform sampling inside unit disk
 __device__ inline Vec3 random_in_unit_disk(curandState* rand_state) {
-    while (true) {
-        Vec3 p(
-            curand_uniform(rand_state) * 2.0f - 1.0f,
-            curand_uniform(rand_state) * 2.0f - 1.0f,
-            0.0f
-        );
-        if (p.length_squared() < 1.0f)
-            return p;
-    }
+    float r = sqrtf(curand_uniform(rand_state));  // square root for uniform area
+    float theta = VEC3_TWO_PI * curand_uniform(rand_state);
+    return Vec3(r * cosf(theta), r * sinf(theta), 0.0f);
 }
 
 __device__ inline Vec3 random_cosine_direction(curandState* rand_state) {
