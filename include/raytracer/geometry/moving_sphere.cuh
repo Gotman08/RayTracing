@@ -2,6 +2,7 @@
 #define RAYTRACER_GEOMETRY_MOVING_SPHERE_CUH
 
 #include "raytracer/geometry/hittable.cuh"
+#include "raytracer/geometry/geometry_utils.cuh"
 #include "raytracer/core/cuda_utils.cuh"
 
 namespace rt {
@@ -58,14 +59,6 @@ public:
         rec.mat = mat;
 
         return true;
-    }
-
-private:
-    __host__ __device__ static void get_sphere_uv(const Vec3& p, float& u, float& v) {
-        float theta = acosf(-p.y);
-        float phi = atan2f(-p.z, p.x) + PI;
-        u = phi / (2.0f * PI);
-        v = theta / PI;
     }
 };
 

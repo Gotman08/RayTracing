@@ -1,68 +1,33 @@
+/**
+ * GPU Renderer - Path Tracing Kernels
+ */
+
 #ifndef RAYTRACER_RENDERING_RENDERER_CUH
 #define RAYTRACER_RENDERING_RENDERER_CUH
 
 #include "raytracer/core/cuda_utils.cuh"
 #include "raytracer/core/vec3.cuh"
+#include "raytracer/core/hit_record.cuh"
 #include "raytracer/camera/camera.cuh"
 #include "raytracer/geometry/hittable_list.cuh"
-#include "raytracer/materials/lambertian.cuh"
-#include "raytracer/materials/metal.cuh"
-#include "raytracer/materials/dielectric.cuh"
-#include "raytracer/materials/emissive.cuh"
-#include "raytracer/materials/isotropic.cuh"
-#include "raytracer/environment/sky.cuh"
+#include "raytracer/acceleration/bvh.cuh"
+#include "raytracer/rendering/render_config.cuh"
+#include "raytracer/rendering/material_dispatch.cuh"
 #include "raytracer/rendering/tone_mapping.cuh"
 
 namespace rt {
 
-struct RenderConfig {
-    int width;
-    int height;
-    int samples_per_pixel;
-    int max_depth;
-    ToneMapMode tone_map;
-    float exposure;
-    bool use_sky;
-    Sky sky;
-    Color background;
+// =============================================================================
+// Path Tracing
+// =============================================================================
 
-    RenderConfig()
-        : width(800), height(600), samples_per_pixel(100), max_depth(50),
-          tone_map(ToneMapMode::ACES), exposure(0.0f), use_sky(true),
-          background(0, 0, 0) {
-        sky = Sky(Color(1, 1, 1), Color(0.5f, 0.7f, 1.0f));
-    }
-};
-
-// Material scatter dispatch
-__device__ inline bool scatter(
-    const Material& mat,
-    const Ray& r_in,
-    const HitRecord& rec,
-    Color& attenuation,
-    Ray& scattered,
-    curandState* rand_state
-) {
-    switch (mat.type) {
-        case MaterialType::LAMBERTIAN:
-            return scatter_lambertian(mat, r_in, rec, attenuation, scattered, rand_state);
-        case MaterialType::METAL:
-            return scatter_metal(mat, r_in, rec, attenuation, scattered, rand_state);
-        case MaterialType::DIELECTRIC:
-            return scatter_dielectric(mat, r_in, rec, attenuation, scattered, rand_state);
-        case MaterialType::EMISSIVE:
-            return scatter_emissive(mat, r_in, rec, attenuation, scattered, rand_state);
-        case MaterialType::ISOTROPIC:
-            return scatter_isotropic(mat, r_in, rec, attenuation, scattered, rand_state);
-        default:
-            return false;
-    }
-}
-
-// Iterative path tracing (avoids CUDA stack overflow)
-__device__ inline Color ray_color(
+/**
+ * Template-based path tracing - works with any acceleration structure that has hit()
+ */
+template<typename AccelerationStructure>
+__device__ inline Color ray_color_impl(
     const Ray& initial_ray,
-    const HittableList& world,
+    const AccelerationStructure& accel,
     int max_depth,
     const RenderConfig& config,
     curandState* rand_state
@@ -74,7 +39,7 @@ __device__ inline Color ray_color(
     for (int depth = 0; depth < max_depth; depth++) {
         HitRecord rec;
 
-        if (world.hit(current_ray, Interval(0.001f, INFINITY_F), rec)) {
+        if (accel.hit(current_ray, Interval(0.001f, INFINITY_F), rec)) {
             // Get emission from material
             Color emitted = rec.mat->emitted(rec.u, rec.v, rec.p);
             accumulated += attenuation * emitted;
@@ -96,8 +61,7 @@ __device__ inline Color ray_color(
                     attenuation = attenuation / p;
                 }
             } else {
-                // Ray absorbed
-                break;
+                break;  // Ray absorbed
             }
         } else {
             // Ray escaped - add background/sky
@@ -113,11 +77,39 @@ __device__ inline Color ray_color(
     return accumulated;
 }
 
-// Main render kernel
-__global__ void render_kernel(
+// Convenience wrappers for backward compatibility
+__device__ inline Color ray_color(
+    const Ray& initial_ray,
+    const HittableList& world,
+    int max_depth,
+    const RenderConfig& config,
+    curandState* rand_state
+) {
+    return ray_color_impl(initial_ray, world, max_depth, config, rand_state);
+}
+
+__device__ inline Color ray_color_bvh(
+    const Ray& initial_ray,
+    const BVH& bvh,
+    int max_depth,
+    const RenderConfig& config,
+    curandState* rand_state
+) {
+    return ray_color_impl(initial_ray, bvh, max_depth, config, rand_state);
+}
+
+// =============================================================================
+// Render Kernels
+// =============================================================================
+
+/**
+ * Template-based render kernel - works with any acceleration structure
+ */
+template<typename AccelerationStructure>
+__global__ void render_kernel_impl(
     Color* frame_buffer,
     Camera camera,
-    HittableList world,
+    AccelerationStructure accel,
     RenderConfig config,
     curandState* rand_states
 ) {
@@ -133,22 +125,18 @@ __global__ void render_kernel(
 
     for (int s = 0; s < config.samples_per_pixel; s++) {
         Ray r = camera.get_ray(i, j, local_rand_state);
-        pixel_color += ray_color(r, world, config.max_depth, config, local_rand_state);
+        pixel_color += ray_color_impl(r, accel, config.max_depth, config, local_rand_state);
     }
 
     // Average samples
     pixel_color = pixel_color / static_cast<float>(config.samples_per_pixel);
 
-    // Apply exposure
+    // Post-processing pipeline
     pixel_color = apply_exposure(pixel_color, config.exposure);
-
-    // Tone mapping
     pixel_color = apply_tone_mapping(pixel_color, config.tone_map);
-
-    // Gamma correction
     pixel_color = gamma_correct(pixel_color);
 
-    // Clamp
+    // Clamp to [0, 1]
     pixel_color.x = fminf(1.0f, fmaxf(0.0f, pixel_color.x));
     pixel_color.y = fminf(1.0f, fmaxf(0.0f, pixel_color.y));
     pixel_color.z = fminf(1.0f, fmaxf(0.0f, pixel_color.z));
@@ -156,7 +144,31 @@ __global__ void render_kernel(
     frame_buffer[pixel_index] = pixel_color;
 }
 
-// Initialize random states
+// Convenience kernel wrappers
+__global__ void render_kernel(
+    Color* frame_buffer,
+    Camera camera,
+    HittableList world,
+    RenderConfig config,
+    curandState* rand_states
+) {
+    render_kernel_impl(frame_buffer, camera, world, config, rand_states);
+}
+
+__global__ void render_kernel_bvh(
+    Color* frame_buffer,
+    Camera camera,
+    BVH bvh,
+    RenderConfig config,
+    curandState* rand_states
+) {
+    render_kernel_impl(frame_buffer, camera, bvh, config, rand_states);
+}
+
+// =============================================================================
+// Random State Initialization
+// =============================================================================
+
 __global__ void init_render_rand_states(
     curandState* rand_states,
     int width, int height,

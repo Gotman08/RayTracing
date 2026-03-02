@@ -3,9 +3,9 @@
 
 #include "raytracer/core/vec3.cuh"
 #include "raytracer/core/ray.cuh"
-#include "raytracer/geometry/hittable.cuh"
 #include "raytracer/textures/solid_color.cuh"
 #include "raytracer/textures/checker.cuh"
+#include "raytracer/textures/noise.cuh"
 
 namespace rt {
 
@@ -30,6 +30,7 @@ public:
     TextureType tex_type;
     SolidColor solid_tex;
     CheckerTexture checker_tex;
+    NoiseTexture noise_tex;
 
     __host__ __device__ Material()
         : type(MaterialType::LAMBERTIAN), albedo(0.5f, 0.5f, 0.5f),
@@ -45,6 +46,8 @@ public:
         switch (tex_type) {
             case TextureType::CHECKER:
                 return checker_tex.value(u, v, p);
+            case TextureType::NOISE:
+                return noise_tex.value(u, v, p);
             case TextureType::SOLID_COLOR:
             default:
                 return solid_tex.value(u, v, p);

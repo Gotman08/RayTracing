@@ -17,6 +17,13 @@ __host__ __device__ inline Material create_lambertian_checker(float scale, const
     return mat;
 }
 
+__host__ inline Material create_lambertian_noise(float scale, const Color& base_color = Color(1, 1, 1), unsigned int seed = 42) {
+    Material mat(MaterialType::LAMBERTIAN, base_color);
+    mat.tex_type = TextureType::NOISE;
+    mat.noise_tex = NoiseTexture(scale, base_color, seed);
+    return mat;
+}
+
 __device__ inline bool scatter_lambertian(
     const Material& mat,
     const Ray& r_in,

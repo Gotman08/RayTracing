@@ -5,26 +5,9 @@
 #include "raytracer/core/ray.cuh"
 #include "raytracer/core/aabb.cuh"
 #include "raytracer/core/interval.cuh"
+#include "raytracer/core/hit_record.cuh"
 
 namespace rt {
-
-// Forward declarations
-class Material;
-
-struct HitRecord {
-    Point3 p;
-    Vec3 normal;
-    Material* mat;
-    float t;
-    float u;
-    float v;
-    bool front_face;
-
-    __host__ __device__ void set_face_normal(const Ray& r, const Vec3& outward_normal) {
-        front_face = dot(r.direction(), outward_normal) < 0;
-        normal = front_face ? outward_normal : -outward_normal;
-    }
-};
 
 // Object types for GPU dispatch (avoiding virtual functions)
 enum class HittableType {

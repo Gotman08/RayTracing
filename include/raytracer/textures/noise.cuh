@@ -5,18 +5,24 @@
 
 namespace rt {
 
-// Perlin noise implementation
-class Perlin {
+// GPU-friendly Perlin noise with static arrays
+class PerlinGPU {
 public:
-    static const int point_count = 256;
-    Vec3* ranvec;
-    int* perm_x;
-    int* perm_y;
-    int* perm_z;
+    static const int POINT_COUNT = 256;
+    Vec3 ranvec[POINT_COUNT];
+    int perm_x[POINT_COUNT];
+    int perm_y[POINT_COUNT];
+    int perm_z[POINT_COUNT];
+    bool initialized;
 
-    __host__ Perlin() {
-        ranvec = new Vec3[point_count];
-        for (int i = 0; i < point_count; i++) {
+    __host__ __device__ PerlinGPU() : initialized(false) {}
+
+    // Host-only initialization
+    __host__ void initialize(unsigned int seed = 42) {
+        srand(seed);
+
+        // Generate random vectors
+        for (int i = 0; i < POINT_COUNT; i++) {
             ranvec[i] = Vec3(
                 (float)rand() / RAND_MAX * 2 - 1,
                 (float)rand() / RAND_MAX * 2 - 1,
@@ -24,16 +30,19 @@ public:
             ).normalized();
         }
 
-        perm_x = perlin_generate_perm();
-        perm_y = perlin_generate_perm();
-        perm_z = perlin_generate_perm();
-    }
+        // Generate permutation tables
+        for (int i = 0; i < POINT_COUNT; i++) {
+            perm_x[i] = i;
+            perm_y[i] = i;
+            perm_z[i] = i;
+        }
 
-    __host__ ~Perlin() {
-        delete[] ranvec;
-        delete[] perm_x;
-        delete[] perm_y;
-        delete[] perm_z;
+        // Shuffle each permutation table
+        permute(perm_x, POINT_COUNT);
+        permute(perm_y, POINT_COUNT);
+        permute(perm_z, POINT_COUNT);
+
+        initialized = true;
     }
 
     __host__ __device__ float noise(const Point3& p) const {
@@ -76,15 +85,6 @@ public:
     }
 
 private:
-    __host__ static int* perlin_generate_perm() {
-        int* p = new int[point_count];
-        for (int i = 0; i < point_count; i++) {
-            p[i] = i;
-        }
-        permute(p, point_count);
-        return p;
-    }
-
     __host__ static void permute(int* p, int n) {
         for (int i = n - 1; i > 0; i--) {
             int target = rand() % (i + 1);
@@ -116,21 +116,24 @@ private:
     }
 };
 
+// GPU-friendly NoiseTexture that embeds the Perlin data
 class NoiseTexture : public Texture {
 public:
-    Perlin* noise;
+    PerlinGPU perlin;
     float scale;
     Color base_color;
 
     __host__ __device__ NoiseTexture()
-        : Texture(TextureType::NOISE), noise(nullptr), scale(1.0f), base_color(1, 1, 1) {}
+        : Texture(TextureType::NOISE), scale(1.0f), base_color(1, 1, 1) {}
 
-    __host__ __device__ NoiseTexture(Perlin* n, float s, const Color& c = Color(1, 1, 1))
-        : Texture(TextureType::NOISE), noise(n), scale(s), base_color(c) {}
+    __host__ NoiseTexture(float s, const Color& c = Color(1, 1, 1), unsigned int seed = 42)
+        : Texture(TextureType::NOISE), scale(s), base_color(c) {
+        perlin.initialize(seed);
+    }
 
     __host__ __device__ Color value(float u, float v, const Point3& p) const {
-        if (!noise) return base_color;
-        return base_color * 0.5f * (1.0f + sinf(scale * p.z + 10.0f * noise->turb(p)));
+        if (!perlin.initialized) return base_color;
+        return base_color * 0.5f * (1.0f + sinf(scale * p.z + 10.0f * perlin.turb(p)));
     }
 };
 
