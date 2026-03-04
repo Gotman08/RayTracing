@@ -7,7 +7,7 @@
 #define RAYTRACER_GEOMETRY_GEOMETRY_UTILS_CUH
 
 #include "raytracer/core/vec3.cuh"
-#include "raytracer/core/constants.cuh"
+#include "raytracer/core/cuda_utils.cuh"
 
 namespace rt {
 

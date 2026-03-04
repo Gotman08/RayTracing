@@ -1,15 +1,18 @@
 #ifndef RAYTRACER_CORE_CUDA_UTILS_CUH
 #define RAYTRACER_CORE_CUDA_UTILS_CUH
 
-#include <cuda_runtime.h>
-#include <curand_kernel.h>
+#include "raytracer/core/cuda_compat.cuh"
 #include <cstdio>
 #include <cstdlib>
+
+#ifdef __CUDACC__
+#include <curand_kernel.h>
+#endif
 
 namespace rt {
 
 // =============================================================================
-// Constants
+// Constants (available on both host and device)
 // =============================================================================
 
 constexpr float PI = 3.14159265358979323846f;
@@ -19,6 +22,12 @@ constexpr float EPSILON = 1e-6f;
 __host__ __device__ inline float degrees_to_radians(float degrees) {
     return degrees * PI / 180.0f;
 }
+
+// =============================================================================
+// CUDA-specific functionality (only when compiling with nvcc)
+// =============================================================================
+
+#ifdef __CUDACC__
 
 // =============================================================================
 // Error Checking Macros
@@ -117,6 +126,8 @@ __global__ inline void init_curand_states(curandState* states, int width, int he
     int pixel_index = j * width + i;
     curand_init(seed + pixel_index, 0, 0, &states[pixel_index]);
 }
+
+#endif // __CUDACC__
 
 } // namespace rt
 

@@ -2,8 +2,11 @@
 #define RAYTRACER_CORE_VEC3_CUH
 
 #include <cmath>
-#include <cuda_runtime.h>
+#include "raytracer/core/cuda_compat.cuh"
+
+#ifdef __CUDACC__
 #include <curand_kernel.h>
+#endif
 
 namespace rt {
 
@@ -117,6 +120,7 @@ __host__ __device__ inline Vec3 unit_vector(const Vec3& v) {
 }
 
 // Random vector generation (device only - uses cuRAND)
+#ifdef __CUDACC__
 __device__ inline Vec3 random_vec3(curandState* rand_state) {
     return Vec3(
         curand_uniform(rand_state),
@@ -175,6 +179,7 @@ __device__ inline Vec3 random_cosine_direction(curandState* rand_state) {
 
     return Vec3(x, y, z);
 }
+#endif // __CUDACC__
 
 } // namespace rt
 

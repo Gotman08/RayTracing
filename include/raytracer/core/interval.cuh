@@ -1,8 +1,8 @@
 #ifndef RAYTRACER_CORE_INTERVAL_CUH
 #define RAYTRACER_CORE_INTERVAL_CUH
 
-#include <cuda_runtime.h>
 #include <cfloat>
+#include "raytracer/core/cuda_compat.cuh"
 
 namespace rt {
 
@@ -47,8 +47,10 @@ public:
 };
 
 // Static interval definitions
+#ifdef __CUDACC__
 __device__ __constant__ inline Interval Interval_empty(+FLT_MAX, -FLT_MAX);
 __device__ __constant__ inline Interval Interval_universe(-FLT_MAX, +FLT_MAX);
+#endif
 
 } // namespace rt
 
