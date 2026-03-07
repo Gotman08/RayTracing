@@ -6,7 +6,6 @@
 
 namespace rt {
 
-// Forward declaration to break circular dependency
 class Material;
 
 struct HitRecord {
@@ -24,6 +23,6 @@ struct HitRecord {
     }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_CORE_HIT_RECORD_CUH
+#endif

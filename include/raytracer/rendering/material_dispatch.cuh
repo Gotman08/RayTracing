@@ -1,8 +1,3 @@
-/**
- * Material Scatter Dispatch
- * Central dispatch function for all material types
- */
-
 #ifndef RAYTRACER_RENDERING_MATERIAL_DISPATCH_CUH
 #define RAYTRACER_RENDERING_MATERIAL_DISPATCH_CUH
 
@@ -13,15 +8,9 @@
 #include "raytracer/materials/lambertian.cuh"
 #include "raytracer/materials/metal.cuh"
 #include "raytracer/materials/dielectric.cuh"
-#include "raytracer/materials/emissive.cuh"
-#include "raytracer/materials/isotropic.cuh"
 
 namespace rt {
 
-/**
- * Dispatch scatter function based on material type
- * @return true if ray scattered, false if absorbed
- */
 __device__ inline bool scatter(
     const Material& mat,
     const Ray& r_in,
@@ -37,15 +26,32 @@ __device__ inline bool scatter(
             return scatter_metal(mat, r_in, rec, attenuation, scattered, rand_state);
         case MaterialType::DIELECTRIC:
             return scatter_dielectric(mat, r_in, rec, attenuation, scattered, rand_state);
-        case MaterialType::EMISSIVE:
-            return scatter_emissive(mat, r_in, rec, attenuation, scattered, rand_state);
-        case MaterialType::ISOTROPIC:
-            return scatter_isotropic(mat, r_in, rec, attenuation, scattered, rand_state);
         default:
             return false;
     }
 }
 
-} // namespace rt
+// CPU version
+inline bool scatter_cpu(
+    const Material& mat,
+    const Ray& r_in,
+    const HitRecord& rec,
+    Color& attenuation,
+    Ray& scattered,
+    CPURandom& rng
+) {
+    switch (mat.type) {
+        case MaterialType::LAMBERTIAN:
+            return scatter_lambertian_cpu(mat, r_in, rec, attenuation, scattered, rng);
+        case MaterialType::METAL:
+            return scatter_metal_cpu(mat, r_in, rec, attenuation, scattered, rng);
+        case MaterialType::DIELECTRIC:
+            return scatter_dielectric_cpu(mat, r_in, rec, attenuation, scattered, rng);
+        default:
+            return false;
+    }
+}
 
-#endif // RAYTRACER_RENDERING_MATERIAL_DISPATCH_CUH
+}
+
+#endif

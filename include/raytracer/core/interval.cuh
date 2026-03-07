@@ -10,7 +10,7 @@ class Interval {
 public:
     float min, max;
 
-    __host__ __device__ Interval() : min(+FLT_MAX), max(-FLT_MAX) {} // Empty interval
+    __host__ __device__ Interval() : min(+FLT_MAX), max(-FLT_MAX) {}
 
     __host__ __device__ Interval(float _min, float _max) : min(_min), max(_max) {}
 
@@ -42,16 +42,9 @@ public:
         return Interval(min - padding, max + padding);
     }
 
-    static const Interval empty;
-    static const Interval universe;
 };
 
-// Static interval definitions
-#ifdef __CUDACC__
-__device__ __constant__ inline Interval Interval_empty(+FLT_MAX, -FLT_MAX);
-__device__ __constant__ inline Interval Interval_universe(-FLT_MAX, +FLT_MAX);
+
+}
+
 #endif
-
-} // namespace rt
-
-#endif // RAYTRACER_CORE_INTERVAL_CUH

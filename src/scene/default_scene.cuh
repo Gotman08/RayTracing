@@ -1,7 +1,3 @@
-/**
- * Default Scene Generator
- */
-
 #ifndef RAYTRACER_SCENE_DEFAULT_SCENE_CUH
 #define RAYTRACER_SCENE_DEFAULT_SCENE_CUH
 
@@ -13,7 +9,7 @@
 #include "raytracer/materials/lambertian.cuh"
 #include "raytracer/materials/metal.cuh"
 #include "raytracer/materials/dielectric.cuh"
-#include "raytracer/rendering/renderer.cuh"
+#include "raytracer/rendering/render_config.cuh"
 
 namespace rt {
 
@@ -26,7 +22,6 @@ inline void create_default_scene(
     int& mat_count,
     RenderConfig& config
 ) {
-    // Camera
     camera.initialize(
         config.width, config.height,
         Point3(13, 2, 3),
@@ -35,35 +30,31 @@ inline void create_default_scene(
         20.0f, 0.1f, 10.0f
     );
 
-    // Ground (checker)
-    materials[mat_count] = create_lambertian_checker(10.0f, Color(0.2f, 0.3f, 0.1f), Color(0.9f, 0.9f, 0.9f));
+    materials[mat_count] = create_lambertian(Color(0.5f, 0.5f, 0.5f));
     objects[obj_count].type = HittableType::SPHERE;
     objects[obj_count].data.sphere = Sphere(Point3(0, -1000, 0), 1000, &materials[mat_count]);
     objects[obj_count].bbox = objects[obj_count].data.sphere.bounding_box();
     mat_count++; obj_count++;
 
-    // Glass sphere
     materials[mat_count] = create_dielectric(1.5f);
     objects[obj_count].type = HittableType::SPHERE;
     objects[obj_count].data.sphere = Sphere(Point3(0, 1, 0), 1.0f, &materials[mat_count]);
     objects[obj_count].bbox = objects[obj_count].data.sphere.bounding_box();
     mat_count++; obj_count++;
 
-    // Diffuse sphere
     materials[mat_count] = create_lambertian(Color(0.4f, 0.2f, 0.1f));
     objects[obj_count].type = HittableType::SPHERE;
     objects[obj_count].data.sphere = Sphere(Point3(-4, 1, 0), 1.0f, &materials[mat_count]);
     objects[obj_count].bbox = objects[obj_count].data.sphere.bounding_box();
     mat_count++; obj_count++;
 
-    // Metal sphere
     materials[mat_count] = create_metal(Color(0.7f, 0.6f, 0.5f), 0.0f);
     objects[obj_count].type = HittableType::SPHERE;
     objects[obj_count].data.sphere = Sphere(Point3(4, 1, 0), 1.0f, &materials[mat_count]);
     objects[obj_count].bbox = objects[obj_count].data.sphere.bounding_box();
     mat_count++; obj_count++;
 
-    // Small random spheres
+    srand(42);
     for (int a = -5; a < 5; a++) {
         for (int b = -5; b < 5; b++) {
             float choose_mat = (float)rand() / RAND_MAX;
@@ -71,7 +62,6 @@ inline void create_default_scene(
 
             if ((center - Point3(4, 0.2f, 0)).length() > 0.9f) {
                 if (choose_mat < 0.6f) {
-                    // Diffuse
                     Color albedo(
                         (float)rand() / RAND_MAX * (float)rand() / RAND_MAX,
                         (float)rand() / RAND_MAX * (float)rand() / RAND_MAX,
@@ -79,7 +69,6 @@ inline void create_default_scene(
                     );
                     materials[mat_count] = create_lambertian(albedo);
                 } else if (choose_mat < 0.85f) {
-                    // Metal
                     Color albedo(
                         0.5f + 0.5f * (float)rand() / RAND_MAX,
                         0.5f + 0.5f * (float)rand() / RAND_MAX,
@@ -88,7 +77,6 @@ inline void create_default_scene(
                     float fuzz = 0.5f * (float)rand() / RAND_MAX;
                     materials[mat_count] = create_metal(albedo, fuzz);
                 } else {
-                    // Glass
                     materials[mat_count] = create_dielectric(1.5f);
                 }
 
@@ -104,6 +92,6 @@ inline void create_default_scene(
     config.use_sky = true;
 }
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_SCENE_DEFAULT_SCENE_CUH
+#endif

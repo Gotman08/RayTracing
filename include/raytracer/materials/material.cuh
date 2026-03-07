@@ -3,18 +3,13 @@
 
 #include "raytracer/core/vec3.cuh"
 #include "raytracer/core/ray.cuh"
-#include "raytracer/textures/solid_color.cuh"
-#include "raytracer/textures/checker.cuh"
-#include "raytracer/textures/noise.cuh"
 
 namespace rt {
 
 enum class MaterialType {
     LAMBERTIAN,
     METAL,
-    DIELECTRIC,
-    EMISSIVE,
-    ISOTROPIC
+    DIELECTRIC
 };
 
 class Material {
@@ -23,45 +18,34 @@ public:
     Color albedo;
     float fuzz;
     float ior;
-    Color emission;
-    float emission_strength;
-
-    // Texture support
-    TextureType tex_type;
-    SolidColor solid_tex;
-    CheckerTexture checker_tex;
-    NoiseTexture noise_tex;
 
     __host__ __device__ Material()
         : type(MaterialType::LAMBERTIAN), albedo(0.5f, 0.5f, 0.5f),
-          fuzz(0), ior(1.0f), emission(0, 0, 0), emission_strength(0),
-          tex_type(TextureType::SOLID_COLOR) {}
+          fuzz(0), ior(1.5f) {}
 
     __host__ __device__ Material(MaterialType t, const Color& a)
-        : type(t), albedo(a), fuzz(0), ior(1.0f),
-          emission(0, 0, 0), emission_strength(0),
-          tex_type(TextureType::SOLID_COLOR), solid_tex(a) {}
+        : type(t), albedo(a), fuzz(0), ior(1.5f) {}
+
+    __host__ __device__ Material(MaterialType t, const Color& a, float f)
+        : type(t), albedo(a), fuzz(f), ior(1.5f) {}
+
+    __host__ __device__ static Material make_dielectric(float index_of_refraction) {
+        Material m;
+        m.type = MaterialType::DIELECTRIC;
+        m.albedo = Color(1, 1, 1);
+        m.ior = index_of_refraction;
+        return m;
+    }
 
     __host__ __device__ Color get_albedo(float u, float v, const Point3& p) const {
-        switch (tex_type) {
-            case TextureType::CHECKER:
-                return checker_tex.value(u, v, p);
-            case TextureType::NOISE:
-                return noise_tex.value(u, v, p);
-            case TextureType::SOLID_COLOR:
-            default:
-                return solid_tex.value(u, v, p);
-        }
+        return albedo;
     }
 
     __host__ __device__ Color emitted(float u, float v, const Point3& p) const {
-        if (type == MaterialType::EMISSIVE) {
-            return emission * emission_strength;
-        }
         return Color(0, 0, 0);
     }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_MATERIALS_MATERIAL_CUH
+#endif

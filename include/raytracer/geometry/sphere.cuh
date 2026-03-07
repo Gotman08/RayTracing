@@ -33,7 +33,6 @@ public:
 
         float sqrtd = sqrtf(discriminant);
 
-        // Find the nearest root in the acceptable range
         float root = (h - sqrtd) / a;
         if (!ray_t.surrounds(root)) {
             root = (h + sqrtd) / a;
@@ -52,6 +51,6 @@ public:
     }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_GEOMETRY_SPHERE_CUH
+#endif

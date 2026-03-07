@@ -16,8 +16,6 @@ public:
 
     __host__ __device__ Plane(const Point3& p, const Vec3& n, Material* m)
         : Hittable(HittableType::PLANE), point(p), normal(unit_vector(n)), mat(m) {
-        // Infinite plane has infinite bounding box in two directions
-        // Use a large but finite box for practical purposes
         float big = 1e10f;
         Vec3 tangent1, tangent2;
 
@@ -36,7 +34,6 @@ public:
     __host__ __device__ bool hit(const Ray& r, Interval ray_t, HitRecord& rec) const {
         float denom = dot(normal, r.direction());
 
-        // Ray parallel to plane
         if (fabsf(denom) < EPSILON)
             return false;
 
@@ -50,7 +47,6 @@ public:
         rec.set_face_normal(r, normal);
         rec.mat = mat;
 
-        // UV coordinates based on projection
         Vec3 local = rec.p - point;
         Vec3 tangent1, tangent2;
         if (fabsf(normal.x) > 0.9f) {
@@ -69,6 +65,6 @@ public:
     }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_GEOMETRY_PLANE_CUH
+#endif

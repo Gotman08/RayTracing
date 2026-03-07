@@ -2,25 +2,12 @@
 #define RAYTRACER_MATERIALS_LAMBERTIAN_CUH
 
 #include "raytracer/materials/material.cuh"
+#include "raytracer/core/random.cuh"
 
 namespace rt {
 
 __host__ __device__ inline Material create_lambertian(const Color& albedo) {
     Material mat(MaterialType::LAMBERTIAN, albedo);
-    return mat;
-}
-
-__host__ __device__ inline Material create_lambertian_checker(float scale, const Color& c1, const Color& c2) {
-    Material mat(MaterialType::LAMBERTIAN, Color(1, 1, 1));
-    mat.tex_type = TextureType::CHECKER;
-    mat.checker_tex = CheckerTexture(scale, c1, c2);
-    return mat;
-}
-
-__host__ inline Material create_lambertian_noise(float scale, const Color& base_color = Color(1, 1, 1), unsigned int seed = 42) {
-    Material mat(MaterialType::LAMBERTIAN, base_color);
-    mat.tex_type = TextureType::NOISE;
-    mat.noise_tex = NoiseTexture(scale, base_color, seed);
     return mat;
 }
 
@@ -38,10 +25,29 @@ __device__ inline bool scatter_lambertian(
         scatter_direction = rec.normal;
 
     scattered = Ray(rec.p, scatter_direction, r_in.time());
-    attenuation = mat.get_albedo(rec.u, rec.v, rec.p);
+    attenuation = mat.albedo;
     return true;
 }
 
-} // namespace rt
+// CPU version
+inline bool scatter_lambertian_cpu(
+    const Material& mat,
+    const Ray& r_in,
+    const HitRecord& rec,
+    Color& attenuation,
+    Ray& scattered,
+    CPURandom& rng
+) {
+    Vec3 scatter_direction = rec.normal + random_unit_vector(rng);
 
-#endif // RAYTRACER_MATERIALS_LAMBERTIAN_CUH
+    if (scatter_direction.near_zero())
+        scatter_direction = rec.normal;
+
+    scattered = Ray(rec.p, scatter_direction, r_in.time());
+    attenuation = mat.albedo;
+    return true;
+}
+
+}
+
+#endif

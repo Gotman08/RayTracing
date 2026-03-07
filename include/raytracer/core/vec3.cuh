@@ -10,7 +10,6 @@
 
 namespace rt {
 
-// Constants for random sampling (avoid circular dependency with cuda_utils.cuh)
 constexpr float VEC3_PI = 3.14159265358979323846f;
 constexpr float VEC3_TWO_PI = 2.0f * VEC3_PI;
 
@@ -83,11 +82,9 @@ public:
     }
 };
 
-// Type aliases
 using Point3 = Vec3;
 using Color = Vec3;
 
-// Free functions
 __host__ __device__ inline Vec3 operator*(float t, const Vec3& v) {
     return v * t;
 }
@@ -119,7 +116,6 @@ __host__ __device__ inline Vec3 unit_vector(const Vec3& v) {
     return v.normalized();
 }
 
-// Random vector generation (device only - uses cuRAND)
 #ifdef __CUDACC__
 __device__ inline Vec3 random_vec3(curandState* rand_state) {
     return Vec3(
@@ -138,7 +134,6 @@ __device__ inline Vec3 random_vec3(float min, float max, curandState* rand_state
     );
 }
 
-// Rejection-free uniform sampling on unit sphere
 __device__ inline Vec3 random_unit_vector(curandState* rand_state) {
     float z = 2.0f * curand_uniform(rand_state) - 1.0f;
     float r = sqrtf(fmaxf(0.0f, 1.0f - z * z));
@@ -146,10 +141,9 @@ __device__ inline Vec3 random_unit_vector(curandState* rand_state) {
     return Vec3(r * cosf(phi), r * sinf(phi), z);
 }
 
-// Rejection-free uniform sampling inside unit sphere
 __device__ inline Vec3 random_in_unit_sphere(curandState* rand_state) {
     Vec3 dir = random_unit_vector(rand_state);
-    float r = cbrtf(curand_uniform(rand_state));  // cube root for uniform volume
+    float r = cbrtf(curand_uniform(rand_state));
     return dir * r;
 }
 
@@ -161,9 +155,8 @@ __device__ inline Vec3 random_on_hemisphere(const Vec3& normal, curandState* ran
         return -on_unit_sphere;
 }
 
-// Rejection-free uniform sampling inside unit disk
 __device__ inline Vec3 random_in_unit_disk(curandState* rand_state) {
-    float r = sqrtf(curand_uniform(rand_state));  // square root for uniform area
+    float r = sqrtf(curand_uniform(rand_state));
     float theta = VEC3_TWO_PI * curand_uniform(rand_state);
     return Vec3(r * cosf(theta), r * sinf(theta), 0.0f);
 }
@@ -179,8 +172,8 @@ __device__ inline Vec3 random_cosine_direction(curandState* rand_state) {
 
     return Vec3(x, y, z);
 }
-#endif // __CUDACC__
+#endif
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_CORE_VEC3_CUH
+#endif

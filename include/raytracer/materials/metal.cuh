@@ -2,6 +2,7 @@
 #define RAYTRACER_MATERIALS_METAL_CUH
 
 #include "raytracer/materials/material.cuh"
+#include "raytracer/core/random.cuh"
 
 namespace rt {
 
@@ -26,6 +27,22 @@ __device__ inline bool scatter_metal(
     return (dot(scattered.direction(), rec.normal) > 0);
 }
 
-} // namespace rt
+// CPU version
+inline bool scatter_metal_cpu(
+    const Material& mat,
+    const Ray& r_in,
+    const HitRecord& rec,
+    Color& attenuation,
+    Ray& scattered,
+    CPURandom& rng
+) {
+    Vec3 reflected = reflect(r_in.direction(), rec.normal);
+    reflected = unit_vector(reflected) + (mat.fuzz * random_unit_vector(rng));
+    scattered = Ray(rec.p, reflected, r_in.time());
+    attenuation = mat.albedo;
+    return (dot(scattered.direction(), rec.normal) > 0);
+}
 
-#endif // RAYTRACER_MATERIALS_METAL_CUH
+}
+
+#endif

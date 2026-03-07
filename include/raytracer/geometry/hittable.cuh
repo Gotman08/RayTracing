@@ -9,16 +9,9 @@
 
 namespace rt {
 
-// Object types for GPU dispatch (avoiding virtual functions)
 enum class HittableType {
     SPHERE,
-    MOVING_SPHERE,
-    PLANE,
-    QUAD,
-    TRIANGLE,
-    BOX,
-    BVH_NODE,
-    HITTABLE_LIST
+    PLANE
 };
 
 class Hittable {
@@ -32,6 +25,6 @@ public:
     __host__ __device__ const AABB& bounding_box() const { return bbox; }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_GEOMETRY_HITTABLE_CUH
+#endif

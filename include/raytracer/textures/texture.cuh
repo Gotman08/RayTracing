@@ -5,21 +5,18 @@
 
 namespace rt {
 
-enum class TextureType {
-    SOLID_COLOR,
-    CHECKER,
-    NOISE,
-    IMAGE
-};
-
 class Texture {
 public:
-    TextureType type;
+    Color color;
 
-    __host__ __device__ Texture() : type(TextureType::SOLID_COLOR) {}
-    __host__ __device__ Texture(TextureType t) : type(t) {}
+    __host__ __device__ Texture() : color(1, 1, 1) {}
+    __host__ __device__ Texture(const Color& c) : color(c) {}
+
+    __host__ __device__ Color value(float u, float v, const Point3& p) const {
+        return color;
+    }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_TEXTURES_TEXTURE_CUH
+#endif

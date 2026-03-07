@@ -25,6 +25,6 @@ public:
     }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_CORE_RAY_CUH
+#endif

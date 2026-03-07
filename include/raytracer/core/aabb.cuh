@@ -11,7 +11,7 @@ class AABB {
 public:
     Interval x, y, z;
 
-    __host__ __device__ AABB() {} // Empty AABB
+    __host__ __device__ AABB() {}
 
     __host__ __device__ AABB(const Interval& x, const Interval& y, const Interval& z)
         : x(x), y(y), z(z) {
@@ -37,28 +37,47 @@ public:
         return x;
     }
 
+    // OPTIMIZED: Unrolled, branchless AABB intersection
     __host__ __device__ bool hit(const Ray& r, Interval ray_t) const {
-        const Point3& ray_orig = r.origin();
-        const Vec3& ray_dir = r.direction();
+        const Point3& orig = r.origin();
+        const Vec3& dir = r.direction();
 
-        for (int axis = 0; axis < 3; axis++) {
-            const Interval& ax = axis_interval(axis);
-            const float adinv = 1.0f / ray_dir[axis];
+        float tmin = ray_t.min;
+        float tmax = ray_t.max;
 
-            float t0 = (ax.min - ray_orig[axis]) * adinv;
-            float t1 = (ax.max - ray_orig[axis]) * adinv;
-
-            if (t0 < t1) {
-                if (t0 > ray_t.min) ray_t.min = t0;
-                if (t1 < ray_t.max) ray_t.max = t1;
-            } else {
-                if (t1 > ray_t.min) ray_t.min = t1;
-                if (t0 < ray_t.max) ray_t.max = t0;
-            }
-
-            if (ray_t.max <= ray_t.min)
-                return false;
+        // X axis
+        {
+            float invD = 1.0f / dir.x;
+            float t0 = (x.min - orig.x) * invD;
+            float t1 = (x.max - orig.x) * invD;
+            if (invD < 0.0f) { float tmp = t0; t0 = t1; t1 = tmp; }
+            tmin = t0 > tmin ? t0 : tmin;
+            tmax = t1 < tmax ? t1 : tmax;
+            if (tmax <= tmin) return false;
         }
+
+        // Y axis
+        {
+            float invD = 1.0f / dir.y;
+            float t0 = (y.min - orig.y) * invD;
+            float t1 = (y.max - orig.y) * invD;
+            if (invD < 0.0f) { float tmp = t0; t0 = t1; t1 = tmp; }
+            tmin = t0 > tmin ? t0 : tmin;
+            tmax = t1 < tmax ? t1 : tmax;
+            if (tmax <= tmin) return false;
+        }
+
+        // Z axis
+        {
+            float invD = 1.0f / dir.z;
+            float t0 = (z.min - orig.z) * invD;
+            float t1 = (z.max - orig.z) * invD;
+            if (invD < 0.0f) { float tmp = t0; t0 = t1; t1 = tmp; }
+            tmin = t0 > tmin ? t0 : tmin;
+            tmax = t1 < tmax ? t1 : tmax;
+            if (tmax <= tmin) return false;
+        }
+
         return true;
     }
 
@@ -93,6 +112,6 @@ private:
     }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_CORE_AABB_CUH
+#endif

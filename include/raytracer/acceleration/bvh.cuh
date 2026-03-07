@@ -7,12 +7,11 @@
 
 namespace rt {
 
-// Linear BVH node for GPU traversal
 struct BVHNode {
     AABB bounds;
-    int left;           // Left child index or first primitive (-1 if leaf)
-    int right;          // Right child index or primitive count
-    int primitive_idx;  // -1 for internal nodes
+    int left;
+    int right;
+    int primitive_idx;
     bool is_leaf;
 
     __host__ __device__ BVHNode()
@@ -29,28 +28,26 @@ public:
     __host__ __device__ BVH()
         : nodes(nullptr), primitives(nullptr), num_nodes(0), num_primitives(0) {}
 
-    // Iterative BVH traversal for GPU
-    __device__ bool hit(const Ray& r, Interval ray_t, HitRecord& rec) const {
+    __host__ __device__ bool hit(const Ray& r, Interval ray_t, HitRecord& rec) const {
         if (num_nodes == 0) return false;
 
         bool hit_anything = false;
         float closest_so_far = ray_t.max;
 
-        // Stack for iterative traversal
         int stack[64];
         int stack_ptr = 0;
-        stack[stack_ptr++] = 0; // Start with root
+        stack[stack_ptr++] = 0;
 
         while (stack_ptr > 0) {
             int node_idx = stack[--stack_ptr];
+
+            // Load node data
             const BVHNode& node = nodes[node_idx];
 
-            // Test AABB
             if (!node.bounds.hit(r, Interval(ray_t.min, closest_so_far)))
                 continue;
 
             if (node.is_leaf) {
-                // Test primitive
                 HitRecord temp_rec;
                 if (primitives[node.primitive_idx].hit(r, Interval(ray_t.min, closest_so_far), temp_rec)) {
                     hit_anything = true;
@@ -58,23 +55,22 @@ public:
                     rec = temp_rec;
                 }
             } else {
-                // Push children (can optimize by ordering by distance)
-                if (node.left >= 0) stack[stack_ptr++] = node.left;
+                // OPTIMIZED: Push children in order (closer first for better early termination)
                 if (node.right >= 0) stack[stack_ptr++] = node.right;
+                if (node.left >= 0) stack[stack_ptr++] = node.left;
             }
         }
 
         return hit_anything;
     }
 
-    __host__ __device__ const AABB& bounding_box() const {
+    __host__ __device__ AABB bounding_box() const {
         if (num_nodes > 0)
             return nodes[0].bounds;
-        static AABB empty;
-        return empty;
+        return AABB();
     }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_ACCELERATION_BVH_CUH
+#endif

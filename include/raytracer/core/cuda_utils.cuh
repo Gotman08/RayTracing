@@ -11,10 +11,6 @@
 
 namespace rt {
 
-// =============================================================================
-// Constants (available on both host and device)
-// =============================================================================
-
 constexpr float PI = 3.14159265358979323846f;
 constexpr float INFINITY_F = 1e30f;
 constexpr float EPSILON = 1e-6f;
@@ -23,15 +19,7 @@ __host__ __device__ inline float degrees_to_radians(float degrees) {
     return degrees * PI / 180.0f;
 }
 
-// =============================================================================
-// CUDA-specific functionality (only when compiling with nvcc)
-// =============================================================================
-
 #ifdef __CUDACC__
-
-// =============================================================================
-// Error Checking Macros
-// =============================================================================
 
 #define CUDA_CHECK(val) check_cuda((val), #val, __FILE__, __LINE__)
 
@@ -49,10 +37,6 @@ inline void check_cuda(cudaError_t result, const char* func,
 
 #define CUDA_CHECK_LAST() CUDA_CHECK(cudaGetLastError())
 #define CUDA_SYNC_CHECK() CUDA_CHECK(cudaDeviceSynchronize())
-
-// =============================================================================
-// Memory Management Helpers
-// =============================================================================
 
 template<typename T>
 T* cuda_alloc(size_t count) {
@@ -85,10 +69,6 @@ void cuda_copy_to_host(T* dst, const T* src, size_t count) {
     CUDA_CHECK(cudaMemcpy(dst, src, count * sizeof(T), cudaMemcpyDeviceToHost));
 }
 
-// =============================================================================
-// Device Query
-// =============================================================================
-
 inline void print_device_info() {
     int device_count;
     CUDA_CHECK(cudaGetDeviceCount(&device_count));
@@ -114,10 +94,6 @@ inline void print_device_info() {
     }
 }
 
-// =============================================================================
-// Random Number Initialization
-// =============================================================================
-
 __global__ inline void init_curand_states(curandState* states, int width, int height, unsigned long long seed) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     int j = blockIdx.y * blockDim.y + threadIdx.y;
@@ -127,8 +103,8 @@ __global__ inline void init_curand_states(curandState* states, int width, int he
     curand_init(seed + pixel_index, 0, 0, &states[pixel_index]);
 }
 
-#endif // __CUDACC__
+#endif
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_CORE_CUDA_UTILS_CUH
+#endif

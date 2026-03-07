@@ -6,8 +6,9 @@ cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
 
 # Check if we only want to build tests (no CUDA required)
 option(BUILD_TESTS_ONLY "Build only tests without CUDA" OFF)
+option(BUILD_CPU_ONLY "Build CPU-only raytracer without CUDA" OFF)
 
-if(BUILD_TESTS_ONLY)
+if(BUILD_TESTS_ONLY OR BUILD_CPU_ONLY)
     project(CUDARayTracer
         VERSION 1.0.0
         DESCRIPTION "High-Performance CUDA Ray Tracer for HPC Clusters (Romeo2025)"
@@ -27,6 +28,7 @@ endif()
 option(BUILD_TESTS "Build unit tests" OFF)
 option(ENABLE_FAST_MATH "Enable fast math optimizations" ON)
 option(ENABLE_DEBUG_OUTPUT "Enable debug output" OFF)
+option(ENABLE_INTERACTIVE "Enable interactive rendering mode with GLFW/OpenGL" ON)
 
 # ==============================================================================
 # C++ Standards
@@ -36,9 +38,36 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # ==============================================================================
-# CUDA Configuration (only when not BUILD_TESTS_ONLY)
+# CPU-Only Raytracer (OpenMP)
 # ==============================================================================
-if(NOT BUILD_TESTS_ONLY)
+if(BUILD_CPU_ONLY)
+    find_package(OpenMP REQUIRED)
+
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}/external
+    )
+
+    add_executable(raytracer src/main_cpu.cpp)
+
+    target_compile_options(raytracer PRIVATE -Wall -O3)
+    target_compile_definitions(raytracer PRIVATE CPU_ONLY=1)
+
+    target_link_libraries(raytracer OpenMP::OpenMP_CXX)
+
+    if(ENABLE_FAST_MATH)
+        target_compile_options(raytracer PRIVATE -ffast-math)
+    endif()
+
+    install(TARGETS raytracer RUNTIME DESTINATION bin)
+
+    message(STATUS "CPU-Only Mode: ENABLED (OpenMP)")
+endif()
+
+# ==============================================================================
+# CUDA Configuration (only when not BUILD_TESTS_ONLY and not BUILD_CPU_ONLY)
+# ==============================================================================
+if(NOT BUILD_TESTS_ONLY AND NOT BUILD_CPU_ONLY)
     set(CMAKE_CUDA_STANDARD 17)
     set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
@@ -97,10 +126,35 @@ if(NOT BUILD_TESTS_ONLY)
         CUDA_RESOLVE_DEVICE_SYMBOLS ON
     )
 
+    # OpenMP for CPU rendering path
+    find_package(OpenMP)
+    if(OpenMP_CXX_FOUND)
+        target_link_libraries(raytracer OpenMP::OpenMP_CXX)
+        # Pass OpenMP flag to host compiler via nvcc
+        target_compile_options(raytracer PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-Xcompiler=${OpenMP_CXX_FLAGS}>)
+        message(STATUS "OpenMP: ENABLED (for --cpu mode)")
+    endif()
+
     target_link_libraries(raytracer
         CUDA::cudart
         CUDA::curand
     )
+
+    # ==============================================================================
+    # Interactive Mode (GLFW + OpenGL)
+    # ==============================================================================
+    if(ENABLE_INTERACTIVE)
+        find_package(OpenGL REQUIRED)
+        find_package(glfw3 3.3 REQUIRED)
+        find_package(GLEW REQUIRED)
+
+        target_compile_definitions(raytracer PRIVATE ENABLE_INTERACTIVE=1)
+        target_link_libraries(raytracer OpenGL::GL glfw GLEW::GLEW)
+
+        message(STATUS "Interactive Mode: ENABLED (GLFW + OpenGL + GLEW)")
+    else()
+        message(STATUS "Interactive Mode: DISABLED")
+    endif()
 
     if(ENABLE_DEBUG_OUTPUT)
         target_compile_definitions(raytracer PRIVATE DEBUG_OUTPUT=1)
@@ -150,9 +204,12 @@ endif()
 # Print Configuration Summary
 # ==============================================================================
 message(STATUS "")
-message(STATUS "=== CUDA Ray Tracer Configuration ===")
+message(STATUS "=== Ray Tracer Configuration ===")
 message(STATUS "Version: ${PROJECT_VERSION}")
-if(NOT BUILD_TESTS_ONLY)
+if(BUILD_CPU_ONLY)
+    message(STATUS "Mode: CPU-only (OpenMP)")
+elseif(NOT BUILD_TESTS_ONLY)
+    message(STATUS "Mode: CUDA + CPU")
     message(STATUS "CUDA Architectures: ${CMAKE_CUDA_ARCHITECTURES}")
 endif()
 message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")

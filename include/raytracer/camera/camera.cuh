@@ -4,6 +4,7 @@
 #include "raytracer/core/vec3.cuh"
 #include "raytracer/core/ray.cuh"
 #include "raytracer/core/cuda_utils.cuh"
+#include "raytracer/core/random.cuh"
 
 namespace rt {
 
@@ -36,31 +37,25 @@ public:
         shutter_open = t0;
         shutter_close = t1;
 
-        // Viewport dimensions
         float theta = degrees_to_radians(vfov);
         float h = tanf(theta / 2.0f);
         float aspect_ratio = static_cast<float>(width) / static_cast<float>(height);
         float viewport_height = 2.0f * h * focus_dist;
         float viewport_width = viewport_height * aspect_ratio;
 
-        // Camera coordinate system
         w = unit_vector(lookfrom - lookat);
         u = unit_vector(cross(vup, w));
         v = cross(w, u);
 
-        // Viewport edge vectors
         Vec3 viewport_u = viewport_width * u;
         Vec3 viewport_v = viewport_height * (-v);
 
-        // Pixel delta vectors
         pixel_delta_u = viewport_u / static_cast<float>(width);
         pixel_delta_v = viewport_v / static_cast<float>(height);
 
-        // Upper left pixel location
         Point3 viewport_upper_left = center - (focus_dist * w) - viewport_u / 2.0f - viewport_v / 2.0f;
         pixel00_loc = viewport_upper_left + 0.5f * (pixel_delta_u + pixel_delta_v);
 
-        // Defocus disk
         defocus_angle = aperture;
         float defocus_radius = focus_dist * tanf(degrees_to_radians(defocus_angle / 2.0f));
         defocus_disk_u = u * defocus_radius;
@@ -68,7 +63,6 @@ public:
     }
 
     __device__ Ray get_ray(int i, int j, curandState* rand_state) const {
-        // Random offset within pixel
         float px = curand_uniform(rand_state) - 0.5f;
         float py = curand_uniform(rand_state) - 0.5f;
 
@@ -84,13 +78,35 @@ public:
         return Ray(ray_origin, ray_direction, ray_time);
     }
 
+    // CPU version using CPURandom
+    Ray get_ray_cpu(int i, int j, CPURandom& rng) const {
+        float px = rng() - 0.5f;
+        float py = rng() - 0.5f;
+
+        Point3 pixel_sample = pixel00_loc
+            + ((static_cast<float>(i) + px) * pixel_delta_u)
+            + ((static_cast<float>(j) + py) * pixel_delta_v);
+
+        Point3 ray_origin = (defocus_angle <= 0) ? center : defocus_disk_sample_cpu(rng);
+        Vec3 ray_direction = pixel_sample - ray_origin;
+
+        float ray_time = shutter_open + rng() * (shutter_close - shutter_open);
+
+        return Ray(ray_origin, ray_direction, ray_time);
+    }
+
 private:
     __device__ Point3 defocus_disk_sample(curandState* rand_state) const {
         Vec3 p = random_in_unit_disk(rand_state);
         return center + (p.x * defocus_disk_u) + (p.y * defocus_disk_v);
     }
+
+    Point3 defocus_disk_sample_cpu(CPURandom& rng) const {
+        Vec3 p = random_in_unit_disk(rng);
+        return center + (p.x * defocus_disk_u) + (p.y * defocus_disk_v);
+    }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_CAMERA_CAMERA_CUH
+#endif

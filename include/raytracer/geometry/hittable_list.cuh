@@ -3,22 +3,13 @@
 
 #include "raytracer/geometry/hittable.cuh"
 #include "raytracer/geometry/sphere.cuh"
-#include "raytracer/geometry/moving_sphere.cuh"
 #include "raytracer/geometry/plane.cuh"
-#include "raytracer/geometry/quad.cuh"
-#include "raytracer/geometry/triangle.cuh"
-#include "raytracer/geometry/box.cuh"
 
 namespace rt {
 
-// Union to store different object types
 union HittableData {
     Sphere sphere;
-    MovingSphere moving_sphere;
     Plane plane;
-    Quad quad;
-    Triangle triangle;
-    Box box;
 
     __host__ __device__ HittableData() {}
 };
@@ -34,16 +25,8 @@ struct HittableObject {
         switch (type) {
             case HittableType::SPHERE:
                 return data.sphere.hit(r, ray_t, rec);
-            case HittableType::MOVING_SPHERE:
-                return data.moving_sphere.hit(r, ray_t, rec);
             case HittableType::PLANE:
                 return data.plane.hit(r, ray_t, rec);
-            case HittableType::QUAD:
-                return data.quad.hit(r, ray_t, rec);
-            case HittableType::TRIANGLE:
-                return data.triangle.hit(r, ray_t, rec);
-            case HittableType::BOX:
-                return data.box.hit(r, ray_t, rec);
             default:
                 return false;
         }
@@ -68,29 +51,11 @@ public:
         count++;
     }
 
-    __host__ __device__ void add_moving_sphere(const Point3& c0, const Point3& c1, float radius, Material* mat) {
+    __host__ __device__ void add_plane(const Point3& point, const Vec3& normal, Material* mat) {
         if (count >= capacity) return;
-        objects[count].type = HittableType::MOVING_SPHERE;
-        objects[count].data.moving_sphere = MovingSphere(c0, c1, radius, mat);
-        objects[count].bbox = objects[count].data.moving_sphere.bounding_box();
-        bbox = (count == 0) ? objects[count].bbox : AABB(bbox, objects[count].bbox);
-        count++;
-    }
-
-    __host__ __device__ void add_quad(const Point3& Q, const Vec3& u, const Vec3& v, Material* mat) {
-        if (count >= capacity) return;
-        objects[count].type = HittableType::QUAD;
-        objects[count].data.quad = Quad(Q, u, v, mat);
-        objects[count].bbox = objects[count].data.quad.bounding_box();
-        bbox = (count == 0) ? objects[count].bbox : AABB(bbox, objects[count].bbox);
-        count++;
-    }
-
-    __host__ __device__ void add_box(const Point3& a, const Point3& b, Material* mat) {
-        if (count >= capacity) return;
-        objects[count].type = HittableType::BOX;
-        objects[count].data.box = Box(a, b, mat);
-        objects[count].bbox = objects[count].data.box.bounding_box();
+        objects[count].type = HittableType::PLANE;
+        objects[count].data.plane = Plane(point, normal, mat);
+        objects[count].bbox = objects[count].data.plane.bounding_box();
         bbox = (count == 0) ? objects[count].bbox : AABB(bbox, objects[count].bbox);
         count++;
     }
@@ -114,6 +79,6 @@ public:
     __host__ __device__ const AABB& bounding_box() const { return bbox; }
 };
 
-} // namespace rt
+}
 
-#endif // RAYTRACER_GEOMETRY_HITTABLE_LIST_CUH
+#endif
