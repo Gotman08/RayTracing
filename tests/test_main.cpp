@@ -59,6 +59,10 @@ void run_interval_tests(int& passed, int& failed, int& total);
 void run_sphere_tests(int& passed, int& failed, int& total);
 void run_plane_tests(int& passed, int& failed, int& total);
 void run_aabb_tests(int& passed, int& failed, int& total);
+void run_materials_tests(int& passed, int& failed, int& total);
+void run_camera_tests(int& passed, int& failed, int& total);
+void run_tone_mapping_tests(int& passed, int& failed, int& total);
+void run_bvh_tests(int& passed, int& failed, int& total);
 
 // ==============================================================================
 // Main
@@ -97,6 +101,22 @@ int main() {
 
     std::cout << "[AABB Tests]\n";
     run_aabb_tests(total_passed, total_failed, total_tests);
+    std::cout << "\n";
+
+    std::cout << "[Materials Tests]\n";
+    run_materials_tests(total_passed, total_failed, total_tests);
+    std::cout << "\n";
+
+    std::cout << "[Camera Tests]\n";
+    run_camera_tests(total_passed, total_failed, total_tests);
+    std::cout << "\n";
+
+    std::cout << "[Tone Mapping Tests]\n";
+    run_tone_mapping_tests(total_passed, total_failed, total_tests);
+    std::cout << "\n";
+
+    std::cout << "[BVH Tests]\n";
+    run_bvh_tests(total_passed, total_failed, total_tests);
     std::cout << "\n";
 
     // Summary

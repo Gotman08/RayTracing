@@ -179,6 +179,10 @@ if(BUILD_TESTS OR BUILD_TESTS_ONLY)
         tests/test_sphere.cpp
         tests/test_plane.cpp
         tests/test_aabb.cpp
+        tests/test_materials.cpp
+        tests/test_camera.cpp
+        tests/test_tone_mapping.cpp
+        tests/test_bvh.cpp
     )
 
     target_include_directories(raytracer_tests PRIVATE
