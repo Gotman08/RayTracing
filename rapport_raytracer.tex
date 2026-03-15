@@ -1,0 +1,583 @@
+\documentclass[12pt,a4paper]{article}
+
+% Encodage et langue
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% Mise en page
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+% Mathématiques
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+
+% Code et listings
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Graphiques et tableaux
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+
+% Liens
+\usepackage{hyperref}
+
+% -----------------------------------------------
+% Configuration des listings (code)
+% -----------------------------------------------
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codeblue}{rgb}{0.0,0.3,0.7}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.97}
+
+\lstdefinestyle{cppstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegray}\itshape,
+    keywordstyle=\color{codeblue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    language=C++
+}
+
+\lstset{style=cppstyle}
+
+% -----------------------------------------------
+% En-têtes et pieds de page
+% -----------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{CUDA Ray Tracer}
+\lhead{Rapport Technique}
+\rfoot{Page \thepage}
+\lfoot{Mars 2026}
+
+% -----------------------------------------------
+% Titre
+% -----------------------------------------------
+\title{
+    \vspace{1cm}
+    {\LARGE \textbf{Rapport Technique}} \\[0.5cm]
+    {\Large CUDA Ray Tracer} \\[0.3cm]
+    {\large Moteur de rendu physiquement réaliste} \\
+    {\large GPU (CUDA) / CPU (OpenMP) / Mode interactif (OpenGL)}
+    \vspace{0.5cm}
+}
+\author{Projet RayTracing}
+\date{Mars 2026}
+
+% ===============================================
+\begin{document}
+% ===============================================
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+Ce rapport présente l'implémentation d'un moteur de ray tracing physiquement réaliste
+tirant parti des capacités de calcul parallèle des GPU modernes via CUDA. Le projet
+propose deux chemins de rendu : un chemin GPU utilisant CUDA pour des performances
+optimales (~160 MRays/s sur RTX 4060), et un chemin CPU multi-thread utilisant
+OpenMP. Un mode interactif en temps réel est également disponible grâce à l'interopérabilité
+CUDA-OpenGL. L'accélération GPU est de l'ordre de \textbf{×56} par rapport à l'exécution CPU.
+\end{abstract}
+
+\vspace{0.5cm}
+\tableofcontents
+\newpage
+
+% ===============================================
+\section{Introduction}
+% ===============================================
+
+Le ray tracing est une technique de rendu qui simule le comportement physique de la lumière
+en traçant des rayons depuis la caméra vers la scène. Contrairement à la rastérisation,
+cette approche permet de produire naturellement des effets tels que les réflexions,
+les réfractions, les ombres douces et la profondeur de champ.
+
+Ce projet implémente un \textbf{path tracer Monte Carlo} : pour chaque pixel, de nombreux
+rayons sont lancés avec des perturbations aléatoires, et leurs contributions sont moyennées
+pour obtenir une image convergée. La nature massivement parallèle du problème
+(chaque pixel est indépendant) le rend idéal pour les GPU.
+
+\subsection{Objectifs}
+
+\begin{itemize}
+    \item Implémenter un path tracer complet avec matériaux physiques (Lambertian, Métal, Diélectrique)
+    \item Exploiter CUDA pour une accélération GPU massive
+    \item Fournir un chemin de rendu CPU avec OpenMP comme alternative portable
+    \item Développer un mode interactif temps réel via l'interopérabilité CUDA-OpenGL
+    \item Construire un pipeline de tests unitaires sans dépendance CUDA
+\end{itemize}
+
+Le code source complet est disponible sur GitHub :
+\url{https://github.com/Gotman08/RayTracing.git}
+
+Le système de build utilise CMake 3.18+ avec trois modes : build GPU complet (défaut),
+build CPU seul (\texttt{BUILD\_CPU\_ONLY=ON}), et tests seuls (\texttt{BUILD\_TESTS\_ONLY=ON}).
+Les images sont exportées aux formats PNG, BMP, JPG, TGA et PPM.
+
+\subsection{Technologies utilisées}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Technologie} & \textbf{Rôle} \\
+\midrule
+CUDA 12.6           & Rendu GPU parallèle \\
+OpenMP              & Rendu CPU multi-thread \\
+GLFW 3.3+           & Fenêtrage (mode interactif) \\
+OpenGL 3.3+         & Affichage temps réel \\
+stb\_image\_write   & Export PNG/BMP/JPG/PPM \\
+CMake 3.18+         & Système de build \\
+CTest               & Tests unitaires \\
+\bottomrule
+\end{tabular}
+\caption{Technologies et bibliothèques du projet}
+\end{table}
+
+% ===============================================
+\section{Architecture générale}
+% ===============================================
+
+Le projet est structuré autour de bibliothèques d'en-têtes (fichiers \texttt{.cuh}) organisées
+par domaine fonctionnel, ce qui favorise la réutilisation du code entre les chemins GPU et CPU.
+
+\subsection{Organisation des modules}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lp{9cm}}
+\toprule
+\textbf{Module} & \textbf{Contenu} \\
+\midrule
+Utilitaires core  & \texttt{vec3}, \texttt{ray}, \texttt{aabb}, \texttt{interval}, \texttt{timer}, générateur aléatoire \\
+Géométrie         & \texttt{sphere}, \texttt{plane}, interface \texttt{hittable} \\
+Matériaux         & \texttt{lambertian}, \texttt{metal}, \texttt{dielectric} \\
+Accélération      & Arbre BVH (variantes GPU et CPU) \\
+Rendu             & Renderers GPU/CPU, tone mapping, dispatch de matériaux \\
+Caméra            & Caméra perspective avec DoF et motion blur \\
+Mode interactif   & Gestionnaire de fenêtre, interop GL, contrôleur caméra, gestion des entrées \\
+\bottomrule
+\end{tabular}
+\caption{Organisation modulaire du projet}
+\end{table}
+
+\subsection{Trois modes de fonctionnement}
+
+\begin{enumerate}
+    \item \textbf{Mode GPU} (défaut) : rendu CUDA, export image
+    \item \textbf{Mode CPU} (\texttt{--cpu}) : rendu OpenMP, export image
+    \item \textbf{Mode interactif} (\texttt{--interactive}) : rendu CUDA temps réel avec affichage OpenGL
+\end{enumerate}
+
+% ===============================================
+\section{Algorithme de path tracing}
+% ===============================================
+
+\subsection{Principe du Monte Carlo path tracing}
+
+Pour chaque pixel $(i, j)$, on lance $N$ rayons avec des perturbations aléatoires.
+La couleur finale est la moyenne des contributions :
+
+\[
+C(i,j) = \frac{1}{N} \sum_{k=1}^{N} \text{trace}(r_k)
+\]
+
+Chaque rayon est suivi de rebond en rebond jusqu'à une profondeur maximale $d_{\max}$
+ou jusqu'à ce qu'il s'échappe vers l'arrière-plan.
+
+\subsection{Traversée BVH itérative}
+
+L'accélération par \textbf{Bounding Volume Hierarchy} (BVH) réduit la complexité
+de l'intersection de $O(n)$ à $O(\log n)$. La traversée est implémentée de façon
+itérative avec une pile (profondeur max : 64 nœuds), ce qui est critique pour
+les performances GPU où la récursion est coûteuse.
+
+La construction du BVH utilise une stratégie de \textit{median split} sur l'axe
+le plus long, avec partitionnement par centroïde.
+
+\subsection{Accumulation et tone mapping}
+
+Les couleurs sont accumulées en virgule flottante (HDR). La compression vers
+l'espace SDR utilise le \textbf{tone mapping de Reinhard} :
+
+\[
+c' = \frac{c}{1 + c}
+\]
+
+Suivi d'une \textbf{correction gamma} $\gamma = 2.2$ :
+
+\[
+c_{\text{out}} = c'^{1/\gamma}
+\]
+
+% ===============================================
+\section{Matériaux}
+% ===============================================
+
+\subsection{Lambertian (diffus)}
+
+Le matériau Lambertien modélise les surfaces mattes avec une distribution
+cosinus-pondérée :
+
+\[
+\bm{d}_{\text{scatter}} = \hat{\bm{n}} + \bm{r}_{\text{unit}}
+\]
+
+où $\bm{r}_{\text{unit}}$ est un vecteur unitaire aléatoire. L'atténuation est
+la couleur \textit{albedo} du matériau.
+
+\subsection{Métal (réflexion spéculaire)}
+
+La réflexion spéculaire avec flou contrôlé :
+
+\[
+\bm{d}_{\text{reflect}} = \bm{v} - 2(\bm{v} \cdot \hat{\bm{n}})\hat{\bm{n}} + f \cdot \bm{r}_{\text{unit}}
+\]
+
+où $f \in [0,1]$ est le paramètre de \textit{fuzz} contrôlant le flou des
+réflexions (0 = miroir parfait).
+
+\subsection{Diélectrique (verre/réfraction)}
+
+Le diélectrique combine réflexion et réfraction via \textbf{l'approximation de Schlick}
+pour les équations de Fresnel :
+
+\[
+R(\theta) \approx R_0 + (1 - R_0)(1 - \cos\theta)^5, \quad R_0 = \left(\frac{n_1 - n_2}{n_1 + n_2}\right)^2
+\]
+
+La réfraction suit la loi de Snell-Descartes :
+
+\[
+n_1 \sin\theta_1 = n_2 \sin\theta_2
+\]
+
+La \textbf{réflexion interne totale} est gérée : si $n_1/n_2 \cdot \sin\theta_1 > 1$,
+le rayon est entièrement réfléchi. L'indice de réfraction par défaut est $n = 1.5$
+(verre).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llll}
+\toprule
+\textbf{Matériau} & \textbf{Modèle} & \textbf{Paramètres} & \textbf{Usage} \\
+\midrule
+Lambertian  & Diffus cosinus    & albedo (RGB)              & Surfaces mattes \\
+Metal       & Réflexion + flou  & albedo (RGB), fuzz [0,1]  & Métaux, miroirs \\
+Dielectric  & Snell + Schlick   & IOR (défaut 1.5)          & Verre, eau \\
+\bottomrule
+\end{tabular}
+\caption{Résumé des matériaux implémentés}
+\end{table}
+
+% ===============================================
+\section{Géométrie}
+% ===============================================
+
+\subsection{Sphère}
+
+L'intersection rayon-sphère est résolue analytiquement via l'équation quadratique :
+
+\[
+\|\bm{o} + t\bm{d} - \bm{c}\|^2 = r^2
+\]
+
+soit $at^2 + bt + c = 0$ avec $a = \|\bm{d}\|^2$,
+$b = 2\bm{d} \cdot (\bm{o} - \bm{c})$,
+$c = \|\bm{o} - \bm{c}\|^2 - r^2$.
+
+La normale de surface est calculée correctement pour les rayons entrant et sortant
+(front/back face). Les coordonnées UV sphériques sont également calculées pour
+un potentiel texturage.
+
+La AABB de la sphère est le cube $[\bm{c} - r, \bm{c} + r]$ sur chaque axe.
+
+\subsection{Plan}
+
+Le plan infini est supporté comme primitive géométrique supplémentaire,
+permettant la construction de sols et de surfaces plates.
+
+% ===============================================
+\section{Caméra}
+% ===============================================
+
+La caméra utilise une projection perspective avec FOV vertical configurable (défaut : 20°),
+position (\textit{lookfrom}), cible (\textit{lookat}) et vecteur up.
+
+La \textbf{profondeur de champ} est simulée via un modèle de lentille mince :
+les rayons sont échantillonnés depuis un disque d'ouverture, pointant vers le plan
+de mise au point (défaut : $f/22$, distance 10 unités).
+Le \textbf{motion blur} est obtenu en générant les rayons à des instants aléatoires
+entre les temps d'ouverture et de fermeture de l'obturateur.
+
+% ===============================================
+\section{Implémentation GPU (CUDA)}
+% ===============================================
+
+\subsection{Organisation des threads}
+
+Le rendu est organisé en grille 2D de blocs $16 \times 16$ (256 threads/bloc) :
+
+\[
+\text{grid} = \left(\left\lceil\frac{W}{16}\right\rceil, \left\lceil\frac{H}{16}\right\rceil\right)
+\]
+
+Chaque thread traite un pixel de l'image de manière indépendante.
+
+\subsection{Kernels CUDA}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lp{8cm}}
+\toprule
+\textbf{Kernel} & \textbf{Rôle} \\
+\midrule
+\texttt{init\_rand\_states\_fast}    & Initialisation des états RNG (Wang hash) \\
+\texttt{render\_kernel}              & Rendu principal (SPP samples par pixel) \\
+\texttt{render\_kernel\_accumulate}  & Accumulation progressive (mode interactif) \\
+\texttt{convert\_to\_rgba8}          & Conversion HDR→RGBA8 avec tone mapping \\
+\bottomrule
+\end{tabular}
+\caption{Kernels CUDA du projet}
+\end{table}
+
+\subsection{Gestion mémoire}
+
+\begin{itemize}
+    \item \textbf{Host→Device} : matériaux, nœuds BVH, primitives (via \texttt{cudaMemcpy})
+    \item \textbf{Device→Host} : framebuffer final après rendu
+    \item \textbf{Fixup de pointeurs} : les pointeurs de matériaux host sont redirigés vers
+    les adresses device en un seul passage
+    \item \textbf{États RNG} : un \texttt{curandState} par pixel (mémoire device)
+\end{itemize}
+
+\subsection{Initialisation RNG rapide}
+
+Au lieu de \texttt{curand\_init} (coûteux), le projet utilise un
+\textbf{Wang hash} pour une initialisation O(1) par pixel :
+
+\begin{lstlisting}[caption={Wang hash pour l'initialisation RNG}]
+__device__ uint32_t wang_hash(uint32_t seed) {
+    seed = (seed ^ 61) ^ (seed >> 16);
+    seed *= 9;
+    seed = seed ^ (seed >> 4);
+    seed *= 0x27d4eb2d;
+    seed = seed ^ (seed >> 15);
+    return seed;
+}
+\end{lstlisting}
+
+% ===============================================
+\section{Implémentation CPU (OpenMP)}
+% ===============================================
+
+\subsection{Parallélisation}
+
+Le rendu CPU utilise OpenMP avec un ordonnancement dynamique par lignes :
+
+\begin{lstlisting}[caption={Parallélisation OpenMP}]
+#pragma omp parallel for schedule(dynamic, 1)
+for (int j = 0; j < height; j++) {
+    CPURandom rng(seed + j);
+    for (int i = 0; i < width; i++) {
+        // rendu du pixel (i, j)
+    }
+}
+\end{lstlisting}
+
+L'\textbf{ordonnancement dynamique} (\texttt{schedule(dynamic, 1)}) assure un
+équilibrage de charge optimal, certaines lignes étant plus coûteuses que d'autres
+selon la complexité de la scène.
+
+\subsection{Générateur aléatoire CPU}
+
+Un générateur à congruence linéaire (\texttt{CPURandom}) est utilisé,
+initialisé par ligne pour garantir la reproductibilité et éviter les
+conditions de course entre threads.
+
+\subsection{Comparaison GPU vs CPU}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrr}
+\toprule
+\textbf{Paramètre} & \textbf{GPU (RTX 4060)} & \textbf{CPU (8 threads)} \\
+\midrule
+Résolution          & 800×600     & 800×600 \\
+Samples per pixel   & 100         & 100 \\
+Temps de rendu      & $\sim$0.3 s & $\sim$17 s \\
+Débit               & $\sim$160 MRays/s & $\sim$2.8 MRays/s \\
+\textbf{Speedup GPU/CPU} & \multicolumn{2}{c}{\textbf{×56}} \\
+\bottomrule
+\end{tabular}
+\caption{Comparaison des performances GPU vs CPU}
+\end{table}
+
+% ===============================================
+\section{Mode interactif OpenGL}
+% ===============================================
+
+\subsection{Architecture CUDA-OpenGL Interop}
+
+Le mode interactif exploite l'interopérabilité CUDA-OpenGL pour afficher
+les frames rendues par CUDA sans aller-retour par le CPU :
+
+\begin{enumerate}
+    \item \textbf{PBO} (Pixel Buffer Object) OpenGL alloué en mémoire GPU
+    \item Enregistrement du PBO comme ressource CUDA (\texttt{cudaGraphicsResource})
+    \item À chaque frame : \texttt{map\_for\_cuda()} → kernel \texttt{convert\_to\_rgba8} →
+    \texttt{unmap\_from\_cuda()} → \texttt{glTexSubImage2D} → rendu quad plein écran
+\end{enumerate}
+
+Ce pipeline \textbf{zéro copie CPU} maximise les performances temps réel.
+
+\subsection{Contrôles et accumulation progressive}
+
+Le contrôleur caméra offre un déplacement WASD avec orientation souris,
+et des raccourcis clavier (R : reset, P : capture, Échap : quitter).
+Le nombre de samples par frame est configurable : 1 en mouvement (réactivité)
+et jusqu'à 1000 à l'arrêt (qualité progressive).
+
+% ===============================================
+\section{Tests unitaires}
+% ===============================================
+
+La suite de tests est compilable \textbf{sans CUDA} (\texttt{BUILD\_TESTS\_ONLY=ON}),
+ce qui permet de valider les composants mathématiques et géométriques de manière
+indépendante du GPU.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Fichier} & \textbf{Composant testé} \\
+\midrule
+\texttt{test\_vec3.cpp}     & Opérations vectorielles (construction, arithmétique, normalisation, produits) \\
+\texttt{test\_ray.cpp}      & Paramétrisation des rayons \\
+\texttt{test\_interval.cpp} & Intersection et containment d'intervalles \\
+\texttt{test\_aabb.cpp}     & Intersection et fusion de boîtes englobantes \\
+\texttt{test\_sphere.cpp}   & Intersection rayon-sphère \\
+\texttt{test\_plane.cpp}    & Géométrie des plans \\
+\texttt{test\_materials.cpp} & Matériaux (Lambertian, Métal, Diélectrique) \\
+\texttt{test\_camera.cpp}    & Génération de rayons, FOV, profondeur de champ \\
+\texttt{test\_tone\_mapping.cpp} & Tone mapping Reinhard et correction gamma \\
+\texttt{test\_bvh.cpp}       & Construction et traversée du BVH \\
+\texttt{test\_main.cpp}      & Framework de tests et statistiques \\
+\bottomrule
+\end{tabular}
+\caption{Suite de tests unitaires}
+\end{table}
+
+La compilation et l'exécution se font via \texttt{cmake .. -DBUILD\_TESTS\_ONLY=ON \&\& make \&\& ctest}.
+L'ensemble de la suite comprend \textbf{144 tests} validant toutes les classes du projet.
+
+% ===============================================
+\section{Optimisations de performance}
+% ===============================================
+
+\begin{enumerate}
+    \item \textbf{Wang hash RNG} : initialisation O(1) des états aléatoires par pixel,
+    évitant le coûteux \texttt{curand\_init}
+
+    \item \textbf{Traversée BVH itérative} : pile explicite (64 nœuds max) évitant
+    la récursion, favorable au cache GPU et au parallélisme SIMT
+
+    \item \textbf{Fast math} : flags \texttt{-{}-use\_fast\_math} (GPU) et \texttt{-ffast-math}
+    (CPU) pour des opérations FPU approximatives mais plus rapides
+
+    \item \textbf{Intersection AABB sans branchement} : code déroulé pour minimiser
+    les divergences de warp sur GPU
+
+    \item \textbf{Ordonnancement dynamique CPU} : \texttt{schedule(dynamic, 1)} pour
+    un équilibrage de charge optimal entre threads OpenMP
+\end{enumerate}
+
+% ===============================================
+\section{Analyse comparative CPU vs GPU}
+% ===============================================
+
+\subsection{Intérêts de la solution GPU (CUDA)}
+
+Le GPU est idéal pour le path tracing grâce à son architecture massivement parallèle :
+des milliers de cœurs CUDA traitent chaque pixel de manière indépendante.
+La RTX 4060 (3072 cœurs CUDA) atteint \textbf{160 MRays/s}, soit un débit
+56 fois supérieur au CPU.
+
+\textbf{Avantages} : débit très élevé, adapté aux problèmes embarrassingly parallel,
+mémoire GPU à haute bande passante (GDDR6).
+
+\textbf{Inconvénients} : transferts mémoire Host$\leftrightarrow$Device coûteux, gestion mémoire
+complexe (fixup de pointeurs, allocation explicite), débogage plus difficile,
+portabilité limitée aux GPU NVIDIA.
+
+\subsection{Intérêts de la solution CPU (OpenMP)}
+
+Le CPU offre portabilité et simplicité. OpenMP permet une parallélisation
+à faible coût de développement (une seule directive pragma), et le débogage
+se fait avec des outils standards (GDB, Valgrind).
+
+\textbf{Avantages} : portabilité universelle, mémoire partagée (pas de transferts),
+débogage direct, support automatique de tous les compilateurs C++ modernes.
+
+\textbf{Inconvénients} : parallélisme limité à 8--16 threads (vs milliers sur GPU),
+débit de seulement \textbf{2.8 MRays/s} sur 8 threads.
+
+\subsection{Discussion du speedup effectif}
+
+Le speedup mesuré de \textbf{×56} s'explique par la nature embarrasingly parallel
+du path tracing : chaque pixel étant totalement indépendant, le GPU exploite pleinement
+ses milliers de cœurs sans synchronisation. Ce ratio est cohérent avec la littérature
+sur les accélérations GPU pour les applications de rendu Monte Carlo.
+
+Le mode interactif illustre une approche \textbf{hybride} : CUDA effectue le rendu,
+tandis qu'OpenGL (via l'interop PBO zéro copie) gère l'affichage. Cette combinaison
+permet un rendu temps réel avec accumulation progressive, démontrant la complémentarité
+des deux technologies.
+
+% ===============================================
+\section{Conclusion}
+% ===============================================
+
+Ce projet démontre une implémentation complète et optimisée d'un path tracer
+physiquement réaliste exploitant le parallélisme massif des GPU modernes.
+
+Les points forts du projet sont :
+
+\begin{itemize}
+    \item \textbf{Double implémentation GPU/CPU} offrant flexibilité et portabilité
+    \item \textbf{Accélération ×56} grâce à CUDA par rapport au rendu CPU
+    \item \textbf{Mode interactif temps réel} via l'interop CUDA-OpenGL zéro copie
+    \item \textbf{Matériaux physiques} couvrant les principaux types de surfaces réelles
+    \item \textbf{Pipeline de tests} indépendant de CUDA pour une validation fiable
+    \item \textbf{Build système flexible} avec CMake supportant plusieurs configurations
+    \item \textbf{Architecture modulaire} facilitant l'extension avec de nouveaux
+    matériaux ou primitives géométriques
+\end{itemize}
+
+Les perspectives d'amélioration incluent l'ajout de sources de lumière explicites,
+le support des textures, l'implémentation du sampling par importance multiple (MIS),
+et l'extension aux volumes participatifs (brouillard, fumée).
+
+% -----------------------------------------------
+\end{document}
