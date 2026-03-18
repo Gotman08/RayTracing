@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence du fichier include/raytracer/geometry/hittable_list.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('hittable__list_8cuh.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence du fichier hittable_list.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Conteneur pour stocker et gerer l'ensemble des objets de la scene.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="hittable_8cuh_source.html">raytracer/geometry/hittable.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="sphere_8cuh_source.html">raytracer/geometry/sphere.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="plane_8cuh_source.html">raytracer/geometry/plane.cuh</a>&quot;</code><br />
+</div>
+<p><a href="hittable__list_8cuh_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:rt_3A_3AHittableData" id="r_rt_3A_3AHittableData"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionrt_1_1_hittable_data.html">rt::HittableData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Union qui stocke les donnees concretes d'un objet geometrique.  <a href="unionrt_1_1_hittable_data.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:rt_3A_3AHittableObject" id="r_rt_3A_3AHittableObject"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrt_1_1_hittable_object.html">rt::HittableObject</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represente un objet complet de la scene avec son type, ses donnees et sa boite englobante.  <a href="structrt_1_1_hittable_object.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:rt_3A_3AHittableList" id="r_rt_3A_3AHittableList"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_hittable_list.html">rt::HittableList</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Liste de tous les objets de la scene.  <a href="classrt_1_1_hittable_list.html#details">Plus de détails...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espaces de nommage</h2></td></tr>
+<tr class="memitem:rt" id="r_rt"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html">rt</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a658869dc78e07da09d0c4b159e6e0377" id="r_a658869dc78e07da09d0c4b159e6e0377"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a658869dc78e07da09d0c4b159e6e0377">RAYTRACER_GEOMETRY_HITTABLE_LIST_CUH</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Conteneur pour stocker et gerer l'ensemble des objets de la scene. </p>
+<p>Ce fichier definit les structures necessaires pour stocker des objets heterogenes (spheres, plans) dans un tableau unique compatible GPU. On utilise une union (HittableData) pour eviter l'allocation dynamique et un struct (HittableObject) pour associer chaque objet a son type et sa boite englobante. La classe HittableList gere la collection complete. </p>
+
+<p class="definition">Définition dans le fichier <a class="el" href="hittable__list_8cuh_source.html">hittable_list.cuh</a>.</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentation des macros</h2>
+<a id="a658869dc78e07da09d0c4b159e6e0377" name="a658869dc78e07da09d0c4b159e6e0377"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a658869dc78e07da09d0c4b159e6e0377">&#9670;&#160;</a></span>RAYTRACER_GEOMETRY_HITTABLE_LIST_CUH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RAYTRACER_GEOMETRY_HITTABLE_LIST_CUH</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="hittable__list_8cuh_source.html#l00002">2</a> du fichier <a class="el" href="hittable__list_8cuh_source.html">hittable_list.cuh</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_5f371c8f98a89310fdec0a60fd23a137.html">raytracer</a></li><li class="navelem"><a href="dir_bf6f0613fddb8ed6e9212cbfdfd78b57.html">geometry</a></li><li class="navelem"><a href="hittable__list_8cuh.html">hittable_list.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

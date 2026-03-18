@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer:  Fichier source de include/raytracer/rendering/cpu_renderer.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('cpu__renderer_8cuh_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">cpu_renderer.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="cpu__renderer_8cuh.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef RAYTRACER_RENDERING_CPU_RENDERER_CUH</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno"><a class="line" href="cpu__renderer_8cuh.html#aa92e6df1f158246bb9b742739fbadc12">    2</a></span><span class="preprocessor">#define RAYTRACER_RENDERING_CPU_RENDERER_CUH</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;omp.h&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="vec3_8cuh.html">raytracer/core/vec3.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="ray_8cuh.html">raytracer/core/ray.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="random_8cuh.html">raytracer/core/random.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="hit__record_8cuh.html">raytracer/core/hit_record.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="camera_8cuh.html">raytracer/camera/camera.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="hittable__list_8cuh.html">raytracer/geometry/hittable_list.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;<a class="code" href="bvh_8cuh.html">raytracer/acceleration/bvh.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;<a class="code" href="render__config_8cuh.html">raytracer/rendering/render_config.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;<a class="code" href="material__dispatch_8cuh.html">raytracer/rendering/material_dispatch.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;<a class="code" href="tone__mapping_8cuh.html">raytracer/rendering/tone_mapping.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacert.html">rt</a> {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="namespacert.html#a8ec9d0b75556c36ffdab848ee8e23eba">   44</a></span><span class="keyword">inline</span> <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> <a class="code hl_function" href="namespacert.html#a8ec9d0b75556c36ffdab848ee8e23eba">ray_color_cpu</a>(</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">const</span> <a class="code hl_class" href="classrt_1_1_ray.html">Ray</a>&amp; initial_ray,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">const</span> <a class="code hl_class" href="classrt_1_1_b_v_h.html">BVH</a>&amp; bvh,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">int</span> max_depth,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structrt_1_1_render_config.html">RenderConfig</a>&amp; config,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <a class="code hl_class" href="classrt_1_1_c_p_u_random.html">CPURandom</a>&amp; rng</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>) {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> accumulated(0, 0, 0);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> attenuation(1, 1, 1);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <a class="code hl_class" href="classrt_1_1_ray.html">Ray</a> current_ray = initial_ray;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> depth = 0; depth &lt; max_depth; depth++) {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <a class="code hl_struct" href="structrt_1_1_hit_record.html">HitRecord</a> rec;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordflow">if</span> (bvh.<a class="code hl_function" href="classrt_1_1_b_v_h.html#a95e533f7121cdc27aed8cba8265aa646">hit</a>(current_ray, <a class="code hl_class" href="classrt_1_1_interval.html">Interval</a>(0.001f, 1e30f), rec)) {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <a class="code hl_class" href="classrt_1_1_ray.html">Ray</a> scattered;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> scatter_attenuation;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="namespacert.html#a53f12cdb6580010fd1f0f7a7c518c3ea">scatter_cpu</a>(*rec.<a class="code hl_variable" href="structrt_1_1_hit_record.html#aa94ca032a41dd2bcc2e5f7bba8e6f603">mat</a>, current_ray, rec, scatter_attenuation, scattered, rng)) {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                attenuation = attenuation * scatter_attenuation;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                current_ray = scattered;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            }</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">if</span> (config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a352487d4152ac13f97702b78aa50b299">use_sky</a>) {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                accumulated += attenuation * config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a340d377b4fb5d1672ac1419677014aab">sky</a>.<a class="code hl_function" href="classrt_1_1_sky.html#afb883d882f9334535cedbb7f6d2a0099">get_color</a>(current_ray.<a class="code hl_function" href="classrt_1_1_ray.html#a41b93c59c49ddfa28af795362456f0f1">direction</a>());</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                accumulated += attenuation * config.<a class="code hl_variable" href="structrt_1_1_render_config.html#aabc7bbbc3809f3948ddb1e2ef26445d3">background</a>;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordflow">return</span> accumulated;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}</div>
+</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span></div>
+<div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="namespacert.html#a6a2ae9c6e5c1c13f0c3ee6dfaa289670">   94</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespacert.html#a6a2ae9c6e5c1c13f0c3ee6dfaa289670">render_cpu</a>(</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>* frame_buffer,</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keyword">const</span> <a class="code hl_class" href="classrt_1_1_camera.html">Camera</a>&amp; camera,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keyword">const</span> <a class="code hl_class" href="classrt_1_1_b_v_h.html">BVH</a>&amp; bvh,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structrt_1_1_render_config.html">RenderConfig</a>&amp; config</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>) {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> width = config.<a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> height = config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a>;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> samples = config.<a class="code hl_variable" href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">samples_per_pixel</a>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> max_depth = config.<a class="code hl_variable" href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">max_depth</a>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">    #pragma omp parallel for schedule(dynamic, 1) collapse(1)</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; height; j++) {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <a class="code hl_class" href="classrt_1_1_c_p_u_random.html">CPURandom</a> rng(j * 1337 + 42);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; width; i++) {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> pixel_color(0, 0, 0);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> s = 0; s &lt; samples; s++) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                <a class="code hl_class" href="classrt_1_1_ray.html">Ray</a> r = camera.<a class="code hl_function" href="classrt_1_1_camera.html#a5c93a0c6f4a8101a694b7eb918213f7f">get_ray_cpu</a>(i, j, rng);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                pixel_color += <a class="code hl_function" href="namespacert.html#a8ec9d0b75556c36ffdab848ee8e23eba">ray_color_cpu</a>(r, bvh, max_depth, config, rng);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            pixel_color = pixel_color / <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(samples);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            pixel_color = <a class="code hl_function" href="namespacert.html#a0fbfee9d2f57e73c1437ca89b7416866">apply_tone_mapping</a>(pixel_color);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            pixel_color = <a class="code hl_function" href="namespacert.html#a9f5c053ec3aabb4f0e65e46daca26f47">gamma_correct</a>(pixel_color);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            pixel_color.<a class="code hl_variable" href="classrt_1_1_vec3.html#a6917bef5d9b3b469d468001b4f52c4be">x</a> = fminf(1.0f, fmaxf(0.0f, pixel_color.<a class="code hl_variable" href="classrt_1_1_vec3.html#a6917bef5d9b3b469d468001b4f52c4be">x</a>));</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            pixel_color.<a class="code hl_variable" href="classrt_1_1_vec3.html#a7fb2435f3a5de0c3c88cf2629d36bd3e">y</a> = fminf(1.0f, fmaxf(0.0f, pixel_color.<a class="code hl_variable" href="classrt_1_1_vec3.html#a7fb2435f3a5de0c3c88cf2629d36bd3e">y</a>));</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>            pixel_color.<a class="code hl_variable" href="classrt_1_1_vec3.html#a535e35383b0e44ff538b95bc4f082ff1">z</a> = fminf(1.0f, fmaxf(0.0f, pixel_color.<a class="code hl_variable" href="classrt_1_1_vec3.html#a535e35383b0e44ff538b95bc4f082ff1">z</a>));</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            <span class="keywordtype">int</span> pixel_index = j * width + i;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>            frame_buffer[pixel_index] = pixel_color;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    }</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>}</div>
+</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="abvh_8cuh_html"><div class="ttname"><a href="bvh_8cuh.html">bvh.cuh</a></div><div class="ttdoc">Structure d&#39;acceleration BVH (Bounding Volume Hierarchy)</div></div>
+<div class="ttc" id="acamera_8cuh_html"><div class="ttname"><a href="camera_8cuh.html">camera.cuh</a></div><div class="ttdoc">Definition de la classe Camera pour le lancer de rayons.</div></div>
+<div class="ttc" id="aclassrt_1_1_b_v_h_html"><div class="ttname"><a href="classrt_1_1_b_v_h.html">rt::BVH</a></div><div class="ttdoc">Structure d&#39;acceleration par hierarchie de volumes englobants.</div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00045">bvh.cuh:45</a></div></div>
+<div class="ttc" id="aclassrt_1_1_b_v_h_html_a95e533f7121cdc27aed8cba8265aa646"><div class="ttname"><a href="classrt_1_1_b_v_h.html#a95e533f7121cdc27aed8cba8265aa646">rt::BVH::hit</a></div><div class="ttdeci">__host__ __device__ bool hit(const Ray &amp;r, Interval ray_t, HitRecord &amp;rec) const</div><div class="ttdoc">Traversee iterative du BVH pour trouver l&#39;intersection la plus proche.</div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00066">bvh.cuh:66</a></div></div>
+<div class="ttc" id="aclassrt_1_1_c_p_u_random_html"><div class="ttname"><a href="classrt_1_1_c_p_u_random.html">rt::CPURandom</a></div><div class="ttdoc">Generateur de nombres aleatoires pour le rendu sur CPU.</div><div class="ttdef"><b>Definition</b> <a href="random_8cuh_source.html#l00030">random.cuh:30</a></div></div>
+<div class="ttc" id="aclassrt_1_1_camera_html"><div class="ttname"><a href="classrt_1_1_camera.html">rt::Camera</a></div><div class="ttdoc">Camera avec projection perspective, profondeur de champ et motion blur.</div><div class="ttdef"><b>Definition</b> <a href="camera_8cuh_source.html#l00027">camera.cuh:27</a></div></div>
+<div class="ttc" id="aclassrt_1_1_camera_html_a5c93a0c6f4a8101a694b7eb918213f7f"><div class="ttname"><a href="classrt_1_1_camera.html#a5c93a0c6f4a8101a694b7eb918213f7f">rt::Camera::get_ray_cpu</a></div><div class="ttdeci">Ray get_ray_cpu(int i, int j, CPURandom &amp;rng) const</div><div class="ttdoc">Genere un rayon pour le pixel (i, j) sur CPU.</div><div class="ttdef"><b>Definition</b> <a href="camera_8cuh_source.html#l00133">camera.cuh:133</a></div></div>
+<div class="ttc" id="aclassrt_1_1_interval_html"><div class="ttname"><a href="classrt_1_1_interval.html">rt::Interval</a></div><div class="ttdoc">Represente un intervalle ferme [min, max] de nombres flottants.</div><div class="ttdef"><b>Definition</b> <a href="interval_8cuh_source.html#l00025">interval.cuh:25</a></div></div>
+<div class="ttc" id="aclassrt_1_1_ray_html"><div class="ttname"><a href="classrt_1_1_ray.html">rt::Ray</a></div><div class="ttdoc">Represente un rayon defini par une origine, une direction et un temps.</div><div class="ttdef"><b>Definition</b> <a href="ray_8cuh_source.html#l00024">ray.cuh:24</a></div></div>
+<div class="ttc" id="aclassrt_1_1_ray_html_a41b93c59c49ddfa28af795362456f0f1"><div class="ttname"><a href="classrt_1_1_ray.html#a41b93c59c49ddfa28af795362456f0f1">rt::Ray::direction</a></div><div class="ttdeci">__host__ __device__ const Vec3 &amp; direction() const</div><div class="ttdoc">Accesseur pour la direction du rayon.</div><div class="ttdef"><b>Definition</b> <a href="ray_8cuh_source.html#l00055">ray.cuh:55</a></div></div>
+<div class="ttc" id="aclassrt_1_1_sky_html_afb883d882f9334535cedbb7f6d2a0099"><div class="ttname"><a href="classrt_1_1_sky.html#afb883d882f9334535cedbb7f6d2a0099">rt::Sky::get_color</a></div><div class="ttdeci">__host__ __device__ Color get_color(const Vec3 &amp;direction) const</div><div class="ttdoc">Calcule la couleur du ciel pour une direction de rayon donnee.</div><div class="ttdef"><b>Definition</b> <a href="sky_8cuh_source.html#l00071">sky.cuh:71</a></div></div>
+<div class="ttc" id="aclassrt_1_1_vec3_html_a535e35383b0e44ff538b95bc4f082ff1"><div class="ttname"><a href="classrt_1_1_vec3.html#a535e35383b0e44ff538b95bc4f082ff1">rt::Vec3::z</a></div><div class="ttdeci">float z</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00038">vec3.cuh:38</a></div></div>
+<div class="ttc" id="aclassrt_1_1_vec3_html_a6917bef5d9b3b469d468001b4f52c4be"><div class="ttname"><a href="classrt_1_1_vec3.html#a6917bef5d9b3b469d468001b4f52c4be">rt::Vec3::x</a></div><div class="ttdeci">float x</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00038">vec3.cuh:38</a></div></div>
+<div class="ttc" id="aclassrt_1_1_vec3_html_a7fb2435f3a5de0c3c88cf2629d36bd3e"><div class="ttname"><a href="classrt_1_1_vec3.html#a7fb2435f3a5de0c3c88cf2629d36bd3e">rt::Vec3::y</a></div><div class="ttdeci">float y</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00038">vec3.cuh:38</a></div></div>
+<div class="ttc" id="ahit__record_8cuh_html"><div class="ttname"><a href="hit__record_8cuh.html">hit_record.cuh</a></div><div class="ttdoc">Definition de la structure HitRecord pour stocker les informations d&#39;intersection.</div></div>
+<div class="ttc" id="ahittable__list_8cuh_html"><div class="ttname"><a href="hittable__list_8cuh.html">hittable_list.cuh</a></div><div class="ttdoc">Conteneur pour stocker et gerer l&#39;ensemble des objets de la scene.</div></div>
+<div class="ttc" id="amaterial__dispatch_8cuh_html"><div class="ttname"><a href="material__dispatch_8cuh.html">material_dispatch.cuh</a></div><div class="ttdoc">Dispatch de l&#39;interaction rayon-materiau selon le type de materiau.</div></div>
+<div class="ttc" id="anamespacert_html"><div class="ttname"><a href="namespacert.html">rt</a></div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00017">bvh.cuh:17</a></div></div>
+<div class="ttc" id="anamespacert_html_a0fbfee9d2f57e73c1437ca89b7416866"><div class="ttname"><a href="namespacert.html#a0fbfee9d2f57e73c1437ca89b7416866">rt::apply_tone_mapping</a></div><div class="ttdeci">__host__ __device__ Color apply_tone_mapping(const Color &amp;hdr)</div><div class="ttdoc">Applique l&#39;operateur de tone mapping de Reinhard pour compresser les couleurs HDR.</div><div class="ttdef"><b>Definition</b> <a href="tone__mapping_8cuh_source.html#l00028">tone_mapping.cuh:28</a></div></div>
+<div class="ttc" id="anamespacert_html_a53f12cdb6580010fd1f0f7a7c518c3ea"><div class="ttname"><a href="namespacert.html#a53f12cdb6580010fd1f0f7a7c518c3ea">rt::scatter_cpu</a></div><div class="ttdeci">bool scatter_cpu(const Material &amp;mat, const Ray &amp;r_in, const HitRecord &amp;rec, Color &amp;attenuation, Ray &amp;scattered, CPURandom &amp;rng)</div><div class="ttdoc">Dispatche l&#39;interaction rayon-materiau selon le type de materiau (version CPU)</div><div class="ttdef"><b>Definition</b> <a href="material__dispatch_8cuh_source.html#l00071">material_dispatch.cuh:71</a></div></div>
+<div class="ttc" id="anamespacert_html_a6a2ae9c6e5c1c13f0c3ee6dfaa289670"><div class="ttname"><a href="namespacert.html#a6a2ae9c6e5c1c13f0c3ee6dfaa289670">rt::render_cpu</a></div><div class="ttdeci">void render_cpu(Color *frame_buffer, const Camera &amp;camera, const BVH &amp;bvh, const RenderConfig &amp;config)</div><div class="ttdoc">Fonction de rendu CPU parallelisee avec OpenMP.</div><div class="ttdef"><b>Definition</b> <a href="#l00094">cpu_renderer.cuh:94</a></div></div>
+<div class="ttc" id="anamespacert_html_a833d4cf4591664e7e913f7e550abc82a"><div class="ttname"><a href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">rt::Color</a></div><div class="ttdeci">Vec3 Color</div><div class="ttdoc">Alias de type : une Color est un Vec3 utilise comme couleur RGB.</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00196">vec3.cuh:196</a></div></div>
+<div class="ttc" id="anamespacert_html_a8ec9d0b75556c36ffdab848ee8e23eba"><div class="ttname"><a href="namespacert.html#a8ec9d0b75556c36ffdab848ee8e23eba">rt::ray_color_cpu</a></div><div class="ttdeci">Color ray_color_cpu(const Ray &amp;initial_ray, const BVH &amp;bvh, int max_depth, const RenderConfig &amp;config, CPURandom &amp;rng)</div><div class="ttdoc">Calcule la couleur d&#39;un rayon sur CPU par rebonds successifs.</div><div class="ttdef"><b>Definition</b> <a href="#l00044">cpu_renderer.cuh:44</a></div></div>
+<div class="ttc" id="anamespacert_html_a9f5c053ec3aabb4f0e65e46daca26f47"><div class="ttname"><a href="namespacert.html#a9f5c053ec3aabb4f0e65e46daca26f47">rt::gamma_correct</a></div><div class="ttdeci">__host__ __device__ Color gamma_correct(const Color &amp;linear, float gamma=2.2f)</div><div class="ttdoc">Applique la correction gamma pour convertir l&#39;espace lineaire en espace sRGB.</div><div class="ttdef"><b>Definition</b> <a href="tone__mapping_8cuh_source.html#l00047">tone_mapping.cuh:47</a></div></div>
+<div class="ttc" id="arandom_8cuh_html"><div class="ttname"><a href="random_8cuh.html">random.cuh</a></div><div class="ttdoc">Generateur de nombres aleatoires pour le rendu CPU.</div></div>
+<div class="ttc" id="aray_8cuh_html"><div class="ttname"><a href="ray_8cuh.html">ray.cuh</a></div><div class="ttdoc">Definition de la classe Ray representant un rayon lumineux.</div></div>
+<div class="ttc" id="arender__config_8cuh_html"><div class="ttname"><a href="render__config_8cuh.html">render_config.cuh</a></div><div class="ttdoc">Structure de configuration pour le moteur de rendu.</div></div>
+<div class="ttc" id="astructrt_1_1_hit_record_html"><div class="ttname"><a href="structrt_1_1_hit_record.html">rt::HitRecord</a></div><div class="ttdoc">Stocke toutes les informations relatives a une intersection rayon-objet.</div><div class="ttdef"><b>Definition</b> <a href="hit__record_8cuh_source.html#l00026">hit_record.cuh:26</a></div></div>
+<div class="ttc" id="astructrt_1_1_hit_record_html_aa94ca032a41dd2bcc2e5f7bba8e6f603"><div class="ttname"><a href="structrt_1_1_hit_record.html#aa94ca032a41dd2bcc2e5f7bba8e6f603">rt::HitRecord::mat</a></div><div class="ttdeci">Material * mat</div><div class="ttdef"><b>Definition</b> <a href="hit__record_8cuh_source.html#l00029">hit_record.cuh:29</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html"><div class="ttname"><a href="structrt_1_1_render_config.html">rt::RenderConfig</a></div><div class="ttdoc">Structure contenant tous les parametres de configuration du rendu.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00026">render_config.cuh:26</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a340d377b4fb5d1672ac1419677014aab"><div class="ttname"><a href="structrt_1_1_render_config.html#a340d377b4fb5d1672ac1419677014aab">rt::RenderConfig::sky</a></div><div class="ttdeci">Sky sky</div><div class="ttdoc">Configuration du ciel degrade (couleurs haut/bas)</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00032">render_config.cuh:32</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a352487d4152ac13f97702b78aa50b299"><div class="ttname"><a href="structrt_1_1_render_config.html#a352487d4152ac13f97702b78aa50b299">rt::RenderConfig::use_sky</a></div><div class="ttdeci">bool use_sky</div><div class="ttdoc">Si vrai, utilise le ciel degrade ; sinon, la couleur de fond.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00031">render_config.cuh:31</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a8c97dc8a2ddc55139dccd5be51d7076f"><div class="ttname"><a href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">rt::RenderConfig::height</a></div><div class="ttdeci">int height</div><div class="ttdoc">Hauteur de l&#39;image en pixels.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00028">render_config.cuh:28</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_aa64bee560f763327cc3b86fe4e04f367"><div class="ttname"><a href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">rt::RenderConfig::width</a></div><div class="ttdeci">int width</div><div class="ttdoc">Largeur de l&#39;image en pixels.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00027">render_config.cuh:27</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_aabc7bbbc3809f3948ddb1e2ef26445d3"><div class="ttname"><a href="structrt_1_1_render_config.html#aabc7bbbc3809f3948ddb1e2ef26445d3">rt::RenderConfig::background</a></div><div class="ttdeci">Color background</div><div class="ttdoc">Couleur de fond uniforme (utilisee si use_sky est faux)</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00033">render_config.cuh:33</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_ab6f25b56bc6a9abd126d607fa9ce5577"><div class="ttname"><a href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">rt::RenderConfig::max_depth</a></div><div class="ttdeci">int max_depth</div><div class="ttdoc">Profondeur maximale des rebonds de rayons.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00030">render_config.cuh:30</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_ae1906f768297ede80d3e8ae958098a9c"><div class="ttname"><a href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">rt::RenderConfig::samples_per_pixel</a></div><div class="ttdeci">int samples_per_pixel</div><div class="ttdoc">Nombre d&#39;echantillons par pixel (antialiasing)</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00029">render_config.cuh:29</a></div></div>
+<div class="ttc" id="atone__mapping_8cuh_html"><div class="ttname"><a href="tone__mapping_8cuh.html">tone_mapping.cuh</a></div><div class="ttdoc">Fonctions de tone mapping et de correction gamma pour le rendu.</div></div>
+<div class="ttc" id="avec3_8cuh_html"><div class="ttname"><a href="vec3_8cuh.html">vec3.cuh</a></div><div class="ttdoc">Definition de la classe Vec3 et des fonctions utilitaires associees.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_5f371c8f98a89310fdec0a60fd23a137.html">raytracer</a></li><li class="navelem"><a href="dir_283c3f7ed10bfcd81111a9d1a93d6708.html">rendering</a></li><li class="navelem"><a href="cpu__renderer_8cuh.html">cpu_renderer.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

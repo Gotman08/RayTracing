@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer:  Fichier source de src/cli/args.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('args_8cuh_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">args.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="args_8cuh.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#ifndef RAYTRACER_CLI_ARGS_CUH</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="args_8cuh.html#a08372b0b31944b43e4a04040244154af">   10</a></span><span class="preprocessor">#define RAYTRACER_CLI_ARGS_CUH</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacert.html">rt</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html">   25</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structrt_1_1_args.html">Args</a> {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#acd72331e34d2d9f4acbf0f4b4a9b3a00">   26</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_args.html#acd72331e34d2d9f4acbf0f4b4a9b3a00">width</a> = 800;                        </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a11e0f6ef9afb7f740cb8e2552ad8c782">   27</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_args.html#a11e0f6ef9afb7f740cb8e2552ad8c782">height</a> = 600;                       </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a037a17ffc0fe2bf005a6e748fd511038">   28</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_args.html#a037a17ffc0fe2bf005a6e748fd511038">samples</a> = 100;                      </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#acddb5db8c7151601f9bce09396783df6">   29</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_args.html#acddb5db8c7151601f9bce09396783df6">depth</a> = 50;                         </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a0942b41de336decf8d1ed0e49bb59f1e">   30</a></span>    std::string <a class="code hl_variable" href="structrt_1_1_args.html#a0942b41de336decf8d1ed0e49bb59f1e">output_file</a> = <span class="stringliteral">&quot;output.png&quot;</span>; </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#adf543ecc8626c56a21460a388dc6ebfb">   31</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="structrt_1_1_args.html#adf543ecc8626c56a21460a388dc6ebfb">show_info</a> = <span class="keyword">false</span>;                 </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">   32</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a> = <span class="keyword">false</span>;                     </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#aa3185e645d17bddd86226fcfb68692a7">   34</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="structrt_1_1_args.html#aa3185e645d17bddd86226fcfb68692a7">use_cpu</a> = <span class="keyword">false</span>;                   </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a6c577ff2cff251f2619c6891cb7835c4">   35</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="structrt_1_1_args.html#a6c577ff2cff251f2619c6891cb7835c4">profile</a> = <span class="keyword">false</span>;                   </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a5f0bbc59ec30ee9894e29734b4d94193">   37</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="structrt_1_1_args.html#a5f0bbc59ec30ee9894e29734b4d94193">interactive</a> = <span class="keyword">false</span>;               </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a7b9c96109352ed3d8e1f28765d57705a">   38</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_args.html#a7b9c96109352ed3d8e1f28765d57705a">interactive_spp</a> = 1;                </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#ab2ca2969b84b33c2a37c387ef4de9778">   39</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_args.html#ab2ca2969b84b33c2a37c387ef4de9778">max_accumulated_spp</a> = 1000;         </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a4605abb76ec889a13f8e201516c0fe8b">   40</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structrt_1_1_args.html#a4605abb76ec889a13f8e201516c0fe8b">mouse_sensitivity</a> = 0.002f;       </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structrt_1_1_args.html#a243435912185cc21403a2a33183bb92e">   41</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structrt_1_1_args.html#a243435912185cc21403a2a33183bb92e">move_speed</a> = 5.0f;                </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>};</div>
+</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
+<div class="foldopen" id="foldopen00051" data-start="{" data-end="}">
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="namespacert.html#ae00026bc579e1dae7e0339f7630a5479">   51</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespacert.html#ae00026bc579e1dae7e0339f7630a5479">print_usage</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* program) {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;CUDA Ray Tracer\n\n&quot;</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Usage: &quot;</span> &lt;&lt; program &lt;&lt; <span class="stringliteral">&quot; [options]\n\n&quot;</span>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Options:\n&quot;</span>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  -w, --width &lt;int&gt;      Largeur image (defaut: 800)\n&quot;</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  -h, --height &lt;int&gt;     Hauteur image (defaut: 600)\n&quot;</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  -s, --samples &lt;int&gt;    Samples par pixel (defaut: 100)\n&quot;</span>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  -d, --depth &lt;int&gt;      Rebonds max (defaut: 50)\n&quot;</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  -o, --output &lt;file&gt;    Fichier sortie (defaut: output.png)\n&quot;</span>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --info                 Afficher info GPU\n&quot;</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --quiet                Mode silencieux\n&quot;</span>;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --cpu                  Rendu CPU (OpenMP)\n&quot;</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --profile              Afficher timing detaille\n&quot;</span>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --help                 Afficher cette aide\n&quot;</span>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;\nInteractive mode:\n&quot;</span>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --interactive          Mode interactif (WASD + souris)\n&quot;</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --ispp &lt;int&gt;           Samples par frame interactif (defaut: 1)\n&quot;</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --max-spp &lt;int&gt;        Max samples accumules (defaut: 1000)\n&quot;</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --sensitivity &lt;float&gt;  Sensibilite souris (defaut: 0.002)\n&quot;</span>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;  --speed &lt;float&gt;        Vitesse deplacement (defaut: 5.0)\n&quot;</span>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>}</div>
+</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span></div>
+<div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="namespacert.html#ae0c16aff837ddf619a74e7fe0e3e9e02">   82</a></span><span class="keyword">inline</span> <a class="code hl_struct" href="structrt_1_1_args.html">Args</a> <a class="code hl_function" href="namespacert.html#ae0c16aff837ddf619a74e7fe0e3e9e02">parse_args</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <a class="code hl_struct" href="structrt_1_1_args.html">Args</a> args;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; argc; i++) {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        std::string arg = argv[i];</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--help&quot;</span>) {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <a class="code hl_function" href="namespacert.html#ae00026bc579e1dae7e0339f7630a5479">print_usage</a>(argv[0]);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            exit(0);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--info&quot;</span>) {</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#adf543ecc8626c56a21460a388dc6ebfb">show_info</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--quiet&quot;</span>) {</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--cpu&quot;</span>) {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#aa3185e645d17bddd86226fcfb68692a7">use_cpu</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--profile&quot;</span>) {</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a6c577ff2cff251f2619c6891cb7835c4">profile</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((arg == <span class="stringliteral">&quot;-w&quot;</span> || arg == <span class="stringliteral">&quot;--width&quot;</span>) &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#acd72331e34d2d9f4acbf0f4b4a9b3a00">width</a> = std::stoi(argv[++i]);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((arg == <span class="stringliteral">&quot;-h&quot;</span> || arg == <span class="stringliteral">&quot;--height&quot;</span>) &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a11e0f6ef9afb7f740cb8e2552ad8c782">height</a> = std::stoi(argv[++i]);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((arg == <span class="stringliteral">&quot;-s&quot;</span> || arg == <span class="stringliteral">&quot;--samples&quot;</span>) &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a037a17ffc0fe2bf005a6e748fd511038">samples</a> = std::stoi(argv[++i]);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((arg == <span class="stringliteral">&quot;-d&quot;</span> || arg == <span class="stringliteral">&quot;--depth&quot;</span>) &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#acddb5db8c7151601f9bce09396783df6">depth</a> = std::stoi(argv[++i]);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((arg == <span class="stringliteral">&quot;-o&quot;</span> || arg == <span class="stringliteral">&quot;--output&quot;</span>) &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a0942b41de336decf8d1ed0e49bb59f1e">output_file</a> = argv[++i];</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--interactive&quot;</span>) {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a5f0bbc59ec30ee9894e29734b4d94193">interactive</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--ispp&quot;</span> &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a7b9c96109352ed3d8e1f28765d57705a">interactive_spp</a> = std::stoi(argv[++i]);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--max-spp&quot;</span> &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#ab2ca2969b84b33c2a37c387ef4de9778">max_accumulated_spp</a> = std::stoi(argv[++i]);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--sensitivity&quot;</span> &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a4605abb76ec889a13f8e201516c0fe8b">mouse_sensitivity</a> = std::stof(argv[++i]);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (arg == <span class="stringliteral">&quot;--speed&quot;</span> &amp;&amp; i + 1 &lt; argc) {</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            args.<a class="code hl_variable" href="structrt_1_1_args.html#a243435912185cc21403a2a33183bb92e">move_speed</a> = std::stof(argv[++i]);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        }</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    }</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordflow">return</span> args;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>}</div>
+</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>}</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="anamespacert_html"><div class="ttname"><a href="namespacert.html">rt</a></div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00017">bvh.cuh:17</a></div></div>
+<div class="ttc" id="anamespacert_html_ae00026bc579e1dae7e0339f7630a5479"><div class="ttname"><a href="namespacert.html#ae00026bc579e1dae7e0339f7630a5479">rt::print_usage</a></div><div class="ttdeci">void print_usage(const char *program)</div><div class="ttdoc">Affiche le message d&#39;aide avec toutes les options disponibles.</div><div class="ttdef"><b>Definition</b> <a href="#l00051">args.cuh:51</a></div></div>
+<div class="ttc" id="anamespacert_html_ae0c16aff837ddf619a74e7fe0e3e9e02"><div class="ttname"><a href="namespacert.html#ae0c16aff837ddf619a74e7fe0e3e9e02">rt::parse_args</a></div><div class="ttdeci">Args parse_args(int argc, char **argv)</div><div class="ttdoc">Parse les arguments de la ligne de commande et retourne une structure Args.</div><div class="ttdef"><b>Definition</b> <a href="#l00082">args.cuh:82</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html"><div class="ttname"><a href="structrt_1_1_args.html">rt::Args</a></div><div class="ttdoc">Structure regroupant tous les arguments en ligne de commande.</div><div class="ttdef"><b>Definition</b> <a href="#l00025">args.cuh:25</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a037a17ffc0fe2bf005a6e748fd511038"><div class="ttname"><a href="structrt_1_1_args.html#a037a17ffc0fe2bf005a6e748fd511038">rt::Args::samples</a></div><div class="ttdeci">int samples</div><div class="ttdoc">Nombre de samples (rayons) par pixel (defaut : 100)</div><div class="ttdef"><b>Definition</b> <a href="#l00028">args.cuh:28</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a0942b41de336decf8d1ed0e49bb59f1e"><div class="ttname"><a href="structrt_1_1_args.html#a0942b41de336decf8d1ed0e49bb59f1e">rt::Args::output_file</a></div><div class="ttdeci">std::string output_file</div><div class="ttdoc">Chemin du fichier image de sortie (defaut : &quot;output.png&quot;)</div><div class="ttdef"><b>Definition</b> <a href="#l00030">args.cuh:30</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a11e0f6ef9afb7f740cb8e2552ad8c782"><div class="ttname"><a href="structrt_1_1_args.html#a11e0f6ef9afb7f740cb8e2552ad8c782">rt::Args::height</a></div><div class="ttdeci">int height</div><div class="ttdoc">Hauteur de l&#39;image en pixels (defaut : 600)</div><div class="ttdef"><b>Definition</b> <a href="#l00027">args.cuh:27</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a243435912185cc21403a2a33183bb92e"><div class="ttname"><a href="structrt_1_1_args.html#a243435912185cc21403a2a33183bb92e">rt::Args::move_speed</a></div><div class="ttdeci">float move_speed</div><div class="ttdoc">Vitesse de deplacement de la camera avec WASD (defaut : 5.0)</div><div class="ttdef"><b>Definition</b> <a href="#l00041">args.cuh:41</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a4605abb76ec889a13f8e201516c0fe8b"><div class="ttname"><a href="structrt_1_1_args.html#a4605abb76ec889a13f8e201516c0fe8b">rt::Args::mouse_sensitivity</a></div><div class="ttdeci">float mouse_sensitivity</div><div class="ttdoc">Sensibilite de la souris pour le controle de la camera (defaut : 0.002)</div><div class="ttdef"><b>Definition</b> <a href="#l00040">args.cuh:40</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a5cede15cdd15a668a1bacc2982c7cdcb"><div class="ttname"><a href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">rt::Args::quiet</a></div><div class="ttdeci">bool quiet</div><div class="ttdoc">Mode silencieux : supprime les messages de progression.</div><div class="ttdef"><b>Definition</b> <a href="#l00032">args.cuh:32</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a5f0bbc59ec30ee9894e29734b4d94193"><div class="ttname"><a href="structrt_1_1_args.html#a5f0bbc59ec30ee9894e29734b4d94193">rt::Args::interactive</a></div><div class="ttdeci">bool interactive</div><div class="ttdoc">Activer le mode interactif avec fenetre OpenGL.</div><div class="ttdef"><b>Definition</b> <a href="#l00037">args.cuh:37</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a6c577ff2cff251f2619c6891cb7835c4"><div class="ttname"><a href="structrt_1_1_args.html#a6c577ff2cff251f2619c6891cb7835c4">rt::Args::profile</a></div><div class="ttdeci">bool profile</div><div class="ttdoc">Afficher le rapport de timing detaille apres le rendu.</div><div class="ttdef"><b>Definition</b> <a href="#l00035">args.cuh:35</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a7b9c96109352ed3d8e1f28765d57705a"><div class="ttname"><a href="structrt_1_1_args.html#a7b9c96109352ed3d8e1f28765d57705a">rt::Args::interactive_spp</a></div><div class="ttdeci">int interactive_spp</div><div class="ttdoc">Nombre de samples par frame en mode interactif (defaut : 1)</div><div class="ttdef"><b>Definition</b> <a href="#l00038">args.cuh:38</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_aa3185e645d17bddd86226fcfb68692a7"><div class="ttname"><a href="structrt_1_1_args.html#aa3185e645d17bddd86226fcfb68692a7">rt::Args::use_cpu</a></div><div class="ttdeci">bool use_cpu</div><div class="ttdoc">Forcer le rendu CPU avec OpenMP au lieu du GPU CUDA.</div><div class="ttdef"><b>Definition</b> <a href="#l00034">args.cuh:34</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_ab2ca2969b84b33c2a37c387ef4de9778"><div class="ttname"><a href="structrt_1_1_args.html#ab2ca2969b84b33c2a37c387ef4de9778">rt::Args::max_accumulated_spp</a></div><div class="ttdeci">int max_accumulated_spp</div><div class="ttdoc">Nombre maximal de samples accumules en mode interactif (defaut : 1000)</div><div class="ttdef"><b>Definition</b> <a href="#l00039">args.cuh:39</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_acd72331e34d2d9f4acbf0f4b4a9b3a00"><div class="ttname"><a href="structrt_1_1_args.html#acd72331e34d2d9f4acbf0f4b4a9b3a00">rt::Args::width</a></div><div class="ttdeci">int width</div><div class="ttdoc">Largeur de l&#39;image en pixels (defaut : 800)</div><div class="ttdef"><b>Definition</b> <a href="#l00026">args.cuh:26</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_acddb5db8c7151601f9bce09396783df6"><div class="ttname"><a href="structrt_1_1_args.html#acddb5db8c7151601f9bce09396783df6">rt::Args::depth</a></div><div class="ttdeci">int depth</div><div class="ttdoc">Profondeur maximale de rebonds des rayons (defaut : 50)</div><div class="ttdef"><b>Definition</b> <a href="#l00029">args.cuh:29</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_adf543ecc8626c56a21460a388dc6ebfb"><div class="ttname"><a href="structrt_1_1_args.html#adf543ecc8626c56a21460a388dc6ebfb">rt::Args::show_info</a></div><div class="ttdeci">bool show_info</div><div class="ttdoc">Afficher les informations du GPU et quitter.</div><div class="ttdef"><b>Definition</b> <a href="#l00031">args.cuh:31</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_b78fdfbbb632ce54d070469d6a721373.html">cli</a></li><li class="navelem"><a href="args_8cuh.html">args.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,2602 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de l&#39;espace de nommage rt</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('namespacert.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de l'espace de nommage rt</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:AABB" id="r_AABB"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boite englobante alignee aux axes (Axis-Aligned Bounding Box)  <a href="classrt_1_1_a_a_b_b.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Args" id="r_Args"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrt_1_1_args.html">Args</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure regroupant tous les arguments en ligne de commande.  <a href="structrt_1_1_args.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:BVH" id="r_BVH"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_b_v_h.html">BVH</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure d'acceleration par hierarchie de volumes englobants.  <a href="classrt_1_1_b_v_h.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:BVHBuilder" id="r_BVHBuilder"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_b_v_h_builder.html">BVHBuilder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur de <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> sur CPU.  <a href="classrt_1_1_b_v_h_builder.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:BVHNode" id="r_BVHNode"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrt_1_1_b_v_h_node.html">BVHNode</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Noeud de l'arbre <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> (Bounding Volume Hierarchy)  <a href="structrt_1_1_b_v_h_node.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Camera" id="r_Camera"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_camera.html">Camera</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classrt_1_1_camera.html" title="Camera avec projection perspective, profondeur de champ et motion blur.">Camera</a> avec projection perspective, profondeur de champ et motion blur.  <a href="classrt_1_1_camera.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:CPURandom" id="r_CPURandom"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generateur de nombres aleatoires pour le rendu sur CPU.  <a href="classrt_1_1_c_p_u_random.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:HitRecord" id="r_HitRecord"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrt_1_1_hit_record.html">HitRecord</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stocke toutes les informations relatives a une intersection rayon-objet.  <a href="structrt_1_1_hit_record.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Hittable" id="r_Hittable"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_hittable.html">Hittable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe de base pour tous les objets de la scene pouvant etre intersectes par un rayon.  <a href="classrt_1_1_hittable.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:HittableData" id="r_HittableData"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionrt_1_1_hittable_data.html">HittableData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Union qui stocke les donnees concretes d'un objet geometrique.  <a href="unionrt_1_1_hittable_data.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:HittableList" id="r_HittableList"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_hittable_list.html">HittableList</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Liste de tous les objets de la scene.  <a href="classrt_1_1_hittable_list.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:HittableObject" id="r_HittableObject"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represente un objet complet de la scene avec son type, ses donnees et sa boite englobante.  <a href="structrt_1_1_hittable_object.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Interval" id="r_Interval"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_interval.html">Interval</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represente un intervalle ferme [min, max] de nombres flottants.  <a href="classrt_1_1_interval.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Material" id="r_Material"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_material.html">Material</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represente un materiau generique attache a un objet de la scene.  <a href="classrt_1_1_material.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Plane" id="r_Plane"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_plane.html">Plane</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represente un plan infini dans la scene 3D.  <a href="classrt_1_1_plane.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Ray" id="r_Ray"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_ray.html">Ray</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represente un rayon defini par une origine, une direction et un temps.  <a href="classrt_1_1_ray.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:RenderConfig" id="r_RenderConfig"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrt_1_1_render_config.html">RenderConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure contenant tous les parametres de configuration du rendu.  <a href="structrt_1_1_render_config.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Sky" id="r_Sky"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_sky.html">Sky</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modele de ciel avec gradient horizon/zenith et soleil optionnel.  <a href="classrt_1_1_sky.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:SolidColor" id="r_SolidColor"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_solid_color.html">SolidColor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classrt_1_1_texture.html" title="Texture de base (couleur solide)">Texture</a> de couleur unie.  <a href="classrt_1_1_solid_color.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Sphere" id="r_Sphere"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_sphere.html">Sphere</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represente une sphere dans la scene 3D.  <a href="classrt_1_1_sphere.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Texture" id="r_Texture"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_texture.html">Texture</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classrt_1_1_texture.html" title="Texture de base (couleur solide)">Texture</a> de base (couleur solide)  <a href="classrt_1_1_texture.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Timer" id="r_Timer"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_timer.html">Timer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Chronometre CPU pour mesurer le temps d'execution des differentes etapes.  <a href="classrt_1_1_timer.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:Vec3" id="r_Vec3"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_vec3.html">Vec3</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vecteur 3D a composantes flottantes.  <a href="classrt_1_1_vec3.html#details">Plus de détails...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Définitions de type</h2></td></tr>
+<tr class="memitem:a679fd997c4225984367e96dfc1f15c59" id="r_a679fd997c4225984367e96dfc1f15c59"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a679fd997c4225984367e96dfc1f15c59">Point3</a> = <a class="el" href="classrt_1_1_vec3.html">Vec3</a></td></tr>
+<tr class="memdesc:a679fd997c4225984367e96dfc1f15c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias de type : un <a class="el" href="#a679fd997c4225984367e96dfc1f15c59" title="Alias de type : un Point3 est un Vec3 utilise comme position.">Point3</a> est un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> utilise comme position.  <br /></td></tr>
+<tr class="memitem:a833d4cf4591664e7e913f7e550abc82a" id="r_a833d4cf4591664e7e913f7e550abc82a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> = <a class="el" href="classrt_1_1_vec3.html">Vec3</a></td></tr>
+<tr class="memdesc:a833d4cf4591664e7e913f7e550abc82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias de type : une <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a> est un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> utilise comme couleur RGB.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
+Énumérations</h2></td></tr>
+<tr class="memitem:a3c2d0fed8c6db4a36f2d0db118b6e825" id="r_a3c2d0fed8c6db4a36f2d0db118b6e825"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a> { <a class="el" href="#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">SPHERE</a>
+, <a class="el" href="#a3c2d0fed8c6db4a36f2d0db118b6e825aad6990fc23cd957328515fde2db852a3">PLANE</a>
+ }</td></tr>
+<tr class="memdesc:a3c2d0fed8c6db4a36f2d0db118b6e825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration des differents types d'objets geometriques supportes.  <a href="#a3c2d0fed8c6db4a36f2d0db118b6e825">Plus de détails...</a><br /></td></tr>
+<tr class="memitem:a0df27b1d021700d77e9ce71e7e1be93a" id="r_a0df27b1d021700d77e9ce71e7e1be93a"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0df27b1d021700d77e9ce71e7e1be93a">MaterialType</a> { <a class="el" href="#a0df27b1d021700d77e9ce71e7e1be93aa798d5303aa3c8108be04fc1d53b4d40d">LAMBERTIAN</a>
+, <a class="el" href="#a0df27b1d021700d77e9ce71e7e1be93aa74108a89672c573afee1fae6de8e4e0b">METAL</a>
+, <a class="el" href="#a0df27b1d021700d77e9ce71e7e1be93aae5a8a71c7b6cc822f851c4df10d10df3">DIELECTRIC</a>
+ }</td></tr>
+<tr class="memdesc:a0df27b1d021700d77e9ce71e7e1be93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration des differents types de materiaux supportes par le raytracer.  <a href="#a0df27b1d021700d77e9ce71e7e1be93a">Plus de détails...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a9a452df1aaac7498c28f7a2ae3a8bd98" id="r_a9a452df1aaac7498c28f7a2ae3a8bd98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a452df1aaac7498c28f7a2ae3a8bd98">degrees_to_radians</a> (float degrees)</td></tr>
+<tr class="memdesc:a9a452df1aaac7498c28f7a2ae3a8bd98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convertit un angle en degres vers des radians.  <br /></td></tr>
+<tr class="memitem:a70fc36c2387fabd38521bd2ca22c4bff" id="r_a70fc36c2387fabd38521bd2ca22c4bff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70fc36c2387fabd38521bd2ca22c4bff">random_vec3</a> (<a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a70fc36c2387fabd38521bd2ca22c4bff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere un vecteur 3D avec des composantes aleatoires dans [0, 1)  <br /></td></tr>
+<tr class="memitem:a160e36e0a7c2e6c84c53eebfed001b5b" id="r_a160e36e0a7c2e6c84c53eebfed001b5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a160e36e0a7c2e6c84c53eebfed001b5b">random_vec3</a> (float min, float max, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a160e36e0a7c2e6c84c53eebfed001b5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere un vecteur 3D avec des composantes aleatoires dans [min, max)  <br /></td></tr>
+<tr class="memitem:accc37cdaf5610b1b137d01a3b50f8153" id="r_accc37cdaf5610b1b137d01a3b50f8153"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#accc37cdaf5610b1b137d01a3b50f8153">random_unit_vector</a> (<a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:accc37cdaf5610b1b137d01a3b50f8153"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere un vecteur unitaire aleatoire uniformement distribue sur la sphere.  <br /></td></tr>
+<tr class="memitem:a67b61aff7b01aa2787980dd928d0e56d" id="r_a67b61aff7b01aa2787980dd928d0e56d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67b61aff7b01aa2787980dd928d0e56d">random_in_unit_sphere</a> (<a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a67b61aff7b01aa2787980dd928d0e56d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere un point aleatoire a l'interieur de la sphere unite.  <br /></td></tr>
+<tr class="memitem:a8ce095d03cba9687828102cbed806c45" id="r_a8ce095d03cba9687828102cbed806c45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ce095d03cba9687828102cbed806c45">random_on_hemisphere</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;normal, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a8ce095d03cba9687828102cbed806c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere un vecteur unitaire aleatoire dans l'hemisphere defini par une normale.  <br /></td></tr>
+<tr class="memitem:a812b9c5a8035ce18c2032aa2c96323f4" id="r_a812b9c5a8035ce18c2032aa2c96323f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a812b9c5a8035ce18c2032aa2c96323f4">random_in_unit_disk</a> (<a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a812b9c5a8035ce18c2032aa2c96323f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere un point aleatoire dans le disque unite (plan XY)  <br /></td></tr>
+<tr class="memitem:a8ef57ec6608315b7036181bc3855bf19" id="r_a8ef57ec6608315b7036181bc3855bf19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ef57ec6608315b7036181bc3855bf19">random_cosine_direction</a> (<a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a8ef57ec6608315b7036181bc3855bf19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere une direction aleatoire selon une distribution cosinus.  <br /></td></tr>
+<tr class="memitem:ac839f506d17030766082bbb5f252a4ac" id="r_ac839f506d17030766082bbb5f252a4ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac839f506d17030766082bbb5f252a4ac">operator*</a> (float t, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:ac839f506d17030766082bbb5f252a4ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplication scalaire * vecteur (commutativite)  <br /></td></tr>
+<tr class="memitem:a02de65a5330009fef7575fc46d3ab2c8" id="r_a02de65a5330009fef7575fc46d3ab2c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02de65a5330009fef7575fc46d3ab2c8">dot</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;u, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:a02de65a5330009fef7575fc46d3ab2c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le produit scalaire de deux vecteurs.  <br /></td></tr>
+<tr class="memitem:a21b9c6568ff24a1b2e307fa319fd6fb9" id="r_a21b9c6568ff24a1b2e307fa319fd6fb9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21b9c6568ff24a1b2e307fa319fd6fb9">cross</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;u, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:a21b9c6568ff24a1b2e307fa319fd6fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le produit vectoriel de deux vecteurs.  <br /></td></tr>
+<tr class="memitem:a3911bca4800ed1c8b2e139521cb9e56a" id="r_a3911bca4800ed1c8b2e139521cb9e56a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3911bca4800ed1c8b2e139521cb9e56a">reflect</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;n)</td></tr>
+<tr class="memdesc:a3911bca4800ed1c8b2e139521cb9e56a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la reflexion d'un vecteur par rapport a une normale.  <br /></td></tr>
+<tr class="memitem:aebda26be983fa59fb63155f7583f7d79" id="r_aebda26be983fa59fb63155f7583f7d79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebda26be983fa59fb63155f7583f7d79">refract</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;uv, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;n, float etai_over_etat)</td></tr>
+<tr class="memdesc:aebda26be983fa59fb63155f7583f7d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la refraction d'un vecteur selon la loi de Snell-Descartes.  <br /></td></tr>
+<tr class="memitem:a412268aee9001dd382684925105832ac" id="r_a412268aee9001dd382684925105832ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a412268aee9001dd382684925105832ac">unit_vector</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:a412268aee9001dd382684925105832ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne le vecteur unitaire (normalise) d'un vecteur donne.  <br /></td></tr>
+<tr class="memitem:ac9a2b3c071cea9810cfa81f1e889b6c3" id="r_ac9a2b3c071cea9810cfa81f1e889b6c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9a2b3c071cea9810cfa81f1e889b6c3">sky_gradient</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;direction)</td></tr>
+<tr class="memdesc:ac9a2b3c071cea9810cfa81f1e889b6c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction libre pour un ciel bleu avec gradient classique.  <br /></td></tr>
+<tr class="memitem:af57522824b06a29f7ff3e4da6a0c1c62" id="r_af57522824b06a29f7ff3e4da6a0c1c62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af57522824b06a29f7ff3e4da6a0c1c62">sky_black</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;direction)</td></tr>
+<tr class="memdesc:af57522824b06a29f7ff3e4da6a0c1c62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction libre pour un fond completement noir.  <br /></td></tr>
+<tr class="memitem:aae49205aa273815ae68edca700fd6c3a" id="r_aae49205aa273815ae68edca700fd6c3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae49205aa273815ae68edca700fd6c3a">get_sphere_uv</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;p, float &amp;u, float &amp;v)</td></tr>
+<tr class="memdesc:aae49205aa273815ae68edca700fd6c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule les coordonnees de texture UV sur une sphere a partir d'un point sur sa surface.  <br /></td></tr>
+<tr class="memitem:aa4f3e8d024cd83252c67587de3c2429c" id="r_aa4f3e8d024cd83252c67587de3c2429c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4f3e8d024cd83252c67587de3c2429c">create_dielectric</a> (float ior)</td></tr>
+<tr class="memdesc:aa4f3e8d024cd83252c67587de3c2429c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cree un materiau dielectrique (transparent) avec l'indice de refraction donne.  <br /></td></tr>
+<tr class="memitem:aa630469f7510d05dd46c970a2f3169a8" id="r_aa630469f7510d05dd46c970a2f3169a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa630469f7510d05dd46c970a2f3169a8">reflectance</a> (float cosine, float ior)</td></tr>
+<tr class="memdesc:aa630469f7510d05dd46c970a2f3169a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la reflectance selon l'approximation de Schlick.  <br /></td></tr>
+<tr class="memitem:a32c034fff4f59bceeda70acdec22746a" id="r_a32c034fff4f59bceeda70acdec22746a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32c034fff4f59bceeda70acdec22746a">scatter_dielectric</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, curandState *rand_state)</td></tr>
+<tr class="memdesc:a32c034fff4f59bceeda70acdec22746a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gere la reflexion ou la refraction d'un rayon sur un dielectrique (version GPU).  <br /></td></tr>
+<tr class="memitem:a3e3b742decd124ea2a3a1ad0e68b35e4" id="r_a3e3b742decd124ea2a3a1ad0e68b35e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e3b742decd124ea2a3a1ad0e68b35e4">scatter_dielectric_cpu</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a3e3b742decd124ea2a3a1ad0e68b35e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gere la reflexion ou la refraction d'un rayon sur un dielectrique (version CPU).  <br /></td></tr>
+<tr class="memitem:a1fc6973eba7ecb4ebf5e5601b73066cb" id="r_a1fc6973eba7ecb4ebf5e5601b73066cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fc6973eba7ecb4ebf5e5601b73066cb">create_lambertian</a> (const <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;albedo)</td></tr>
+<tr class="memdesc:a1fc6973eba7ecb4ebf5e5601b73066cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cree un materiau lambertien (diffus) avec la couleur donnee.  <br /></td></tr>
+<tr class="memitem:a24a6ceda4dcd88de32e6c81a5e4e336f" id="r_a24a6ceda4dcd88de32e6c81a5e4e336f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24a6ceda4dcd88de32e6c81a5e4e336f">scatter_lambertian</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, curandState *rand_state)</td></tr>
+<tr class="memdesc:a24a6ceda4dcd88de32e6c81a5e4e336f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la diffusion d'un rayon sur une surface lambertienne (version GPU).  <br /></td></tr>
+<tr class="memitem:a1c2aef51595baa4362be5b6219858b85" id="r_a1c2aef51595baa4362be5b6219858b85"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c2aef51595baa4362be5b6219858b85">scatter_lambertian_cpu</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a1c2aef51595baa4362be5b6219858b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la diffusion d'un rayon sur une surface lambertienne (version CPU).  <br /></td></tr>
+<tr class="memitem:a279f6edeb52b1181010f0077bdbd7746" id="r_a279f6edeb52b1181010f0077bdbd7746"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a279f6edeb52b1181010f0077bdbd7746">create_metal</a> (const <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;albedo, float fuzz)</td></tr>
+<tr class="memdesc:a279f6edeb52b1181010f0077bdbd7746"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cree un materiau metallique avec la couleur et le flou donnes.  <br /></td></tr>
+<tr class="memitem:aa45fe0159557681f21c8208b7ba466ba" id="r_aa45fe0159557681f21c8208b7ba466ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa45fe0159557681f21c8208b7ba466ba">scatter_metal</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, curandState *rand_state)</td></tr>
+<tr class="memdesc:aa45fe0159557681f21c8208b7ba466ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la reflexion d'un rayon sur une surface metallique (version GPU).  <br /></td></tr>
+<tr class="memitem:a22f1ceaf58860a71329592885382de7d" id="r_a22f1ceaf58860a71329592885382de7d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22f1ceaf58860a71329592885382de7d">scatter_metal_cpu</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a22f1ceaf58860a71329592885382de7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la reflexion d'un rayon sur une surface metallique (version CPU).  <br /></td></tr>
+<tr class="memitem:a8ec9d0b75556c36ffdab848ee8e23eba" id="r_a8ec9d0b75556c36ffdab848ee8e23eba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ec9d0b75556c36ffdab848ee8e23eba">ray_color_cpu</a> (const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;initial_ray, const <a class="el" href="classrt_1_1_b_v_h.html">BVH</a> &amp;bvh, int max_depth, const <a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> &amp;config, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a8ec9d0b75556c36ffdab848ee8e23eba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la couleur d'un rayon sur CPU par rebonds successifs.  <br /></td></tr>
+<tr class="memitem:a6a2ae9c6e5c1c13f0c3ee6dfaa289670" id="r_a6a2ae9c6e5c1c13f0c3ee6dfaa289670"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a2ae9c6e5c1c13f0c3ee6dfaa289670">render_cpu</a> (<a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> *frame_buffer, const <a class="el" href="classrt_1_1_camera.html">Camera</a> &amp;camera, const <a class="el" href="classrt_1_1_b_v_h.html">BVH</a> &amp;bvh, const <a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> &amp;config)</td></tr>
+<tr class="memdesc:a6a2ae9c6e5c1c13f0c3ee6dfaa289670"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction de rendu CPU parallelisee avec OpenMP.  <br /></td></tr>
+<tr class="memitem:a39c99a179d64564065e8a287512c2967" id="r_a39c99a179d64564065e8a287512c2967"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39c99a179d64564065e8a287512c2967">scatter</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, curandState *rand_state)</td></tr>
+<tr class="memdesc:a39c99a179d64564065e8a287512c2967"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatche l'interaction rayon-materiau selon le type de materiau (version GPU)  <br /></td></tr>
+<tr class="memitem:a53f12cdb6580010fd1f0f7a7c518c3ea" id="r_a53f12cdb6580010fd1f0f7a7c518c3ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53f12cdb6580010fd1f0f7a7c518c3ea">scatter_cpu</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a53f12cdb6580010fd1f0f7a7c518c3ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatche l'interaction rayon-materiau selon le type de materiau (version CPU)  <br /></td></tr>
+<tr class="memitem:ac6f5e0c411dad93836cef8b6296aca63" id="r_ac6f5e0c411dad93836cef8b6296aca63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6f5e0c411dad93836cef8b6296aca63">ray_color</a> (const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;initial_ray, const <a class="el" href="classrt_1_1_b_v_h.html">BVH</a> &amp;bvh, int max_depth, const <a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> &amp;config, curandState *rand_state)</td></tr>
+<tr class="memdesc:ac6f5e0c411dad93836cef8b6296aca63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la couleur d'un rayon en simulant ses rebonds successifs dans la scene.  <br /></td></tr>
+<tr class="memitem:a69a8da8d4aa075b46750d851f25b9dbe" id="r_a69a8da8d4aa075b46750d851f25b9dbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a75e2d5456e52f5c9703fc88479472e55">__global__</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69a8da8d4aa075b46750d851f25b9dbe">render_kernel</a> (<a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> *frame_buffer, <a class="el" href="classrt_1_1_camera.html">Camera</a> camera, <a class="el" href="classrt_1_1_b_v_h.html">BVH</a> bvh, <a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> config, curandState *rand_states)</td></tr>
+<tr class="memdesc:a69a8da8d4aa075b46750d851f25b9dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel principal de rendu GPU : chaque thread calcule la couleur d'un pixel.  <br /></td></tr>
+<tr class="memitem:a3f4c766f124893c99968364bb826d83c" id="r_a3f4c766f124893c99968364bb826d83c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> __forceinline__ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f4c766f124893c99968364bb826d83c">wang_hash</a> (unsigned int seed)</td></tr>
+<tr class="memdesc:a3f4c766f124893c99968364bb826d83c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction de hachage rapide de Wang pour generer des graines pseudo-aleatoires.  <br /></td></tr>
+<tr class="memitem:a741c9cf4537471c304a54b01c40ecae1" id="r_a741c9cf4537471c304a54b01c40ecae1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a75e2d5456e52f5c9703fc88479472e55">__global__</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a741c9cf4537471c304a54b01c40ecae1">init_rand_states_fast</a> (curandState *rand_states, int width, int height, unsigned int seed)</td></tr>
+<tr class="memdesc:a741c9cf4537471c304a54b01c40ecae1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel d'initialisation rapide des etats aleatoires curand via hachage.  <br /></td></tr>
+<tr class="memitem:a799c659e0416005fc47845cb3105a693" id="r_a799c659e0416005fc47845cb3105a693"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a75e2d5456e52f5c9703fc88479472e55">__global__</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a799c659e0416005fc47845cb3105a693">init_rand_states</a> (curandState *rand_states, int width, int height, unsigned long long seed)</td></tr>
+<tr class="memdesc:a799c659e0416005fc47845cb3105a693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel d'initialisation classique des etats aleatoires curand.  <br /></td></tr>
+<tr class="memitem:a0fbfee9d2f57e73c1437ca89b7416866" id="r_a0fbfee9d2f57e73c1437ca89b7416866"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0fbfee9d2f57e73c1437ca89b7416866">apply_tone_mapping</a> (const <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;hdr)</td></tr>
+<tr class="memdesc:a0fbfee9d2f57e73c1437ca89b7416866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applique l'operateur de tone mapping de Reinhard pour compresser les couleurs HDR.  <br /></td></tr>
+<tr class="memitem:a9f5c053ec3aabb4f0e65e46daca26f47" id="r_a9f5c053ec3aabb4f0e65e46daca26f47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f5c053ec3aabb4f0e65e46daca26f47">gamma_correct</a> (const <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;linear, float gamma=2.2f)</td></tr>
+<tr class="memdesc:a9f5c053ec3aabb4f0e65e46daca26f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applique la correction gamma pour convertir l'espace lineaire en espace sRGB.  <br /></td></tr>
+<tr class="memitem:ae00026bc579e1dae7e0339f7630a5479" id="r_ae00026bc579e1dae7e0339f7630a5479"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae00026bc579e1dae7e0339f7630a5479">print_usage</a> (const char *program)</td></tr>
+<tr class="memdesc:ae00026bc579e1dae7e0339f7630a5479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Affiche le message d'aide avec toutes les options disponibles.  <br /></td></tr>
+<tr class="memitem:ae0c16aff837ddf619a74e7fe0e3e9e02" id="r_ae0c16aff837ddf619a74e7fe0e3e9e02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrt_1_1_args.html">Args</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0c16aff837ddf619a74e7fe0e3e9e02">parse_args</a> (int argc, char **argv)</td></tr>
+<tr class="memdesc:ae0c16aff837ddf619a74e7fe0e3e9e02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse les arguments de la ligne de commande et retourne une structure <a class="el" href="structrt_1_1_args.html" title="Structure regroupant tous les arguments en ligne de commande.">Args</a>.  <br /></td></tr>
+<tr class="memitem:a360f6f7f7e6331279a9afdddaa7a13bd" id="r_a360f6f7f7e6331279a9afdddaa7a13bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a360f6f7f7e6331279a9afdddaa7a13bd">save_image</a> (const std::string &amp;filename, <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> *buffer, int width, int height)</td></tr>
+<tr class="memdesc:a360f6f7f7e6331279a9afdddaa7a13bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sauvegarde le frame buffer en fichier image dans le format determine par l'extension.  <br /></td></tr>
+<tr class="memitem:a42aafe38e4e8f767eab277b6ee79cc50" id="r_a42aafe38e4e8f767eab277b6ee79cc50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42aafe38e4e8f767eab277b6ee79cc50">create_default_scene</a> (<a class="el" href="classrt_1_1_camera.html">Camera</a> &amp;camera, <a class="el" href="classrt_1_1_hittable_list.html">HittableList</a> &amp;world, <a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a> *objects, <a class="el" href="classrt_1_1_material.html">Material</a> *materials, int &amp;obj_count, int &amp;mat_count, <a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> &amp;config)</td></tr>
+<tr class="memdesc:a42aafe38e4e8f767eab277b6ee79cc50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cree la scene par defaut avec sol, spheres principales et spheres aleatoires.  <br /></td></tr>
+<tr class="memitem:ab187519a7ef6a4e0aeae0602724839b5" id="r_ab187519a7ef6a4e0aeae0602724839b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab187519a7ef6a4e0aeae0602724839b5">random_unit_vector</a> (curandState *)</td></tr>
+<tr class="memitem:a486232b1e315130657227f6ed13ead9d" id="r_a486232b1e315130657227f6ed13ead9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a486232b1e315130657227f6ed13ead9d">random_in_unit_sphere</a> (curandState *)</td></tr>
+<tr class="memitem:abb476374a4ff50b30e05be574381eabb" id="r_abb476374a4ff50b30e05be574381eabb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb476374a4ff50b30e05be574381eabb">random_in_unit_disk</a> (curandState *)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ac75ad42b0d984c71e00f1f2a3f77dbb7" id="r_ac75ad42b0d984c71e00f1f2a3f77dbb7"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac75ad42b0d984c71e00f1f2a3f77dbb7">PI</a> = 3.14159265358979323846f</td></tr>
+<tr class="memdesc:ac75ad42b0d984c71e00f1f2a3f77dbb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constante PI en simple precision.  <br /></td></tr>
+<tr class="memitem:af37ea1dd751844bbbe551661750483f2" id="r_af37ea1dd751844bbbe551661750483f2"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af37ea1dd751844bbbe551661750483f2">INFINITY_F</a> = 1e30f</td></tr>
+<tr class="memdesc:af37ea1dd751844bbbe551661750483f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valeur representant l'infini pour les calculs de rayons.  <br /></td></tr>
+<tr class="memitem:a319f26fff3702bb0ccfca31c49828526" id="r_a319f26fff3702bb0ccfca31c49828526"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a319f26fff3702bb0ccfca31c49828526">EPSILON</a> = 1e-6f</td></tr>
+<tr class="memdesc:a319f26fff3702bb0ccfca31c49828526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seuil de tolerance pour les comparaisons flottantes.  <br /></td></tr>
+<tr class="memitem:a5513e05d54d0803bd1115411fa3a5ea7" id="r_a5513e05d54d0803bd1115411fa3a5ea7"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5513e05d54d0803bd1115411fa3a5ea7">RANDOM_TWO_PI</a> = 2.0f * 3.14159265358979323846f</td></tr>
+<tr class="memdesc:a5513e05d54d0803bd1115411fa3a5ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constante 2*PI pour les calculs d'angles.  <br /></td></tr>
+<tr class="memitem:a028cc11d0f9e05b53695b6f9a0840208" id="r_a028cc11d0f9e05b53695b6f9a0840208"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a028cc11d0f9e05b53695b6f9a0840208">VEC3_PI</a> = 3.14159265358979323846f</td></tr>
+<tr class="memdesc:a028cc11d0f9e05b53695b6f9a0840208"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constante Pi en simple precision.  <br /></td></tr>
+<tr class="memitem:afa9c483dc1590a7babc933214351b0de" id="r_afa9c483dc1590a7babc933214351b0de"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa9c483dc1590a7babc933214351b0de">VEC3_TWO_PI</a> = 2.0f * <a class="el" href="#a028cc11d0f9e05b53695b6f9a0840208">VEC3_PI</a></td></tr>
+<tr class="memdesc:afa9c483dc1590a7babc933214351b0de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constante 2*Pi en simple precision, utile pour les angles en radians.  <br /></td></tr>
+</table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Documentation des définitions de type</h2>
+<a id="a833d4cf4591664e7e913f7e550abc82a" name="a833d4cf4591664e7e913f7e550abc82a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a833d4cf4591664e7e913f7e550abc82a">&#9670;&#160;</a></span>Color</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">rt::Color</a> = <a class="el" href="classrt_1_1_vec3.html">Vec3</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Alias de type : une <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a> est un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> utilise comme couleur RGB. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00196">196</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a679fd997c4225984367e96dfc1f15c59" name="a679fd997c4225984367e96dfc1f15c59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a679fd997c4225984367e96dfc1f15c59">&#9670;&#160;</a></span>Point3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a679fd997c4225984367e96dfc1f15c59">rt::Point3</a> = <a class="el" href="classrt_1_1_vec3.html">Vec3</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Alias de type : un <a class="el" href="#a679fd997c4225984367e96dfc1f15c59" title="Alias de type : un Point3 est un Vec3 utilise comme position.">Point3</a> est un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> utilise comme position. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00194">194</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Documentation du type de l'énumération</h2>
+<a id="a3c2d0fed8c6db4a36f2d0db118b6e825" name="a3c2d0fed8c6db4a36f2d0db118b6e825"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c2d0fed8c6db4a36f2d0db118b6e825">&#9670;&#160;</a></span>HittableType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a3c2d0fed8c6db4a36f2d0db118b6e825">rt::HittableType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enumeration des differents types d'objets geometriques supportes. </p>
+<p>On utilise cette enumeration pour identifier le type concret d'un objet sans avoir recours au polymorphisme dynamique (incompatible avec CUDA). Cela permet de faire un switch sur le type dans le code GPU. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Valeurs énumérées</th></tr><tr><td class="fieldname"><a id="a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43" name="a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43"></a>SPHERE&#160;</td><td class="fielddoc"><p>Objet de type sphere. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3c2d0fed8c6db4a36f2d0db118b6e825aad6990fc23cd957328515fde2db852a3" name="a3c2d0fed8c6db4a36f2d0db118b6e825aad6990fc23cd957328515fde2db852a3"></a>PLANE&#160;</td><td class="fielddoc"><p>Objet de type plan infini. </p>
+</td></tr>
+</table>
+
+<p class="definition">Définition à la ligne <a class="el" href="hittable_8cuh_source.html#l00027">27</a> du fichier <a class="el" href="hittable_8cuh_source.html">hittable.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a0df27b1d021700d77e9ce71e7e1be93a" name="a0df27b1d021700d77e9ce71e7e1be93a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0df27b1d021700d77e9ce71e7e1be93a">&#9670;&#160;</a></span>MaterialType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a0df27b1d021700d77e9ce71e7e1be93a">rt::MaterialType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enumeration des differents types de materiaux supportes par le raytracer. </p>
+<p>Chaque type correspond a un modele d'interaction lumiere-surface different :</p><ul>
+<li>LAMBERTIAN : surface diffuse (mat), la lumiere est renvoyee dans toutes les directions.</li>
+<li>METAL : surface metallique reflechissante, avec possibilite de flou (fuzz).</li>
+<li>DIELECTRIC : materiau transparent comme le verre, capable de refraction et reflexion. </li>
+</ul>
+<table class="fieldtable">
+<tr><th colspan="2">Valeurs énumérées</th></tr><tr><td class="fieldname"><a id="a0df27b1d021700d77e9ce71e7e1be93aa798d5303aa3c8108be04fc1d53b4d40d" name="a0df27b1d021700d77e9ce71e7e1be93aa798d5303aa3c8108be04fc1d53b4d40d"></a>LAMBERTIAN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a0df27b1d021700d77e9ce71e7e1be93aa74108a89672c573afee1fae6de8e4e0b" name="a0df27b1d021700d77e9ce71e7e1be93aa74108a89672c573afee1fae6de8e4e0b"></a>METAL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a0df27b1d021700d77e9ce71e7e1be93aae5a8a71c7b6cc822f851c4df10d10df3" name="a0df27b1d021700d77e9ce71e7e1be93aae5a8a71c7b6cc822f851c4df10d10df3"></a>DIELECTRIC&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00025">25</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions</h2>
+<a id="a0fbfee9d2f57e73c1437ca89b7416866" name="a0fbfee9d2f57e73c1437ca89b7416866"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fbfee9d2f57e73c1437ca89b7416866">&#9670;&#160;</a></span>apply_tone_mapping()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::apply_tone_mapping </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>hdr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Applique l'operateur de tone mapping de Reinhard pour compresser les couleurs HDR. </p>
+<p>En raytracing, les couleurs calculees peuvent avoir des valeurs superieures a 1.0 (High Dynamic Range). L'operateur de Reinhard utilise la formule x / (1 + x) sur chaque composante RGB pour ramener doucement les valeurs dans [0, 1] sans ecreter brutalement les hautes lumieres. C'est un compromis simple et efficace. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hdr</td><td>La couleur en HDR (valeurs potentiellement &gt; 1.0) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La couleur compressees dans l'intervalle [0, 1] </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="tone__mapping_8cuh_source.html#l00028">28</a> du fichier <a class="el" href="tone__mapping_8cuh_source.html">tone_mapping.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a42aafe38e4e8f767eab277b6ee79cc50" name="a42aafe38e4e8f767eab277b6ee79cc50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42aafe38e4e8f767eab277b6ee79cc50">&#9670;&#160;</a></span>create_default_scene()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rt::create_default_scene </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_camera.html">Camera</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camera</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_hittable_list.html">HittableList</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>world</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a> *</td>          <td class="paramname"><span class="paramname"><em>objects</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_material.html">Material</a> *</td>          <td class="paramname"><span class="paramname"><em>materials</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>obj_count</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>mat_count</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>config</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cree la scene par defaut avec sol, spheres principales et spheres aleatoires. </p>
+<p>Initialise la camera avec un point de vue classique (position 13,2,3 regardant l'origine) et construit la scene suivante :</p><ul>
+<li>Un sol gris (grande sphere de rayon 1000, materiau lambertien)</li>
+<li>Une sphere dielectrique (verre, indice 1.5) au centre</li>
+<li>Une sphere lambertienne (diffuse, marron) a gauche</li>
+<li>Une sphere metallique (reflechissante, doree) a droite</li>
+<li>Des petites spheres aleatoires (lambertien, metal ou verre) dans une grille La graine aleatoire est fixee a 42 pour la reproductibilite. <dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">camera</td><td>Reference vers la camera a initialiser </td></tr>
+    <tr><td class="paramname">world</td><td>Reference vers la liste d'objets de la scene (non utilisee directement ici) </td></tr>
+    <tr><td class="paramname">objects</td><td>Tableau pre-alloue pour stocker les objets <a class="el" href="structrt_1_1_hittable_object.html" title="Represente un objet complet de la scene avec son type, ses donnees et sa boite englobante.">HittableObject</a> </td></tr>
+    <tr><td class="paramname">materials</td><td>Tableau pre-alloue pour stocker les materiaux <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a> </td></tr>
+    <tr><td class="paramname">obj_count</td><td>Compteur d'objets, incremente au fur et a mesure de l'ajout (entree/sortie) </td></tr>
+    <tr><td class="paramname">mat_count</td><td>Compteur de materiaux, incremente au fur et a mesure de l'ajout (entree/sortie) </td></tr>
+    <tr><td class="paramname">config</td><td>Configuration de rendu, utilisee pour la resolution et le flag use_sky </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+<p class="definition">Définition à la ligne <a class="el" href="default__scene_8cuh_source.html#l00043">43</a> du fichier <a class="el" href="default__scene_8cuh_source.html">default_scene.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aa4f3e8d024cd83252c67587de3c2429c" name="aa4f3e8d024cd83252c67587de3c2429c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4f3e8d024cd83252c67587de3c2429c">&#9670;&#160;</a></span>create_dielectric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_material.html">Material</a> rt::create_dielectric </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>ior</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cree un materiau dielectrique (transparent) avec l'indice de refraction donne. </p>
+<p>Initialise un objet <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a> de type DIELECTRIC avec un albedo blanc (le verre pur ne colore pas la lumiere qui le traverse) et l'indice de refraction specifie. Par exemple, le verre a un ior d'environ 1.5 et l'eau d'environ 1.33. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ior</td><td>L'indice de refraction du milieu (rapport des vitesses de la lumiere). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un objet <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a> configure comme dielectrique. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="dielectric_8cuh_source.html#l00028">28</a> du fichier <a class="el" href="dielectric_8cuh_source.html">dielectric.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a1fc6973eba7ecb4ebf5e5601b73066cb" name="a1fc6973eba7ecb4ebf5e5601b73066cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fc6973eba7ecb4ebf5e5601b73066cb">&#9670;&#160;</a></span>create_lambertian()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_material.html">Material</a> rt::create_lambertian </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>albedo</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cree un materiau lambertien (diffus) avec la couleur donnee. </p>
+<p>Initialise un objet <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a> de type LAMBERTIAN avec l'albedo specifie. L'albedo represente la proportion de lumiere reflechie pour chaque canal de couleur (rouge, vert, bleu). </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">albedo</td><td>La couleur de la surface diffuse (valeurs entre 0 et 1 par canal). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un objet <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a> configure comme lambertien. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="lambertian_8cuh_source.html#l00026">26</a> du fichier <a class="el" href="lambertian_8cuh_source.html">lambertian.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a279f6edeb52b1181010f0077bdbd7746" name="a279f6edeb52b1181010f0077bdbd7746"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a279f6edeb52b1181010f0077bdbd7746">&#9670;&#160;</a></span>create_metal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_material.html">Material</a> rt::create_metal </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>albedo</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>fuzz</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cree un materiau metallique avec la couleur et le flou donnes. </p>
+<p>Initialise un objet <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a> de type METAL. Le parametre fuzz est borne a 1.0 maximum : a 0 le metal est un miroir parfait, a 1 la reflexion est tres perturbee (surface rugueuse). </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">albedo</td><td>La couleur du metal (teinte de la reflexion). </td></tr>
+    <tr><td class="paramname">fuzz</td><td>Le facteur de flou de la reflexion (0 = miroir, 1 = tres flou). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un objet <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a> configure comme metallique. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="metal_8cuh_source.html#l00027">27</a> du fichier <a class="el" href="metal_8cuh_source.html">metal.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a21b9c6568ff24a1b2e307fa319fd6fb9" name="a21b9c6568ff24a1b2e307fa319fd6fb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21b9c6568ff24a1b2e307fa319fd6fb9">&#9670;&#160;</a></span>cross()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::cross </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>u</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule le produit vectoriel de deux vecteurs. </p>
+<p>Le resultat est un vecteur perpendiculaire au plan forme par u et v. Utilise pour calculer les normales de surfaces. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>Premier vecteur </td></tr>
+    <tr><td class="paramname">v</td><td>Deuxieme vecteur </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur u x v </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00228">228</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a9a452df1aaac7498c28f7a2ae3a8bd98" name="a9a452df1aaac7498c28f7a2ae3a8bd98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a452df1aaac7498c28f7a2ae3a8bd98">&#9670;&#160;</a></span>degrees_to_radians()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float rt::degrees_to_radians </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>degrees</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convertit un angle en degres vers des radians. </p>
+<p>Fonction utilisable a la fois sur le CPU et le GPU grace aux qualificateurs <b>host</b> <b>device</b>. Utile pour convertir les parametres de la camera (champ de vision) en radians. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">degrees</td><td>L'angle en degres a convertir </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>L'angle equivalent en radians </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="cuda__utils_8cuh_source.html#l00036">36</a> du fichier <a class="el" href="cuda__utils_8cuh_source.html">cuda_utils.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a02de65a5330009fef7575fc46d3ab2c8" name="a02de65a5330009fef7575fc46d3ab2c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02de65a5330009fef7575fc46d3ab2c8">&#9670;&#160;</a></span>dot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float rt::dot </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>u</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule le produit scalaire de deux vecteurs. </p>
+<p>Le produit scalaire donne le cosinus de l'angle entre les vecteurs (si ceux-ci sont normalises). Tres utilise en eclairage. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>Premier vecteur </td></tr>
+    <tr><td class="paramname">v</td><td>Deuxieme vecteur </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le produit scalaire u . v </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00216">216</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a9f5c053ec3aabb4f0e65e46daca26f47" name="a9f5c053ec3aabb4f0e65e46daca26f47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f5c053ec3aabb4f0e65e46daca26f47">&#9670;&#160;</a></span>gamma_correct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::gamma_correct </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>linear</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>gamma</em></span><span class="paramdefsep"> = </span><span class="paramdefval">2.2f</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Applique la correction gamma pour convertir l'espace lineaire en espace sRGB. </p>
+<p>Les ecrans utilisent un espace colorimetrique non-lineaire (sRGB). Sans correction gamma, l'image apparaitrait trop sombre. Cette fonction eleve chaque composante a la puissance 1/gamma (par defaut 1/2.2) pour compenser la courbe de reponse de l'ecran. Les valeurs negatives sont clampees a 0 avant l'elevation en puissance pour eviter les erreurs mathematiques. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">linear</td><td>La couleur en espace lineaire (apres tone mapping) </td></tr>
+    <tr><td class="paramname">gamma</td><td>La valeur du gamma (2.2 par defaut pour sRGB) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La couleur corrigee, prete pour l'affichage a l'ecran </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="tone__mapping_8cuh_source.html#l00047">47</a> du fichier <a class="el" href="tone__mapping_8cuh_source.html">tone_mapping.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aae49205aa273815ae68edca700fd6c3a" name="aae49205aa273815ae68edca700fd6c3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae49205aa273815ae68edca700fd6c3a">&#9670;&#160;</a></span>get_sphere_uv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> void rt::get_sphere_uv </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;</td>          <td class="paramname"><span class="paramname"><em>u</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule les coordonnees de texture UV sur une sphere a partir d'un point sur sa surface. </p>
+<p>Convertit un point sur la sphere unitaire en coordonnees UV (entre 0 et 1) en utilisant les coordonnees spheriques. L'angle theta (colatitude) est calcule via acos(-y) et l'angle phi (longitude) via atan2(-z, x) + PI. Les formules donnent :</p><ul>
+<li>u = phi / (2*PI) : coordonnee horizontale (tour complet de la sphere)</li>
+<li>v = theta / PI : coordonnee verticale (du pole nord au pole sud) <dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>Point sur la sphere unitaire (vecteur normal sortant normalise). </td></tr>
+    <tr><td class="paramname">u</td><td>Coordonnee U de sortie (entre 0 et 1, direction horizontale). </td></tr>
+    <tr><td class="paramname">v</td><td>Coordonnee V de sortie (entre 0 et 1, direction verticale). </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+<p class="definition">Définition à la ligne <a class="el" href="geometry__utils_8cuh_source.html#l00029">29</a> du fichier <a class="el" href="geometry__utils_8cuh_source.html">geometry_utils.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a799c659e0416005fc47845cb3105a693" name="a799c659e0416005fc47845cb3105a693"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a799c659e0416005fc47845cb3105a693">&#9670;&#160;</a></span>init_rand_states()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a75e2d5456e52f5c9703fc88479472e55">__global__</a> void rt::init_rand_states </td>
+          <td>(</td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_states</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long long</td>          <td class="paramname"><span class="paramname"><em>seed</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kernel d'initialisation classique des etats aleatoires curand. </p>
+<p>Chaque thread initialise son etat curand en utilisant une graine basee sur l'index du pixel. Cette methode est plus lente que la version rapide (init_rand_states_fast) car curand_init effectue un travail interne plus important, mais elle garantit des sequences parfaitement independantes. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rand_states</td><td>Le tableau des etats curand a initialiser (un par pixel) </td></tr>
+    <tr><td class="paramname">width</td><td>La largeur de l'image en pixels </td></tr>
+    <tr><td class="paramname">height</td><td>La hauteur de l'image en pixels </td></tr>
+    <tr><td class="paramname">seed</td><td>La graine de base pour l'initialisation </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="renderer_8cuh_source.html#l00181">181</a> du fichier <a class="el" href="renderer_8cuh_source.html">renderer.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a741c9cf4537471c304a54b01c40ecae1" name="a741c9cf4537471c304a54b01c40ecae1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a741c9cf4537471c304a54b01c40ecae1">&#9670;&#160;</a></span>init_rand_states_fast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a75e2d5456e52f5c9703fc88479472e55">__global__</a> void rt::init_rand_states_fast </td>
+          <td>(</td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_states</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>seed</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kernel d'initialisation rapide des etats aleatoires curand via hachage. </p>
+<p>Chaque thread initialise l'etat curand de son pixel en utilisant le hachage de Wang pour creer une graine unique. Cette methode est bien plus rapide que l'initialisation classique avec des sequences differentes, car curand_init est couteux quand la sequence est grande. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rand_states</td><td>Le tableau des etats curand a initialiser (un par pixel) </td></tr>
+    <tr><td class="paramname">width</td><td>La largeur de l'image en pixels </td></tr>
+    <tr><td class="paramname">height</td><td>La hauteur de l'image en pixels </td></tr>
+    <tr><td class="paramname">seed</td><td>La graine de base pour le hachage </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="renderer_8cuh_source.html#l00155">155</a> du fichier <a class="el" href="renderer_8cuh_source.html">renderer.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ac839f506d17030766082bbb5f252a4ac" name="ac839f506d17030766082bbb5f252a4ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac839f506d17030766082bbb5f252a4ac">&#9670;&#160;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::operator* </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Multiplication scalaire * vecteur (commutativite) </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le scalaire </td></tr>
+    <tr><td class="paramname">v</td><td>Le vecteur </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur mis a l'echelle </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00204">204</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ae0c16aff837ddf619a74e7fe0e3e9e02" name="ae0c16aff837ddf619a74e7fe0e3e9e02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0c16aff837ddf619a74e7fe0e3e9e02">&#9670;&#160;</a></span>parse_args()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structrt_1_1_args.html">Args</a> rt::parse_args </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>argc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **</td>          <td class="paramname"><span class="paramname"><em>argv</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parse les arguments de la ligne de commande et retourne une structure <a class="el" href="structrt_1_1_args.html" title="Structure regroupant tous les arguments en ligne de commande.">Args</a>. </p>
+<p>Parcourt les arguments argv un par un et remplit la structure <a class="el" href="structrt_1_1_args.html" title="Structure regroupant tous les arguments en ligne de commande.">Args</a> en consequence. Les options non reconnues sont silencieusement ignorees. Si &ndash;help est detecte, l'aide est affichee et le programme se termine. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">argc</td><td>Nombre d'arguments passes au programme </td></tr>
+    <tr><td class="paramname">argv</td><td>Tableau de chaines de caracteres contenant les arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Structure <a class="el" href="structrt_1_1_args.html" title="Structure regroupant tous les arguments en ligne de commande.">Args</a> remplie avec les valeurs parsees (ou les valeurs par defaut) </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="args_8cuh_source.html#l00082">82</a> du fichier <a class="el" href="args_8cuh_source.html">args.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ae00026bc579e1dae7e0339f7630a5479" name="ae00026bc579e1dae7e0339f7630a5479"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae00026bc579e1dae7e0339f7630a5479">&#9670;&#160;</a></span>print_usage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rt::print_usage </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>program</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Affiche le message d'aide avec toutes les options disponibles. </p>
+<p>Liste toutes les options en ligne de commande avec leur description, leur format attendu et leur valeur par defaut. Inclut les options de rendu standard ainsi que les options du mode interactif. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">program</td><td>Nom du programme (argv[0]), utilise pour afficher la syntaxe d'utilisation </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="args_8cuh_source.html#l00051">51</a> du fichier <a class="el" href="args_8cuh_source.html">args.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a8ef57ec6608315b7036181bc3855bf19" name="a8ef57ec6608315b7036181bc3855bf19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ef57ec6608315b7036181bc3855bf19">&#9670;&#160;</a></span>random_cosine_direction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_cosine_direction </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere une direction aleatoire selon une distribution cosinus. </p>
+<p>Produit une direction dans l'hemisphere superieur (z &gt; 0) avec une probabilite proportionnelle au cosinus de l'angle avec la normale (axe z). C'est l'echantillonnage optimal pour les surfaces lambertiennes car il suit la loi de Lambert. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rng</td><td>Reference vers le generateur aleatoire CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> direction dans l'hemisphere superieur, pondere par le cosinus </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="random_8cuh_source.html#l00175">175</a> du fichier <a class="el" href="random_8cuh_source.html">random.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a812b9c5a8035ce18c2032aa2c96323f4" name="a812b9c5a8035ce18c2032aa2c96323f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a812b9c5a8035ce18c2032aa2c96323f4">&#9670;&#160;</a></span>random_in_unit_disk() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_in_unit_disk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere un point aleatoire dans le disque unite (plan XY) </p>
+<p>Utilise un echantillonnage polaire avec r = sqrt(u) pour assurer une distribution surfacique uniforme dans le disque. La composante z est toujours 0. Principalement utilise pour simuler la profondeur de champ (defocus blur) de la camera. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rng</td><td>Reference vers le generateur aleatoire CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> dans le plan z=0, de norme &lt;= 1 </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="random_8cuh_source.html#l00160">160</a> du fichier <a class="el" href="random_8cuh_source.html">random.cuh</a>.</p>
+
+</div>
+</div>
+<a id="abb476374a4ff50b30e05be574381eabb" name="abb476374a4ff50b30e05be574381eabb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb476374a4ff50b30e05be574381eabb">&#9670;&#160;</a></span>random_in_unit_disk() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_in_unit_disk </td>
+          <td>(</td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="test__camera_8cpp_source.html#l00023">23</a> du fichier <a class="el" href="test__camera_8cpp_source.html">test_camera.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a67b61aff7b01aa2787980dd928d0e56d" name="a67b61aff7b01aa2787980dd928d0e56d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67b61aff7b01aa2787980dd928d0e56d">&#9670;&#160;</a></span>random_in_unit_sphere() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_in_unit_sphere </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere un point aleatoire a l'interieur de la sphere unite. </p>
+<p>Combine un vecteur unitaire aleatoire avec un rayon mis a l'echelle par la racine cubique d'un nombre aleatoire, ce qui assure une distribution volumique uniforme dans la sphere. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rng</td><td>Reference vers le generateur aleatoire CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> de norme &lt;= 1 </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="random_8cuh_source.html#l00128">128</a> du fichier <a class="el" href="random_8cuh_source.html">random.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a486232b1e315130657227f6ed13ead9d" name="a486232b1e315130657227f6ed13ead9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a486232b1e315130657227f6ed13ead9d">&#9670;&#160;</a></span>random_in_unit_sphere() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_in_unit_sphere </td>
+          <td>(</td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="test__camera_8cpp_source.html#l00022">22</a> du fichier <a class="el" href="test__camera_8cpp_source.html">test_camera.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8ce095d03cba9687828102cbed806c45" name="a8ce095d03cba9687828102cbed806c45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ce095d03cba9687828102cbed806c45">&#9670;&#160;</a></span>random_on_hemisphere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_on_hemisphere </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>normal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere un vecteur unitaire aleatoire dans l'hemisphere defini par une normale. </p>
+<p>Genere un vecteur aleatoire sur la sphere unite, puis le retourne s'il pointe dans la direction opposee a la normale. Utile pour l'echantillonnage de la diffusion lambertienne. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">normal</td><td>La normale de la surface definissant l'hemisphere </td></tr>
+    <tr><td class="paramname">rng</td><td>Reference vers le generateur aleatoire CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> unitaire dans le meme hemisphere que la normale </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="random_8cuh_source.html#l00143">143</a> du fichier <a class="el" href="random_8cuh_source.html">random.cuh</a>.</p>
+
+</div>
+</div>
+<a id="accc37cdaf5610b1b137d01a3b50f8153" name="accc37cdaf5610b1b137d01a3b50f8153"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accc37cdaf5610b1b137d01a3b50f8153">&#9670;&#160;</a></span>random_unit_vector() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_unit_vector </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere un vecteur unitaire aleatoire uniformement distribue sur la sphere. </p>
+<p>Utilise la methode des coordonnees spheriques avec z uniforme dans [-1, 1] et phi uniforme dans [0, 2*PI) pour obtenir une distribution uniforme sur la surface de la sphere unite. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rng</td><td>Reference vers le generateur aleatoire CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> de norme 1 oriente aleatoirement </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="random_8cuh_source.html#l00113">113</a> du fichier <a class="el" href="random_8cuh_source.html">random.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ab187519a7ef6a4e0aeae0602724839b5" name="ab187519a7ef6a4e0aeae0602724839b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab187519a7ef6a4e0aeae0602724839b5">&#9670;&#160;</a></span>random_unit_vector() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_unit_vector </td>
+          <td>(</td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="test__camera_8cpp_source.html#l00021">21</a> du fichier <a class="el" href="test__camera_8cpp_source.html">test_camera.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a70fc36c2387fabd38521bd2ca22c4bff" name="a70fc36c2387fabd38521bd2ca22c4bff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70fc36c2387fabd38521bd2ca22c4bff">&#9670;&#160;</a></span>random_vec3() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_vec3 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere un vecteur 3D avec des composantes aleatoires dans [0, 1) </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rng</td><td>Reference vers le generateur aleatoire CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> dont chaque composante est un float aleatoire dans [0, 1) </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="random_8cuh_source.html#l00085">85</a> du fichier <a class="el" href="random_8cuh_source.html">random.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a160e36e0a7c2e6c84c53eebfed001b5b" name="a160e36e0a7c2e6c84c53eebfed001b5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a160e36e0a7c2e6c84c53eebfed001b5b">&#9670;&#160;</a></span>random_vec3() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::random_vec3 </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>min</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>max</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere un vecteur 3D avec des composantes aleatoires dans [min, max) </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min</td><td>Borne inferieure pour chaque composante </td></tr>
+    <tr><td class="paramname">max</td><td>Borne superieure pour chaque composante </td></tr>
+    <tr><td class="paramname">rng</td><td>Reference vers le generateur aleatoire CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> dont chaque composante est dans [min, max) </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="random_8cuh_source.html#l00096">96</a> du fichier <a class="el" href="random_8cuh_source.html">random.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ac6f5e0c411dad93836cef8b6296aca63" name="ac6f5e0c411dad93836cef8b6296aca63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6f5e0c411dad93836cef8b6296aca63">&#9670;&#160;</a></span>ray_color()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::ray_color </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>initial_ray</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_b_v_h.html">BVH</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>bvh</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>max_depth</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_state</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la couleur d'un rayon en simulant ses rebonds successifs dans la scene. </p>
+<p>Cette fonction utilise une boucle iterative (et non recursive) pour tracer le parcours d'un rayon a travers la scene. A chaque rebond, on accumule l'attenuation du materiau touche. Si le rayon ne touche aucun objet, on retourne la couleur du ciel (ou du fond) ponderee par l'attenuation accumulee. Si le rayon depasse la profondeur maximale, la contribution est nulle (noir). </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">initial_ray</td><td>Le rayon initial lance depuis la camera </td></tr>
+    <tr><td class="paramname">bvh</td><td>La structure d'acceleration <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> contenant la scene </td></tr>
+    <tr><td class="paramname">max_depth</td><td>Le nombre maximal de rebonds autorises </td></tr>
+    <tr><td class="paramname">config</td><td>La configuration du rendu (ciel, fond, etc.) </td></tr>
+    <tr><td class="paramname">rand_state</td><td>L'etat du generateur aleatoire curand pour ce thread </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La couleur finale calculee pour ce rayon </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="renderer_8cuh_source.html#l00041">41</a> du fichier <a class="el" href="renderer_8cuh_source.html">renderer.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a8ec9d0b75556c36ffdab848ee8e23eba" name="a8ec9d0b75556c36ffdab848ee8e23eba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ec9d0b75556c36ffdab848ee8e23eba">&#9670;&#160;</a></span>ray_color_cpu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::ray_color_cpu </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>initial_ray</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_b_v_h.html">BVH</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>bvh</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>max_depth</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la couleur d'un rayon sur CPU par rebonds successifs. </p>
+<p>Version CPU de <a class="el" href="#ac6f5e0c411dad93836cef8b6296aca63" title="Calcule la couleur d&#39;un rayon en simulant ses rebonds successifs dans la scene.">ray_color()</a>. L'algorithme est le meme : on suit le rayon de rebond en rebond, en accumulant l'attenuation de chaque materiau. Si le rayon ne touche rien, on retourne la couleur du ciel ou du fond. La seule difference est l'utilisation de <a class="el" href="classrt_1_1_c_p_u_random.html" title="Generateur de nombres aleatoires pour le rendu sur CPU.">CPURandom</a> au lieu de curand et de <a class="el" href="#a53f12cdb6580010fd1f0f7a7c518c3ea" title="Dispatche l&#39;interaction rayon-materiau selon le type de materiau (version CPU)">scatter_cpu()</a> au lieu de <a class="el" href="#a39c99a179d64564065e8a287512c2967" title="Dispatche l&#39;interaction rayon-materiau selon le type de materiau (version GPU)">scatter()</a>. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">initial_ray</td><td>Le rayon initial lance depuis la camera </td></tr>
+    <tr><td class="paramname">bvh</td><td>La structure d'acceleration <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> contenant la scene </td></tr>
+    <tr><td class="paramname">max_depth</td><td>Le nombre maximal de rebonds autorises </td></tr>
+    <tr><td class="paramname">config</td><td>La configuration du rendu (ciel, fond, etc.) </td></tr>
+    <tr><td class="paramname">rng</td><td>Le generateur de nombres aleatoires CPU pour ce thread </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La couleur finale calculee pour ce rayon </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="cpu__renderer_8cuh_source.html#l00044">44</a> du fichier <a class="el" href="cpu__renderer_8cuh_source.html">cpu_renderer.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a3911bca4800ed1c8b2e139521cb9e56a" name="a3911bca4800ed1c8b2e139521cb9e56a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3911bca4800ed1c8b2e139521cb9e56a">&#9670;&#160;</a></span>reflect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::reflect </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>n</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la reflexion d'un vecteur par rapport a une normale. </p>
+<p>Applique la formule de reflexion : r = v - 2*(v.n)*n. Utilisee pour les materiaux metalliques et les miroirs. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Le vecteur incident </td></tr>
+    <tr><td class="paramname">n</td><td>La normale a la surface (doit etre unitaire) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur reflechi </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00244">244</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aa630469f7510d05dd46c970a2f3169a8" name="aa630469f7510d05dd46c970a2f3169a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa630469f7510d05dd46c970a2f3169a8">&#9670;&#160;</a></span>reflectance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float rt::reflectance </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>cosine</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>ior</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la reflectance selon l'approximation de Schlick. </p>
+<p>L'approximation de Schlick est une formule simplifiee qui estime la proportion de lumiere reflechie a la surface d'un dielectrique en fonction de l'angle d'incidence. Plus l'angle est rasant (cosine proche de 0), plus la reflectance est elevee (effet bien visible quand on regarde un lac a angle rasant : l'eau devient un miroir). </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cosine</td><td>Le cosinus de l'angle entre le rayon incident et la normale. </td></tr>
+    <tr><td class="paramname">ior</td><td>Le rapport des indices de refraction entre les deux milieux. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La proportion de lumiere reflechie (entre 0 et 1). </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="dielectric_8cuh_source.html#l00045">45</a> du fichier <a class="el" href="dielectric_8cuh_source.html">dielectric.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aebda26be983fa59fb63155f7583f7d79" name="aebda26be983fa59fb63155f7583f7d79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebda26be983fa59fb63155f7583f7d79">&#9670;&#160;</a></span>refract()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::refract </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>uv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>n</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>etai_over_etat</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la refraction d'un vecteur selon la loi de Snell-Descartes. </p>
+<p>Decompose le rayon refracte en composantes perpendiculaire et parallele a la normale. Utilisee pour les materiaux dielectriques (verre, eau, etc.). </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uv</td><td>Le vecteur incident (doit etre unitaire) </td></tr>
+    <tr><td class="paramname">n</td><td>La normale a la surface (doit etre unitaire) </td></tr>
+    <tr><td class="paramname">etai_over_etat</td><td>Le rapport des indices de refraction (n1/n2) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur refracte </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00258">258</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a6a2ae9c6e5c1c13f0c3ee6dfaa289670" name="a6a2ae9c6e5c1c13f0c3ee6dfaa289670"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a2ae9c6e5c1c13f0c3ee6dfaa289670">&#9670;&#160;</a></span>render_cpu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rt::render_cpu </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> *</td>          <td class="paramname"><span class="paramname"><em>frame_buffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_camera.html">Camera</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>camera</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_b_v_h.html">BVH</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>bvh</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_render_config.html">RenderConfig</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>config</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fonction de rendu CPU parallelisee avec OpenMP. </p>
+<p>Cette fonction parcourt tous les pixels de l'image en parallele grace a OpenMP. Chaque thread gere une ligne complete de l'image et possede son propre generateur aleatoire (<a class="el" href="classrt_1_1_c_p_u_random.html" title="Generateur de nombres aleatoires pour le rendu sur CPU.">CPURandom</a>) pour eviter les conflits. Pour chaque pixel, on lance plusieurs rayons (multi-echantillonnage), on fait la moyenne, puis on applique le tone mapping de Reinhard et la correction gamma avant de clamper dans [0, 1]. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame_buffer</td><td>Le buffer de sortie contenant les couleurs des pixels </td></tr>
+    <tr><td class="paramname">camera</td><td>La camera utilisee pour generer les rayons </td></tr>
+    <tr><td class="paramname">bvh</td><td>La structure d'acceleration <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> de la scene </td></tr>
+    <tr><td class="paramname">config</td><td>La configuration du rendu (resolution, samples, profondeur, etc.) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="cpu__renderer_8cuh_source.html#l00094">94</a> du fichier <a class="el" href="cpu__renderer_8cuh_source.html">cpu_renderer.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a69a8da8d4aa075b46750d851f25b9dbe" name="a69a8da8d4aa075b46750d851f25b9dbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69a8da8d4aa075b46750d851f25b9dbe">&#9670;&#160;</a></span>render_kernel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a75e2d5456e52f5c9703fc88479472e55">__global__</a> void rt::render_kernel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> *</td>          <td class="paramname"><span class="paramname"><em>frame_buffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_camera.html">Camera</a></td>          <td class="paramname"><span class="paramname"><em>camera</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_b_v_h.html">BVH</a></td>          <td class="paramname"><span class="paramname"><em>bvh</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrt_1_1_render_config.html">RenderConfig</a></td>          <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_states</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Kernel principal de rendu GPU : chaque thread calcule la couleur d'un pixel. </p>
+<p>Chaque thread CUDA correspond a un pixel de l'image. Pour chaque pixel, on lance plusieurs rayons (multi-echantillonnage / antialiasing) a travers la scene, puis on fait la moyenne des couleurs obtenues. Ensuite, on applique le tone mapping de Reinhard et la correction gamma avant de clamper les valeurs dans [0, 1] et d'ecrire le resultat dans le frame buffer. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame_buffer</td><td>Le buffer de sortie contenant les couleurs des pixels </td></tr>
+    <tr><td class="paramname">camera</td><td>La camera utilisee pour generer les rayons </td></tr>
+    <tr><td class="paramname">bvh</td><td>La structure d'acceleration <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> de la scene </td></tr>
+    <tr><td class="paramname">config</td><td>La configuration du rendu (resolution, samples, profondeur, etc.) </td></tr>
+    <tr><td class="paramname">rand_states</td><td>Les etats aleatoires curand, un par pixel </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="renderer_8cuh_source.html#l00091">91</a> du fichier <a class="el" href="renderer_8cuh_source.html">renderer.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a360f6f7f7e6331279a9afdddaa7a13bd" name="a360f6f7f7e6331279a9afdddaa7a13bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a360f6f7f7e6331279a9afdddaa7a13bd">&#9670;&#160;</a></span>save_image()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rt::save_image </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> *</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>height</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sauvegarde le frame buffer en fichier image dans le format determine par l'extension. </p>
+<p>Convertit chaque pixel du buffer (couleurs flottantes entre 0 et 1) en valeurs octets (0-255) de maniere parallelisee avec OpenMP. Le format de sortie est determine automatiquement par l'extension du fichier : .png, .jpg/.jpeg, .bmp, .tga utilisent la bibliotheque stb_image_write, et tout autre format produit un fichier PPM (format texte simple). </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Chemin du fichier de sortie (l'extension determine le format) </td></tr>
+    <tr><td class="paramname">buffer</td><td>Pointeur vers le tableau de pixels <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a> (valeurs flottantes RGB) </td></tr>
+    <tr><td class="paramname">width</td><td>Largeur de l'image en pixels </td></tr>
+    <tr><td class="paramname">height</td><td>Hauteur de l'image en pixels </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="image__writer_8cuh_source.html#l00034">34</a> du fichier <a class="el" href="image__writer_8cuh_source.html">image_writer.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a39c99a179d64564065e8a287512c2967" name="a39c99a179d64564065e8a287512c2967"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39c99a179d64564065e8a287512c2967">&#9670;&#160;</a></span>scatter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool rt::scatter </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_state</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dispatche l'interaction rayon-materiau selon le type de materiau (version GPU) </p>
+<p>Cette fonction examine le type du materiau touche par le rayon et appelle la fonction de diffusion appropriee : lambertien (diffusion aleatoire), metal (reflexion avec flou) ou dielectrique (refraction/reflexion type verre). Elle utilise un switch sur l'enum <a class="el" href="#a0df27b1d021700d77e9ce71e7e1be93a" title="Enumeration des differents types de materiaux supportes par le raytracer.">MaterialType</a>. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Le materiau de la surface touchee </td></tr>
+    <tr><td class="paramname">r_in</td><td>Le rayon incident </td></tr>
+    <tr><td class="paramname">rec</td><td>L'enregistrement du point d'intersection </td></tr>
+    <tr><td class="paramname">attenuation</td><td>La couleur d'attenuation du materiau (parametre de sortie) </td></tr>
+    <tr><td class="paramname">scattered</td><td>Le rayon diffuse produit par l'interaction (parametre de sortie) </td></tr>
+    <tr><td class="paramname">rand_state</td><td>L'etat du generateur aleatoire curand </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true si le rayon a ete diffuse, false s'il a ete absorbe </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="material__dispatch_8cuh_source.html#l00038">38</a> du fichier <a class="el" href="material__dispatch_8cuh_source.html">material_dispatch.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a53f12cdb6580010fd1f0f7a7c518c3ea" name="a53f12cdb6580010fd1f0f7a7c518c3ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53f12cdb6580010fd1f0f7a7c518c3ea">&#9670;&#160;</a></span>scatter_cpu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rt::scatter_cpu </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dispatche l'interaction rayon-materiau selon le type de materiau (version CPU) </p>
+<p>Version CPU de <a class="el" href="#a39c99a179d64564065e8a287512c2967" title="Dispatche l&#39;interaction rayon-materiau selon le type de materiau (version GPU)">scatter()</a>. Meme logique de dispatch par switch, mais utilise les variantes CPU des fonctions de diffusion (scatter_lambertian_cpu, etc.) qui prennent un <a class="el" href="classrt_1_1_c_p_u_random.html" title="Generateur de nombres aleatoires pour le rendu sur CPU.">CPURandom</a> au lieu d'un curandState. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Le materiau de la surface touchee </td></tr>
+    <tr><td class="paramname">r_in</td><td>Le rayon incident </td></tr>
+    <tr><td class="paramname">rec</td><td>L'enregistrement du point d'intersection </td></tr>
+    <tr><td class="paramname">attenuation</td><td>La couleur d'attenuation du materiau (parametre de sortie) </td></tr>
+    <tr><td class="paramname">scattered</td><td>Le rayon diffuse produit par l'interaction (parametre de sortie) </td></tr>
+    <tr><td class="paramname">rng</td><td>Le generateur de nombres aleatoires CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true si le rayon a ete diffuse, false s'il a ete absorbe </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="material__dispatch_8cuh_source.html#l00071">71</a> du fichier <a class="el" href="material__dispatch_8cuh_source.html">material_dispatch.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a32c034fff4f59bceeda70acdec22746a" name="a32c034fff4f59bceeda70acdec22746a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32c034fff4f59bceeda70acdec22746a">&#9670;&#160;</a></span>scatter_dielectric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool rt::scatter_dielectric </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_state</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gere la reflexion ou la refraction d'un rayon sur un dielectrique (version GPU). </p>
+<p>Cette fonction decide si le rayon est reflechi ou refracte en se basant sur deux criteres :</p><ol type="1">
+<li>La reflexion totale interne : si l'angle d'incidence est trop grand (selon la loi de Snell), la refraction est impossible et le rayon est entierement reflechi.</li>
+<li>L'approximation de Schlick : meme si la refraction est possible, une partie de la lumiere est reflechie de facon probabiliste. L'attenuation est toujours blanche car le verre pur ne colore pas la lumiere. <dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Le materiau dielectrique de la surface. </td></tr>
+    <tr><td class="paramname">r_in</td><td>Le rayon incident arrivant sur la surface. </td></tr>
+    <tr><td class="paramname">rec</td><td>L'enregistrement du point d'impact (position, normale, face avant/arriere). </td></tr>
+    <tr><td class="paramname">attenuation</td><td>[sortie] La couleur d'attenuation (toujours blanc pour un dielectrique). </td></tr>
+    <tr><td class="paramname">scattered</td><td>[sortie] Le rayon reflechi ou refracte genere. </td></tr>
+    <tr><td class="paramname">rand_state</td><td>L'etat du generateur aleatoire CUDA pour le choix reflexion/refraction. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true toujours, car un dielectrique produit toujours un rayon sortant. </dd></dl>
+</li>
+</ol>
+
+<p class="definition">Définition à la ligne <a class="el" href="dielectric_8cuh_source.html#l00069">69</a> du fichier <a class="el" href="dielectric_8cuh_source.html">dielectric.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a3e3b742decd124ea2a3a1ad0e68b35e4" name="a3e3b742decd124ea2a3a1ad0e68b35e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e3b742decd124ea2a3a1ad0e68b35e4">&#9670;&#160;</a></span>scatter_dielectric_cpu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rt::scatter_dielectric_cpu </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gere la reflexion ou la refraction d'un rayon sur un dielectrique (version CPU). </p>
+<p>Meme algorithme que <a class="el" href="#a32c034fff4f59bceeda70acdec22746a" title="Gere la reflexion ou la refraction d&#39;un rayon sur un dielectrique (version GPU).">scatter_dielectric()</a>, mais utilise un generateur aleatoire CPU (<a class="el" href="classrt_1_1_c_p_u_random.html" title="Generateur de nombres aleatoires pour le rendu sur CPU.">CPURandom</a>) pour le choix probabiliste entre reflexion et refraction. Cette version est utilisee pour le rendu CPU avec OpenMP. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Le materiau dielectrique de la surface. </td></tr>
+    <tr><td class="paramname">r_in</td><td>Le rayon incident. </td></tr>
+    <tr><td class="paramname">rec</td><td>L'enregistrement du point d'impact. </td></tr>
+    <tr><td class="paramname">attenuation</td><td>[sortie] La couleur d'attenuation (toujours blanc). </td></tr>
+    <tr><td class="paramname">scattered</td><td>[sortie] Le rayon reflechi ou refracte genere. </td></tr>
+    <tr><td class="paramname">rng</td><td>Le generateur de nombres aleatoires CPU. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true toujours, car un dielectrique produit toujours un rayon sortant. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="dielectric_8cuh_source.html#l00110">110</a> du fichier <a class="el" href="dielectric_8cuh_source.html">dielectric.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a24a6ceda4dcd88de32e6c81a5e4e336f" name="a24a6ceda4dcd88de32e6c81a5e4e336f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24a6ceda4dcd88de32e6c81a5e4e336f">&#9670;&#160;</a></span>scatter_lambertian()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool rt::scatter_lambertian </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_state</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la diffusion d'un rayon sur une surface lambertienne (version GPU). </p>
+<p>La direction de diffusion est calculee en ajoutant un vecteur unitaire aleatoire a la normale de la surface. Si le vecteur resultant est quasi-nul (cas degenere ou le vecteur aleatoire est oppose a la normale), on utilise directement la normale comme direction de diffusion. L'attenuation est simplement l'albedo du materiau. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Le materiau lambertien de la surface touchee. </td></tr>
+    <tr><td class="paramname">r_in</td><td>Le rayon incident (celui qui arrive sur la surface). </td></tr>
+    <tr><td class="paramname">rec</td><td>L'enregistrement du point d'impact (position, normale, etc.). </td></tr>
+    <tr><td class="paramname">attenuation</td><td>[sortie] La couleur d'attenuation appliquee au rayon diffuse. </td></tr>
+    <tr><td class="paramname">scattered</td><td>[sortie] Le nouveau rayon diffuse genere apres le rebond. </td></tr>
+    <tr><td class="paramname">rand_state</td><td>L'etat du generateur aleatoire CUDA (curand) pour le GPU. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true toujours, car une surface lambertienne diffuse toujours le rayon. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="lambertian_8cuh_source.html#l00046">46</a> du fichier <a class="el" href="lambertian_8cuh_source.html">lambertian.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a1c2aef51595baa4362be5b6219858b85" name="a1c2aef51595baa4362be5b6219858b85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c2aef51595baa4362be5b6219858b85">&#9670;&#160;</a></span>scatter_lambertian_cpu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rt::scatter_lambertian_cpu </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la diffusion d'un rayon sur une surface lambertienne (version CPU). </p>
+<p>Meme algorithme que <a class="el" href="#a24a6ceda4dcd88de32e6c81a5e4e336f" title="Calcule la diffusion d&#39;un rayon sur une surface lambertienne (version GPU).">scatter_lambertian()</a>, mais utilise un generateur aleatoire CPU (<a class="el" href="classrt_1_1_c_p_u_random.html" title="Generateur de nombres aleatoires pour le rendu sur CPU.">CPURandom</a>) au lieu de curand. Cette version est utilisee pour le rendu sur CPU avec OpenMP. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Le materiau lambertien de la surface touchee. </td></tr>
+    <tr><td class="paramname">r_in</td><td>Le rayon incident. </td></tr>
+    <tr><td class="paramname">rec</td><td>L'enregistrement du point d'impact. </td></tr>
+    <tr><td class="paramname">attenuation</td><td>[sortie] La couleur d'attenuation appliquee au rayon diffuse. </td></tr>
+    <tr><td class="paramname">scattered</td><td>[sortie] Le nouveau rayon diffuse genere. </td></tr>
+    <tr><td class="paramname">rng</td><td>Le generateur de nombres aleatoires CPU. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true toujours, car la diffusion lambertienne reussit systematiquement. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="lambertian_8cuh_source.html#l00077">77</a> du fichier <a class="el" href="lambertian_8cuh_source.html">lambertian.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aa45fe0159557681f21c8208b7ba466ba" name="aa45fe0159557681f21c8208b7ba466ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa45fe0159557681f21c8208b7ba466ba">&#9670;&#160;</a></span>scatter_metal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool rt::scatter_metal </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_state</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la reflexion d'un rayon sur une surface metallique (version GPU). </p>
+<p>Le rayon incident est reflechi par rapport a la normale de la surface. Le vecteur reflechi est ensuite perturbe par un vecteur aleatoire pondere par le facteur de flou (fuzz), ce qui simule l'imperfection de la surface. Si le rayon reflechi part sous la surface (produit scalaire negatif avec la normale), la reflexion est rejetee. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Le materiau metallique de la surface. </td></tr>
+    <tr><td class="paramname">r_in</td><td>Le rayon incident arrivant sur la surface. </td></tr>
+    <tr><td class="paramname">rec</td><td>L'enregistrement du point d'impact (position, normale, etc.). </td></tr>
+    <tr><td class="paramname">attenuation</td><td>[sortie] La couleur d'attenuation (albedo du metal). </td></tr>
+    <tr><td class="paramname">scattered</td><td>[sortie] Le rayon reflechi genere. </td></tr>
+    <tr><td class="paramname">rand_state</td><td>L'etat du generateur aleatoire CUDA pour la perturbation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true si le rayon reflechi est du bon cote de la surface, false sinon. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="metal_8cuh_source.html#l00048">48</a> du fichier <a class="el" href="metal_8cuh_source.html">metal.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a22f1ceaf58860a71329592885382de7d" name="a22f1ceaf58860a71329592885382de7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22f1ceaf58860a71329592885382de7d">&#9670;&#160;</a></span>scatter_metal_cpu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rt::scatter_metal_cpu </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la reflexion d'un rayon sur une surface metallique (version CPU). </p>
+<p>Meme algorithme que <a class="el" href="#aa45fe0159557681f21c8208b7ba466ba" title="Calcule la reflexion d&#39;un rayon sur une surface metallique (version GPU).">scatter_metal()</a>, mais utilise un generateur aleatoire CPU (<a class="el" href="classrt_1_1_c_p_u_random.html" title="Generateur de nombres aleatoires pour le rendu sur CPU.">CPURandom</a>) pour la perturbation du vecteur reflechi. Cette version est utilisee lors du rendu CPU avec OpenMP. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Le materiau metallique de la surface. </td></tr>
+    <tr><td class="paramname">r_in</td><td>Le rayon incident. </td></tr>
+    <tr><td class="paramname">rec</td><td>L'enregistrement du point d'impact. </td></tr>
+    <tr><td class="paramname">attenuation</td><td>[sortie] La couleur d'attenuation (albedo du metal). </td></tr>
+    <tr><td class="paramname">scattered</td><td>[sortie] Le rayon reflechi genere. </td></tr>
+    <tr><td class="paramname">rng</td><td>Le generateur de nombres aleatoires CPU. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true si le rayon reflechi est du bon cote de la surface, false sinon. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="metal_8cuh_source.html#l00076">76</a> du fichier <a class="el" href="metal_8cuh_source.html">metal.cuh</a>.</p>
+
+</div>
+</div>
+<a id="af57522824b06a29f7ff3e4da6a0c1c62" name="af57522824b06a29f7ff3e4da6a0c1c62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af57522824b06a29f7ff3e4da6a0c1c62">&#9670;&#160;</a></span>sky_black()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::sky_black </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>direction</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fonction libre pour un fond completement noir. </p>
+<p>Utile pour les scenes ou l'on ne veut aucune lumiere ambiante du ciel, par exemple les scenes d'interieur ou les scenes avec eclairage artificiel. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">direction</td><td>Direction du rayon (ignoree) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Noir (0, 0, 0) </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="sky_8cuh_source.html#l00110">110</a> du fichier <a class="el" href="sky_8cuh_source.html">sky.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ac9a2b3c071cea9810cfa81f1e889b6c3" name="ac9a2b3c071cea9810cfa81f1e889b6c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9a2b3c071cea9810cfa81f1e889b6c3">&#9670;&#160;</a></span>sky_gradient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::sky_gradient </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>direction</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fonction libre pour un ciel bleu avec gradient classique. </p>
+<p>Retourne un degrade allant du blanc (horizon) au bleu clair (zenith). C'est le ciel par defaut utilise dans beaucoup de raytracers. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">direction</td><td>Direction du rayon </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Couleur du ciel interpolee entre blanc et bleu </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="sky_8cuh_source.html#l00097">97</a> du fichier <a class="el" href="sky_8cuh_source.html">sky.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a412268aee9001dd382684925105832ac" name="a412268aee9001dd382684925105832ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a412268aee9001dd382684925105832ac">&#9670;&#160;</a></span>unit_vector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::unit_vector </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne le vecteur unitaire (normalise) d'un vecteur donne. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Le vecteur a normaliser </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur unitaire dans la meme direction que v </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00270">270</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a3f4c766f124893c99968364bb826d83c" name="a3f4c766f124893c99968364bb826d83c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f4c766f124893c99968364bb826d83c">&#9670;&#160;</a></span>wang_hash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> __forceinline__ unsigned int rt::wang_hash </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>seed</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction de hachage rapide de Wang pour generer des graines pseudo-aleatoires. </p>
+<p>Cette fonction prend un entier en entree et produit un hachage bien distribue. Elle est utilisee pour creer des graines uniques et variees pour chaque pixel lors de l'initialisation des etats curand, ce qui evite les correlations entre pixels voisins. C'est beaucoup plus rapide que curand_init avec des sequences differentes. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seed</td><td>La valeur d'entree a hacher (typiquement l'index du pixel + un offset) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La valeur hachee, bien distribuee sur 32 bits </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="renderer_8cuh_source.html#l00135">135</a> du fichier <a class="el" href="renderer_8cuh_source.html">renderer.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Documentation des variables</h2>
+<a id="a319f26fff3702bb0ccfca31c49828526" name="a319f26fff3702bb0ccfca31c49828526"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a319f26fff3702bb0ccfca31c49828526">&#9670;&#160;</a></span>EPSILON</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::EPSILON = 1e-6f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Seuil de tolerance pour les comparaisons flottantes. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="cuda__utils_8cuh_source.html#l00026">26</a> du fichier <a class="el" href="cuda__utils_8cuh_source.html">cuda_utils.cuh</a>.</p>
+
+</div>
+</div>
+<a id="af37ea1dd751844bbbe551661750483f2" name="af37ea1dd751844bbbe551661750483f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af37ea1dd751844bbbe551661750483f2">&#9670;&#160;</a></span>INFINITY_F</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::INFINITY_F = 1e30f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Valeur representant l'infini pour les calculs de rayons. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="cuda__utils_8cuh_source.html#l00025">25</a> du fichier <a class="el" href="cuda__utils_8cuh_source.html">cuda_utils.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ac75ad42b0d984c71e00f1f2a3f77dbb7" name="ac75ad42b0d984c71e00f1f2a3f77dbb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac75ad42b0d984c71e00f1f2a3f77dbb7">&#9670;&#160;</a></span>PI</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::PI = 3.14159265358979323846f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constante PI en simple precision. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="cuda__utils_8cuh_source.html#l00024">24</a> du fichier <a class="el" href="cuda__utils_8cuh_source.html">cuda_utils.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a5513e05d54d0803bd1115411fa3a5ea7" name="a5513e05d54d0803bd1115411fa3a5ea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5513e05d54d0803bd1115411fa3a5ea7">&#9670;&#160;</a></span>RANDOM_TWO_PI</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::RANDOM_TWO_PI = 2.0f * 3.14159265358979323846f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constante 2*PI pour les calculs d'angles. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="random_8cuh_source.html#l00078">78</a> du fichier <a class="el" href="random_8cuh_source.html">random.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a028cc11d0f9e05b53695b6f9a0840208" name="a028cc11d0f9e05b53695b6f9a0840208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a028cc11d0f9e05b53695b6f9a0840208">&#9670;&#160;</a></span>VEC3_PI</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::VEC3_PI = 3.14159265358979323846f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constante Pi en simple precision. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00024">24</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="afa9c483dc1590a7babc933214351b0de" name="afa9c483dc1590a7babc933214351b0de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa9c483dc1590a7babc933214351b0de">&#9670;&#160;</a></span>VEC3_TWO_PI</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::VEC3_TWO_PI = 2.0f * <a class="el" href="#a028cc11d0f9e05b53695b6f9a0840208">VEC3_PI</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constante 2*Pi en simple precision, utile pour les angles en radians. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00026">26</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

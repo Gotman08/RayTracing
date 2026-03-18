@@ -1,0 +1,553 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence du fichier tests/test_ray.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('test__ray_8cpp.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence du fichier test_ray.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Tests unitaires pour la classe <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a> (rayon)  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &quot;<a class="el" href="ray_8cuh_source.html">raytracer/core/ray.cuh</a>&quot;</code><br />
+</div>
+<p><a href="test__ray_8cpp_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a29a763f14098f5574ae5c68291dc6ddd" id="r_a29a763f14098f5574ae5c68291dc6ddd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29a763f14098f5574ae5c68291dc6ddd">TEST_ASSERT</a>(expr)</td></tr>
+<tr class="memdesc:a29a763f14098f5574ae5c68291dc6ddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'assertion simple pour les tests.  <br /></td></tr>
+<tr class="memitem:a944437e7ac7475ac6e6c7e6316012510" id="r_a944437e7ac7475ac6e6c7e6316012510"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a944437e7ac7475ac6e6c7e6316012510">TEST_ASSERT_NEAR</a>(a,  b,  eps)</td></tr>
+<tr class="memdesc:a944437e7ac7475ac6e6c7e6316012510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'assertion avec tolerance pour les comparaisons flottantes.  <br /></td></tr>
+<tr class="memitem:a36936b10eceab520bb9d3d95534a00db" id="r_a36936b10eceab520bb9d3d95534a00db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36936b10eceab520bb9d3d95534a00db">RUN_TEST</a>(test_func)</td></tr>
+<tr class="memdesc:a36936b10eceab520bb9d3d95534a00db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'execution d'un test unitaire.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:ad427d23d50b1b07f41792d72756f8af5" id="r_ad427d23d50b1b07f41792d72756f8af5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad427d23d50b1b07f41792d72756f8af5">test_ray_default_constructor</a> ()</td></tr>
+<tr class="memdesc:ad427d23d50b1b07f41792d72756f8af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur par defaut de <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a>.  <br /></td></tr>
+<tr class="memitem:ab94169a05ac87cdb177b9e6b12ddea0f" id="r_ab94169a05ac87cdb177b9e6b12ddea0f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab94169a05ac87cdb177b9e6b12ddea0f">test_ray_parameterized_constructor</a> ()</td></tr>
+<tr class="memdesc:ab94169a05ac87cdb177b9e6b12ddea0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur parametre de <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a> (origine + direction)  <br /></td></tr>
+<tr class="memitem:adc9b20fd5a9f7c5661f2c01dec8d31f3" id="r_adc9b20fd5a9f7c5661f2c01dec8d31f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc9b20fd5a9f7c5661f2c01dec8d31f3">test_ray_with_time</a> ()</td></tr>
+<tr class="memdesc:adc9b20fd5a9f7c5661f2c01dec8d31f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur de <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a> avec un parametre de temps.  <br /></td></tr>
+<tr class="memitem:a9dbc7466725868dd0d358211bebcb75f" id="r_a9dbc7466725868dd0d358211bebcb75f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9dbc7466725868dd0d358211bebcb75f">test_ray_at_zero</a> ()</td></tr>
+<tr class="memdesc:a9dbc7466725868dd0d358211bebcb75f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste at(0) qui doit retourner l'origine du rayon.  <br /></td></tr>
+<tr class="memitem:a6ec6e851e54b231bfea34a0b21e6341a" id="r_a6ec6e851e54b231bfea34a0b21e6341a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ec6e851e54b231bfea34a0b21e6341a">test_ray_at_positive</a> ()</td></tr>
+<tr class="memdesc:a6ec6e851e54b231bfea34a0b21e6341a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste at() avec un parametre t positif.  <br /></td></tr>
+<tr class="memitem:a6d7b062dd367e2a9e7082732c9a1c28b" id="r_a6d7b062dd367e2a9e7082732c9a1c28b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d7b062dd367e2a9e7082732c9a1c28b">test_ray_at_negative</a> ()</td></tr>
+<tr class="memdesc:a6d7b062dd367e2a9e7082732c9a1c28b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste at() avec un parametre t negatif.  <br /></td></tr>
+<tr class="memitem:afbdcf73130dfd45357eb7eebd1c7345b" id="r_afbdcf73130dfd45357eb7eebd1c7345b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbdcf73130dfd45357eb7eebd1c7345b">test_ray_at_fractional</a> ()</td></tr>
+<tr class="memdesc:afbdcf73130dfd45357eb7eebd1c7345b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste at() avec un parametre t fractionnaire (0.5)  <br /></td></tr>
+<tr class="memitem:a8b2f6a9d3687559e2cf3f889e87638e6" id="r_a8b2f6a9d3687559e2cf3f889e87638e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b2f6a9d3687559e2cf3f889e87638e6">test_ray_at_unit_direction</a> ()</td></tr>
+<tr class="memdesc:a8b2f6a9d3687559e2cf3f889e87638e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste at(1) avec une direction normalisee.  <br /></td></tr>
+<tr class="memitem:a62ead2fe3f4f1b6296777f907134788a" id="r_a62ead2fe3f4f1b6296777f907134788a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62ead2fe3f4f1b6296777f907134788a">test_ray_diagonal_direction</a> ()</td></tr>
+<tr class="memdesc:a62ead2fe3f4f1b6296777f907134788a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste un rayon avec une direction diagonale (1, 1, 1)  <br /></td></tr>
+<tr class="memitem:a467465ae9de0ace0f98e96626f69873a" id="r_a467465ae9de0ace0f98e96626f69873a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a467465ae9de0ace0f98e96626f69873a">test_ray_z_direction</a> ()</td></tr>
+<tr class="memdesc:a467465ae9de0ace0f98e96626f69873a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste un rayon oriente le long de l'axe -Z.  <br /></td></tr>
+<tr class="memitem:a1e6d1f1a7938fc6ed81a78ce5a9c13db" id="r_a1e6d1f1a7938fc6ed81a78ce5a9c13db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e6d1f1a7938fc6ed81a78ce5a9c13db">run_ray_tests</a> (int &amp;<a class="el" href="test__vec3_8cpp.html#a561a5450b127e97c5ca67d0b349747a8">passed</a>, int &amp;<a class="el" href="test__vec3_8cpp.html#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a>, int &amp;<a class="el" href="test__vec3_8cpp.html#ac7af894858cf396a219d632f40afdc8d">total</a>)</td></tr>
+<tr class="memdesc:a1e6d1f1a7938fc6ed81a78ce5a9c13db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute l'ensemble des tests unitaires pour <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a>.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a2cf9e40e1e678d716235c32043993b35" id="r_a2cf9e40e1e678d716235c32043993b35"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cf9e40e1e678d716235c32043993b35">EPS</a> = 1e-6f</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Tests unitaires pour la classe <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a> (rayon) </p>
+<p>Ce fichier verifie le bon fonctionnement de la classe <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a> qui represente un rayon dans l'espace 3D, defini par une origine et une direction. On teste les constructeurs (par defaut, parametre, avec temps), les accesseurs (origin, direction, time) et la methode at(t) qui calcule le point le long du rayon a la distance parametrique t. </p>
+
+<p class="definition">Définition dans le fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentation des macros</h2>
+<a id="a36936b10eceab520bb9d3d95534a00db" name="a36936b10eceab520bb9d3d95534a00db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36936b10eceab520bb9d3d95534a00db">&#9670;&#160;</a></span>RUN_TEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RUN_TEST</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>test_func</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (test_func()) { \</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;  [PASS] &quot;</span> &lt;&lt; #test_func &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <a class="code hl_variable" href="test__vec3_8cpp.html#a561a5450b127e97c5ca67d0b349747a8">passed</a>++; \</div>
+<div class="line">        } <span class="keywordflow">else</span> { \</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;  [FAIL] &quot;</span> &lt;&lt; #test_func &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <a class="code hl_variable" href="test__vec3_8cpp.html#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a>++; \</div>
+<div class="line">        } \</div>
+<div class="line">        <a class="code hl_variable" href="test__vec3_8cpp.html#ac7af894858cf396a219d632f40afdc8d">total</a>++; \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+<div class="ttc" id="atest__vec3_8cpp_html_a561a5450b127e97c5ca67d0b349747a8"><div class="ttname"><a href="test__vec3_8cpp.html#a561a5450b127e97c5ca67d0b349747a8">passed</a></div><div class="ttdeci">int passed</div></div>
+<div class="ttc" id="atest__vec3_8cpp_html_ac7af894858cf396a219d632f40afdc8d"><div class="ttname"><a href="test__vec3_8cpp.html#ac7af894858cf396a219d632f40afdc8d">total</a></div><div class="ttdeci">int total</div><div class="ttdef"><b>Definition</b> <a href="test__vec3_8cpp_source.html#l00021">test_vec3.cpp:21</a></div></div>
+<div class="ttc" id="atest__vec3_8cpp_html_ad4ec5aab9b62fbbe9b8fc2d8ac0a5989"><div class="ttname"><a href="test__vec3_8cpp.html#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a></div><div class="ttdeci">int failed</div><div class="ttdef"><b>Definition</b> <a href="test__vec3_8cpp_source.html#l00021">test_vec3.cpp:21</a></div></div>
+</div><!-- fragment -->
+<p>Macro d'execution d'un test unitaire. </p>
+<p>Lance un test, affiche son resultat et incremente les compteurs. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00053">53</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a29a763f14098f5574ae5c68291dc6ddd" name="a29a763f14098f5574ae5c68291dc6ddd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29a763f14098f5574ae5c68291dc6ddd">&#9670;&#160;</a></span>TEST_ASSERT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_ASSERT</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>expr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (!(expr)) { \</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;    FAILED: &quot;</span> &lt;&lt; #expr &lt;&lt; <span class="stringliteral">&quot; at &quot;</span> &lt;&lt; __FILE__ &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>; \</div>
+<div class="line">        } \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Macro d'assertion simple pour les tests. </p>
+<p>Verifie qu'une expression booleenne est vraie. Affiche un message d'erreur avec le fichier et la ligne en cas d'echec. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00025">25</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a944437e7ac7475ac6e6c7e6316012510" name="a944437e7ac7475ac6e6c7e6316012510"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a944437e7ac7475ac6e6c7e6316012510">&#9670;&#160;</a></span>TEST_ASSERT_NEAR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_ASSERT_NEAR</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>b</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>eps</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (std::abs((a) - (b)) &gt; (eps)) { \</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;    FAILED: &quot;</span> &lt;&lt; #a &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (a) &lt;&lt; <span class="stringliteral">&quot;) != &quot;</span> &lt;&lt; #b &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (b) &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> \</div>
+<div class="line">                      &lt;&lt; <span class="stringliteral">&quot; at &quot;</span> &lt;&lt; __FILE__ &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>; \</div>
+<div class="line">        } \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Macro d'assertion avec tolerance pour les comparaisons flottantes. </p>
+<p>Compare deux valeurs flottantes avec une tolerance eps pour gerer les imprecisions inherentes au calcul en virgule flottante. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00039">39</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions</h2>
+<a id="a1e6d1f1a7938fc6ed81a78ce5a9c13db" name="a1e6d1f1a7938fc6ed81a78ce5a9c13db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e6d1f1a7938fc6ed81a78ce5a9c13db">&#9670;&#160;</a></span>run_ray_tests()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void run_ray_tests </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>passed</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>failed</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>total</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute l'ensemble des tests unitaires pour <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a>. </p>
+<p>Lance les tests unitaires du type Ray (rayon).</p>
+<p>Lance tous les tests de la classe Ray et met a jour les compteurs.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">passed</td><td>Compteur de tests reussis </td></tr>
+    <tr><td class="paramname">failed</td><td>Compteur de tests echoues </td></tr>
+    <tr><td class="paramname">total</td><td>Compteur du nombre total de tests executes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00256">256</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="afbdcf73130dfd45357eb7eebd1c7345b" name="afbdcf73130dfd45357eb7eebd1c7345b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbdcf73130dfd45357eb7eebd1c7345b">&#9670;&#160;</a></span>test_ray_at_fractional()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_at_fractional </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste at() avec un parametre t fractionnaire (0.5) </p>
+<p>Verifie le calcul pour un point situe a mi-chemin le long du rayon. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00180">180</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6d7b062dd367e2a9e7082732c9a1c28b" name="a6d7b062dd367e2a9e7082732c9a1c28b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d7b062dd367e2a9e7082732c9a1c28b">&#9670;&#160;</a></span>test_ray_at_negative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_at_negative </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste at() avec un parametre t negatif. </p>
+<p>Un t negatif correspond a un point situe derriere l'origine du rayon, dans la direction opposee. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00163">163</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6ec6e851e54b231bfea34a0b21e6341a" name="a6ec6e851e54b231bfea34a0b21e6341a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ec6e851e54b231bfea34a0b21e6341a">&#9670;&#160;</a></span>test_ray_at_positive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_at_positive </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste at() avec un parametre t positif. </p>
+<p>Verifie que P(t) = origin + t * direction pour t=2. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00145">145</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8b2f6a9d3687559e2cf3f889e87638e6" name="a8b2f6a9d3687559e2cf3f889e87638e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b2f6a9d3687559e2cf3f889e87638e6">&#9670;&#160;</a></span>test_ray_at_unit_direction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_at_unit_direction </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste at(1) avec une direction normalisee. </p>
+<p>Avec une direction unitaire, at(1) doit donner un point a exactement 1 unite de distance de l'origine. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00198">198</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9dbc7466725868dd0d358211bebcb75f" name="a9dbc7466725868dd0d358211bebcb75f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dbc7466725868dd0d358211bebcb75f">&#9670;&#160;</a></span>test_ray_at_zero()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_at_zero </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste at(0) qui doit retourner l'origine du rayon. </p>
+<p>Quand t=0, le point sur le rayon correspond exactement a l'origine. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00128">128</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad427d23d50b1b07f41792d72756f8af5" name="ad427d23d50b1b07f41792d72756f8af5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad427d23d50b1b07f41792d72756f8af5">&#9670;&#160;</a></span>test_ray_default_constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_default_constructor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur par defaut de <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a>. </p>
+<p>Verifie que le constructeur sans argument initialise l'origine et la direction a (0, 0, 0) et le temps a 0. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00074">74</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a62ead2fe3f4f1b6296777f907134788a" name="a62ead2fe3f4f1b6296777f907134788a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62ead2fe3f4f1b6296777f907134788a">&#9670;&#160;</a></span>test_ray_diagonal_direction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_diagonal_direction </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste un rayon avec une direction diagonale (1, 1, 1) </p>
+<p>Verifie le calcul de at() pour un rayon qui se deplace dans les trois dimensions simultanement. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00216">216</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab94169a05ac87cdb177b9e6b12ddea0f" name="ab94169a05ac87cdb177b9e6b12ddea0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab94169a05ac87cdb177b9e6b12ddea0f">&#9670;&#160;</a></span>test_ray_parameterized_constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_parameterized_constructor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur parametre de <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a> (origine + direction) </p>
+<p>Verifie que l'origine et la direction sont correctement stockees et que le temps est initialise a 0 par defaut. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00092">92</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="adc9b20fd5a9f7c5661f2c01dec8d31f3" name="adc9b20fd5a9f7c5661f2c01dec8d31f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc9b20fd5a9f7c5661f2c01dec8d31f3">&#9670;&#160;</a></span>test_ray_with_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_with_time </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur de <a class="el" href="classrt_1_1_ray.html" title="Represente un rayon defini par une origine, une direction et un temps.">Ray</a> avec un parametre de temps. </p>
+<p>Verifie que le temps est correctement pris en compte lors de la construction du rayon. Utile pour le flou de mouvement (motion blur). </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00113">113</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a467465ae9de0ace0f98e96626f69873a" name="a467465ae9de0ace0f98e96626f69873a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a467465ae9de0ace0f98e96626f69873a">&#9670;&#160;</a></span>test_ray_z_direction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_ray_z_direction </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste un rayon oriente le long de l'axe -Z. </p>
+<p>Configuration typique en raytracing ou la camera regarde vers les Z negatifs. Verifie at(10) sur cet axe. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00234">234</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Documentation des variables</h2>
+<a id="a2cf9e40e1e678d716235c32043993b35" name="a2cf9e40e1e678d716235c32043993b35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cf9e40e1e678d716235c32043993b35">&#9670;&#160;</a></span>EPS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float EPS = 1e-6f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="test__ray_8cpp_source.html#l00065">65</a> du fichier <a class="el" href="test__ray_8cpp_source.html">test_ray.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a href="test__ray_8cpp.html">test_ray.cpp</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

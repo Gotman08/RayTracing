@@ -1,3 +1,13 @@
+/**
+ * @file main.cu
+ * @brief Point d'entree principal du ray tracer CUDA
+ * @details Ce fichier contient la fonction main() qui orchestre l'ensemble du
+ *          pipeline de rendu : parsing des arguments, creation de la scene,
+ *          construction du BVH, allocation memoire GPU, lancement du rendu
+ *          (GPU CUDA ou CPU OpenMP) et sauvegarde de l'image finale.
+ *          Il gere egalement le mode interactif avec fenetre OpenGL si active.
+ */
+
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -32,6 +42,23 @@ static constexpr int MAX_OBJECTS = 1000;
 static constexpr int MAX_MATERIALS = 1000;
 
 #ifdef ENABLE_INTERACTIVE
+/**
+ * @brief Boucle principale du mode interactif avec rendu progressif en temps reel
+ * @details Initialise une fenetre OpenGL, configure l'interop CUDA/OpenGL pour
+ *          afficher le rendu directement sur la carte graphique, et entre dans
+ *          une boucle de rendu temps reel. La camera est controlable avec les
+ *          touches WASD (deplacement), la souris (orientation), Space/Q (monter)
+ *          et Ctrl/E (descendre). Le rendu est progressif : les samples s'accumulent
+ *          tant que la camera ne bouge pas, jusqu'a max_accumulated_spp.
+ *          Le deplacement de la camera reinitialise l'accumulation.
+ *          Supporte aussi la capture d'ecran avec la touche P.
+ * @param args Arguments en ligne de commande (sensibilite, vitesse, SPP, etc.)
+ * @param initial_camera Camera initiale configuree par la scene
+ * @param bvh Structure BVH deja construite et uploadee sur le GPU
+ * @param config Configuration de rendu (resolution, profondeur, etc.)
+ * @param d_rand_states Etats du generateur aleatoire CUDA, deja initialises sur le GPU
+ * @return 0 en cas de succes, 1 en cas d'erreur d'initialisation
+ */
 int run_interactive_mode(
     const Args& args,
     Camera& initial_camera,
@@ -39,14 +66,12 @@ int run_interactive_mode(
     RenderConfig& config,
     curandState* d_rand_states
 ) {
-    // Initialize GLFW window
     Window window;
     if (!window.initialize(config.width, config.height, "CUDA Ray Tracer - Interactive")) {
         std::cerr << "Failed to initialize window\n";
         return 1;
     }
 
-    // Initialize CUDA-GL interop
     GLInterop gl_interop;
     if (!gl_interop.initialize(config.width, config.height)) {
         std::cerr << "Failed to initialize GL interop\n";
@@ -54,7 +79,6 @@ int run_interactive_mode(
         return 1;
     }
 
-    // Initialize accumulation buffer
     AccumulationBuffer accum_buffer;
     if (!accum_buffer.initialize(config.width, config.height)) {
         std::cerr << "Failed to initialize accumulation buffer\n";
@@ -63,7 +87,6 @@ int run_interactive_mode(
         return 1;
     }
 
-    // Initialize camera controller from initial camera
     CameraController camera_ctrl;
     camera_ctrl.initialize(
         initial_camera.center,
@@ -75,17 +98,14 @@ int run_interactive_mode(
     camera_ctrl.move_speed = args.move_speed;
     camera_ctrl.mouse_sensitivity = args.mouse_sensitivity;
 
-    // Initialize input handler
     InputHandler input;
     input.setup_callbacks(window.handle);
 
-    // Rendering setup
     constexpr int BLOCK_SIZE = 16;
     dim3 blocks((config.width + BLOCK_SIZE - 1) / BLOCK_SIZE,
                 (config.height + BLOCK_SIZE - 1) / BLOCK_SIZE);
     dim3 threads(BLOCK_SIZE, BLOCK_SIZE);
 
-    // Frame timing
     auto last_frame_time = std::chrono::high_resolution_clock::now();
     float fps = 0.0f;
     int frame_count = 0;
@@ -95,32 +115,24 @@ int run_interactive_mode(
     std::cout << "  WASD: Move | Mouse: Look | Space/Q: Up | Ctrl/E: Down\n";
     std::cout << "  Shift: Fast | R: Reset | P: Screenshot | Esc: Quit\n\n";
 
-    // Main loop
     while (!window.should_close() && !input.state.should_close) {
-        // Calculate delta time
         auto current_time = std::chrono::high_resolution_clock::now();
         float delta_time = std::chrono::duration<float>(current_time - last_frame_time).count();
         last_frame_time = current_time;
 
-        // Poll input
         input.poll_events();
 
-        // Update camera
         bool camera_moved = camera_ctrl.update(input.state, delta_time);
 
-        // Reset accumulation if camera moved or R pressed
         if (camera_moved || input.state.reset_accumulation) {
             accum_buffer.reset();
         }
 
-        // Determine if we should render more samples
         bool should_render = (accum_buffer.get_accumulated_samples() < args.max_accumulated_spp);
 
         if (should_render) {
-            // Build camera for this frame
             Camera frame_camera = camera_ctrl.build_camera(config.width, config.height);
 
-            // Render to accumulation buffer
             render_kernel_accumulate<<<blocks, threads>>>(
                 accum_buffer.d_buffer,
                 frame_camera,
@@ -134,7 +146,6 @@ int run_interactive_mode(
             accum_buffer.accumulated_samples += args.interactive_spp;
         }
 
-        // Convert accumulation buffer to display format
         uchar4* d_display = gl_interop.map_for_cuda();
 
         convert_to_rgba8<<<blocks, threads>>>(
@@ -147,19 +158,16 @@ int run_interactive_mode(
 
         gl_interop.unmap_from_cuda();
 
-        // Display
         glClear(GL_COLOR_BUFFER_BIT);
         gl_interop.display();
         window.swap_buffers();
 
-        // Handle screenshot request
         if (input.state.screenshot_requested) {
             std::vector<Color> h_buffer(config.width * config.height);
             cudaMemcpy(h_buffer.data(), accum_buffer.d_buffer,
                        config.width * config.height * sizeof(Color),
                        cudaMemcpyDeviceToHost);
 
-            // Normalize and tone map
             int samples = accum_buffer.get_accumulated_samples();
             for (auto& c : h_buffer) {
                 if (samples > 0) c = c / static_cast<float>(samples);
@@ -173,7 +181,6 @@ int run_interactive_mode(
             std::cout << "Screenshot saved: screenshot.png (" << samples << " SPP)\n";
         }
 
-        // Update FPS counter
         frame_count++;
         auto fps_elapsed = std::chrono::duration<float>(current_time - fps_timer).count();
         if (fps_elapsed >= 1.0f) {
@@ -191,7 +198,6 @@ int run_interactive_mode(
         input.state.clear_deltas();
     }
 
-    // Cleanup
     accum_buffer.cleanup();
     gl_interop.cleanup();
     window.cleanup();
@@ -200,6 +206,14 @@ int run_interactive_mode(
 }
 #endif
 
+/**
+ * @brief Recupere le pointeur vers le materiau d'un objet hittable
+ * @details Selon le type de l'objet (sphere ou plan), retourne le pointeur
+ *          vers le materiau associe. Utile notamment lors de la conversion
+ *          des pointeurs host vers device pour le transfert GPU.
+ * @param obj Reference constante vers l'objet dont on veut le materiau
+ * @return Pointeur vers le Material de l'objet, ou nullptr si le type est inconnu
+ */
 inline Material* get_material_ptr(const HittableObject& obj) {
     switch (obj.type) {
         case HittableType::SPHERE: return obj.data.sphere.mat;
@@ -208,6 +222,15 @@ inline Material* get_material_ptr(const HittableObject& obj) {
     }
 }
 
+/**
+ * @brief Modifie le pointeur materiau d'un objet hittable
+ * @details Remplace le pointeur materiau de l'objet par un nouveau pointeur.
+ *          Utilise principalement pour la "fixup" des pointeurs lors du transfert
+ *          des donnees du CPU vers le GPU : les pointeurs host doivent etre
+ *          remplaces par les pointeurs device correspondants.
+ * @param obj Reference vers l'objet dont on veut modifier le materiau
+ * @param mat Nouveau pointeur vers le materiau (typiquement un pointeur device)
+ */
 inline void set_material_ptr(HittableObject& obj, Material* mat) {
     switch (obj.type) {
         case HittableType::SPHERE:
@@ -221,6 +244,22 @@ inline void set_material_ptr(HittableObject& obj, Material* mat) {
     }
 }
 
+/**
+ * @brief Point d'entree principal du ray tracer
+ * @details Orchestre l'ensemble du pipeline de rendu en plusieurs etapes :
+ *          1. Parsing des arguments en ligne de commande
+ *          2. Creation de la scene par defaut (camera, objets, materiaux)
+ *          3. Selon le mode choisi (CPU ou GPU) :
+ *             - CPU : construction du BVH cote host, rendu OpenMP
+ *             - GPU : allocation memoire CUDA, upload des materiaux, fixup des
+ *               pointeurs host->device, construction et upload du BVH, initialisation
+ *               des etats aleatoires, puis lancement du kernel de rendu
+ *          4. Sauvegarde de l'image finale
+ *          En mode interactif, delegue a run_interactive_mode() apres l'initialisation GPU.
+ * @param argc Nombre d'arguments de la ligne de commande
+ * @param argv Tableau des arguments de la ligne de commande
+ * @return 0 en cas de succes, 1 en cas d'erreur
+ */
 int main(int argc, char** argv) {
     Args args = parse_args(argc, argv);
 
@@ -256,7 +295,6 @@ int main(int argc, char** argv) {
         std::cout << "Output: " << args.output_file << "\n\n";
     }
 
-    // CPU Rendering Path
     if (args.use_cpu) {
         Timer timer;
 
@@ -303,7 +341,6 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    // GPU Rendering Path
     Timer timer;
     CudaTimer cuda_timer;
 
@@ -354,7 +391,6 @@ int main(int argc, char** argv) {
     if (!args.quiet) std::cout << "Initialisation..." << std::flush;
     timer.start("Init Random States");
     cuda_timer.start();
-    // Use fast hash-based initialization
     init_rand_states_fast<<<blocks, threads>>>(d_rand_states, config.width, config.height, static_cast<unsigned int>(time(NULL)));
     CUDA_SYNC_CHECK();
     cuda_timer.stop();

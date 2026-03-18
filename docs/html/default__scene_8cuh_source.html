@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer:  Fichier source de src/scene/default_scene.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('default__scene_8cuh_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">default_scene.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="default__scene_8cuh.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#ifndef RAYTRACER_SCENE_DEFAULT_SCENE_CUH</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="default__scene_8cuh.html#afcb6f6e6065034d31a0577303309e99a">   11</a></span><span class="preprocessor">#define RAYTRACER_SCENE_DEFAULT_SCENE_CUH</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="vec3_8cuh.html">raytracer/core/vec3.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="camera_8cuh.html">raytracer/camera/camera.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="hittable__list_8cuh.html">raytracer/geometry/hittable_list.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="sphere_8cuh.html">raytracer/geometry/sphere.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="lambertian_8cuh.html">raytracer/materials/lambertian.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="metal_8cuh.html">raytracer/materials/metal.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="dielectric_8cuh.html">raytracer/materials/dielectric.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="render__config_8cuh.html">raytracer/rendering/render_config.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacert.html">rt</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span></div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="namespacert.html#a42aafe38e4e8f767eab277b6ee79cc50">   43</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespacert.html#a42aafe38e4e8f767eab277b6ee79cc50">create_default_scene</a>(</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <a class="code hl_class" href="classrt_1_1_camera.html">Camera</a>&amp; camera,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <a class="code hl_class" href="classrt_1_1_hittable_list.html">HittableList</a>&amp; world,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <a class="code hl_struct" href="structrt_1_1_hittable_object.html">HittableObject</a>* objects,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <a class="code hl_class" href="classrt_1_1_material.html">Material</a>* materials,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">int</span>&amp; obj_count,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">int</span>&amp; mat_count,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <a class="code hl_struct" href="structrt_1_1_render_config.html">RenderConfig</a>&amp; config</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>) {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    camera.<a class="code hl_function" href="classrt_1_1_camera.html#aecb50fa6cc37e704f604c70681afcf51">initialize</a>(</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        config.<a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a>, config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a>,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>(13, 2, 3),</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>(0, 0, 0),</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <a class="code hl_class" href="classrt_1_1_vec3.html">Vec3</a>(0, 1, 0),</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        20.0f, 0.1f, 10.0f</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    );</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    materials[mat_count] = <a class="code hl_function" href="namespacert.html#a1fc6973eba7ecb4ebf5e5601b73066cb">create_lambertian</a>(<a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>(0.5f, 0.5f, 0.5f));</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#ad6ba8bfa455c6d6741ebc758c84c1970">type</a> = <a class="code hl_enumvalue" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">HittableType::SPHERE</a>;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a> = <a class="code hl_class" href="classrt_1_1_sphere.html">Sphere</a>(<a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>(0, -1000, 0), 1000, &amp;materials[mat_count]);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a6cd9cda55b6b2304aa86d0ff32b8b8d0">bbox</a> = objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a>.<a class="code hl_function" href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">bounding_box</a>();</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    mat_count++; obj_count++;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    materials[mat_count] = <a class="code hl_function" href="namespacert.html#aa4f3e8d024cd83252c67587de3c2429c">create_dielectric</a>(1.5f);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#ad6ba8bfa455c6d6741ebc758c84c1970">type</a> = <a class="code hl_enumvalue" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">HittableType::SPHERE</a>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a> = <a class="code hl_class" href="classrt_1_1_sphere.html">Sphere</a>(<a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>(0, 1, 0), 1.0f, &amp;materials[mat_count]);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a6cd9cda55b6b2304aa86d0ff32b8b8d0">bbox</a> = objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a>.<a class="code hl_function" href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">bounding_box</a>();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    mat_count++; obj_count++;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    materials[mat_count] = <a class="code hl_function" href="namespacert.html#a1fc6973eba7ecb4ebf5e5601b73066cb">create_lambertian</a>(<a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>(0.4f, 0.2f, 0.1f));</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#ad6ba8bfa455c6d6741ebc758c84c1970">type</a> = <a class="code hl_enumvalue" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">HittableType::SPHERE</a>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a> = <a class="code hl_class" href="classrt_1_1_sphere.html">Sphere</a>(<a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>(-4, 1, 0), 1.0f, &amp;materials[mat_count]);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a6cd9cda55b6b2304aa86d0ff32b8b8d0">bbox</a> = objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a>.<a class="code hl_function" href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">bounding_box</a>();</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    mat_count++; obj_count++;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    materials[mat_count] = <a class="code hl_function" href="namespacert.html#a279f6edeb52b1181010f0077bdbd7746">create_metal</a>(<a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>(0.7f, 0.6f, 0.5f), 0.0f);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#ad6ba8bfa455c6d6741ebc758c84c1970">type</a> = <a class="code hl_enumvalue" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">HittableType::SPHERE</a>;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a> = <a class="code hl_class" href="classrt_1_1_sphere.html">Sphere</a>(<a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>(4, 1, 0), 1.0f, &amp;materials[mat_count]);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a6cd9cda55b6b2304aa86d0ff32b8b8d0">bbox</a> = objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a>.<a class="code hl_function" href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">bounding_box</a>();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    mat_count++; obj_count++;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    srand(42);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> a = -5; a &lt; 5; a++) {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> b = -5; b &lt; 5; b++) {</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="keywordtype">float</span> choose_mat = (float)rand() / RAND_MAX;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> center(a + 0.9f * (<span class="keywordtype">float</span>)rand() / RAND_MAX, 0.2f, b + 0.9f * (<span class="keywordtype">float</span>)rand() / RAND_MAX);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <span class="keywordflow">if</span> ((center - <a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>(4, 0.2f, 0)).length() &gt; 0.9f) {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                <span class="keywordflow">if</span> (choose_mat &lt; 0.6f) {</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                    <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> albedo(</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                        (<span class="keywordtype">float</span>)rand() / RAND_MAX * (<span class="keywordtype">float</span>)rand() / RAND_MAX,</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                        (<span class="keywordtype">float</span>)rand() / RAND_MAX * (<span class="keywordtype">float</span>)rand() / RAND_MAX,</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                        (<span class="keywordtype">float</span>)rand() / RAND_MAX * (<span class="keywordtype">float</span>)rand() / RAND_MAX</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                    );</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                    materials[mat_count] = <a class="code hl_function" href="namespacert.html#a1fc6973eba7ecb4ebf5e5601b73066cb">create_lambertian</a>(albedo);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (choose_mat &lt; 0.85f) {</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                    <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> albedo(</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                        0.5f + 0.5f * (<span class="keywordtype">float</span>)rand() / RAND_MAX,</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                        0.5f + 0.5f * (<span class="keywordtype">float</span>)rand() / RAND_MAX,</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                        0.5f + 0.5f * (<span class="keywordtype">float</span>)rand() / RAND_MAX</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                    );</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                    <span class="keywordtype">float</span> fuzz = 0.5f * (float)rand() / RAND_MAX;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                    materials[mat_count] = <a class="code hl_function" href="namespacert.html#a279f6edeb52b1181010f0077bdbd7746">create_metal</a>(albedo, fuzz);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                    materials[mat_count] = <a class="code hl_function" href="namespacert.html#aa4f3e8d024cd83252c67587de3c2429c">create_dielectric</a>(1.5f);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#ad6ba8bfa455c6d6741ebc758c84c1970">type</a> = <a class="code hl_enumvalue" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">HittableType::SPHERE</a>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a> = <a class="code hl_class" href="classrt_1_1_sphere.html">Sphere</a>(center, 0.2f, &amp;materials[mat_count]);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a6cd9cda55b6b2304aa86d0ff32b8b8d0">bbox</a> = objects[obj_count].<a class="code hl_variable" href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">data</a>.<a class="code hl_variable" href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">sphere</a>.<a class="code hl_function" href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">bounding_box</a>();</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                mat_count++;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                obj_count++;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        }</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    }</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a352487d4152ac13f97702b78aa50b299">use_sky</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>}</div>
+</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>}</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="acamera_8cuh_html"><div class="ttname"><a href="camera_8cuh.html">camera.cuh</a></div><div class="ttdoc">Definition de la classe Camera pour le lancer de rayons.</div></div>
+<div class="ttc" id="aclassrt_1_1_camera_html"><div class="ttname"><a href="classrt_1_1_camera.html">rt::Camera</a></div><div class="ttdoc">Camera avec projection perspective, profondeur de champ et motion blur.</div><div class="ttdef"><b>Definition</b> <a href="camera_8cuh_source.html#l00027">camera.cuh:27</a></div></div>
+<div class="ttc" id="aclassrt_1_1_camera_html_aecb50fa6cc37e704f604c70681afcf51"><div class="ttname"><a href="classrt_1_1_camera.html#aecb50fa6cc37e704f604c70681afcf51">rt::Camera::initialize</a></div><div class="ttdeci">__host__ void initialize(int width, int height, Point3 lookfrom, Point3 lookat, Vec3 vup, float vfov, float aperture=0.0f, float focus_dist=10.0f, float t0=0.0f, float t1=0.0f)</div><div class="ttdoc">Configure la camera avec tous ses parametres.</div><div class="ttdef"><b>Definition</b> <a href="camera_8cuh_source.html#l00059">camera.cuh:59</a></div></div>
+<div class="ttc" id="aclassrt_1_1_hittable_html_ab18e54778652e4257e4fff79da4c1473"><div class="ttname"><a href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">rt::Hittable::bounding_box</a></div><div class="ttdeci">__host__ __device__ const AABB &amp; bounding_box() const</div><div class="ttdoc">Retourne la boite englobante de l&#39;objet.</div><div class="ttdef"><b>Definition</b> <a href="hittable_8cuh_source.html#l00061">hittable.cuh:61</a></div></div>
+<div class="ttc" id="aclassrt_1_1_hittable_list_html"><div class="ttname"><a href="classrt_1_1_hittable_list.html">rt::HittableList</a></div><div class="ttdoc">Liste de tous les objets de la scene.</div><div class="ttdef"><b>Definition</b> <a href="hittable__list_8cuh_source.html#l00088">hittable_list.cuh:88</a></div></div>
+<div class="ttc" id="aclassrt_1_1_material_html"><div class="ttname"><a href="classrt_1_1_material.html">rt::Material</a></div><div class="ttdoc">Represente un materiau generique attache a un objet de la scene.</div><div class="ttdef"><b>Definition</b> <a href="material_8cuh_source.html#l00040">material.cuh:40</a></div></div>
+<div class="ttc" id="aclassrt_1_1_sphere_html"><div class="ttname"><a href="classrt_1_1_sphere.html">rt::Sphere</a></div><div class="ttdoc">Represente une sphere dans la scene 3D.</div><div class="ttdef"><b>Definition</b> <a href="sphere_8cuh_source.html#l00027">sphere.cuh:27</a></div></div>
+<div class="ttc" id="aclassrt_1_1_vec3_html"><div class="ttname"><a href="classrt_1_1_vec3.html">rt::Vec3</a></div><div class="ttdoc">Vecteur 3D a composantes flottantes.</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00036">vec3.cuh:36</a></div></div>
+<div class="ttc" id="adielectric_8cuh_html"><div class="ttname"><a href="dielectric_8cuh.html">dielectric.cuh</a></div><div class="ttdoc">Implementation du materiau dielectrique (verre, eau) pour le raytracer.</div></div>
+<div class="ttc" id="ahittable__list_8cuh_html"><div class="ttname"><a href="hittable__list_8cuh.html">hittable_list.cuh</a></div><div class="ttdoc">Conteneur pour stocker et gerer l&#39;ensemble des objets de la scene.</div></div>
+<div class="ttc" id="alambertian_8cuh_html"><div class="ttname"><a href="lambertian_8cuh.html">lambertian.cuh</a></div><div class="ttdoc">Implementation du materiau lambertien (diffus) pour le raytracer.</div></div>
+<div class="ttc" id="ametal_8cuh_html"><div class="ttname"><a href="metal_8cuh.html">metal.cuh</a></div><div class="ttdoc">Implementation du materiau metallique pour le raytracer.</div></div>
+<div class="ttc" id="anamespacert_html"><div class="ttname"><a href="namespacert.html">rt</a></div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00017">bvh.cuh:17</a></div></div>
+<div class="ttc" id="anamespacert_html_a1fc6973eba7ecb4ebf5e5601b73066cb"><div class="ttname"><a href="namespacert.html#a1fc6973eba7ecb4ebf5e5601b73066cb">rt::create_lambertian</a></div><div class="ttdeci">__host__ __device__ Material create_lambertian(const Color &amp;albedo)</div><div class="ttdoc">Cree un materiau lambertien (diffus) avec la couleur donnee.</div><div class="ttdef"><b>Definition</b> <a href="lambertian_8cuh_source.html#l00026">lambertian.cuh:26</a></div></div>
+<div class="ttc" id="anamespacert_html_a279f6edeb52b1181010f0077bdbd7746"><div class="ttname"><a href="namespacert.html#a279f6edeb52b1181010f0077bdbd7746">rt::create_metal</a></div><div class="ttdeci">__host__ __device__ Material create_metal(const Color &amp;albedo, float fuzz)</div><div class="ttdoc">Cree un materiau metallique avec la couleur et le flou donnes.</div><div class="ttdef"><b>Definition</b> <a href="metal_8cuh_source.html#l00027">metal.cuh:27</a></div></div>
+<div class="ttc" id="anamespacert_html_a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43"><div class="ttname"><a href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">rt::HittableType::SPHERE</a></div><div class="ttdeci">@ SPHERE</div><div class="ttdoc">Objet de type sphere.</div><div class="ttdef"><b>Definition</b> <a href="hittable_8cuh_source.html#l00028">hittable.cuh:28</a></div></div>
+<div class="ttc" id="anamespacert_html_a42aafe38e4e8f767eab277b6ee79cc50"><div class="ttname"><a href="namespacert.html#a42aafe38e4e8f767eab277b6ee79cc50">rt::create_default_scene</a></div><div class="ttdeci">void create_default_scene(Camera &amp;camera, HittableList &amp;world, HittableObject *objects, Material *materials, int &amp;obj_count, int &amp;mat_count, RenderConfig &amp;config)</div><div class="ttdoc">Cree la scene par defaut avec sol, spheres principales et spheres aleatoires.</div><div class="ttdef"><b>Definition</b> <a href="#l00043">default_scene.cuh:43</a></div></div>
+<div class="ttc" id="anamespacert_html_a679fd997c4225984367e96dfc1f15c59"><div class="ttname"><a href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">rt::Point3</a></div><div class="ttdeci">Vec3 Point3</div><div class="ttdoc">Alias de type : un Point3 est un Vec3 utilise comme position.</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00194">vec3.cuh:194</a></div></div>
+<div class="ttc" id="anamespacert_html_a833d4cf4591664e7e913f7e550abc82a"><div class="ttname"><a href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">rt::Color</a></div><div class="ttdeci">Vec3 Color</div><div class="ttdoc">Alias de type : une Color est un Vec3 utilise comme couleur RGB.</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00196">vec3.cuh:196</a></div></div>
+<div class="ttc" id="anamespacert_html_aa4f3e8d024cd83252c67587de3c2429c"><div class="ttname"><a href="namespacert.html#aa4f3e8d024cd83252c67587de3c2429c">rt::create_dielectric</a></div><div class="ttdeci">__host__ __device__ Material create_dielectric(float ior)</div><div class="ttdoc">Cree un materiau dielectrique (transparent) avec l&#39;indice de refraction donne.</div><div class="ttdef"><b>Definition</b> <a href="dielectric_8cuh_source.html#l00028">dielectric.cuh:28</a></div></div>
+<div class="ttc" id="arender__config_8cuh_html"><div class="ttname"><a href="render__config_8cuh.html">render_config.cuh</a></div><div class="ttdoc">Structure de configuration pour le moteur de rendu.</div></div>
+<div class="ttc" id="asphere_8cuh_html"><div class="ttname"><a href="sphere_8cuh.html">sphere.cuh</a></div><div class="ttdoc">Definition de la classe Sphere pour le lancer de rayons.</div></div>
+<div class="ttc" id="astructrt_1_1_hittable_object_html"><div class="ttname"><a href="structrt_1_1_hittable_object.html">rt::HittableObject</a></div><div class="ttdoc">Represente un objet complet de la scene avec son type, ses donnees et sa boite englobante.</div><div class="ttdef"><b>Definition</b> <a href="hittable__list_8cuh_source.html#l00046">hittable_list.cuh:46</a></div></div>
+<div class="ttc" id="astructrt_1_1_hittable_object_html_a6cd9cda55b6b2304aa86d0ff32b8b8d0"><div class="ttname"><a href="structrt_1_1_hittable_object.html#a6cd9cda55b6b2304aa86d0ff32b8b8d0">rt::HittableObject::bbox</a></div><div class="ttdeci">AABB bbox</div><div class="ttdoc">Boite englobante de l&#39;objet.</div><div class="ttdef"><b>Definition</b> <a href="hittable__list_8cuh_source.html#l00049">hittable_list.cuh:49</a></div></div>
+<div class="ttc" id="astructrt_1_1_hittable_object_html_a76c3168a99add76602fe6abc97cfd1ac"><div class="ttname"><a href="structrt_1_1_hittable_object.html#a76c3168a99add76602fe6abc97cfd1ac">rt::HittableObject::data</a></div><div class="ttdeci">HittableData data</div><div class="ttdoc">Donnees geometriques de l&#39;objet.</div><div class="ttdef"><b>Definition</b> <a href="hittable__list_8cuh_source.html#l00048">hittable_list.cuh:48</a></div></div>
+<div class="ttc" id="astructrt_1_1_hittable_object_html_ad6ba8bfa455c6d6741ebc758c84c1970"><div class="ttname"><a href="structrt_1_1_hittable_object.html#ad6ba8bfa455c6d6741ebc758c84c1970">rt::HittableObject::type</a></div><div class="ttdeci">HittableType type</div><div class="ttdoc">Type de l&#39;objet (SPHERE ou PLANE)</div><div class="ttdef"><b>Definition</b> <a href="hittable__list_8cuh_source.html#l00047">hittable_list.cuh:47</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html"><div class="ttname"><a href="structrt_1_1_render_config.html">rt::RenderConfig</a></div><div class="ttdoc">Structure contenant tous les parametres de configuration du rendu.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00026">render_config.cuh:26</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a352487d4152ac13f97702b78aa50b299"><div class="ttname"><a href="structrt_1_1_render_config.html#a352487d4152ac13f97702b78aa50b299">rt::RenderConfig::use_sky</a></div><div class="ttdeci">bool use_sky</div><div class="ttdoc">Si vrai, utilise le ciel degrade ; sinon, la couleur de fond.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00031">render_config.cuh:31</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a8c97dc8a2ddc55139dccd5be51d7076f"><div class="ttname"><a href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">rt::RenderConfig::height</a></div><div class="ttdeci">int height</div><div class="ttdoc">Hauteur de l&#39;image en pixels.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00028">render_config.cuh:28</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_aa64bee560f763327cc3b86fe4e04f367"><div class="ttname"><a href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">rt::RenderConfig::width</a></div><div class="ttdeci">int width</div><div class="ttdoc">Largeur de l&#39;image en pixels.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00027">render_config.cuh:27</a></div></div>
+<div class="ttc" id="aunionrt_1_1_hittable_data_html_a733dd8004003a994c712f81e93cc54d5"><div class="ttname"><a href="unionrt_1_1_hittable_data.html#a733dd8004003a994c712f81e93cc54d5">rt::HittableData::sphere</a></div><div class="ttdeci">Sphere sphere</div><div class="ttdoc">Donnees de la sphere (si le type est SPHERE)</div><div class="ttdef"><b>Definition</b> <a href="hittable__list_8cuh_source.html#l00029">hittable_list.cuh:29</a></div></div>
+<div class="ttc" id="avec3_8cuh_html"><div class="ttname"><a href="vec3_8cuh.html">vec3.cuh</a></div><div class="ttdoc">Definition de la classe Vec3 et des fonctions utilitaires associees.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="dir_35781f0e74aa8deac19fa31b37174dc2.html">scene</a></li><li class="navelem"><a href="default__scene_8cuh.html">default_scene.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

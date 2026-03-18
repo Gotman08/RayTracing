@@ -1,3 +1,12 @@
+/**
+ * @file default_scene.cuh
+ * @brief Creation de la scene par defaut du ray tracer
+ * @details Ce fichier contient la fonction qui genere la scene de demonstration
+ *          inspiree du livre "Ray Tracing in One Weekend" de Peter Shirley.
+ *          La scene comprend un sol, trois grandes spheres centrales et un
+ *          ensemble de petites spheres aleatoires avec differents materiaux.
+ */
+
 #ifndef RAYTRACER_SCENE_DEFAULT_SCENE_CUH
 #define RAYTRACER_SCENE_DEFAULT_SCENE_CUH
 
@@ -13,6 +22,24 @@
 
 namespace rt {
 
+/**
+ * @brief Cree la scene par defaut avec sol, spheres principales et spheres aleatoires
+ * @details Initialise la camera avec un point de vue classique (position 13,2,3 regardant
+ *          l'origine) et construit la scene suivante :
+ *          - Un sol gris (grande sphere de rayon 1000, materiau lambertien)
+ *          - Une sphere dielectrique (verre, indice 1.5) au centre
+ *          - Une sphere lambertienne (diffuse, marron) a gauche
+ *          - Une sphere metallique (reflechissante, doree) a droite
+ *          - Des petites spheres aleatoires (lambertien, metal ou verre) dans une grille
+ *          La graine aleatoire est fixee a 42 pour la reproductibilite.
+ * @param camera Reference vers la camera a initialiser
+ * @param world Reference vers la liste d'objets de la scene (non utilisee directement ici)
+ * @param objects Tableau pre-alloue pour stocker les objets HittableObject
+ * @param materials Tableau pre-alloue pour stocker les materiaux Material
+ * @param obj_count Compteur d'objets, incremente au fur et a mesure de l'ajout (entree/sortie)
+ * @param mat_count Compteur de materiaux, incremente au fur et a mesure de l'ajout (entree/sortie)
+ * @param config Configuration de rendu, utilisee pour la resolution et le flag use_sky
+ */
 inline void create_default_scene(
     Camera& camera,
     HittableList& world,

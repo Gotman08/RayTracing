@@ -1,0 +1,970 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence du fichier tests/test_vec3.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('test__vec3_8cpp.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence du fichier test_vec3.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Tests unitaires pour la classe <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> (vecteur 3D)  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &quot;<a class="el" href="vec3_8cuh_source.html">raytracer/core/vec3.cuh</a>&quot;</code><br />
+</div>
+<p><a href="test__vec3_8cpp_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a29a763f14098f5574ae5c68291dc6ddd" id="r_a29a763f14098f5574ae5c68291dc6ddd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29a763f14098f5574ae5c68291dc6ddd">TEST_ASSERT</a>(expr)</td></tr>
+<tr class="memdesc:a29a763f14098f5574ae5c68291dc6ddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'assertion simple pour les tests.  <br /></td></tr>
+<tr class="memitem:a944437e7ac7475ac6e6c7e6316012510" id="r_a944437e7ac7475ac6e6c7e6316012510"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a944437e7ac7475ac6e6c7e6316012510">TEST_ASSERT_NEAR</a>(a,  b,  eps)</td></tr>
+<tr class="memdesc:a944437e7ac7475ac6e6c7e6316012510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'assertion avec tolerance pour les comparaisons flottantes.  <br /></td></tr>
+<tr class="memitem:a36936b10eceab520bb9d3d95534a00db" id="r_a36936b10eceab520bb9d3d95534a00db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36936b10eceab520bb9d3d95534a00db">RUN_TEST</a>(test_func)</td></tr>
+<tr class="memdesc:a36936b10eceab520bb9d3d95534a00db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'execution d'un test unitaire.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a1bfaa9641b5b660b741b6a4b9e5180f8" id="r_a1bfaa9641b5b660b741b6a4b9e5180f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1bfaa9641b5b660b741b6a4b9e5180f8">test_vec3_default_constructor</a> ()</td></tr>
+<tr class="memdesc:a1bfaa9641b5b660b741b6a4b9e5180f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur par defaut de <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>.  <br /></td></tr>
+<tr class="memitem:a48ae0a63d900b38f5b4f3d6b867a187e" id="r_a48ae0a63d900b38f5b4f3d6b867a187e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48ae0a63d900b38f5b4f3d6b867a187e">test_vec3_value_constructor</a> ()</td></tr>
+<tr class="memdesc:a48ae0a63d900b38f5b4f3d6b867a187e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur avec trois valeurs distinctes.  <br /></td></tr>
+<tr class="memitem:a2a5f9bb5f394250d82d1626f8437c1c9" id="r_a2a5f9bb5f394250d82d1626f8437c1c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a5f9bb5f394250d82d1626f8437c1c9">test_vec3_single_value_constructor</a> ()</td></tr>
+<tr class="memdesc:a2a5f9bb5f394250d82d1626f8437c1c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur avec une seule valeur.  <br /></td></tr>
+<tr class="memitem:a8df43b8f105842e50574ff82c277ff33" id="r_a8df43b8f105842e50574ff82c277ff33"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8df43b8f105842e50574ff82c277ff33">test_vec3_negation</a> ()</td></tr>
+<tr class="memdesc:a8df43b8f105842e50574ff82c277ff33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'operateur de negation unaire (-<a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>)  <br /></td></tr>
+<tr class="memitem:a2c9e1a48613d54c5097c16e64aada18c" id="r_a2c9e1a48613d54c5097c16e64aada18c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c9e1a48613d54c5097c16e64aada18c">test_vec3_addition</a> ()</td></tr>
+<tr class="memdesc:a2c9e1a48613d54c5097c16e64aada18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'addition de deux vecteurs (operator+)  <br /></td></tr>
+<tr class="memitem:a33493f0e1fe853d77f965569a54ac88d" id="r_a33493f0e1fe853d77f965569a54ac88d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33493f0e1fe853d77f965569a54ac88d">test_vec3_subtraction</a> ()</td></tr>
+<tr class="memdesc:a33493f0e1fe853d77f965569a54ac88d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la soustraction de deux vecteurs (operator-)  <br /></td></tr>
+<tr class="memitem:ad78eb25c197c617b71a6524115b3df84" id="r_ad78eb25c197c617b71a6524115b3df84"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad78eb25c197c617b71a6524115b3df84">test_vec3_multiplication</a> ()</td></tr>
+<tr class="memdesc:ad78eb25c197c617b71a6524115b3df84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la multiplication composante par composante de deux vecteurs.  <br /></td></tr>
+<tr class="memitem:ab12a965984bf75a8712bbd30c9f0fa11" id="r_ab12a965984bf75a8712bbd30c9f0fa11"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab12a965984bf75a8712bbd30c9f0fa11">test_vec3_scalar_multiplication</a> ()</td></tr>
+<tr class="memdesc:ab12a965984bf75a8712bbd30c9f0fa11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la multiplication par un scalaire (<a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> * float et float * <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>)  <br /></td></tr>
+<tr class="memitem:a03f0f595d34d45b5bd49ae08e4d54a95" id="r_a03f0f595d34d45b5bd49ae08e4d54a95"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03f0f595d34d45b5bd49ae08e4d54a95">test_vec3_division</a> ()</td></tr>
+<tr class="memdesc:a03f0f595d34d45b5bd49ae08e4d54a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la division d'un vecteur par un scalaire.  <br /></td></tr>
+<tr class="memitem:acb02ef02756b2c276286f036383d4c47" id="r_acb02ef02756b2c276286f036383d4c47"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb02ef02756b2c276286f036383d4c47">test_vec3_index_operator</a> ()</td></tr>
+<tr class="memdesc:acb02ef02756b2c276286f036383d4c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'operateur d'indexation (operator[])  <br /></td></tr>
+<tr class="memitem:a1e1164c0eb9fac182194624b0e22300b" id="r_a1e1164c0eb9fac182194624b0e22300b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e1164c0eb9fac182194624b0e22300b">test_vec3_compound_addition</a> ()</td></tr>
+<tr class="memdesc:a1e1164c0eb9fac182194624b0e22300b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'operateur d'addition composee (operator+=)  <br /></td></tr>
+<tr class="memitem:a43c25d98c10cf006650166f982447c18" id="r_a43c25d98c10cf006650166f982447c18"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43c25d98c10cf006650166f982447c18">test_vec3_compound_multiplication</a> ()</td></tr>
+<tr class="memdesc:a43c25d98c10cf006650166f982447c18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'operateur de multiplication composee (operator*=)  <br /></td></tr>
+<tr class="memitem:af6a72efa48a3e935dd72c0bcf3c23736" id="r_af6a72efa48a3e935dd72c0bcf3c23736"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af6a72efa48a3e935dd72c0bcf3c23736">test_vec3_compound_division</a> ()</td></tr>
+<tr class="memdesc:af6a72efa48a3e935dd72c0bcf3c23736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'operateur de division composee (operator/=)  <br /></td></tr>
+<tr class="memitem:abba9ea2e2bb79804313f993b2e350391" id="r_abba9ea2e2bb79804313f993b2e350391"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abba9ea2e2bb79804313f993b2e350391">test_vec3_length</a> ()</td></tr>
+<tr class="memdesc:abba9ea2e2bb79804313f993b2e350391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le calcul de la norme (longueur) du vecteur.  <br /></td></tr>
+<tr class="memitem:a4d346714637c1cc4aa94f1594b870024" id="r_a4d346714637c1cc4aa94f1594b870024"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d346714637c1cc4aa94f1594b870024">test_vec3_length_squared</a> ()</td></tr>
+<tr class="memdesc:a4d346714637c1cc4aa94f1594b870024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le calcul de la norme au carre.  <br /></td></tr>
+<tr class="memitem:a1fbdc2644f205baeee100071d3c82f7f" id="r_a1fbdc2644f205baeee100071d3c82f7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fbdc2644f205baeee100071d3c82f7f">test_vec3_normalized</a> ()</td></tr>
+<tr class="memdesc:a1fbdc2644f205baeee100071d3c82f7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la normalisation du vecteur (vecteur unitaire)  <br /></td></tr>
+<tr class="memitem:ada2608f36b318d3660fefccd4ba6375c" id="r_ada2608f36b318d3660fefccd4ba6375c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada2608f36b318d3660fefccd4ba6375c">test_vec3_near_zero</a> ()</td></tr>
+<tr class="memdesc:ada2608f36b318d3660fefccd4ba6375c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la detection de vecteurs quasi-nuls (near_zero)  <br /></td></tr>
+<tr class="memitem:a9d5eae826479c3809d7f7d78cee7468a" id="r_a9d5eae826479c3809d7f7d78cee7468a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d5eae826479c3809d7f7d78cee7468a">test_vec3_dot</a> ()</td></tr>
+<tr class="memdesc:a9d5eae826479c3809d7f7d78cee7468a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le produit scalaire (dot product)  <br /></td></tr>
+<tr class="memitem:a1f090d99e1d35b70d22867482e9474f6" id="r_a1f090d99e1d35b70d22867482e9474f6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f090d99e1d35b70d22867482e9474f6">test_vec3_cross</a> ()</td></tr>
+<tr class="memdesc:a1f090d99e1d35b70d22867482e9474f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le produit vectoriel (cross product)  <br /></td></tr>
+<tr class="memitem:a75ae6ce06630bf2832b4130b31c2511d" id="r_a75ae6ce06630bf2832b4130b31c2511d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75ae6ce06630bf2832b4130b31c2511d">test_vec3_cross_anticommutative</a> ()</td></tr>
+<tr class="memdesc:a75ae6ce06630bf2832b4130b31c2511d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'anticommutativite du produit vectoriel.  <br /></td></tr>
+<tr class="memitem:ab888f19291cac00139e57d0d7f71d05f" id="r_ab888f19291cac00139e57d0d7f71d05f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab888f19291cac00139e57d0d7f71d05f">test_vec3_reflect</a> ()</td></tr>
+<tr class="memdesc:ab888f19291cac00139e57d0d7f71d05f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la reflexion d'un vecteur par rapport a une normale.  <br /></td></tr>
+<tr class="memitem:a169794d6a937611b9b44ac7d1d8010b4" id="r_a169794d6a937611b9b44ac7d1d8010b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a169794d6a937611b9b44ac7d1d8010b4">test_vec3_refract_perpendicular</a> ()</td></tr>
+<tr class="memdesc:a169794d6a937611b9b44ac7d1d8010b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la refraction d'un rayon perpendiculaire a la surface.  <br /></td></tr>
+<tr class="memitem:a025ac379887293ca69261a8e6c5dc215" id="r_a025ac379887293ca69261a8e6c5dc215"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a025ac379887293ca69261a8e6c5dc215">test_vec3_unit_vector</a> ()</td></tr>
+<tr class="memdesc:a025ac379887293ca69261a8e6c5dc215"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la fonction libre unit_vector.  <br /></td></tr>
+<tr class="memitem:a105ca66d33c8591bdb01884ed597908c" id="r_a105ca66d33c8591bdb01884ed597908c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a105ca66d33c8591bdb01884ed597908c">test_point3_alias</a> ()</td></tr>
+<tr class="memdesc:a105ca66d33c8591bdb01884ed597908c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'alias <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59" title="Alias de type : un Point3 est un Vec3 utilise comme position.">Point3</a> pour <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>.  <br /></td></tr>
+<tr class="memitem:a36fb31d1e6fc0a43c2621e43e75b889c" id="r_a36fb31d1e6fc0a43c2621e43e75b889c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36fb31d1e6fc0a43c2621e43e75b889c">test_color_alias</a> ()</td></tr>
+<tr class="memdesc:a36fb31d1e6fc0a43c2621e43e75b889c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'alias <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a> pour <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>.  <br /></td></tr>
+<tr class="memitem:abbe87c0cf6cc3789d09d99fa41e3eba3" id="r_abbe87c0cf6cc3789d09d99fa41e3eba3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abbe87c0cf6cc3789d09d99fa41e3eba3">run_vec3_tests</a> (int &amp;<a class="el" href="#a561a5450b127e97c5ca67d0b349747a8">passed</a>, int &amp;<a class="el" href="#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a>, int &amp;<a class="el" href="#ac7af894858cf396a219d632f40afdc8d">total</a>)</td></tr>
+<tr class="memdesc:abbe87c0cf6cc3789d09d99fa41e3eba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute l'ensemble des tests unitaires pour <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a561a5450b127e97c5ca67d0b349747a8" id="r_a561a5450b127e97c5ca67d0b349747a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a561a5450b127e97c5ca67d0b349747a8">passed</a></td></tr>
+<tr class="memitem:ad4ec5aab9b62fbbe9b8fc2d8ac0a5989" id="r_ad4ec5aab9b62fbbe9b8fc2d8ac0a5989"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a></td></tr>
+<tr class="memitem:ac7af894858cf396a219d632f40afdc8d" id="r_ac7af894858cf396a219d632f40afdc8d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7af894858cf396a219d632f40afdc8d">total</a></td></tr>
+<tr class="memitem:a2cf9e40e1e678d716235c32043993b35" id="r_a2cf9e40e1e678d716235c32043993b35"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cf9e40e1e678d716235c32043993b35">EPS</a> = 1e-6f</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Tests unitaires pour la classe <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> (vecteur 3D) </p>
+<p>Ce fichier contient l'ensemble des tests unitaires permettant de valider le bon fonctionnement de la classe <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>. On y verifie les constructeurs, les operateurs arithmetiques (+, -, *, /), les operateurs composes (+=, *=, /=), ainsi que les fonctions mathematiques essentielles au raytracing : produit scalaire (dot), produit vectoriel (cross), reflexion, refraction, normalisation et detection de vecteurs quasi-nuls. Les alias <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59" title="Alias de type : un Point3 est un Vec3 utilise comme position.">Point3</a> et <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a> sont egalement testes. </p>
+
+<p class="definition">Définition dans le fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentation des macros</h2>
+<a id="a36936b10eceab520bb9d3d95534a00db" name="a36936b10eceab520bb9d3d95534a00db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36936b10eceab520bb9d3d95534a00db">&#9670;&#160;</a></span>RUN_TEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RUN_TEST</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>test_func</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (test_func()) { \</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;  [PASS] &quot;</span> &lt;&lt; #test_func &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <a class="code hl_variable" href="#a561a5450b127e97c5ca67d0b349747a8">passed</a>++; \</div>
+<div class="line">        } <span class="keywordflow">else</span> { \</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;  [FAIL] &quot;</span> &lt;&lt; #test_func &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <a class="code hl_variable" href="#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a>++; \</div>
+<div class="line">        } \</div>
+<div class="line">        <a class="code hl_variable" href="#ac7af894858cf396a219d632f40afdc8d">total</a>++; \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+<div class="ttc" id="atest__vec3_8cpp_html_a561a5450b127e97c5ca67d0b349747a8"><div class="ttname"><a href="#a561a5450b127e97c5ca67d0b349747a8">passed</a></div><div class="ttdeci">int passed</div></div>
+<div class="ttc" id="atest__vec3_8cpp_html_ac7af894858cf396a219d632f40afdc8d"><div class="ttname"><a href="#ac7af894858cf396a219d632f40afdc8d">total</a></div><div class="ttdeci">int total</div><div class="ttdef"><b>Definition</b> <a href="test__vec3_8cpp_source.html#l00021">test_vec3.cpp:21</a></div></div>
+<div class="ttc" id="atest__vec3_8cpp_html_ad4ec5aab9b62fbbe9b8fc2d8ac0a5989"><div class="ttname"><a href="#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a></div><div class="ttdeci">int failed</div><div class="ttdef"><b>Definition</b> <a href="test__vec3_8cpp_source.html#l00021">test_vec3.cpp:21</a></div></div>
+</div><!-- fragment -->
+<p>Macro d'execution d'un test unitaire. </p>
+<p>Execute la fonction de test passee en parametre, affiche le resultat ([PASS] ou [FAIL]) et met a jour les compteurs de tests reussis, echoues et totaux. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00061">61</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a29a763f14098f5574ae5c68291dc6ddd" name="a29a763f14098f5574ae5c68291dc6ddd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29a763f14098f5574ae5c68291dc6ddd">&#9670;&#160;</a></span>TEST_ASSERT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_ASSERT</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>expr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (!(expr)) { \</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;    FAILED: &quot;</span> &lt;&lt; #expr &lt;&lt; <span class="stringliteral">&quot; at &quot;</span> &lt;&lt; __FILE__ &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>; \</div>
+<div class="line">        } \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Macro d'assertion simple pour les tests. </p>
+<p>Verifie qu'une expression booleenne est vraie. En cas d'echec, affiche l'expression fautive ainsi que le fichier et la ligne correspondante, puis retourne false pour signaler l'echec du test. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00030">30</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a944437e7ac7475ac6e6c7e6316012510" name="a944437e7ac7475ac6e6c7e6316012510"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a944437e7ac7475ac6e6c7e6316012510">&#9670;&#160;</a></span>TEST_ASSERT_NEAR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_ASSERT_NEAR</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>b</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>eps</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (std::abs((a) - (b)) &gt; (eps)) { \</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;    FAILED: &quot;</span> &lt;&lt; #a &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (a) &lt;&lt; <span class="stringliteral">&quot;) != &quot;</span> &lt;&lt; #b &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (b) &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> \</div>
+<div class="line">                      &lt;&lt; <span class="stringliteral">&quot; at &quot;</span> &lt;&lt; __FILE__ &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>; \</div>
+<div class="line">        } \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Macro d'assertion avec tolerance pour les comparaisons flottantes. </p>
+<p>Compare deux valeurs flottantes en verifiant que leur difference absolue ne depasse pas la tolerance eps. Indispensable pour eviter les faux negatifs dus aux erreurs d'arrondi en virgule flottante. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00045">45</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions</h2>
+<a id="abbe87c0cf6cc3789d09d99fa41e3eba3" name="abbe87c0cf6cc3789d09d99fa41e3eba3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbe87c0cf6cc3789d09d99fa41e3eba3">&#9670;&#160;</a></span>run_vec3_tests()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void run_vec3_tests </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>passed</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>failed</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>total</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute l'ensemble des tests unitaires pour <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>. </p>
+<p>Lance les tests unitaires du type Vec3 (vecteur 3D).</p>
+<p>Fonction principale qui lance tous les tests de Vec3 et met a jour les compteurs de resultats (passed, failed, total).</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">passed</td><td>Compteur de tests reussis </td></tr>
+    <tr><td class="paramname">failed</td><td>Compteur de tests echoues </td></tr>
+    <tr><td class="paramname">total</td><td>Compteur du nombre total de tests executes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00455">455</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a36fb31d1e6fc0a43c2621e43e75b889c" name="a36fb31d1e6fc0a43c2621e43e75b889c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36fb31d1e6fc0a43c2621e43e75b889c">&#9670;&#160;</a></span>test_color_alias()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_color_alias </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'alias <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a> pour <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>. </p>
+<p><a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a> est un alias de type pour <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> utilise pour representer les couleurs RGB. On verifie qu'il se comporte comme un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00436">436</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a105ca66d33c8591bdb01884ed597908c" name="a105ca66d33c8591bdb01884ed597908c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a105ca66d33c8591bdb01884ed597908c">&#9670;&#160;</a></span>test_point3_alias()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_point3_alias </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'alias <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59" title="Alias de type : un Point3 est un Vec3 utilise comme position.">Point3</a> pour <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>. </p>
+<p><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59" title="Alias de type : un Point3 est un Vec3 utilise comme position.">Point3</a> est un alias de type pour <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> utilise pour representer les positions dans l'espace 3D. On verifie qu'il se comporte exactement comme un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00422">422</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2c9e1a48613d54c5097c16e64aada18c" name="a2c9e1a48613d54c5097c16e64aada18c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c9e1a48613d54c5097c16e64aada18c">&#9670;&#160;</a></span>test_vec3_addition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_addition </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'addition de deux vecteurs (operator+) </p>
+<p>Verifie que l'addition se fait composante par composante. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00138">138</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1e1164c0eb9fac182194624b0e22300b" name="a1e1164c0eb9fac182194624b0e22300b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e1164c0eb9fac182194624b0e22300b">&#9670;&#160;</a></span>test_vec3_compound_addition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_compound_addition </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'operateur d'addition composee (operator+=) </p>
+<p>Verifie que l'ajout en place modifie correctement le vecteur. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00229">229</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af6a72efa48a3e935dd72c0bcf3c23736" name="af6a72efa48a3e935dd72c0bcf3c23736"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6a72efa48a3e935dd72c0bcf3c23736">&#9670;&#160;</a></span>test_vec3_compound_division()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_compound_division </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'operateur de division composee (operator/=) </p>
+<p>Verifie que la division en place par un scalaire fonctionne. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00257">257</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a43c25d98c10cf006650166f982447c18" name="a43c25d98c10cf006650166f982447c18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c25d98c10cf006650166f982447c18">&#9670;&#160;</a></span>test_vec3_compound_multiplication()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_compound_multiplication </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'operateur de multiplication composee (operator*=) </p>
+<p>Verifie que la multiplication en place par un scalaire fonctionne. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00243">243</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1f090d99e1d35b70d22867482e9474f6" name="a1f090d99e1d35b70d22867482e9474f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f090d99e1d35b70d22867482e9474f6">&#9670;&#160;</a></span>test_vec3_cross()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_cross </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le produit vectoriel (cross product) </p>
+<p>Verifie que cross(x, y) = z selon la regle de la main droite. Le produit vectoriel donne un vecteur perpendiculaire aux deux operandes. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00342">342</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a75ae6ce06630bf2832b4130b31c2511d" name="a75ae6ce06630bf2832b4130b31c2511d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75ae6ce06630bf2832b4130b31c2511d">&#9670;&#160;</a></span>test_vec3_cross_anticommutative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_cross_anticommutative </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'anticommutativite du produit vectoriel. </p>
+<p>Verifie que cross(a, b) = -cross(b, a), propriete fondamentale du produit vectoriel. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00358">358</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1bfaa9641b5b660b741b6a4b9e5180f8" name="a1bfaa9641b5b660b741b6a4b9e5180f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bfaa9641b5b660b741b6a4b9e5180f8">&#9670;&#160;</a></span>test_vec3_default_constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_default_constructor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur par defaut de <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>. </p>
+<p>Verifie que le constructeur sans argument initialise bien toutes les composantes (x, y, z) a zero. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00082">82</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a03f0f595d34d45b5bd49ae08e4d54a95" name="a03f0f595d34d45b5bd49ae08e4d54a95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03f0f595d34d45b5bd49ae08e4d54a95">&#9670;&#160;</a></span>test_vec3_division()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_division </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la division d'un vecteur par un scalaire. </p>
+<p>Verifie que chaque composante est bien divisee par le scalaire. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00202">202</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9d5eae826479c3809d7f7d78cee7468a" name="a9d5eae826479c3809d7f7d78cee7468a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d5eae826479c3809d7f7d78cee7468a">&#9670;&#160;</a></span>test_vec3_dot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_dot </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le produit scalaire (dot product) </p>
+<p>Verifie que dot((1,2,3), (4,5,6)) = 1*4 + 2*5 + 3*6 = 32. Le produit scalaire est fondamental pour les calculs d'eclairage. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00328">328</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acb02ef02756b2c276286f036383d4c47" name="acb02ef02756b2c276286f036383d4c47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb02ef02756b2c276286f036383d4c47">&#9670;&#160;</a></span>test_vec3_index_operator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_index_operator </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'operateur d'indexation (operator[]) </p>
+<p>Verifie que v[0], v[1], v[2] retournent respectivement x, y et z. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00216">216</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="abba9ea2e2bb79804313f993b2e350391" name="abba9ea2e2bb79804313f993b2e350391"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abba9ea2e2bb79804313f993b2e350391">&#9670;&#160;</a></span>test_vec3_length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_length </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le calcul de la norme (longueur) du vecteur. </p>
+<p>Utilise le triangle classique (3, 4, 0) dont la norme vaut 5. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00272">272</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4d346714637c1cc4aa94f1594b870024" name="a4d346714637c1cc4aa94f1594b870024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d346714637c1cc4aa94f1594b870024">&#9670;&#160;</a></span>test_vec3_length_squared()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_length_squared </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le calcul de la norme au carre. </p>
+<p>La norme au carre evite la racine carree et vaut ici 25. Fonction souvent utilisee pour des comparaisons de distance sans sqrt. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00284">284</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad78eb25c197c617b71a6524115b3df84" name="ad78eb25c197c617b71a6524115b3df84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad78eb25c197c617b71a6524115b3df84">&#9670;&#160;</a></span>test_vec3_multiplication()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_multiplication </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la multiplication composante par composante de deux vecteurs. </p>
+<p>Verifie que chaque composante du resultat est le produit des composantes correspondantes. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00168">168</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ada2608f36b318d3660fefccd4ba6375c" name="ada2608f36b318d3660fefccd4ba6375c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada2608f36b318d3660fefccd4ba6375c">&#9670;&#160;</a></span>test_vec3_near_zero()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_near_zero </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la detection de vecteurs quasi-nuls (near_zero) </p>
+<p>Un vecteur tres petit (composantes ~1e-9) doit etre detecte comme quasi-nul, tandis qu'un vecteur standard ne l'est pas. Utile pour eviter les divisions par zero dans les calculs de reflexion/refraction. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00313">313</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8df43b8f105842e50574ff82c277ff33" name="a8df43b8f105842e50574ff82c277ff33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8df43b8f105842e50574ff82c277ff33">&#9670;&#160;</a></span>test_vec3_negation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_negation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'operateur de negation unaire (-<a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>) </p>
+<p>Verifie que la negation inverse le signe de chaque composante. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00124">124</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1fbdc2644f205baeee100071d3c82f7f" name="a1fbdc2644f205baeee100071d3c82f7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fbdc2644f205baeee100071d3c82f7f">&#9670;&#160;</a></span>test_vec3_normalized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_normalized </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la normalisation du vecteur (vecteur unitaire) </p>
+<p>Verifie que le vecteur normalise a une longueur de 1 et que ses composantes sont correctes (0.6, 0.8, 0.0). </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00296">296</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab888f19291cac00139e57d0d7f71d05f" name="ab888f19291cac00139e57d0d7f71d05f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab888f19291cac00139e57d0d7f71d05f">&#9670;&#160;</a></span>test_vec3_reflect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_reflect </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la reflexion d'un vecteur par rapport a une normale. </p>
+<p>Un vecteur incident (1, -1, 0) reflechi par la normale (0, 1, 0) doit donner (1, 1, 0). Essentiel pour les materiaux metalliques. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00375">375</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a169794d6a937611b9b44ac7d1d8010b4" name="a169794d6a937611b9b44ac7d1d8010b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a169794d6a937611b9b44ac7d1d8010b4">&#9670;&#160;</a></span>test_vec3_refract_perpendicular()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_refract_perpendicular </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la refraction d'un rayon perpendiculaire a la surface. </p>
+<p>Avec un indice de refraction de 1.0 et une incidence perpendiculaire, le rayon refracte doit garder la meme direction. Cela correspond au cas trivial de la loi de Snell-Descartes. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00392">392</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab12a965984bf75a8712bbd30c9f0fa11" name="ab12a965984bf75a8712bbd30c9f0fa11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab12a965984bf75a8712bbd30c9f0fa11">&#9670;&#160;</a></span>test_vec3_scalar_multiplication()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_scalar_multiplication </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la multiplication par un scalaire (<a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> * float et float * <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a>) </p>
+<p>Verifie la commutativite de la multiplication scalaire : v * 2 doit donner le meme resultat que 2 * v. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00184">184</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2a5f9bb5f394250d82d1626f8437c1c9" name="a2a5f9bb5f394250d82d1626f8437c1c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5f9bb5f394250d82d1626f8437c1c9">&#9670;&#160;</a></span>test_vec3_single_value_constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_single_value_constructor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur avec une seule valeur. </p>
+<p>Verifie que Vec3(5) initialise les trois composantes a 5, ce qui est utile pour creer des vecteurs uniformes. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00110">110</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a33493f0e1fe853d77f965569a54ac88d" name="a33493f0e1fe853d77f965569a54ac88d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33493f0e1fe853d77f965569a54ac88d">&#9670;&#160;</a></span>test_vec3_subtraction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_subtraction </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la soustraction de deux vecteurs (operator-) </p>
+<p>Verifie que la soustraction se fait composante par composante. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00153">153</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a025ac379887293ca69261a8e6c5dc215" name="a025ac379887293ca69261a8e6c5dc215"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a025ac379887293ca69261a8e6c5dc215">&#9670;&#160;</a></span>test_vec3_unit_vector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_unit_vector </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la fonction libre unit_vector. </p>
+<p>Verifie que unit_vector retourne un vecteur de norme 1. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00407">407</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a48ae0a63d900b38f5b4f3d6b867a187e" name="a48ae0a63d900b38f5b4f3d6b867a187e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48ae0a63d900b38f5b4f3d6b867a187e">&#9670;&#160;</a></span>test_vec3_value_constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_vec3_value_constructor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur avec trois valeurs distinctes. </p>
+<p>Verifie que Vec3(1, 2, 3) stocke bien chaque composante dans le membre correspondant. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00096">96</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Documentation des variables</h2>
+<a id="a2cf9e40e1e678d716235c32043993b35" name="a2cf9e40e1e678d716235c32043993b35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cf9e40e1e678d716235c32043993b35">&#9670;&#160;</a></span>EPS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float EPS = 1e-6f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00073">73</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad4ec5aab9b62fbbe9b8fc2d8ac0a5989" name="ad4ec5aab9b62fbbe9b8fc2d8ac0a5989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">&#9670;&#160;</a></span>failed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int failed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00021">21</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a561a5450b127e97c5ca67d0b349747a8" name="a561a5450b127e97c5ca67d0b349747a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a561a5450b127e97c5ca67d0b349747a8">&#9670;&#160;</a></span>passed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int passed</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel extern">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac7af894858cf396a219d632f40afdc8d" name="ac7af894858cf396a219d632f40afdc8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7af894858cf396a219d632f40afdc8d">&#9670;&#160;</a></span>total</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int total</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="test__vec3_8cpp_source.html#l00021">21</a> du fichier <a class="el" href="test__vec3_8cpp_source.html">test_vec3.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a href="test__vec3_8cpp.html">test_vec3.cpp</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

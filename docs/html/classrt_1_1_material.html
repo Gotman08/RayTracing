@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la classe rt::Material</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classrt_1_1_material.html','','classrt_1_1_material-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la classe rt::Material</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Represente un materiau generique attache a un objet de la scene.  
+ <a href="#details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:a7bc9b253e06328f456bc233f8a8eb46d" id="r_a7bc9b253e06328f456bc233f8a8eb46d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7bc9b253e06328f456bc233f8a8eb46d">Material</a> ()</td></tr>
+<tr class="memdesc:a7bc9b253e06328f456bc233f8a8eb46d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur par defaut.  <br /></td></tr>
+<tr class="memitem:a2a3481a8104d0687e4c2f0cb6e1b72eb" id="r_a2a3481a8104d0687e4c2f0cb6e1b72eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a3481a8104d0687e4c2f0cb6e1b72eb">Material</a> (<a class="el" href="namespacert.html#a0df27b1d021700d77e9ce71e7e1be93a">MaterialType</a> t, const <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;a)</td></tr>
+<tr class="memdesc:a2a3481a8104d0687e4c2f0cb6e1b72eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur avec type et couleur.  <br /></td></tr>
+<tr class="memitem:a57ec2af385bc068f105c4db2d7a19f1a" id="r_a57ec2af385bc068f105c4db2d7a19f1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57ec2af385bc068f105c4db2d7a19f1a">Material</a> (<a class="el" href="namespacert.html#a0df27b1d021700d77e9ce71e7e1be93a">MaterialType</a> t, const <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;a, float f)</td></tr>
+<tr class="memdesc:a57ec2af385bc068f105c4db2d7a19f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur avec type, couleur et facteur de flou.  <br /></td></tr>
+<tr class="memitem:acd072d9f2bda24a7deea2396869e3c46" id="r_acd072d9f2bda24a7deea2396869e3c46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd072d9f2bda24a7deea2396869e3c46">get_albedo</a> (float u, float v, const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;p) const</td></tr>
+<tr class="memdesc:acd072d9f2bda24a7deea2396869e3c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne la couleur (albedo) du materiau au point donne.  <br /></td></tr>
+<tr class="memitem:a072d1b2cc9ae53bf6d352048abfb5e4a" id="r_a072d1b2cc9ae53bf6d352048abfb5e4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a072d1b2cc9ae53bf6d352048abfb5e4a">emitted</a> (float u, float v, const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;p) const</td></tr>
+<tr class="memdesc:a072d1b2cc9ae53bf6d352048abfb5e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne la lumiere emise par le materiau.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr class="memitem:a7977ce4ec731a83aa1a9ba80abec97ad" id="r_a7977ce4ec731a83aa1a9ba80abec97ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> static <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_material.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7977ce4ec731a83aa1a9ba80abec97ad">make_dielectric</a> (float index_of_refraction)</td></tr>
+<tr class="memdesc:a7977ce4ec731a83aa1a9ba80abec97ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fabrique statique pour creer un materiau dielectrique.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:a9e62cc98dd91842f2e59ab08962a5c66" id="r_a9e62cc98dd91842f2e59ab08962a5c66"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacert.html#a0df27b1d021700d77e9ce71e7e1be93a">MaterialType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e62cc98dd91842f2e59ab08962a5c66">type</a></td></tr>
+<tr class="memdesc:a9e62cc98dd91842f2e59ab08962a5c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type du materiau (lambertien, metal ou dielectrique)  <br /></td></tr>
+<tr class="memitem:a1330a8f5430881c994e838263f935b94" id="r_a1330a8f5430881c994e838263f935b94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1330a8f5430881c994e838263f935b94">albedo</a></td></tr>
+<tr class="memdesc:a1330a8f5430881c994e838263f935b94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Couleur de base du materiau (proportion de lumiere reflechie par canal RGB)  <br /></td></tr>
+<tr class="memitem:ae028b17a71af8e0bd2d742a89b43800c" id="r_ae028b17a71af8e0bd2d742a89b43800c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae028b17a71af8e0bd2d742a89b43800c">fuzz</a></td></tr>
+<tr class="memdesc:ae028b17a71af8e0bd2d742a89b43800c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Facteur de flou pour les metaux (0 = miroir parfait, 1 = tres flou)  <br /></td></tr>
+<tr class="memitem:a76dd63236b96f9d8a76d1174e0462046" id="r_a76dd63236b96f9d8a76d1174e0462046"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76dd63236b96f9d8a76d1174e0462046">ior</a></td></tr>
+<tr class="memdesc:a76dd63236b96f9d8a76d1174e0462046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indice de refraction pour les dielectriques (ex: 1.5 pour le verre)  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Represente un materiau generique attache a un objet de la scene. </p>
+<p>Cette classe stocke toutes les proprietes physiques d'un materiau : le type (lambertien, metal ou dielectrique), la couleur (albedo), le facteur de flou pour les metaux (fuzz) et l'indice de refraction pour les dielectriques (ior). Elle est utilisable a la fois sur le CPU (host) et le GPU (device) grace aux qualificateurs CUDA. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00040">40</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a id="a7bc9b253e06328f456bc233f8a8eb46d" name="a7bc9b253e06328f456bc233f8a8eb46d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bc9b253e06328f456bc233f8a8eb46d">&#9670;&#160;</a></span>Material() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Material::Material </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur par defaut. </p>
+<p>Initialise un materiau lambertien gris (albedo 0.5) sans flou et avec un indice de refraction de 1.5 par defaut. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00052">52</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a2a3481a8104d0687e4c2f0cb6e1b72eb" name="a2a3481a8104d0687e4c2f0cb6e1b72eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a3481a8104d0687e4c2f0cb6e1b72eb">&#9670;&#160;</a></span>Material() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Material::Material </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacert.html#a0df27b1d021700d77e9ce71e7e1be93a">MaterialType</a></td>          <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>a</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur avec type et couleur. </p>
+<p>Cree un materiau du type specifie avec la couleur donnee. Le fuzz est mis a 0 et l'ior a 1.5 par defaut. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le type du materiau (LAMBERTIAN, METAL ou DIELECTRIC). </td></tr>
+    <tr><td class="paramname">a</td><td>La couleur (albedo) du materiau. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00063">63</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a57ec2af385bc068f105c4db2d7a19f1a" name="a57ec2af385bc068f105c4db2d7a19f1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57ec2af385bc068f105c4db2d7a19f1a">&#9670;&#160;</a></span>Material() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Material::Material </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacert.html#a0df27b1d021700d77e9ce71e7e1be93a">MaterialType</a></td>          <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>f</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur avec type, couleur et facteur de flou. </p>
+<p>Cree un materiau avec tous les parametres principaux. Utile principalement pour les materiaux metalliques ou le fuzz controle la nettete de la reflexion. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le type du materiau. </td></tr>
+    <tr><td class="paramname">a</td><td>La couleur (albedo) du materiau. </td></tr>
+    <tr><td class="paramname">f</td><td>Le facteur de flou (perturbation de la reflexion). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00075">75</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="a072d1b2cc9ae53bf6d352048abfb5e4a" name="a072d1b2cc9ae53bf6d352048abfb5e4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a072d1b2cc9ae53bf6d352048abfb5e4a">&#9670;&#160;</a></span>emitted()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::Material::emitted </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>u</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>v</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne la lumiere emise par le materiau. </p>
+<p>Par defaut, un materiau n'emet pas de lumiere (retourne noir). Cette methode peut etre surchargee pour creer des materiaux emissifs (sources de lumiere dans la scene). </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>Coordonnee de texture U. </td></tr>
+    <tr><td class="paramname">v</td><td>Coordonnee de texture V. </td></tr>
+    <tr><td class="paramname">p</td><td>Le point 3D sur la surface de l'objet. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La couleur emise (noir par defaut, soit aucune emission). </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00118">118</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a id="acd072d9f2bda24a7deea2396869e3c46" name="acd072d9f2bda24a7deea2396869e3c46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd072d9f2bda24a7deea2396869e3c46">&#9670;&#160;</a></span>get_albedo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::Material::get_albedo </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>u</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>v</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne la couleur (albedo) du materiau au point donne. </p>
+<p>Pour l'instant, cette methode retourne simplement l'albedo uniforme du materiau, mais elle pourrait etre etendue pour supporter des textures en utilisant les coordonnees UV. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>Coordonnee de texture U (non utilisee pour l'instant). </td></tr>
+    <tr><td class="paramname">v</td><td>Coordonnee de texture V (non utilisee pour l'instant). </td></tr>
+    <tr><td class="paramname">p</td><td>Le point 3D sur la surface de l'objet. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La couleur du materiau au point donne. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00104">104</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a7977ce4ec731a83aa1a9ba80abec97ad" name="a7977ce4ec731a83aa1a9ba80abec97ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7977ce4ec731a83aa1a9ba80abec97ad">&#9670;&#160;</a></span>make_dielectric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> static <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_material.html">Material</a> rt::Material::make_dielectric </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>index_of_refraction</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fabrique statique pour creer un materiau dielectrique. </p>
+<p>Methode utilitaire qui configure correctement un materiau de type DIELECTRIC avec un albedo blanc (le verre ne colore pas la lumiere) et l'indice de refraction specifie. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index_of_refraction</td><td>L'indice de refraction du milieu (ex: 1.5 pour le verre). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un objet <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a> configure comme dielectrique. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00086">86</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="a1330a8f5430881c994e838263f935b94" name="a1330a8f5430881c994e838263f935b94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1330a8f5430881c994e838263f935b94">&#9670;&#160;</a></span>albedo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> rt::Material::albedo</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Couleur de base du materiau (proportion de lumiere reflechie par canal RGB) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00043">43</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ae028b17a71af8e0bd2d742a89b43800c" name="ae028b17a71af8e0bd2d742a89b43800c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae028b17a71af8e0bd2d742a89b43800c">&#9670;&#160;</a></span>fuzz</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Material::fuzz</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Facteur de flou pour les metaux (0 = miroir parfait, 1 = tres flou) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00044">44</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a76dd63236b96f9d8a76d1174e0462046" name="a76dd63236b96f9d8a76d1174e0462046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76dd63236b96f9d8a76d1174e0462046">&#9670;&#160;</a></span>ior</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Material::ior</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indice de refraction pour les dielectriques (ex: 1.5 pour le verre) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00045">45</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a9e62cc98dd91842f2e59ab08962a5c66" name="a9e62cc98dd91842f2e59ab08962a5c66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e62cc98dd91842f2e59ab08962a5c66">&#9670;&#160;</a></span>type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacert.html#a0df27b1d021700d77e9ce71e7e1be93a">MaterialType</a> rt::Material::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type du materiau (lambertien, metal ou dielectrique) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="material_8cuh_source.html#l00042">42</a> du fichier <a class="el" href="material_8cuh_source.html">material.cuh</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>include/raytracer/materials/<a class="el" href="material_8cuh_source.html">material.cuh</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li><li class="navelem"><a href="classrt_1_1_material.html">Material</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,770 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence du fichier tests/test_aabb.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('test__aabb_8cpp.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence du fichier test_aabb.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Tests unitaires pour la classe <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> (Axis-Aligned Bounding Box)  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &quot;<a class="el" href="aabb_8cuh_source.html">raytracer/core/aabb.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="cuda__utils_8cuh_source.html">raytracer/core/cuda_utils.cuh</a>&quot;</code><br />
+</div>
+<p><a href="test__aabb_8cpp_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a29a763f14098f5574ae5c68291dc6ddd" id="r_a29a763f14098f5574ae5c68291dc6ddd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29a763f14098f5574ae5c68291dc6ddd">TEST_ASSERT</a>(expr)</td></tr>
+<tr class="memdesc:a29a763f14098f5574ae5c68291dc6ddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'assertion simple pour les tests.  <br /></td></tr>
+<tr class="memitem:a944437e7ac7475ac6e6c7e6316012510" id="r_a944437e7ac7475ac6e6c7e6316012510"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a944437e7ac7475ac6e6c7e6316012510">TEST_ASSERT_NEAR</a>(a,  b,  eps)</td></tr>
+<tr class="memdesc:a944437e7ac7475ac6e6c7e6316012510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'assertion avec tolerance pour les comparaisons flottantes.  <br /></td></tr>
+<tr class="memitem:a36936b10eceab520bb9d3d95534a00db" id="r_a36936b10eceab520bb9d3d95534a00db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36936b10eceab520bb9d3d95534a00db">RUN_TEST</a>(test_func)</td></tr>
+<tr class="memdesc:a36936b10eceab520bb9d3d95534a00db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro d'execution d'un test unitaire.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:ae6f0a8d8a2a9b4137035b911ca29a96a" id="r_ae6f0a8d8a2a9b4137035b911ca29a96a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6f0a8d8a2a9b4137035b911ca29a96a">test_aabb_point_constructor</a> ()</td></tr>
+<tr class="memdesc:ae6f0a8d8a2a9b4137035b911ca29a96a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> a partir de deux points.  <br /></td></tr>
+<tr class="memitem:a11b0af3bbac5a2a9532adb6b2273e166" id="r_a11b0af3bbac5a2a9532adb6b2273e166"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11b0af3bbac5a2a9532adb6b2273e166">test_aabb_point_constructor_reversed</a> ()</td></tr>
+<tr class="memdesc:a11b0af3bbac5a2a9532adb6b2273e166"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur avec des points dans l'ordre inverse.  <br /></td></tr>
+<tr class="memitem:a691f7ee7335387c6b62471881e0512bf" id="r_a691f7ee7335387c6b62471881e0512bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a691f7ee7335387c6b62471881e0512bf">test_aabb_interval_constructor</a> ()</td></tr>
+<tr class="memdesc:a691f7ee7335387c6b62471881e0512bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur a partir de trois intervalles (un par axe)  <br /></td></tr>
+<tr class="memitem:ac27c05f95f60c777fb88a88b0ccb194c" id="r_ac27c05f95f60c777fb88a88b0ccb194c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac27c05f95f60c777fb88a88b0ccb194c">test_aabb_merge_constructor</a> ()</td></tr>
+<tr class="memdesc:ac27c05f95f60c777fb88a88b0ccb194c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le constructeur de fusion de deux <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a>.  <br /></td></tr>
+<tr class="memitem:a1c97f077ad9754dbff16b15a1e22ab33" id="r_a1c97f077ad9754dbff16b15a1e22ab33"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c97f077ad9754dbff16b15a1e22ab33">test_aabb_hit_through_center</a> ()</td></tr>
+<tr class="memdesc:a1c97f077ad9754dbff16b15a1e22ab33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'intersection d'un rayon passant par le centre de la boite.  <br /></td></tr>
+<tr class="memitem:ace2102714056dce28e2c220e0c0a976d" id="r_ace2102714056dce28e2c220e0c0a976d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace2102714056dce28e2c220e0c0a976d">test_aabb_hit_edge</a> ()</td></tr>
+<tr class="memdesc:ace2102714056dce28e2c220e0c0a976d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'intersection d'un rayon rasant le bord de la boite.  <br /></td></tr>
+<tr class="memitem:a2c7636fa659100fa8c8cefb0e36a38b9" id="r_a2c7636fa659100fa8c8cefb0e36a38b9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c7636fa659100fa8c8cefb0e36a38b9">test_aabb_miss</a> ()</td></tr>
+<tr class="memdesc:a2c7636fa659100fa8c8cefb0e36a38b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste un rayon qui rate completement la boite.  <br /></td></tr>
+<tr class="memitem:abfdc34f7b9effacdaff51ac95b2f58ce" id="r_abfdc34f7b9effacdaff51ac95b2f58ce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abfdc34f7b9effacdaff51ac95b2f58ce">test_aabb_ray_behind</a> ()</td></tr>
+<tr class="memdesc:abfdc34f7b9effacdaff51ac95b2f58ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste un rayon dont la direction s'eloigne de la boite.  <br /></td></tr>
+<tr class="memitem:a0c639a2f6068a02bc2e39f3f14763cba" id="r_a0c639a2f6068a02bc2e39f3f14763cba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c639a2f6068a02bc2e39f3f14763cba">test_aabb_ray_inside</a> ()</td></tr>
+<tr class="memdesc:a0c639a2f6068a02bc2e39f3f14763cba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste un rayon dont l'origine est a l'interieur de la boite.  <br /></td></tr>
+<tr class="memitem:ab6b6d3b57367000719fdc6762fb41f7f" id="r_ab6b6d3b57367000719fdc6762fb41f7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6b6d3b57367000719fdc6762fb41f7f">test_aabb_diagonal_ray</a> ()</td></tr>
+<tr class="memdesc:ab6b6d3b57367000719fdc6762fb41f7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste un rayon diagonal traversant la boite.  <br /></td></tr>
+<tr class="memitem:a2c9eab62b35568bc4fb01ee88db6123f" id="r_a2c9eab62b35568bc4fb01ee88db6123f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c9eab62b35568bc4fb01ee88db6123f">test_aabb_interval_excludes</a> ()</td></tr>
+<tr class="memdesc:a2c9eab62b35568bc4fb01ee88db6123f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste qu'un intervalle de t trop restrictif exclut l'intersection.  <br /></td></tr>
+<tr class="memitem:a4cf54db733d293561e659e04d21a0cb9" id="r_a4cf54db733d293561e659e04d21a0cb9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4cf54db733d293561e659e04d21a0cb9">test_aabb_centroid</a> ()</td></tr>
+<tr class="memdesc:a4cf54db733d293561e659e04d21a0cb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le calcul du centroide de la boite.  <br /></td></tr>
+<tr class="memitem:a333d6f7f434fcdaae3b36a2f6eac085a" id="r_a333d6f7f434fcdaae3b36a2f6eac085a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a333d6f7f434fcdaae3b36a2f6eac085a">test_aabb_centroid_offset</a> ()</td></tr>
+<tr class="memdesc:a333d6f7f434fcdaae3b36a2f6eac085a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste le centroide d'une boite decalee par rapport a l'origine.  <br /></td></tr>
+<tr class="memitem:ad72d295728fd41ac8c9a99ccb7401cb2" id="r_ad72d295728fd41ac8c9a99ccb7401cb2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad72d295728fd41ac8c9a99ccb7401cb2">test_aabb_surface_area_cube</a> ()</td></tr>
+<tr class="memdesc:ad72d295728fd41ac8c9a99ccb7401cb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'aire de surface d'un cube.  <br /></td></tr>
+<tr class="memitem:ae9c99b67e5dd46b4b50b97d8d856be56" id="r_ae9c99b67e5dd46b4b50b97d8d856be56"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9c99b67e5dd46b4b50b97d8d856be56">test_aabb_surface_area_rect</a> ()</td></tr>
+<tr class="memdesc:ae9c99b67e5dd46b4b50b97d8d856be56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'aire de surface d'un parallelepipede rectangle.  <br /></td></tr>
+<tr class="memitem:aed033a5da34aadfec871ae4848d73b8c" id="r_aed033a5da34aadfec871ae4848d73b8c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed033a5da34aadfec871ae4848d73b8c">test_aabb_longest_axis_x</a> ()</td></tr>
+<tr class="memdesc:aed033a5da34aadfec871ae4848d73b8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la detection de l'axe le plus long (axe X)  <br /></td></tr>
+<tr class="memitem:a9d69c8fb99aa8e74e2bc4bddf102f65d" id="r_a9d69c8fb99aa8e74e2bc4bddf102f65d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d69c8fb99aa8e74e2bc4bddf102f65d">test_aabb_longest_axis_y</a> ()</td></tr>
+<tr class="memdesc:a9d69c8fb99aa8e74e2bc4bddf102f65d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la detection de l'axe le plus long (axe Y)  <br /></td></tr>
+<tr class="memitem:a901f8037518a9e32d174f0164ababc28" id="r_a901f8037518a9e32d174f0164ababc28"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a901f8037518a9e32d174f0164ababc28">test_aabb_longest_axis_z</a> ()</td></tr>
+<tr class="memdesc:a901f8037518a9e32d174f0164ababc28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste la detection de l'axe le plus long (axe Z)  <br /></td></tr>
+<tr class="memitem:a48e0711c0c1363e58358d64337cfb76a" id="r_a48e0711c0c1363e58358d64337cfb76a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48e0711c0c1363e58358d64337cfb76a">test_aabb_axis_interval</a> ()</td></tr>
+<tr class="memdesc:a48e0711c0c1363e58358d64337cfb76a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teste l'acces aux intervalles par indice d'axe.  <br /></td></tr>
+<tr class="memitem:a8de7e856efa33ae85bc684a12d574997" id="r_a8de7e856efa33ae85bc684a12d574997"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8de7e856efa33ae85bc684a12d574997">run_aabb_tests</a> (int &amp;<a class="el" href="test__vec3_8cpp.html#a561a5450b127e97c5ca67d0b349747a8">passed</a>, int &amp;<a class="el" href="test__vec3_8cpp.html#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a>, int &amp;<a class="el" href="test__vec3_8cpp.html#ac7af894858cf396a219d632f40afdc8d">total</a>)</td></tr>
+<tr class="memdesc:a8de7e856efa33ae85bc684a12d574997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute l'ensemble des tests unitaires pour <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a>.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a2cf9e40e1e678d716235c32043993b35" id="r_a2cf9e40e1e678d716235c32043993b35"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cf9e40e1e678d716235c32043993b35">EPS</a> = 1e-4f</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Tests unitaires pour la classe <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> (Axis-Aligned Bounding Box) </p>
+<p>Ce fichier teste la boite englobante alignee sur les axes, structure fondamentale pour l'acceleration du raytracing via les <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> (Bounding Volume Hierarchy). On verifie les differents constructeurs (points, intervalles, fusion), les tests d'intersection rayon-boite, le calcul du centroide, de l'aire de surface, de l'axe le plus long et l'acces aux intervalles par axe. </p>
+
+<p class="definition">Définition dans le fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentation des macros</h2>
+<a id="a36936b10eceab520bb9d3d95534a00db" name="a36936b10eceab520bb9d3d95534a00db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36936b10eceab520bb9d3d95534a00db">&#9670;&#160;</a></span>RUN_TEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RUN_TEST</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>test_func</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (test_func()) { \</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;  [PASS] &quot;</span> &lt;&lt; #test_func &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <a class="code hl_variable" href="test__vec3_8cpp.html#a561a5450b127e97c5ca67d0b349747a8">passed</a>++; \</div>
+<div class="line">        } <span class="keywordflow">else</span> { \</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;  [FAIL] &quot;</span> &lt;&lt; #test_func &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <a class="code hl_variable" href="test__vec3_8cpp.html#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a>++; \</div>
+<div class="line">        } \</div>
+<div class="line">        <a class="code hl_variable" href="test__vec3_8cpp.html#ac7af894858cf396a219d632f40afdc8d">total</a>++; \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+<div class="ttc" id="atest__vec3_8cpp_html_a561a5450b127e97c5ca67d0b349747a8"><div class="ttname"><a href="test__vec3_8cpp.html#a561a5450b127e97c5ca67d0b349747a8">passed</a></div><div class="ttdeci">int passed</div></div>
+<div class="ttc" id="atest__vec3_8cpp_html_ac7af894858cf396a219d632f40afdc8d"><div class="ttname"><a href="test__vec3_8cpp.html#ac7af894858cf396a219d632f40afdc8d">total</a></div><div class="ttdeci">int total</div><div class="ttdef"><b>Definition</b> <a href="test__vec3_8cpp_source.html#l00021">test_vec3.cpp:21</a></div></div>
+<div class="ttc" id="atest__vec3_8cpp_html_ad4ec5aab9b62fbbe9b8fc2d8ac0a5989"><div class="ttname"><a href="test__vec3_8cpp.html#ad4ec5aab9b62fbbe9b8fc2d8ac0a5989">failed</a></div><div class="ttdeci">int failed</div><div class="ttdef"><b>Definition</b> <a href="test__vec3_8cpp_source.html#l00021">test_vec3.cpp:21</a></div></div>
+</div><!-- fragment -->
+<p>Macro d'execution d'un test unitaire. </p>
+<p>Lance un test, affiche son resultat et incremente les compteurs. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00054">54</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a29a763f14098f5574ae5c68291dc6ddd" name="a29a763f14098f5574ae5c68291dc6ddd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29a763f14098f5574ae5c68291dc6ddd">&#9670;&#160;</a></span>TEST_ASSERT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_ASSERT</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>expr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (!(expr)) { \</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;    FAILED: &quot;</span> &lt;&lt; #expr &lt;&lt; <span class="stringliteral">&quot; at &quot;</span> &lt;&lt; __FILE__ &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>; \</div>
+<div class="line">        } \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Macro d'assertion simple pour les tests. </p>
+<p>Verifie qu'une expression booleenne est vraie. Affiche un message d'erreur avec le fichier et la ligne en cas d'echec. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00027">27</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a944437e7ac7475ac6e6c7e6316012510" name="a944437e7ac7475ac6e6c7e6316012510"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a944437e7ac7475ac6e6c7e6316012510">&#9670;&#160;</a></span>TEST_ASSERT_NEAR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_ASSERT_NEAR</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>b</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>eps</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valeur :</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        if (std::abs((a) - (b)) &gt; (eps)) { \</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;    FAILED: &quot;</span> &lt;&lt; #a &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (a) &lt;&lt; <span class="stringliteral">&quot;) != &quot;</span> &lt;&lt; #b &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (b) &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> \</div>
+<div class="line">                      &lt;&lt; <span class="stringliteral">&quot; at &quot;</span> &lt;&lt; __FILE__ &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; \</div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>; \</div>
+<div class="line">        } \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Macro d'assertion avec tolerance pour les comparaisons flottantes. </p>
+<p>Compare deux valeurs flottantes avec une tolerance eps. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00040">40</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions</h2>
+<a id="a8de7e856efa33ae85bc684a12d574997" name="a8de7e856efa33ae85bc684a12d574997"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8de7e856efa33ae85bc684a12d574997">&#9670;&#160;</a></span>run_aabb_tests()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void run_aabb_tests </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>passed</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>failed</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;</td>          <td class="paramname"><span class="paramname"><em>total</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute l'ensemble des tests unitaires pour <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a>. </p>
+<p>Lance les tests unitaires de l'AABB (boite englobante alignee aux axes).</p>
+<p>Lance tous les tests de la classe AABB et met a jour les compteurs.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">passed</td><td>Compteur de tests reussis </td></tr>
+    <tr><td class="paramname">failed</td><td>Compteur de tests echoues </td></tr>
+    <tr><td class="paramname">total</td><td>Compteur du nombre total de tests executes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00410">410</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a48e0711c0c1363e58358d64337cfb76a" name="a48e0711c0c1363e58358d64337cfb76a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48e0711c0c1363e58358d64337cfb76a">&#9670;&#160;</a></span>test_aabb_axis_interval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_axis_interval </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'acces aux intervalles par indice d'axe. </p>
+<p>Verifie que axis_interval(0), axis_interval(1) et axis_interval(2) retournent respectivement les intervalles X, Y et Z de la boite. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00383">383</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4cf54db733d293561e659e04d21a0cb9" name="a4cf54db733d293561e659e04d21a0cb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cf54db733d293561e659e04d21a0cb9">&#9670;&#160;</a></span>test_aabb_centroid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_centroid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le calcul du centroide de la boite. </p>
+<p>Le centroide de [0,4] x [0,6] x [0,8] doit etre (2, 3, 4). Le centroide est utilise pour le tri spatial dans le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00281">281</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a333d6f7f434fcdaae3b36a2f6eac085a" name="a333d6f7f434fcdaae3b36a2f6eac085a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a333d6f7f434fcdaae3b36a2f6eac085a">&#9670;&#160;</a></span>test_aabb_centroid_offset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_centroid_offset </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le centroide d'une boite decalee par rapport a l'origine. </p>
+<p>Le centroide de [2,4]^3 doit etre (3, 3, 3). </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00297">297</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab6b6d3b57367000719fdc6762fb41f7f" name="ab6b6d3b57367000719fdc6762fb41f7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6b6d3b57367000719fdc6762fb41f7f">&#9670;&#160;</a></span>test_aabb_diagonal_ray()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_diagonal_ray </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste un rayon diagonal traversant la boite. </p>
+<p>Un rayon en diagonale depuis (-1,-1,-1) vers (1,1,1) doit traverser la boite [0,2]^3. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00244">244</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ace2102714056dce28e2c220e0c0a976d" name="ace2102714056dce28e2c220e0c0a976d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace2102714056dce28e2c220e0c0a976d">&#9670;&#160;</a></span>test_aabb_hit_edge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_hit_edge </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'intersection d'un rayon rasant le bord de la boite. </p>
+<p>Un rayon passant pres du coin de la boite doit quand meme etre detecte comme intersection. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00173">173</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1c97f077ad9754dbff16b15a1e22ab33" name="a1c97f077ad9754dbff16b15a1e22ab33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c97f077ad9754dbff16b15a1e22ab33">&#9670;&#160;</a></span>test_aabb_hit_through_center()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_hit_through_center </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'intersection d'un rayon passant par le centre de la boite. </p>
+<p>Un rayon tire le long de l'axe Z vers le centre de la boite doit produire une intersection. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00155">155</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a691f7ee7335387c6b62471881e0512bf" name="a691f7ee7335387c6b62471881e0512bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a691f7ee7335387c6b62471881e0512bf">&#9670;&#160;</a></span>test_aabb_interval_constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_interval_constructor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur a partir de trois intervalles (un par axe) </p>
+<p>Verifie que la boite est correctement initialisee lorsqu'on fournit directement les intervalles pour X, Y et Z. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00113">113</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2c9eab62b35568bc4fb01ee88db6123f" name="a2c9eab62b35568bc4fb01ee88db6123f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c9eab62b35568bc4fb01ee88db6123f">&#9670;&#160;</a></span>test_aabb_interval_excludes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_interval_excludes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste qu'un intervalle de t trop restrictif exclut l'intersection. </p>
+<p>Meme si le rayon touche la boite geometriquement, si le t d'intersection est en dehors de l'intervalle [tmin, tmax], le hit doit echouer. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00262">262</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aed033a5da34aadfec871ae4848d73b8c" name="aed033a5da34aadfec871ae4848d73b8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed033a5da34aadfec871ae4848d73b8c">&#9670;&#160;</a></span>test_aabb_longest_axis_x()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_longest_axis_x </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la detection de l'axe le plus long (axe X) </p>
+<p>Pour une boite 10x2x3, l'axe X (indice 0) est le plus long. Utilise pour choisir l'axe de partition dans le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00345">345</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9d69c8fb99aa8e74e2bc4bddf102f65d" name="a9d69c8fb99aa8e74e2bc4bddf102f65d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d69c8fb99aa8e74e2bc4bddf102f65d">&#9670;&#160;</a></span>test_aabb_longest_axis_y()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_longest_axis_y </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la detection de l'axe le plus long (axe Y) </p>
+<p>Pour une boite 2x10x3, l'axe Y (indice 1) est le plus long. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00357">357</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a901f8037518a9e32d174f0164ababc28" name="a901f8037518a9e32d174f0164ababc28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a901f8037518a9e32d174f0164ababc28">&#9670;&#160;</a></span>test_aabb_longest_axis_z()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_longest_axis_z </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste la detection de l'axe le plus long (axe Z) </p>
+<p>Pour une boite 2x3x10, l'axe Z (indice 2) est le plus long. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00369">369</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac27c05f95f60c777fb88a88b0ccb194c" name="ac27c05f95f60c777fb88a88b0ccb194c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac27c05f95f60c777fb88a88b0ccb194c">&#9670;&#160;</a></span>test_aabb_merge_constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_merge_constructor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur de fusion de deux <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a>. </p>
+<p>La fusion de deux boites disjointes doit produire une boite englobant les deux. Utilise dans la construction du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00135">135</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2c7636fa659100fa8c8cefb0e36a38b9" name="a2c7636fa659100fa8c8cefb0e36a38b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c7636fa659100fa8c8cefb0e36a38b9">&#9670;&#160;</a></span>test_aabb_miss()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_miss </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste un rayon qui rate completement la boite. </p>
+<p>Un rayon tire loin de la boite ne doit pas produire d'intersection. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00190">190</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae6f0a8d8a2a9b4137035b911ca29a96a" name="ae6f0a8d8a2a9b4137035b911ca29a96a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6f0a8d8a2a9b4137035b911ca29a96a">&#9670;&#160;</a></span>test_aabb_point_constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_point_constructor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> a partir de deux points. </p>
+<p>Verifie que la boite englobante est correctement construite avec les intervalles [0,2], [0,3], [0,4] sur chaque axe. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00075">75</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a11b0af3bbac5a2a9532adb6b2273e166" name="a11b0af3bbac5a2a9532adb6b2273e166"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11b0af3bbac5a2a9532adb6b2273e166">&#9670;&#160;</a></span>test_aabb_point_constructor_reversed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_point_constructor_reversed </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste le constructeur avec des points dans l'ordre inverse. </p>
+<p>Verifie que le constructeur gere le cas ou le premier point a des coordonnees plus grandes que le second (les bornes doivent etre triees). </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00096">96</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="abfdc34f7b9effacdaff51ac95b2f58ce" name="abfdc34f7b9effacdaff51ac95b2f58ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfdc34f7b9effacdaff51ac95b2f58ce">&#9670;&#160;</a></span>test_aabb_ray_behind()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_ray_behind </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste un rayon dont la direction s'eloigne de la boite. </p>
+<p>Le rayon pointe dans la direction opposee a la boite, donc aucune intersection ne doit etre trouvee. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00208">208</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0c639a2f6068a02bc2e39f3f14763cba" name="a0c639a2f6068a02bc2e39f3f14763cba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c639a2f6068a02bc2e39f3f14763cba">&#9670;&#160;</a></span>test_aabb_ray_inside()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_ray_inside </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste un rayon dont l'origine est a l'interieur de la boite. </p>
+<p>Un rayon partant de l'interieur de la boite doit toujours detecter une intersection (en sortie de boite). </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00226">226</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad72d295728fd41ac8c9a99ccb7401cb2" name="ad72d295728fd41ac8c9a99ccb7401cb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad72d295728fd41ac8c9a99ccb7401cb2">&#9670;&#160;</a></span>test_aabb_surface_area_cube()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_surface_area_cube </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'aire de surface d'un cube. </p>
+<p>Un cube de cote 2 a une aire de surface de 6 * 2^2 = 24. L'aire de surface est utilisee dans l'heuristique SAH du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00315">315</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae9c99b67e5dd46b4b50b97d8d856be56" name="ae9c99b67e5dd46b4b50b97d8d856be56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9c99b67e5dd46b4b50b97d8d856be56">&#9670;&#160;</a></span>test_aabb_surface_area_rect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool test_aabb_surface_area_rect </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Teste l'aire de surface d'un parallelepipede rectangle. </p>
+<p>Un parallelepipede 2x3x4 a une aire de 2*(2*3 + 2*4 + 3*4) = 52. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00329">329</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Documentation des variables</h2>
+<a id="a2cf9e40e1e678d716235c32043993b35" name="a2cf9e40e1e678d716235c32043993b35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cf9e40e1e678d716235c32043993b35">&#9670;&#160;</a></span>EPS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float EPS = 1e-4f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="test__aabb_8cpp_source.html#l00066">66</a> du fichier <a class="el" href="test__aabb_8cpp_source.html">test_aabb.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a href="test__aabb_8cpp.html">test_aabb.cpp</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

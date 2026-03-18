@@ -1,4 +1,13 @@
-// CPU-only Ray Tracer - No CUDA dependency
+/**
+ * @file main_cpu.cpp
+ * @brief Point d'entree du ray tracer en mode CPU uniquement (sans dependance CUDA)
+ * @details Ce fichier fournit une version autonome du ray tracer qui fonctionne
+ *          entierement sur le CPU avec OpenMP pour la parallelisation.
+ *          Il inclut sa propre implementation du constructeur BVH (CPUBVHBuilder)
+ *          afin d'eviter toute dependance au runtime CUDA. Cela permet de
+ *          compiler et executer le ray tracer sur des machines sans GPU NVIDIA.
+ */
+
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -40,12 +49,29 @@ using namespace rt;
 static constexpr int MAX_OBJECTS = 1000;
 static constexpr int MAX_MATERIALS = 1000;
 
-// CPU-only BVH Builder (no CUDA dependencies)
+/**
+ * @brief Constructeur de BVH (Bounding Volume Hierarchy) pour le CPU
+ * @details Version CPU du constructeur de BVH, independante de CUDA.
+ *          Construit un arbre binaire de volumes englobants (AABB) pour
+ *          accelerer les tests d'intersection rayon-scene. L'algorithme
+ *          utilise une approche recursive top-down avec tri selon l'axe
+ *          le plus long de la boite englobante et decoupe au milieu (median split).
+ *          Les noeuds et primitives sont stockes dans des std::vector pour
+ *          une gestion memoire simple cote host.
+ */
 class CPUBVHBuilder {
 public:
-    std::vector<BVHNode> nodes;
-    std::vector<HittableObject> primitives;
+    std::vector<BVHNode> nodes;             ///< Liste des noeuds du BVH (internes et feuilles)
+    std::vector<HittableObject> primitives; ///< Liste des primitives (objets) triees par le BVH
 
+    /**
+     * @brief Construit le BVH a partir d'un tableau d'objets
+     * @details Copie les objets dans le vecteur interne, puis lance la
+     *          construction recursive de l'arbre. Reserve la memoire
+     *          necessaire (2*count noeuds maximum pour un arbre binaire).
+     * @param objects Tableau d'objets HittableObject a organiser dans le BVH
+     * @param count Nombre d'objets dans le tableau
+     */
     void build(HittableObject* objects, int count) {
         primitives.assign(objects, objects + count);
         nodes.clear();
@@ -56,6 +82,13 @@ public:
         build_recursive(0, count);
     }
 
+    /**
+     * @brief Cree et retourne une structure BVH utilisable pour le rendu
+     * @details Alloue des tableaux dynamiques (new[]) et copie les noeuds et
+     *          primitives depuis les vecteurs internes. La structure BVH retournee
+     *          est autonome et peut etre utilisee independamment du builder.
+     * @return Structure BVH contenant les noeuds et primitives copies
+     */
     BVH create_bvh() {
         BVH bvh;
         bvh.num_nodes = static_cast<int>(nodes.size());
@@ -70,6 +103,13 @@ public:
         return bvh;
     }
 
+    /**
+     * @brief Libere la memoire allouee par create_bvh()
+     * @details Supprime les tableaux de noeuds et de primitives alloues
+     *          dynamiquement, puis remet les pointeurs a nullptr pour eviter
+     *          les double-free.
+     * @param bvh Reference vers la structure BVH a liberer
+     */
     void free_bvh(BVH& bvh) {
         if (bvh.nodes) delete[] bvh.nodes;
         if (bvh.primitives) delete[] bvh.primitives;
@@ -78,6 +118,18 @@ public:
     }
 
 private:
+    /**
+     * @brief Construit recursivement un sous-arbre du BVH
+     * @details Pour la plage [start, end) de primitives :
+     *          1. Calcule la boite englobante (AABB) de toutes les primitives
+     *          2. Si une seule primitive, cree une feuille
+     *          3. Sinon, determine l'axe le plus long de l'AABB, trie les
+     *             primitives selon cet axe, decoupe au milieu et recurse
+     *             sur les deux moities pour creer les noeuds fils.
+     * @param start Indice de debut (inclus) dans le tableau de primitives
+     * @param end Indice de fin (exclus) dans le tableau de primitives
+     * @return Indice du noeud cree dans le vecteur nodes
+     */
     int build_recursive(int start, int end) {
         int node_idx = static_cast<int>(nodes.size());
         nodes.emplace_back();
@@ -113,9 +165,22 @@ private:
     }
 };
 
+/**
+ * @brief Point d'entree du ray tracer CPU (sans CUDA)
+ * @details Version CPU autonome du ray tracer. Effectue les etapes suivantes :
+ *          1. Parse les arguments en ligne de commande (force le mode CPU)
+ *          2. Cree la scene par defaut (camera, objets, materiaux)
+ *          3. Construit le BVH avec CPUBVHBuilder
+ *          4. Lance le rendu CPU parallelise avec OpenMP
+ *          5. Affiche les statistiques de performance (temps, MRays/s)
+ *          6. Sauvegarde l'image finale et libere la memoire
+ * @param argc Nombre d'arguments de la ligne de commande
+ * @param argv Tableau des arguments de la ligne de commande
+ * @return 0 en cas de succes
+ */
 int main(int argc, char** argv) {
     Args args = parse_args(argc, argv);
-    args.use_cpu = true;  // Force CPU mode
+    args.use_cpu = true;
 
     RenderConfig config;
     config.width = args.width;

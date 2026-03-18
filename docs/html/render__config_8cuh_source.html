@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer:  Fichier source de include/raytracer/rendering/render_config.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('render__config_8cuh_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">render_config.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="render__config_8cuh.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef RAYTRACER_RENDERING_RENDER_CONFIG_CUH</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno"><a class="line" href="render__config_8cuh.html#a322a295b6a64b2b5d40b7bd24ca6d186">    2</a></span><span class="preprocessor">#define RAYTRACER_RENDERING_RENDER_CONFIG_CUH</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="vec3_8cuh.html">raytracer/core/vec3.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="sky_8cuh.html">raytracer/environment/sky.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacert.html">rt</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html">   26</a></span><span class="keyword">struct </span><a class="code hl_function" href="structrt_1_1_render_config.html#a5b62d55d73237c94adce13b579695e80">RenderConfig</a> {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">   27</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a>;                </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">   28</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a>;               </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">   29</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">samples_per_pixel</a>;    </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">   30</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">max_depth</a>;            </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html#a352487d4152ac13f97702b78aa50b299">   31</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="structrt_1_1_render_config.html#a352487d4152ac13f97702b78aa50b299">use_sky</a>;             </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html#a340d377b4fb5d1672ac1419677014aab">   32</a></span>    <a class="code hl_class" href="classrt_1_1_sky.html">Sky</a> <a class="code hl_variable" href="structrt_1_1_render_config.html#a340d377b4fb5d1672ac1419677014aab">sky</a>;                  </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html#aabc7bbbc3809f3948ddb1e2ef26445d3">   33</a></span>    <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> <a class="code hl_variable" href="structrt_1_1_render_config.html#aabc7bbbc3809f3948ddb1e2ef26445d3">background</a>;         </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
+<div class="foldopen" id="foldopen00041" data-start="{" data-end="}">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structrt_1_1_render_config.html#a5b62d55d73237c94adce13b579695e80">   41</a></span>    <a class="code hl_function" href="structrt_1_1_render_config.html#a5b62d55d73237c94adce13b579695e80">RenderConfig</a>()</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        : <a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a>(800), <a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a>(600), <a class="code hl_variable" href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">samples_per_pixel</a>(100), <a class="code hl_variable" href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">max_depth</a>(50),</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>          <a class="code hl_variable" href="structrt_1_1_render_config.html#a352487d4152ac13f97702b78aa50b299">use_sky</a>(true), <a class="code hl_variable" href="structrt_1_1_render_config.html#aabc7bbbc3809f3948ddb1e2ef26445d3">background</a>(0, 0, 0) {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <a class="code hl_variable" href="structrt_1_1_render_config.html#a340d377b4fb5d1672ac1419677014aab">sky</a> = <a class="code hl_class" href="classrt_1_1_sky.html">Sky</a>(<a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>(1, 1, 1), <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>(0.5f, 0.7f, 1.0f));</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
+</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
+</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassrt_1_1_sky_html"><div class="ttname"><a href="classrt_1_1_sky.html">rt::Sky</a></div><div class="ttdoc">Modele de ciel avec gradient horizon/zenith et soleil optionnel.</div><div class="ttdef"><b>Definition</b> <a href="sky_8cuh_source.html#l00024">sky.cuh:24</a></div></div>
+<div class="ttc" id="anamespacert_html"><div class="ttname"><a href="namespacert.html">rt</a></div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00017">bvh.cuh:17</a></div></div>
+<div class="ttc" id="anamespacert_html_a833d4cf4591664e7e913f7e550abc82a"><div class="ttname"><a href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">rt::Color</a></div><div class="ttdeci">Vec3 Color</div><div class="ttdoc">Alias de type : une Color est un Vec3 utilise comme couleur RGB.</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00196">vec3.cuh:196</a></div></div>
+<div class="ttc" id="asky_8cuh_html"><div class="ttname"><a href="sky_8cuh.html">sky.cuh</a></div><div class="ttdoc">Modele de ciel avec gradient et soleil optionnel.</div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a340d377b4fb5d1672ac1419677014aab"><div class="ttname"><a href="structrt_1_1_render_config.html#a340d377b4fb5d1672ac1419677014aab">rt::RenderConfig::sky</a></div><div class="ttdeci">Sky sky</div><div class="ttdoc">Configuration du ciel degrade (couleurs haut/bas)</div><div class="ttdef"><b>Definition</b> <a href="#l00032">render_config.cuh:32</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a352487d4152ac13f97702b78aa50b299"><div class="ttname"><a href="structrt_1_1_render_config.html#a352487d4152ac13f97702b78aa50b299">rt::RenderConfig::use_sky</a></div><div class="ttdeci">bool use_sky</div><div class="ttdoc">Si vrai, utilise le ciel degrade ; sinon, la couleur de fond.</div><div class="ttdef"><b>Definition</b> <a href="#l00031">render_config.cuh:31</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a5b62d55d73237c94adce13b579695e80"><div class="ttname"><a href="structrt_1_1_render_config.html#a5b62d55d73237c94adce13b579695e80">rt::RenderConfig::RenderConfig</a></div><div class="ttdeci">RenderConfig()</div><div class="ttdoc">Constructeur par defaut avec des valeurs raisonnables.</div><div class="ttdef"><b>Definition</b> <a href="#l00041">render_config.cuh:41</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a8c97dc8a2ddc55139dccd5be51d7076f"><div class="ttname"><a href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">rt::RenderConfig::height</a></div><div class="ttdeci">int height</div><div class="ttdoc">Hauteur de l&#39;image en pixels.</div><div class="ttdef"><b>Definition</b> <a href="#l00028">render_config.cuh:28</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_aa64bee560f763327cc3b86fe4e04f367"><div class="ttname"><a href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">rt::RenderConfig::width</a></div><div class="ttdeci">int width</div><div class="ttdoc">Largeur de l&#39;image en pixels.</div><div class="ttdef"><b>Definition</b> <a href="#l00027">render_config.cuh:27</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_aabc7bbbc3809f3948ddb1e2ef26445d3"><div class="ttname"><a href="structrt_1_1_render_config.html#aabc7bbbc3809f3948ddb1e2ef26445d3">rt::RenderConfig::background</a></div><div class="ttdeci">Color background</div><div class="ttdoc">Couleur de fond uniforme (utilisee si use_sky est faux)</div><div class="ttdef"><b>Definition</b> <a href="#l00033">render_config.cuh:33</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_ab6f25b56bc6a9abd126d607fa9ce5577"><div class="ttname"><a href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">rt::RenderConfig::max_depth</a></div><div class="ttdeci">int max_depth</div><div class="ttdoc">Profondeur maximale des rebonds de rayons.</div><div class="ttdef"><b>Definition</b> <a href="#l00030">render_config.cuh:30</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_ae1906f768297ede80d3e8ae958098a9c"><div class="ttname"><a href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">rt::RenderConfig::samples_per_pixel</a></div><div class="ttdeci">int samples_per_pixel</div><div class="ttdoc">Nombre d&#39;echantillons par pixel (antialiasing)</div><div class="ttdef"><b>Definition</b> <a href="#l00029">render_config.cuh:29</a></div></div>
+<div class="ttc" id="avec3_8cuh_html"><div class="ttname"><a href="vec3_8cuh.html">vec3.cuh</a></div><div class="ttdoc">Definition de la classe Vec3 et des fonctions utilitaires associees.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_5f371c8f98a89310fdec0a60fd23a137.html">raytracer</a></li><li class="navelem"><a href="dir_283c3f7ed10bfcd81111a9d1a93d6708.html">rendering</a></li><li class="navelem"><a href="render__config_8cuh.html">render_config.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

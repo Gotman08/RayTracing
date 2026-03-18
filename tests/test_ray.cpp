@@ -1,5 +1,12 @@
 /**
- * Unit Tests - Ray
+ * @file test_ray.cpp
+ * @brief Tests unitaires pour la classe Ray (rayon)
+ *
+ * Ce fichier verifie le bon fonctionnement de la classe Ray qui represente
+ * un rayon dans l'espace 3D, defini par une origine et une direction.
+ * On teste les constructeurs (par defaut, parametre, avec temps),
+ * les accesseurs (origin, direction, time) et la methode at(t)
+ * qui calcule le point le long du rayon a la distance parametrique t.
  */
 
 #include <iostream>
@@ -9,6 +16,12 @@
 
 using namespace rt;
 
+/**
+ * @brief Macro d'assertion simple pour les tests
+ *
+ * Verifie qu'une expression booleenne est vraie. Affiche un message
+ * d'erreur avec le fichier et la ligne en cas d'echec.
+ */
 #define TEST_ASSERT(expr) \
     do { \
         if (!(expr)) { \
@@ -17,6 +30,12 @@ using namespace rt;
         } \
     } while(0)
 
+/**
+ * @brief Macro d'assertion avec tolerance pour les comparaisons flottantes
+ *
+ * Compare deux valeurs flottantes avec une tolerance eps pour gerer
+ * les imprecisions inherentes au calcul en virgule flottante.
+ */
 #define TEST_ASSERT_NEAR(a, b, eps) \
     do { \
         if (std::abs((a) - (b)) > (eps)) { \
@@ -26,6 +45,11 @@ using namespace rt;
         } \
     } while(0)
 
+/**
+ * @brief Macro d'execution d'un test unitaire
+ *
+ * Lance un test, affiche son resultat et incremente les compteurs.
+ */
 #define RUN_TEST(test_func) \
     do { \
         if (test_func()) { \
@@ -40,10 +64,13 @@ using namespace rt;
 
 constexpr float EPS = 1e-6f;
 
-// ==============================================================================
-// Construction Tests
-// ==============================================================================
 
+/**
+ * @brief Teste le constructeur par defaut de Ray
+ *
+ * Verifie que le constructeur sans argument initialise l'origine
+ * et la direction a (0, 0, 0) et le temps a 0.
+ */
 bool test_ray_default_constructor() {
     Ray r;
     TEST_ASSERT_NEAR(r.origin().x, 0.0f, EPS);
@@ -56,6 +83,12 @@ bool test_ray_default_constructor() {
     return true;
 }
 
+/**
+ * @brief Teste le constructeur parametre de Ray (origine + direction)
+ *
+ * Verifie que l'origine et la direction sont correctement stockees
+ * et que le temps est initialise a 0 par defaut.
+ */
 bool test_ray_parameterized_constructor() {
     Point3 origin(1.0f, 2.0f, 3.0f);
     Vec3 direction(0.0f, 0.0f, -1.0f);
@@ -71,6 +104,12 @@ bool test_ray_parameterized_constructor() {
     return true;
 }
 
+/**
+ * @brief Teste le constructeur de Ray avec un parametre de temps
+ *
+ * Verifie que le temps est correctement pris en compte lors de
+ * la construction du rayon. Utile pour le flou de mouvement (motion blur).
+ */
 bool test_ray_with_time() {
     Point3 origin(0.0f, 0.0f, 0.0f);
     Vec3 direction(1.0f, 0.0f, 0.0f);
@@ -80,122 +119,151 @@ bool test_ray_with_time() {
     return true;
 }
 
-// ==============================================================================
-// at(t) Tests - Verify p = o + t*d formula
-// ==============================================================================
 
+/**
+ * @brief Teste at(0) qui doit retourner l'origine du rayon
+ *
+ * Quand t=0, le point sur le rayon correspond exactement a l'origine.
+ */
 bool test_ray_at_zero() {
     Point3 origin(1.0f, 2.0f, 3.0f);
     Vec3 direction(1.0f, 0.0f, 0.0f);
     Ray r(origin, direction);
 
     Point3 p = r.at(0.0f);
-    // At t=0, p should equal origin
     TEST_ASSERT_NEAR(p.x, 1.0f, EPS);
     TEST_ASSERT_NEAR(p.y, 2.0f, EPS);
     TEST_ASSERT_NEAR(p.z, 3.0f, EPS);
     return true;
 }
 
+/**
+ * @brief Teste at() avec un parametre t positif
+ *
+ * Verifie que P(t) = origin + t * direction pour t=2.
+ */
 bool test_ray_at_positive() {
     Point3 origin(0.0f, 0.0f, 0.0f);
     Vec3 direction(1.0f, 2.0f, 3.0f);
     Ray r(origin, direction);
 
     Point3 p = r.at(2.0f);
-    // p = (0,0,0) + 2*(1,2,3) = (2,4,6)
     TEST_ASSERT_NEAR(p.x, 2.0f, EPS);
     TEST_ASSERT_NEAR(p.y, 4.0f, EPS);
     TEST_ASSERT_NEAR(p.z, 6.0f, EPS);
     return true;
 }
 
+/**
+ * @brief Teste at() avec un parametre t negatif
+ *
+ * Un t negatif correspond a un point situe derriere l'origine
+ * du rayon, dans la direction opposee.
+ */
 bool test_ray_at_negative() {
     Point3 origin(5.0f, 5.0f, 5.0f);
     Vec3 direction(1.0f, 0.0f, 0.0f);
     Ray r(origin, direction);
 
     Point3 p = r.at(-3.0f);
-    // p = (5,5,5) + (-3)*(1,0,0) = (2,5,5)
     TEST_ASSERT_NEAR(p.x, 2.0f, EPS);
     TEST_ASSERT_NEAR(p.y, 5.0f, EPS);
     TEST_ASSERT_NEAR(p.z, 5.0f, EPS);
     return true;
 }
 
+/**
+ * @brief Teste at() avec un parametre t fractionnaire (0.5)
+ *
+ * Verifie le calcul pour un point situe a mi-chemin le long du rayon.
+ */
 bool test_ray_at_fractional() {
     Point3 origin(0.0f, 0.0f, 0.0f);
     Vec3 direction(4.0f, 0.0f, 0.0f);
     Ray r(origin, direction);
 
     Point3 p = r.at(0.5f);
-    // p = (0,0,0) + 0.5*(4,0,0) = (2,0,0)
     TEST_ASSERT_NEAR(p.x, 2.0f, EPS);
     TEST_ASSERT_NEAR(p.y, 0.0f, EPS);
     TEST_ASSERT_NEAR(p.z, 0.0f, EPS);
     return true;
 }
 
+/**
+ * @brief Teste at(1) avec une direction normalisee
+ *
+ * Avec une direction unitaire, at(1) doit donner un point
+ * a exactement 1 unite de distance de l'origine.
+ */
 bool test_ray_at_unit_direction() {
     Point3 origin(0.0f, 0.0f, 0.0f);
     Vec3 direction = Vec3(1.0f, 1.0f, 1.0f).normalized();
     Ray r(origin, direction);
 
     Point3 p = r.at(1.0f);
-    // With unit direction, at t=1, distance from origin should be 1
     float dist = (p - origin).length();
     TEST_ASSERT_NEAR(dist, 1.0f, EPS);
     return true;
 }
 
-// ==============================================================================
-// Ray Direction Tests
-// ==============================================================================
 
+/**
+ * @brief Teste un rayon avec une direction diagonale (1, 1, 1)
+ *
+ * Verifie le calcul de at() pour un rayon qui se deplace
+ * dans les trois dimensions simultanement.
+ */
 bool test_ray_diagonal_direction() {
     Point3 origin(1.0f, 1.0f, 1.0f);
     Vec3 direction(1.0f, 1.0f, 1.0f);
     Ray r(origin, direction);
 
     Point3 p = r.at(3.0f);
-    // p = (1,1,1) + 3*(1,1,1) = (4,4,4)
     TEST_ASSERT_NEAR(p.x, 4.0f, EPS);
     TEST_ASSERT_NEAR(p.y, 4.0f, EPS);
     TEST_ASSERT_NEAR(p.z, 4.0f, EPS);
     return true;
 }
 
+/**
+ * @brief Teste un rayon oriente le long de l'axe -Z
+ *
+ * Configuration typique en raytracing ou la camera regarde
+ * vers les Z negatifs. Verifie at(10) sur cet axe.
+ */
 bool test_ray_z_direction() {
     Point3 origin(0.0f, 0.0f, 0.0f);
-    Vec3 direction(0.0f, 0.0f, -1.0f);  // Looking into scene
+    Vec3 direction(0.0f, 0.0f, -1.0f);
     Ray r(origin, direction);
 
     Point3 p = r.at(10.0f);
-    // p = (0,0,0) + 10*(0,0,-1) = (0,0,-10)
     TEST_ASSERT_NEAR(p.x, 0.0f, EPS);
     TEST_ASSERT_NEAR(p.y, 0.0f, EPS);
     TEST_ASSERT_NEAR(p.z, -10.0f, EPS);
     return true;
 }
 
-// ==============================================================================
-// Test Suite Runner
-// ==============================================================================
 
+/**
+ * @brief Execute l'ensemble des tests unitaires pour Ray
+ *
+ * Lance tous les tests de la classe Ray et met a jour les compteurs.
+ *
+ * @param passed Compteur de tests reussis
+ * @param failed Compteur de tests echoues
+ * @param total Compteur du nombre total de tests executes
+ */
 void run_ray_tests(int& passed, int& failed, int& total) {
-    // Construction
     RUN_TEST(test_ray_default_constructor);
     RUN_TEST(test_ray_parameterized_constructor);
     RUN_TEST(test_ray_with_time);
 
-    // at(t) - formula p = o + t*d
     RUN_TEST(test_ray_at_zero);
     RUN_TEST(test_ray_at_positive);
     RUN_TEST(test_ray_at_negative);
     RUN_TEST(test_ray_at_fractional);
     RUN_TEST(test_ray_at_unit_direction);
 
-    // Direction variations
     RUN_TEST(test_ray_diagonal_direction);
     RUN_TEST(test_ray_z_direction);
 }

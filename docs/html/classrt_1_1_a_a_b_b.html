@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la classe rt::AABB</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classrt_1_1_a_a_b_b.html','','classrt_1_1_a_a_b_b-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la classe rt::AABB</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Boite englobante alignee aux axes (Axis-Aligned Bounding Box)  
+ <a href="#details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:aec1e432988542627121b7c6e9ad08a19" id="r_aec1e432988542627121b7c6e9ad08a19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec1e432988542627121b7c6e9ad08a19">AABB</a> ()</td></tr>
+<tr class="memdesc:aec1e432988542627121b7c6e9ad08a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur par defaut, cree une <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> vide.  <br /></td></tr>
+<tr class="memitem:aaf351403b7c3955f395b3f8095690eb0" id="r_aaf351403b7c3955f395b3f8095690eb0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf351403b7c3955f395b3f8095690eb0">AABB</a> (const <a class="el" href="classrt_1_1_interval.html">Interval</a> &amp;<a class="el" href="#a455650be9665cb83c90a15afa895089e">x</a>, const <a class="el" href="classrt_1_1_interval.html">Interval</a> &amp;<a class="el" href="#a9f5dcf13f404c099fe3268668b357e95">y</a>, const <a class="el" href="classrt_1_1_interval.html">Interval</a> &amp;<a class="el" href="#ada355d14fede0d6e15977ea1e6031901">z</a>)</td></tr>
+<tr class="memdesc:aaf351403b7c3955f395b3f8095690eb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur a partir de trois intervalles (un par axe)  <br /></td></tr>
+<tr class="memitem:a6e48c60fe47200bd230d7a6869f5b87e" id="r_a6e48c60fe47200bd230d7a6869f5b87e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e48c60fe47200bd230d7a6869f5b87e">AABB</a> (const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;a, const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;b)</td></tr>
+<tr class="memdesc:a6e48c60fe47200bd230d7a6869f5b87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur a partir de deux points opposes de la boite.  <br /></td></tr>
+<tr class="memitem:abad8b0f9b3ff17a4cbea66ae4d410e63" id="r_abad8b0f9b3ff17a4cbea66ae4d410e63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abad8b0f9b3ff17a4cbea66ae4d410e63">AABB</a> (const <a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a> &amp;box0, const <a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a> &amp;box1)</td></tr>
+<tr class="memdesc:abad8b0f9b3ff17a4cbea66ae4d410e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur d'union de deux <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a>.  <br /></td></tr>
+<tr class="memitem:a1c016758b35e2552942422572f2786dd" id="r_a1c016758b35e2552942422572f2786dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> const <a class="el" href="classrt_1_1_interval.html">Interval</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c016758b35e2552942422572f2786dd">axis_interval</a> (int n) const</td></tr>
+<tr class="memdesc:a1c016758b35e2552942422572f2786dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne l'intervalle correspondant a un axe donne.  <br /></td></tr>
+<tr class="memitem:acdd0a3a23dfbc673d814087dd999182f" id="r_acdd0a3a23dfbc673d814087dd999182f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acdd0a3a23dfbc673d814087dd999182f">hit</a> (const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r, <a class="el" href="classrt_1_1_interval.html">Interval</a> ray_t) const</td></tr>
+<tr class="memdesc:acdd0a3a23dfbc673d814087dd999182f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test d'intersection rayon-boite par la methode des slabs.  <br /></td></tr>
+<tr class="memitem:a506ed58ba7683f5bff13645582c1972f" id="r_a506ed58ba7683f5bff13645582c1972f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a506ed58ba7683f5bff13645582c1972f">longest_axis</a> () const</td></tr>
+<tr class="memdesc:a506ed58ba7683f5bff13645582c1972f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne l'indice de l'axe le plus long de la boite.  <br /></td></tr>
+<tr class="memitem:a8e5f118dab2ab6e59bef0558e325cf96" id="r_a8e5f118dab2ab6e59bef0558e325cf96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e5f118dab2ab6e59bef0558e325cf96">centroid</a> () const</td></tr>
+<tr class="memdesc:a8e5f118dab2ab6e59bef0558e325cf96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le centre geometrique (centroide) de la boite.  <br /></td></tr>
+<tr class="memitem:a45dec8ecda48e3a9b27d777d341aa3f7" id="r_a45dec8ecda48e3a9b27d777d341aa3f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45dec8ecda48e3a9b27d777d341aa3f7">surface_area</a> () const</td></tr>
+<tr class="memdesc:a45dec8ecda48e3a9b27d777d341aa3f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule l'aire de la surface de la boite.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:a455650be9665cb83c90a15afa895089e" id="r_a455650be9665cb83c90a15afa895089e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_interval.html">Interval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a455650be9665cb83c90a15afa895089e">x</a></td></tr>
+<tr class="memitem:a9f5dcf13f404c099fe3268668b357e95" id="r_a9f5dcf13f404c099fe3268668b357e95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_interval.html">Interval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f5dcf13f404c099fe3268668b357e95">y</a></td></tr>
+<tr class="memitem:ada355d14fede0d6e15977ea1e6031901" id="r_ada355d14fede0d6e15977ea1e6031901"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_interval.html">Interval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada355d14fede0d6e15977ea1e6031901">z</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Boite englobante alignee aux axes (Axis-Aligned Bounding Box) </p>
+<p>Une <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> est definie par trois intervalles (un par axe x, y, z) qui forment un parallelepipede rectangle aligne avec les axes du repere. Grace a cet alignement, le test d'intersection avec un rayon est tres rapide (methode des slabs). Utilisee dans le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> pour organiser la scene en hierarchie de volumes. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00029">29</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a id="aec1e432988542627121b7c6e9ad08a19" name="aec1e432988542627121b7c6e9ad08a19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec1e432988542627121b7c6e9ad08a19">&#9670;&#160;</a></span>AABB() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::AABB::AABB </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur par defaut, cree une <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> vide. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00038">38</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aaf351403b7c3955f395b3f8095690eb0" name="aaf351403b7c3955f395b3f8095690eb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf351403b7c3955f395b3f8095690eb0">&#9670;&#160;</a></span>AABB() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::AABB::AABB </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_interval.html">Interval</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_interval.html">Interval</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_interval.html">Interval</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>z</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur a partir de trois intervalles (un par axe) </p>
+<p>Applique un padding minimal pour eviter les boites degenerees. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Intervalle sur l'axe X </td></tr>
+    <tr><td class="paramname">y</td><td>Intervalle sur l'axe Y </td></tr>
+    <tr><td class="paramname">z</td><td>Intervalle sur l'axe Z </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00047">47</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a6e48c60fe47200bd230d7a6869f5b87e" name="a6e48c60fe47200bd230d7a6869f5b87e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e48c60fe47200bd230d7a6869f5b87e">&#9670;&#160;</a></span>AABB() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::AABB::AABB </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>b</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur a partir de deux points opposes de la boite. </p>
+<p>Les intervalles sont automatiquement ordonnes (min &lt;= max) quel que soit l'ordre des points. Un padding minimal est applique. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>Premier coin de la boite </td></tr>
+    <tr><td class="paramname">b</td><td>Coin oppose de la boite </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00059">59</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="abad8b0f9b3ff17a4cbea66ae4d410e63" name="abad8b0f9b3ff17a4cbea66ae4d410e63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abad8b0f9b3ff17a4cbea66ae4d410e63">&#9670;&#160;</a></span>AABB() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::AABB::AABB </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>box0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>box1</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur d'union de deux <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a>. </p>
+<p>Cree la plus petite <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> contenant les deux boites donnees. Utilise lors de la construction du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> pour fusionner les boites englobantes des noeuds enfants. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">box0</td><td>Premiere boite englobante </td></tr>
+    <tr><td class="paramname">box1</td><td>Deuxieme boite englobante </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00074">74</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="a1c016758b35e2552942422572f2786dd" name="a1c016758b35e2552942422572f2786dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c016758b35e2552942422572f2786dd">&#9670;&#160;</a></span>axis_interval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> const <a class="el" href="classrt_1_1_interval.html">Interval</a> &amp; rt::AABB::axis_interval </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne l'intervalle correspondant a un axe donne. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Indice de l'axe (0 = x, 1 = y, 2 = z) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Reference constante vers l'intervalle de l'axe demande </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00085">85</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a8e5f118dab2ab6e59bef0558e325cf96" name="a8e5f118dab2ab6e59bef0558e325cf96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e5f118dab2ab6e59bef0558e325cf96">&#9670;&#160;</a></span>centroid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> rt::AABB::centroid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule le centre geometrique (centroide) de la boite. </p>
+<p>Le centroide est la moyenne des bornes sur chaque axe. Utilise dans le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> pour trier les objets spatialement. </p><dl class="section return"><dt>Renvoie</dt><dd>Le point central de la boite </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00161">161</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="acdd0a3a23dfbc673d814087dd999182f" name="acdd0a3a23dfbc673d814087dd999182f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdd0a3a23dfbc673d814087dd999182f">&#9670;&#160;</a></span>hit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool rt::AABB::hit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_interval.html">Interval</a></td>          <td class="paramname"><span class="paramname"><em>ray_t</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Test d'intersection rayon-boite par la methode des slabs. </p>
+<p>Pour chaque axe, on calcule les parametres t d'entree et de sortie du rayon dans la tranche (slab) definie par l'intervalle de cet axe. L'intersection existe si et seulement si les intervalles de t se chevauchent sur les trois axes simultanement. C'est un algorithme tres efficace et adapte au GPU. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Le rayon a tester </td></tr>
+    <tr><td class="paramname">ray_t</td><td>L'intervalle de validite pour le parametre t du rayon </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true si le rayon intersecte la boite dans l'intervalle donne </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00102">102</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a506ed58ba7683f5bff13645582c1972f" name="a506ed58ba7683f5bff13645582c1972f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a506ed58ba7683f5bff13645582c1972f">&#9670;&#160;</a></span>longest_axis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> int rt::AABB::longest_axis </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne l'indice de l'axe le plus long de la boite. </p>
+<p>Utile pour le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> : on trie les objets selon l'axe le plus long pour obtenir une meilleure partition spatiale. </p><dl class="section return"><dt>Renvoie</dt><dd>0 pour x, 1 pour y, 2 pour z </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00148">148</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a45dec8ecda48e3a9b27d777d341aa3f7" name="a45dec8ecda48e3a9b27d777d341aa3f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45dec8ecda48e3a9b27d777d341aa3f7">&#9670;&#160;</a></span>surface_area()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float rt::AABB::surface_area </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule l'aire de la surface de la boite. </p>
+<p>La formule est 2*(dx*dy + dy*dz + dz*dx), c'est-a-dire la somme des aires des 6 faces. Utilisee dans l'heuristique SAH (Surface Area Heuristic) pour optimiser la construction du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>. </p><dl class="section return"><dt>Renvoie</dt><dd>L'aire totale de la surface de la boite </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00176">176</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="a455650be9665cb83c90a15afa895089e" name="a455650be9665cb83c90a15afa895089e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a455650be9665cb83c90a15afa895089e">&#9670;&#160;</a></span>x</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_interval.html">Interval</a> rt::AABB::x</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Etendue de la boite le long de l'axe X </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00031">31</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a9f5dcf13f404c099fe3268668b357e95" name="a9f5dcf13f404c099fe3268668b357e95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f5dcf13f404c099fe3268668b357e95">&#9670;&#160;</a></span>y</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_interval.html">Interval</a> rt::AABB::y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Etendue de la boite le long de l'axe Y </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00032">32</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ada355d14fede0d6e15977ea1e6031901" name="ada355d14fede0d6e15977ea1e6031901"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada355d14fede0d6e15977ea1e6031901">&#9670;&#160;</a></span>z</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_interval.html">Interval</a> rt::AABB::z</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Etendue de la boite le long de l'axe Z </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="aabb_8cuh_source.html#l00033">33</a> du fichier <a class="el" href="aabb_8cuh_source.html">aabb.cuh</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>include/raytracer/core/<a class="el" href="aabb_8cuh_source.html">aabb.cuh</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li><li class="navelem"><a href="classrt_1_1_a_a_b_b.html">AABB</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

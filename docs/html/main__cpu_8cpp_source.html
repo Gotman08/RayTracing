@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer:  Fichier source de src/main_cpu.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('main__cpu_8cpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">main_cpu.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="main__cpu_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;ctime&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="main__cpu_8cpp.html#a18372412ad2fc3ce1e3240b3cf0efe78">   16</a></span><span class="preprocessor">#define STB_IMAGE_IMPLEMENTATION</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;stb_image.h&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="main__cpu_8cpp.html#aefe397a94e8feddc652f92ef40ce9597">   18</a></span><span class="preprocessor">#define STB_IMAGE_WRITE_IMPLEMENTATION</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;stb_image_write.h&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="cuda__compat_8cuh.html">raytracer/core/cuda_compat.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="vec3_8cuh.html">raytracer/core/vec3.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;<a class="code" href="ray_8cuh.html">raytracer/core/ray.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;<a class="code" href="random_8cuh.html">raytracer/core/random.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;<a class="code" href="aabb_8cuh.html">raytracer/core/aabb.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;<a class="code" href="interval_8cuh.html">raytracer/core/interval.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &quot;<a class="code" href="hit__record_8cuh.html">raytracer/core/hit_record.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &quot;<a class="code" href="hittable_8cuh.html">raytracer/geometry/hittable.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &quot;<a class="code" href="hittable__list_8cuh.html">raytracer/geometry/hittable_list.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include &quot;<a class="code" href="sphere_8cuh.html">raytracer/geometry/sphere.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &quot;<a class="code" href="plane_8cuh.html">raytracer/geometry/plane.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &quot;<a class="code" href="material_8cuh.html">raytracer/materials/material.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &quot;<a class="code" href="lambertian_8cuh.html">raytracer/materials/lambertian.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &quot;<a class="code" href="metal_8cuh.html">raytracer/materials/metal.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;<a class="code" href="dielectric_8cuh.html">raytracer/materials/dielectric.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;<a class="code" href="camera_8cuh.html">raytracer/camera/camera.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;<a class="code" href="bvh_8cuh.html">raytracer/acceleration/bvh.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;<a class="code" href="render__config_8cuh.html">raytracer/rendering/render_config.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;<a class="code" href="material__dispatch_8cuh.html">raytracer/rendering/material_dispatch.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &quot;<a class="code" href="tone__mapping_8cuh.html">raytracer/rendering/tone_mapping.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &quot;<a class="code" href="cpu__renderer_8cuh.html">raytracer/rendering/cpu_renderer.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &quot;<a class="code" href="args_8cuh.html">cli/args.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &quot;<a class="code" href="image__writer_8cuh.html">io/image_writer.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#include &quot;<a class="code" href="default__scene_8cuh.html">scene/default_scene.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespacert.html">rt</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> MAX_OBJECTS = 1000;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> MAX_MATERIALS = 1000;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
+<div class="foldopen" id="foldopen00062" data-start="{" data-end="};">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="class_c_p_u_b_v_h_builder.html">   62</a></span><span class="keyword">class </span><a class="code hl_class" href="class_c_p_u_b_v_h_builder.html">CPUBVHBuilder</a> {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">   64</a></span>    std::vector&lt;BVHNode&gt; <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>;             </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">   65</a></span>    std::vector&lt;HittableObject&gt; <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>; </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span></div>
+<div class="foldopen" id="foldopen00075" data-start="{" data-end="}">
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="class_c_p_u_b_v_h_builder.html#ae8fcf8eb36467f53144e905d4eefef38">   75</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_c_p_u_b_v_h_builder.html#ae8fcf8eb36467f53144e905d4eefef38">build</a>(<a class="code hl_struct" href="structrt_1_1_hittable_object.html">HittableObject</a>* objects, <span class="keywordtype">int</span> count) {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>.assign(objects, objects + count);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.clear();</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.reserve(2 * count);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">if</span> (count == 0) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        build_recursive(0, count);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
+</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span></div>
+<div class="foldopen" id="foldopen00092" data-start="{" data-end="}">
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="class_c_p_u_b_v_h_builder.html#afba3a018eaabe9d405205e6d30678a9e">   92</a></span>    <a class="code hl_class" href="classrt_1_1_b_v_h.html">BVH</a> <a class="code hl_function" href="class_c_p_u_b_v_h_builder.html#afba3a018eaabe9d405205e6d30678a9e">create_bvh</a>() {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <a class="code hl_class" href="classrt_1_1_b_v_h.html">BVH</a> bvh;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#ac6b27d875ee6d3ba86de01563e06edc4">num_nodes</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.size());</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#a1234229117f938b8d2a5027ad9ce9241">num_primitives</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>.size());</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#aa6f541b4f316fdd5ab78ed214d4aab12">nodes</a> = <span class="keyword">new</span> <a class="code hl_struct" href="structrt_1_1_b_v_h_node.html">BVHNode</a>[<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.size()];</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#a9e9696e69c4a21072a19a128d20e8958">primitives</a> = <span class="keyword">new</span> <a class="code hl_struct" href="structrt_1_1_hittable_object.html">HittableObject</a>[<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>.size()];</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        std::copy(<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.begin(), <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.end(), bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#aa6f541b4f316fdd5ab78ed214d4aab12">nodes</a>);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        std::copy(<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>.begin(), <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>.end(), bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#a9e9696e69c4a21072a19a128d20e8958">primitives</a>);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">return</span> bvh;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    }</div>
+</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span></div>
+<div class="foldopen" id="foldopen00113" data-start="{" data-end="}">
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="class_c_p_u_b_v_h_builder.html#a8548b9080b15a95600965c7daef80d94">  113</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_c_p_u_b_v_h_builder.html#a8548b9080b15a95600965c7daef80d94">free_bvh</a>(<a class="code hl_class" href="classrt_1_1_b_v_h.html">BVH</a>&amp; bvh) {</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keywordflow">if</span> (bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#aa6f541b4f316fdd5ab78ed214d4aab12">nodes</a>) <span class="keyword">delete</span>[] bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#aa6f541b4f316fdd5ab78ed214d4aab12">nodes</a>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keywordflow">if</span> (bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#a9e9696e69c4a21072a19a128d20e8958">primitives</a>) <span class="keyword">delete</span>[] bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#a9e9696e69c4a21072a19a128d20e8958">primitives</a>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#aa6f541b4f316fdd5ab78ed214d4aab12">nodes</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        bvh.<a class="code hl_variable" href="classrt_1_1_b_v_h.html#a9e9696e69c4a21072a19a128d20e8958">primitives</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    }</div>
+</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordtype">int</span> build_recursive(<span class="keywordtype">int</span> start, <span class="keywordtype">int</span> end) {</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <span class="keywordtype">int</span> node_idx = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.size());</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.emplace_back();</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <a class="code hl_class" href="classrt_1_1_a_a_b_b.html">AABB</a> bounds = <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>[start].bbox;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = start + 1; i &lt; end; i++) {</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            bounds = <a class="code hl_class" href="classrt_1_1_a_a_b_b.html">AABB</a>(bounds, <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>[i].bbox);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        }</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>[node_idx].bounds = bounds;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordtype">int</span> count = end - start;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="keywordflow">if</span> (count == 1) {</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>[node_idx].is_leaf = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>[node_idx].primitive_idx = start;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            <span class="keywordflow">return</span> node_idx;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        }</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordtype">int</span> axis = bounds.<a class="code hl_function" href="classrt_1_1_a_a_b_b.html#a506ed58ba7683f5bff13645582c1972f">longest_axis</a>();</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        std::sort(<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>.begin() + start, <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">primitives</a>.begin() + end,</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            [axis](<span class="keyword">const</span> HittableObject&amp; a, <span class="keyword">const</span> HittableObject&amp; b) {</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                return a.bbox.centroid()[axis] &lt; b.bbox.centroid()[axis];</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            });</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordtype">int</span> mid = start + count / 2;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>[node_idx].left = build_recursive(start, mid);</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>[node_idx].right = build_recursive(mid, end);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>[node_idx].is_leaf = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keywordflow">return</span> node_idx;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>};</div>
+</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span></div>
+<div class="foldopen" id="foldopen00181" data-start="{" data-end="}">
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno"><a class="line" href="main__cpu_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  181</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="test__main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <a class="code hl_struct" href="structrt_1_1_args.html">Args</a> args = <a class="code hl_function" href="namespacert.html#ae0c16aff837ddf619a74e7fe0e3e9e02">parse_args</a>(argc, argv);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    args.<a class="code hl_variable" href="structrt_1_1_args.html#aa3185e645d17bddd86226fcfb68692a7">use_cpu</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <a class="code hl_struct" href="structrt_1_1_render_config.html">RenderConfig</a> config;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    config.<a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a> = args.<a class="code hl_variable" href="structrt_1_1_args.html#acd72331e34d2d9f4acbf0f4b4a9b3a00">width</a>;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a> = args.<a class="code hl_variable" href="structrt_1_1_args.html#a11e0f6ef9afb7f740cb8e2552ad8c782">height</a>;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    config.<a class="code hl_variable" href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">samples_per_pixel</a> = args.<a class="code hl_variable" href="structrt_1_1_args.html#a037a17ffc0fe2bf005a6e748fd511038">samples</a>;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    config.<a class="code hl_variable" href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">max_depth</a> = args.<a class="code hl_variable" href="structrt_1_1_args.html#acddb5db8c7151601f9bce09396783df6">depth</a>;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keywordtype">int</span> num_pixels = config.<a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a> * config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a>;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    std::vector&lt;HittableObject&gt; h_objects(MAX_OBJECTS);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    std::vector&lt;Material&gt; h_materials(MAX_MATERIALS);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    <span class="keywordtype">int</span> obj_count = 0;</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="keywordtype">int</span> mat_count = 0;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <a class="code hl_class" href="classrt_1_1_camera.html">Camera</a> camera;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <a class="code hl_class" href="classrt_1_1_hittable_list.html">HittableList</a> world;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <a class="code hl_function" href="namespacert.html#a42aafe38e4e8f767eab277b6ee79cc50">create_default_scene</a>(camera, world, h_objects.data(), h_materials.data(), obj_count, mat_count, config);</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keywordflow">if</span> (!args.<a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a>) {</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;CPU Ray Tracer (OpenMP)\n&quot;</span>;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Resolution: &quot;</span> &lt;&lt; config.<a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a> &lt;&lt; <span class="stringliteral">&quot;x&quot;</span> &lt;&lt; config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Samples: &quot;</span> &lt;&lt; config.<a class="code hl_variable" href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">samples_per_pixel</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Max Depth: &quot;</span> &lt;&lt; config.<a class="code hl_variable" href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">max_depth</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Objects: &quot;</span> &lt;&lt; obj_count &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Output: &quot;</span> &lt;&lt; args.<a class="code hl_variable" href="structrt_1_1_args.html#a0942b41de336decf8d1ed0e49bb59f1e">output_file</a> &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    }</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <span class="keywordflow">if</span> (!args.<a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a>) std::cout &lt;&lt; <span class="stringliteral">&quot;Construction du BVH...&quot;</span> &lt;&lt; std::flush;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <a class="code hl_class" href="class_c_p_u_b_v_h_builder.html">CPUBVHBuilder</a> bvh_builder;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    bvh_builder.<a class="code hl_function" href="class_c_p_u_b_v_h_builder.html#ae8fcf8eb36467f53144e905d4eefef38">build</a>(h_objects.data(), obj_count);</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    <a class="code hl_class" href="classrt_1_1_b_v_h.html">BVH</a> bvh = bvh_builder.<a class="code hl_function" href="class_c_p_u_b_v_h_builder.html#afba3a018eaabe9d405205e6d30678a9e">create_bvh</a>();</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keywordflow">if</span> (!args.<a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a>) std::cout &lt;&lt; <span class="stringliteral">&quot; OK (&quot;</span> &lt;&lt; bvh_builder.<a class="code hl_variable" href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">nodes</a>.size() &lt;&lt; <span class="stringliteral">&quot; noeuds)\n&quot;</span>;</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    std::vector&lt;Color&gt; h_frame_buffer(num_pixels);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keywordflow">if</span> (!args.<a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a>) std::cout &lt;&lt; <span class="stringliteral">&quot;Rendu CPU en cours...&quot;</span> &lt;&lt; std::flush;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="keyword">auto</span> start_time = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <a class="code hl_function" href="namespacert.html#a6a2ae9c6e5c1c13f0c3ee6dfaa289670">render_cpu</a>(h_frame_buffer.data(), camera, bvh, config);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keyword">auto</span> end_time = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="keyword">auto</span> duration = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(end_time - start_time);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordflow">if</span> (!args.<a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a>) {</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        std::cout &lt;&lt; <span class="stringliteral">&quot; OK\n&quot;</span>;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Temps: &quot;</span> &lt;&lt; duration.count() / 1000.0f &lt;&lt; <span class="stringliteral">&quot; secondes\n&quot;</span>;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        <span class="keywordtype">float</span> mrays = (float)config.<a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a> * config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a> * config.<a class="code hl_variable" href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">samples_per_pixel</a> / 1000000.0f;</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;Performance: &quot;</span> &lt;&lt; mrays / (duration.count() / 1000.0f) &lt;&lt; <span class="stringliteral">&quot; MRays/s\n&quot;</span>;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    }</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="keywordflow">if</span> (!args.<a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a>) std::cout &lt;&lt; <span class="stringliteral">&quot;Sauvegarde...&quot;</span> &lt;&lt; std::flush;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <a class="code hl_function" href="namespacert.html#a360f6f7f7e6331279a9afdddaa7a13bd">save_image</a>(args.<a class="code hl_variable" href="structrt_1_1_args.html#a0942b41de336decf8d1ed0e49bb59f1e">output_file</a>, h_frame_buffer.data(), config.<a class="code hl_variable" href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">width</a>, config.<a class="code hl_variable" href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">height</a>);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keywordflow">if</span> (!args.<a class="code hl_variable" href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">quiet</a>) std::cout &lt;&lt; <span class="stringliteral">&quot; OK\n&quot;</span>;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    bvh_builder.<a class="code hl_function" href="class_c_p_u_b_v_h_builder.html#a8548b9080b15a95600965c7daef80d94">free_bvh</a>(bvh);</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>}</div>
+</div>
+<div class="ttc" id="aaabb_8cuh_html"><div class="ttname"><a href="aabb_8cuh.html">aabb.cuh</a></div><div class="ttdoc">Definition de la classe AABB (Axis-Aligned Bounding Box)</div></div>
+<div class="ttc" id="aargs_8cuh_html"><div class="ttname"><a href="args_8cuh.html">args.cuh</a></div><div class="ttdoc">Gestion des arguments en ligne de commande du ray tracer.</div></div>
+<div class="ttc" id="abvh_8cuh_html"><div class="ttname"><a href="bvh_8cuh.html">bvh.cuh</a></div><div class="ttdoc">Structure d&#39;acceleration BVH (Bounding Volume Hierarchy)</div></div>
+<div class="ttc" id="acamera_8cuh_html"><div class="ttname"><a href="camera_8cuh.html">camera.cuh</a></div><div class="ttdoc">Definition de la classe Camera pour le lancer de rayons.</div></div>
+<div class="ttc" id="aclass_c_p_u_b_v_h_builder_html"><div class="ttname"><a href="class_c_p_u_b_v_h_builder.html">CPUBVHBuilder</a></div><div class="ttdoc">Constructeur de BVH (Bounding Volume Hierarchy) pour le CPU.</div><div class="ttdef"><b>Definition</b> <a href="#l00062">main_cpu.cpp:62</a></div></div>
+<div class="ttc" id="aclass_c_p_u_b_v_h_builder_html_a3366f646411e846f0b8d42ea1b957a3c"><div class="ttname"><a href="class_c_p_u_b_v_h_builder.html#a3366f646411e846f0b8d42ea1b957a3c">CPUBVHBuilder::primitives</a></div><div class="ttdeci">std::vector&lt; HittableObject &gt; primitives</div><div class="ttdoc">Liste des primitives (objets) triees par le BVH.</div><div class="ttdef"><b>Definition</b> <a href="#l00065">main_cpu.cpp:65</a></div></div>
+<div class="ttc" id="aclass_c_p_u_b_v_h_builder_html_a8548b9080b15a95600965c7daef80d94"><div class="ttname"><a href="class_c_p_u_b_v_h_builder.html#a8548b9080b15a95600965c7daef80d94">CPUBVHBuilder::free_bvh</a></div><div class="ttdeci">void free_bvh(BVH &amp;bvh)</div><div class="ttdoc">Libere la memoire allouee par create_bvh()</div><div class="ttdef"><b>Definition</b> <a href="#l00113">main_cpu.cpp:113</a></div></div>
+<div class="ttc" id="aclass_c_p_u_b_v_h_builder_html_ac17ad94580bff596777b700c002650da"><div class="ttname"><a href="class_c_p_u_b_v_h_builder.html#ac17ad94580bff596777b700c002650da">CPUBVHBuilder::nodes</a></div><div class="ttdeci">std::vector&lt; BVHNode &gt; nodes</div><div class="ttdoc">Liste des noeuds du BVH (internes et feuilles)</div><div class="ttdef"><b>Definition</b> <a href="#l00064">main_cpu.cpp:64</a></div></div>
+<div class="ttc" id="aclass_c_p_u_b_v_h_builder_html_ae8fcf8eb36467f53144e905d4eefef38"><div class="ttname"><a href="class_c_p_u_b_v_h_builder.html#ae8fcf8eb36467f53144e905d4eefef38">CPUBVHBuilder::build</a></div><div class="ttdeci">void build(HittableObject *objects, int count)</div><div class="ttdoc">Construit le BVH a partir d&#39;un tableau d&#39;objets.</div><div class="ttdef"><b>Definition</b> <a href="#l00075">main_cpu.cpp:75</a></div></div>
+<div class="ttc" id="aclass_c_p_u_b_v_h_builder_html_afba3a018eaabe9d405205e6d30678a9e"><div class="ttname"><a href="class_c_p_u_b_v_h_builder.html#afba3a018eaabe9d405205e6d30678a9e">CPUBVHBuilder::create_bvh</a></div><div class="ttdeci">BVH create_bvh()</div><div class="ttdoc">Cree et retourne une structure BVH utilisable pour le rendu.</div><div class="ttdef"><b>Definition</b> <a href="#l00092">main_cpu.cpp:92</a></div></div>
+<div class="ttc" id="aclassrt_1_1_a_a_b_b_html"><div class="ttname"><a href="classrt_1_1_a_a_b_b.html">rt::AABB</a></div><div class="ttdoc">Boite englobante alignee aux axes (Axis-Aligned Bounding Box)</div><div class="ttdef"><b>Definition</b> <a href="aabb_8cuh_source.html#l00029">aabb.cuh:29</a></div></div>
+<div class="ttc" id="aclassrt_1_1_a_a_b_b_html_a506ed58ba7683f5bff13645582c1972f"><div class="ttname"><a href="classrt_1_1_a_a_b_b.html#a506ed58ba7683f5bff13645582c1972f">rt::AABB::longest_axis</a></div><div class="ttdeci">__host__ __device__ int longest_axis() const</div><div class="ttdoc">Retourne l&#39;indice de l&#39;axe le plus long de la boite.</div><div class="ttdef"><b>Definition</b> <a href="aabb_8cuh_source.html#l00148">aabb.cuh:148</a></div></div>
+<div class="ttc" id="aclassrt_1_1_b_v_h_html"><div class="ttname"><a href="classrt_1_1_b_v_h.html">rt::BVH</a></div><div class="ttdoc">Structure d&#39;acceleration par hierarchie de volumes englobants.</div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00045">bvh.cuh:45</a></div></div>
+<div class="ttc" id="aclassrt_1_1_b_v_h_html_a1234229117f938b8d2a5027ad9ce9241"><div class="ttname"><a href="classrt_1_1_b_v_h.html#a1234229117f938b8d2a5027ad9ce9241">rt::BVH::num_primitives</a></div><div class="ttdeci">int num_primitives</div><div class="ttdoc">Nombre total de primitives.</div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00050">bvh.cuh:50</a></div></div>
+<div class="ttc" id="aclassrt_1_1_b_v_h_html_a9e9696e69c4a21072a19a128d20e8958"><div class="ttname"><a href="classrt_1_1_b_v_h.html#a9e9696e69c4a21072a19a128d20e8958">rt::BVH::primitives</a></div><div class="ttdeci">HittableObject * primitives</div><div class="ttdoc">Tableau des primitives de la scene.</div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00048">bvh.cuh:48</a></div></div>
+<div class="ttc" id="aclassrt_1_1_b_v_h_html_aa6f541b4f316fdd5ab78ed214d4aab12"><div class="ttname"><a href="classrt_1_1_b_v_h.html#aa6f541b4f316fdd5ab78ed214d4aab12">rt::BVH::nodes</a></div><div class="ttdeci">BVHNode * nodes</div><div class="ttdoc">Tableau de noeuds du BVH (memoire GPU ou CPU)</div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00047">bvh.cuh:47</a></div></div>
+<div class="ttc" id="aclassrt_1_1_b_v_h_html_ac6b27d875ee6d3ba86de01563e06edc4"><div class="ttname"><a href="classrt_1_1_b_v_h.html#ac6b27d875ee6d3ba86de01563e06edc4">rt::BVH::num_nodes</a></div><div class="ttdeci">int num_nodes</div><div class="ttdoc">Nombre total de noeuds dans l&#39;arbre.</div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00049">bvh.cuh:49</a></div></div>
+<div class="ttc" id="aclassrt_1_1_camera_html"><div class="ttname"><a href="classrt_1_1_camera.html">rt::Camera</a></div><div class="ttdoc">Camera avec projection perspective, profondeur de champ et motion blur.</div><div class="ttdef"><b>Definition</b> <a href="camera_8cuh_source.html#l00027">camera.cuh:27</a></div></div>
+<div class="ttc" id="aclassrt_1_1_hittable_list_html"><div class="ttname"><a href="classrt_1_1_hittable_list.html">rt::HittableList</a></div><div class="ttdoc">Liste de tous les objets de la scene.</div><div class="ttdef"><b>Definition</b> <a href="hittable__list_8cuh_source.html#l00088">hittable_list.cuh:88</a></div></div>
+<div class="ttc" id="acpu__renderer_8cuh_html"><div class="ttname"><a href="cpu__renderer_8cuh.html">cpu_renderer.cuh</a></div><div class="ttdoc">Moteur de rendu CPU du raytracer, parallelise avec OpenMP.</div></div>
+<div class="ttc" id="acuda__compat_8cuh_html"><div class="ttname"><a href="cuda__compat_8cuh.html">cuda_compat.cuh</a></div><div class="ttdoc">Couche de compatibilite pour compiler le code sans le toolkit CUDA.</div></div>
+<div class="ttc" id="adefault__scene_8cuh_html"><div class="ttname"><a href="default__scene_8cuh.html">default_scene.cuh</a></div><div class="ttdoc">Creation de la scene par defaut du ray tracer.</div></div>
+<div class="ttc" id="adielectric_8cuh_html"><div class="ttname"><a href="dielectric_8cuh.html">dielectric.cuh</a></div><div class="ttdoc">Implementation du materiau dielectrique (verre, eau) pour le raytracer.</div></div>
+<div class="ttc" id="ahit__record_8cuh_html"><div class="ttname"><a href="hit__record_8cuh.html">hit_record.cuh</a></div><div class="ttdoc">Definition de la structure HitRecord pour stocker les informations d&#39;intersection.</div></div>
+<div class="ttc" id="ahittable_8cuh_html"><div class="ttname"><a href="hittable_8cuh.html">hittable.cuh</a></div><div class="ttdoc">Classe de base abstraite pour tous les objets intersectables de la scene.</div></div>
+<div class="ttc" id="ahittable__list_8cuh_html"><div class="ttname"><a href="hittable__list_8cuh.html">hittable_list.cuh</a></div><div class="ttdoc">Conteneur pour stocker et gerer l&#39;ensemble des objets de la scene.</div></div>
+<div class="ttc" id="aimage__writer_8cuh_html"><div class="ttname"><a href="image__writer_8cuh.html">image_writer.cuh</a></div><div class="ttdoc">Sauvegarde du frame buffer en fichier image.</div></div>
+<div class="ttc" id="ainterval_8cuh_html"><div class="ttname"><a href="interval_8cuh.html">interval.cuh</a></div><div class="ttdoc">Definition de la classe Interval pour gerer des plages de valeurs [min, max].</div></div>
+<div class="ttc" id="alambertian_8cuh_html"><div class="ttname"><a href="lambertian_8cuh.html">lambertian.cuh</a></div><div class="ttdoc">Implementation du materiau lambertien (diffus) pour le raytracer.</div></div>
+<div class="ttc" id="amaterial_8cuh_html"><div class="ttname"><a href="material_8cuh.html">material.cuh</a></div><div class="ttdoc">Definition du materiau generique utilise dans le raytracer.</div></div>
+<div class="ttc" id="amaterial__dispatch_8cuh_html"><div class="ttname"><a href="material__dispatch_8cuh.html">material_dispatch.cuh</a></div><div class="ttdoc">Dispatch de l&#39;interaction rayon-materiau selon le type de materiau.</div></div>
+<div class="ttc" id="ametal_8cuh_html"><div class="ttname"><a href="metal_8cuh.html">metal.cuh</a></div><div class="ttdoc">Implementation du materiau metallique pour le raytracer.</div></div>
+<div class="ttc" id="anamespacert_html"><div class="ttname"><a href="namespacert.html">rt</a></div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00017">bvh.cuh:17</a></div></div>
+<div class="ttc" id="anamespacert_html_a360f6f7f7e6331279a9afdddaa7a13bd"><div class="ttname"><a href="namespacert.html#a360f6f7f7e6331279a9afdddaa7a13bd">rt::save_image</a></div><div class="ttdeci">void save_image(const std::string &amp;filename, Color *buffer, int width, int height)</div><div class="ttdoc">Sauvegarde le frame buffer en fichier image dans le format determine par l&#39;extension.</div><div class="ttdef"><b>Definition</b> <a href="image__writer_8cuh_source.html#l00034">image_writer.cuh:34</a></div></div>
+<div class="ttc" id="anamespacert_html_a42aafe38e4e8f767eab277b6ee79cc50"><div class="ttname"><a href="namespacert.html#a42aafe38e4e8f767eab277b6ee79cc50">rt::create_default_scene</a></div><div class="ttdeci">void create_default_scene(Camera &amp;camera, HittableList &amp;world, HittableObject *objects, Material *materials, int &amp;obj_count, int &amp;mat_count, RenderConfig &amp;config)</div><div class="ttdoc">Cree la scene par defaut avec sol, spheres principales et spheres aleatoires.</div><div class="ttdef"><b>Definition</b> <a href="default__scene_8cuh_source.html#l00043">default_scene.cuh:43</a></div></div>
+<div class="ttc" id="anamespacert_html_a6a2ae9c6e5c1c13f0c3ee6dfaa289670"><div class="ttname"><a href="namespacert.html#a6a2ae9c6e5c1c13f0c3ee6dfaa289670">rt::render_cpu</a></div><div class="ttdeci">void render_cpu(Color *frame_buffer, const Camera &amp;camera, const BVH &amp;bvh, const RenderConfig &amp;config)</div><div class="ttdoc">Fonction de rendu CPU parallelisee avec OpenMP.</div><div class="ttdef"><b>Definition</b> <a href="cpu__renderer_8cuh_source.html#l00094">cpu_renderer.cuh:94</a></div></div>
+<div class="ttc" id="anamespacert_html_ae0c16aff837ddf619a74e7fe0e3e9e02"><div class="ttname"><a href="namespacert.html#ae0c16aff837ddf619a74e7fe0e3e9e02">rt::parse_args</a></div><div class="ttdeci">Args parse_args(int argc, char **argv)</div><div class="ttdoc">Parse les arguments de la ligne de commande et retourne une structure Args.</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00082">args.cuh:82</a></div></div>
+<div class="ttc" id="aplane_8cuh_html"><div class="ttname"><a href="plane_8cuh.html">plane.cuh</a></div><div class="ttdoc">Definition de la classe Plane pour le lancer de rayons.</div></div>
+<div class="ttc" id="arandom_8cuh_html"><div class="ttname"><a href="random_8cuh.html">random.cuh</a></div><div class="ttdoc">Generateur de nombres aleatoires pour le rendu CPU.</div></div>
+<div class="ttc" id="aray_8cuh_html"><div class="ttname"><a href="ray_8cuh.html">ray.cuh</a></div><div class="ttdoc">Definition de la classe Ray representant un rayon lumineux.</div></div>
+<div class="ttc" id="arender__config_8cuh_html"><div class="ttname"><a href="render__config_8cuh.html">render_config.cuh</a></div><div class="ttdoc">Structure de configuration pour le moteur de rendu.</div></div>
+<div class="ttc" id="asphere_8cuh_html"><div class="ttname"><a href="sphere_8cuh.html">sphere.cuh</a></div><div class="ttdoc">Definition de la classe Sphere pour le lancer de rayons.</div></div>
+<div class="ttc" id="astructrt_1_1_args_html"><div class="ttname"><a href="structrt_1_1_args.html">rt::Args</a></div><div class="ttdoc">Structure regroupant tous les arguments en ligne de commande.</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00025">args.cuh:25</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a037a17ffc0fe2bf005a6e748fd511038"><div class="ttname"><a href="structrt_1_1_args.html#a037a17ffc0fe2bf005a6e748fd511038">rt::Args::samples</a></div><div class="ttdeci">int samples</div><div class="ttdoc">Nombre de samples (rayons) par pixel (defaut : 100)</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00028">args.cuh:28</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a0942b41de336decf8d1ed0e49bb59f1e"><div class="ttname"><a href="structrt_1_1_args.html#a0942b41de336decf8d1ed0e49bb59f1e">rt::Args::output_file</a></div><div class="ttdeci">std::string output_file</div><div class="ttdoc">Chemin du fichier image de sortie (defaut : &quot;output.png&quot;)</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00030">args.cuh:30</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a11e0f6ef9afb7f740cb8e2552ad8c782"><div class="ttname"><a href="structrt_1_1_args.html#a11e0f6ef9afb7f740cb8e2552ad8c782">rt::Args::height</a></div><div class="ttdeci">int height</div><div class="ttdoc">Hauteur de l&#39;image en pixels (defaut : 600)</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00027">args.cuh:27</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_a5cede15cdd15a668a1bacc2982c7cdcb"><div class="ttname"><a href="structrt_1_1_args.html#a5cede15cdd15a668a1bacc2982c7cdcb">rt::Args::quiet</a></div><div class="ttdeci">bool quiet</div><div class="ttdoc">Mode silencieux : supprime les messages de progression.</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00032">args.cuh:32</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_aa3185e645d17bddd86226fcfb68692a7"><div class="ttname"><a href="structrt_1_1_args.html#aa3185e645d17bddd86226fcfb68692a7">rt::Args::use_cpu</a></div><div class="ttdeci">bool use_cpu</div><div class="ttdoc">Forcer le rendu CPU avec OpenMP au lieu du GPU CUDA.</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00034">args.cuh:34</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_acd72331e34d2d9f4acbf0f4b4a9b3a00"><div class="ttname"><a href="structrt_1_1_args.html#acd72331e34d2d9f4acbf0f4b4a9b3a00">rt::Args::width</a></div><div class="ttdeci">int width</div><div class="ttdoc">Largeur de l&#39;image en pixels (defaut : 800)</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00026">args.cuh:26</a></div></div>
+<div class="ttc" id="astructrt_1_1_args_html_acddb5db8c7151601f9bce09396783df6"><div class="ttname"><a href="structrt_1_1_args.html#acddb5db8c7151601f9bce09396783df6">rt::Args::depth</a></div><div class="ttdeci">int depth</div><div class="ttdoc">Profondeur maximale de rebonds des rayons (defaut : 50)</div><div class="ttdef"><b>Definition</b> <a href="args_8cuh_source.html#l00029">args.cuh:29</a></div></div>
+<div class="ttc" id="astructrt_1_1_b_v_h_node_html"><div class="ttname"><a href="structrt_1_1_b_v_h_node.html">rt::BVHNode</a></div><div class="ttdoc">Noeud de l&#39;arbre BVH (Bounding Volume Hierarchy)</div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00025">bvh.cuh:25</a></div></div>
+<div class="ttc" id="astructrt_1_1_hittable_object_html"><div class="ttname"><a href="structrt_1_1_hittable_object.html">rt::HittableObject</a></div><div class="ttdoc">Represente un objet complet de la scene avec son type, ses donnees et sa boite englobante.</div><div class="ttdef"><b>Definition</b> <a href="hittable__list_8cuh_source.html#l00046">hittable_list.cuh:46</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html"><div class="ttname"><a href="structrt_1_1_render_config.html">rt::RenderConfig</a></div><div class="ttdoc">Structure contenant tous les parametres de configuration du rendu.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00026">render_config.cuh:26</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_a8c97dc8a2ddc55139dccd5be51d7076f"><div class="ttname"><a href="structrt_1_1_render_config.html#a8c97dc8a2ddc55139dccd5be51d7076f">rt::RenderConfig::height</a></div><div class="ttdeci">int height</div><div class="ttdoc">Hauteur de l&#39;image en pixels.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00028">render_config.cuh:28</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_aa64bee560f763327cc3b86fe4e04f367"><div class="ttname"><a href="structrt_1_1_render_config.html#aa64bee560f763327cc3b86fe4e04f367">rt::RenderConfig::width</a></div><div class="ttdeci">int width</div><div class="ttdoc">Largeur de l&#39;image en pixels.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00027">render_config.cuh:27</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_ab6f25b56bc6a9abd126d607fa9ce5577"><div class="ttname"><a href="structrt_1_1_render_config.html#ab6f25b56bc6a9abd126d607fa9ce5577">rt::RenderConfig::max_depth</a></div><div class="ttdeci">int max_depth</div><div class="ttdoc">Profondeur maximale des rebonds de rayons.</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00030">render_config.cuh:30</a></div></div>
+<div class="ttc" id="astructrt_1_1_render_config_html_ae1906f768297ede80d3e8ae958098a9c"><div class="ttname"><a href="structrt_1_1_render_config.html#ae1906f768297ede80d3e8ae958098a9c">rt::RenderConfig::samples_per_pixel</a></div><div class="ttdeci">int samples_per_pixel</div><div class="ttdoc">Nombre d&#39;echantillons par pixel (antialiasing)</div><div class="ttdef"><b>Definition</b> <a href="render__config_8cuh_source.html#l00029">render_config.cuh:29</a></div></div>
+<div class="ttc" id="atest__main_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="test__main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdoc">Fonction principale : execute toutes les suites de tests et affiche le bilan.</div><div class="ttdef"><b>Definition</b> <a href="test__main_8cpp_source.html#l00105">test_main.cpp:105</a></div></div>
+<div class="ttc" id="atone__mapping_8cuh_html"><div class="ttname"><a href="tone__mapping_8cuh.html">tone_mapping.cuh</a></div><div class="ttdoc">Fonctions de tone mapping et de correction gamma pour le rendu.</div></div>
+<div class="ttc" id="avec3_8cuh_html"><div class="ttname"><a href="vec3_8cuh.html">vec3.cuh</a></div><div class="ttdoc">Definition de la classe Vec3 et des fonctions utilitaires associees.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="main__cpu_8cpp.html">main_cpu.cpp</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,3 +1,11 @@
+/**
+ * @file args.cuh
+ * @brief Gestion des arguments en ligne de commande du ray tracer
+ * @details Ce fichier definit la structure contenant tous les parametres
+ *          configurables du ray tracer ainsi que les fonctions de parsing
+ *          des arguments passes par l'utilisateur via argc/argv.
+ */
+
 #ifndef RAYTRACER_CLI_ARGS_CUH
 #define RAYTRACER_CLI_ARGS_CUH
 
@@ -7,27 +15,39 @@
 
 namespace rt {
 
+/**
+ * @brief Structure regroupant tous les arguments en ligne de commande
+ * @details Contient les parametres de rendu (resolution, samples, profondeur),
+ *          les options de sortie, le choix du mode CPU/GPU, ainsi que les
+ *          parametres du mode interactif (controles camera, accumulation).
+ *          Chaque champ possede une valeur par defaut raisonnable.
+ */
 struct Args {
-    int width = 800;
-    int height = 600;
-    int samples = 100;
-    int depth = 50;
-    std::string output_file = "output.png";
-    bool show_info = false;
-    bool quiet = false;
+    int width = 800;                        ///< Largeur de l'image en pixels (defaut : 800)
+    int height = 600;                       ///< Hauteur de l'image en pixels (defaut : 600)
+    int samples = 100;                      ///< Nombre de samples (rayons) par pixel (defaut : 100)
+    int depth = 50;                         ///< Profondeur maximale de rebonds des rayons (defaut : 50)
+    std::string output_file = "output.png"; ///< Chemin du fichier image de sortie (defaut : "output.png")
+    bool show_info = false;                 ///< Afficher les informations du GPU et quitter
+    bool quiet = false;                     ///< Mode silencieux : supprime les messages de progression
 
-    // Rendering mode
-    bool use_cpu = false;
-    bool profile = false;
+    bool use_cpu = false;                   ///< Forcer le rendu CPU avec OpenMP au lieu du GPU CUDA
+    bool profile = false;                   ///< Afficher le rapport de timing detaille apres le rendu
 
-    // Interactive mode options
-    bool interactive = false;
-    int interactive_spp = 1;         // Samples per frame during movement
-    int max_accumulated_spp = 1000;  // Max samples when camera is still
-    float mouse_sensitivity = 0.002f;
-    float move_speed = 5.0f;
+    bool interactive = false;               ///< Activer le mode interactif avec fenetre OpenGL
+    int interactive_spp = 1;                ///< Nombre de samples par frame en mode interactif (defaut : 1)
+    int max_accumulated_spp = 1000;         ///< Nombre maximal de samples accumules en mode interactif (defaut : 1000)
+    float mouse_sensitivity = 0.002f;       ///< Sensibilite de la souris pour le controle de la camera (defaut : 0.002)
+    float move_speed = 5.0f;                ///< Vitesse de deplacement de la camera avec WASD (defaut : 5.0)
 };
 
+/**
+ * @brief Affiche le message d'aide avec toutes les options disponibles
+ * @details Liste toutes les options en ligne de commande avec leur description,
+ *          leur format attendu et leur valeur par defaut. Inclut les options
+ *          de rendu standard ainsi que les options du mode interactif.
+ * @param program Nom du programme (argv[0]), utilise pour afficher la syntaxe d'utilisation
+ */
 inline void print_usage(const char* program) {
     std::cout << "CUDA Ray Tracer\n\n";
     std::cout << "Usage: " << program << " [options]\n\n";
@@ -50,6 +70,15 @@ inline void print_usage(const char* program) {
     std::cout << "  --speed <float>        Vitesse deplacement (defaut: 5.0)\n";
 }
 
+/**
+ * @brief Parse les arguments de la ligne de commande et retourne une structure Args
+ * @details Parcourt les arguments argv un par un et remplit la structure Args
+ *          en consequence. Les options non reconnues sont silencieusement ignorees.
+ *          Si --help est detecte, l'aide est affichee et le programme se termine.
+ * @param argc Nombre d'arguments passes au programme
+ * @param argv Tableau de chaines de caracteres contenant les arguments
+ * @return Structure Args remplie avec les valeurs parsees (ou les valeurs par defaut)
+ */
 inline Args parse_args(int argc, char** argv) {
     Args args;
 

@@ -1,0 +1,804 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la classe rt::Vec3</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classrt_1_1_vec3.html','','classrt_1_1_vec3-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la classe rt::Vec3</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Vecteur 3D a composantes flottantes.  
+ <a href="#details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:a35c8af8d5c021d3a51b9a4f7b159d484" id="r_a35c8af8d5c021d3a51b9a4f7b159d484"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35c8af8d5c021d3a51b9a4f7b159d484">Vec3</a> ()</td></tr>
+<tr class="memdesc:a35c8af8d5c021d3a51b9a4f7b159d484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur par defaut, initialise le vecteur a (0, 0, 0)  <br /></td></tr>
+<tr class="memitem:afe88bffa6f23e8db868e5e44d1c957d9" id="r_afe88bffa6f23e8db868e5e44d1c957d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe88bffa6f23e8db868e5e44d1c957d9">Vec3</a> (float e0, float e1, float e2)</td></tr>
+<tr class="memdesc:afe88bffa6f23e8db868e5e44d1c957d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur a partir de trois composantes.  <br /></td></tr>
+<tr class="memitem:ac202911448b4b375a5e85414d02157e3" id="r_ac202911448b4b375a5e85414d02157e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac202911448b4b375a5e85414d02157e3">Vec3</a> (float v)</td></tr>
+<tr class="memdesc:ac202911448b4b375a5e85414d02157e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur explicite a partir d'une seule valeur.  <br /></td></tr>
+<tr class="memitem:a3d6d071cb596ef8bf3d2ca61c11dea71" id="r_a3d6d071cb596ef8bf3d2ca61c11dea71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d6d071cb596ef8bf3d2ca61c11dea71">operator-</a> () const</td></tr>
+<tr class="memdesc:a3d6d071cb596ef8bf3d2ca61c11dea71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operateur de negation unaire.  <br /></td></tr>
+<tr class="memitem:a812f0f55da100f5778764c30faacc572" id="r_a812f0f55da100f5778764c30faacc572"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a812f0f55da100f5778764c30faacc572">operator[]</a> (int i) const</td></tr>
+<tr class="memdesc:a812f0f55da100f5778764c30faacc572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acces a une composante par indice.  <br /></td></tr>
+<tr class="memitem:ab661bc2672f25ab16b15e64477564d95" id="r_ab661bc2672f25ab16b15e64477564d95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab661bc2672f25ab16b15e64477564d95">operator+</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v) const</td></tr>
+<tr class="memdesc:ab661bc2672f25ab16b15e64477564d95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition de deux vecteurs composante par composante.  <br /></td></tr>
+<tr class="memitem:a81b074d4f216c936edffa168b1999733" id="r_a81b074d4f216c936edffa168b1999733"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81b074d4f216c936edffa168b1999733">operator-</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v) const</td></tr>
+<tr class="memdesc:a81b074d4f216c936edffa168b1999733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Soustraction de deux vecteurs composante par composante.  <br /></td></tr>
+<tr class="memitem:a3524e9d4ec7337130a5a0932684ef4d8" id="r_a3524e9d4ec7337130a5a0932684ef4d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3524e9d4ec7337130a5a0932684ef4d8">operator*</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v) const</td></tr>
+<tr class="memdesc:a3524e9d4ec7337130a5a0932684ef4d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplication composante par composante (produit de Hadamard)  <br /></td></tr>
+<tr class="memitem:a934dfc2a610f585dded49c91ad09ab77" id="r_a934dfc2a610f585dded49c91ad09ab77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a934dfc2a610f585dded49c91ad09ab77">operator*</a> (float t) const</td></tr>
+<tr class="memdesc:a934dfc2a610f585dded49c91ad09ab77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplication par un scalaire.  <br /></td></tr>
+<tr class="memitem:a8d0f2e5b8c6e754012dfb6b22b9d27ea" id="r_a8d0f2e5b8c6e754012dfb6b22b9d27ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d0f2e5b8c6e754012dfb6b22b9d27ea">operator/</a> (float t) const</td></tr>
+<tr class="memdesc:a8d0f2e5b8c6e754012dfb6b22b9d27ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Division par un scalaire.  <br /></td></tr>
+<tr class="memitem:adc09856fd37290c3d48125a5725487d8" id="r_adc09856fd37290c3d48125a5725487d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc09856fd37290c3d48125a5725487d8">operator+=</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:adc09856fd37290c3d48125a5725487d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition en place d'un vecteur.  <br /></td></tr>
+<tr class="memitem:a85b1cb864682e4d78da0160c0dfed5b5" id="r_a85b1cb864682e4d78da0160c0dfed5b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85b1cb864682e4d78da0160c0dfed5b5">operator*=</a> (float t)</td></tr>
+<tr class="memdesc:a85b1cb864682e4d78da0160c0dfed5b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplication en place par un scalaire.  <br /></td></tr>
+<tr class="memitem:a11d882eebf0cad9b0c56bb509bf6b097" id="r_a11d882eebf0cad9b0c56bb509bf6b097"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11d882eebf0cad9b0c56bb509bf6b097">operator/=</a> (float t)</td></tr>
+<tr class="memdesc:a11d882eebf0cad9b0c56bb509bf6b097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Division en place par un scalaire.  <br /></td></tr>
+<tr class="memitem:aaaa4e575126d0676a5acf275013c3fdf" id="r_aaaa4e575126d0676a5acf275013c3fdf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaaa4e575126d0676a5acf275013c3fdf">length</a> () const</td></tr>
+<tr class="memdesc:aaaa4e575126d0676a5acf275013c3fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la norme (longueur) du vecteur.  <br /></td></tr>
+<tr class="memitem:a050fa1a46ee76bd4a05556ef50af27f2" id="r_a050fa1a46ee76bd4a05556ef50af27f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a050fa1a46ee76bd4a05556ef50af27f2">length_squared</a> () const</td></tr>
+<tr class="memdesc:a050fa1a46ee76bd4a05556ef50af27f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le carre de la norme du vecteur.  <br /></td></tr>
+<tr class="memitem:a87b606af35851136a563757c5f9dfb30" id="r_a87b606af35851136a563757c5f9dfb30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a87b606af35851136a563757c5f9dfb30">normalized</a> () const</td></tr>
+<tr class="memdesc:a87b606af35851136a563757c5f9dfb30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne le vecteur normalise (de norme 1)  <br /></td></tr>
+<tr class="memitem:a4b72ef083704e482858282b1995b7293" id="r_a4b72ef083704e482858282b1995b7293"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b72ef083704e482858282b1995b7293">near_zero</a> () const</td></tr>
+<tr class="memdesc:a4b72ef083704e482858282b1995b7293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifie si le vecteur est proche du vecteur nul.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:a6917bef5d9b3b469d468001b4f52c4be" id="r_a6917bef5d9b3b469d468001b4f52c4be"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6917bef5d9b3b469d468001b4f52c4be">x</a></td></tr>
+<tr class="memitem:a7fb2435f3a5de0c3c88cf2629d36bd3e" id="r_a7fb2435f3a5de0c3c88cf2629d36bd3e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fb2435f3a5de0c3c88cf2629d36bd3e">y</a></td></tr>
+<tr class="memitem:a535e35383b0e44ff538b95bc4f082ff1" id="r_a535e35383b0e44ff538b95bc4f082ff1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a535e35383b0e44ff538b95bc4f082ff1">z</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Vecteur 3D a composantes flottantes. </p>
+<p>Classe de base du raytracer servant a representer des positions (<a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59" title="Alias de type : un Point3 est un Vec3 utilise comme position.">Point3</a>), des directions ou des couleurs (<a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a>) dans l'espace 3D. Tous les operateurs arithmetiques courants sont surcharges pour faciliter les calculs vectoriels. Compatible host/device CUDA. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00036">36</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a id="a35c8af8d5c021d3a51b9a4f7b159d484" name="a35c8af8d5c021d3a51b9a4f7b159d484"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35c8af8d5c021d3a51b9a4f7b159d484">&#9670;&#160;</a></span>Vec3() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Vec3::Vec3 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur par defaut, initialise le vecteur a (0, 0, 0) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00043">43</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="afe88bffa6f23e8db868e5e44d1c957d9" name="afe88bffa6f23e8db868e5e44d1c957d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe88bffa6f23e8db868e5e44d1c957d9">&#9670;&#160;</a></span>Vec3() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Vec3::Vec3 </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>e0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>e1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>e2</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur a partir de trois composantes. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e0</td><td>Composante x </td></tr>
+    <tr><td class="paramname">e1</td><td>Composante y </td></tr>
+    <tr><td class="paramname">e2</td><td>Composante z </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00051">51</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ac202911448b4b375a5e85414d02157e3" name="ac202911448b4b375a5e85414d02157e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac202911448b4b375a5e85414d02157e3">&#9670;&#160;</a></span>Vec3() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Vec3::Vec3 </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur explicite a partir d'une seule valeur. </p>
+<p>Initialise les trois composantes a la meme valeur v </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Valeur commune pour x, y et z </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00058">58</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="aaaa4e575126d0676a5acf275013c3fdf" name="aaaa4e575126d0676a5acf275013c3fdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaa4e575126d0676a5acf275013c3fdf">&#9670;&#160;</a></span>length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float rt::Vec3::length </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la norme (longueur) du vecteur. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>La norme euclidienne du vecteur </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00156">156</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a050fa1a46ee76bd4a05556ef50af27f2" name="a050fa1a46ee76bd4a05556ef50af27f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a050fa1a46ee76bd4a05556ef50af27f2">&#9670;&#160;</a></span>length_squared()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float rt::Vec3::length_squared </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule le carre de la norme du vecteur. </p>
+<p>Plus rapide que <a class="el" href="#aaaa4e575126d0676a5acf275013c3fdf" title="Calcule la norme (longueur) du vecteur.">length()</a> car evite la racine carree. Utile pour les comparaisons de distances. </p><dl class="section return"><dt>Renvoie</dt><dd>Le carre de la norme euclidienne </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00166">166</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a4b72ef083704e482858282b1995b7293" name="a4b72ef083704e482858282b1995b7293"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b72ef083704e482858282b1995b7293">&#9670;&#160;</a></span>near_zero()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool rt::Vec3::near_zero </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Verifie si le vecteur est proche du vecteur nul. </p>
+<p>Chaque composante est comparee a un seuil de 1e-8. Utile pour eviter des erreurs numeriques lors des reflexions. </p><dl class="section return"><dt>Renvoie</dt><dd>true si toutes les composantes sont proches de zero </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00187">187</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a87b606af35851136a563757c5f9dfb30" name="a87b606af35851136a563757c5f9dfb30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87b606af35851136a563757c5f9dfb30">&#9670;&#160;</a></span>normalized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Vec3::normalized </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne le vecteur normalise (de norme 1) </p>
+<p>Si le vecteur est de norme nulle, retourne le vecteur nul pour eviter une division par zero. </p><dl class="section return"><dt>Renvoie</dt><dd>Le vecteur unitaire dans la meme direction </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00176">176</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a3524e9d4ec7337130a5a0932684ef4d8" name="a3524e9d4ec7337130a5a0932684ef4d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3524e9d4ec7337130a5a0932684ef4d8">&#9670;&#160;</a></span>operator*() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Vec3::operator* </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Multiplication composante par composante (produit de Hadamard) </p>
+<p>Utile pour la modulation des couleurs (ex: couleur * albedo) </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Le vecteur multiplicateur </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur resultat </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00101">101</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a934dfc2a610f585dded49c91ad09ab77" name="a934dfc2a610f585dded49c91ad09ab77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a934dfc2a610f585dded49c91ad09ab77">&#9670;&#160;</a></span>operator*() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Vec3::operator* </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Multiplication par un scalaire. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le scalaire multiplicateur </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur mis a l'echelle </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00110">110</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a85b1cb864682e4d78da0160c0dfed5b5" name="a85b1cb864682e4d78da0160c0dfed5b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85b1cb864682e4d78da0160c0dfed5b5">&#9670;&#160;</a></span>operator*=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp; rt::Vec3::operator*= </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Multiplication en place par un scalaire. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le scalaire multiplicateur </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Reference vers le vecteur modifie </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00138">138</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ab661bc2672f25ab16b15e64477564d95" name="ab661bc2672f25ab16b15e64477564d95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab661bc2672f25ab16b15e64477564d95">&#9670;&#160;</a></span>operator+()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Vec3::operator+ </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Addition de deux vecteurs composante par composante. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Le vecteur a additionner </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur somme </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00082">82</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="adc09856fd37290c3d48125a5725487d8" name="adc09856fd37290c3d48125a5725487d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc09856fd37290c3d48125a5725487d8">&#9670;&#160;</a></span>operator+=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp; rt::Vec3::operator+= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Addition en place d'un vecteur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Le vecteur a ajouter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Reference vers le vecteur modifie </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00128">128</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a3d6d071cb596ef8bf3d2ca61c11dea71" name="a3d6d071cb596ef8bf3d2ca61c11dea71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d6d071cb596ef8bf3d2ca61c11dea71">&#9670;&#160;</a></span>operator-() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Vec3::operator- </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Operateur de negation unaire. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>Un nouveau vecteur dont chaque composante est l'opposee </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00064">64</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a81b074d4f216c936edffa168b1999733" name="a81b074d4f216c936edffa168b1999733"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81b074d4f216c936edffa168b1999733">&#9670;&#160;</a></span>operator-() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Vec3::operator- </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Soustraction de deux vecteurs composante par composante. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Le vecteur a soustraire </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur difference </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00091">91</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a8d0f2e5b8c6e754012dfb6b22b9d27ea" name="a8d0f2e5b8c6e754012dfb6b22b9d27ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d0f2e5b8c6e754012dfb6b22b9d27ea">&#9670;&#160;</a></span>operator/()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Vec3::operator/ </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Division par un scalaire. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le scalaire diviseur </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le vecteur divise </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00119">119</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a11d882eebf0cad9b0c56bb509bf6b097" name="a11d882eebf0cad9b0c56bb509bf6b097"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11d882eebf0cad9b0c56bb509bf6b097">&#9670;&#160;</a></span>operator/=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp; rt::Vec3::operator/= </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Division en place par un scalaire. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le scalaire diviseur </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Reference vers le vecteur modifie </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00148">148</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a812f0f55da100f5778764c30faacc572" name="a812f0f55da100f5778764c30faacc572"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a812f0f55da100f5778764c30faacc572">&#9670;&#160;</a></span>operator[]()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float rt::Vec3::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>i</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Acces a une composante par indice. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>Indice de la composante (0 = x, 1 = y, 2 = z) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La valeur de la composante demandee </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00071">71</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="a6917bef5d9b3b469d468001b4f52c4be" name="a6917bef5d9b3b469d468001b4f52c4be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6917bef5d9b3b469d468001b4f52c4be">&#9670;&#160;</a></span>x</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Vec3::x</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00038">38</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a7fb2435f3a5de0c3c88cf2629d36bd3e" name="a7fb2435f3a5de0c3c88cf2629d36bd3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fb2435f3a5de0c3c88cf2629d36bd3e">&#9670;&#160;</a></span>y</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Vec3::y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00038">38</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a535e35383b0e44ff538b95bc4f082ff1" name="a535e35383b0e44ff538b95bc4f082ff1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a535e35383b0e44ff538b95bc4f082ff1">&#9670;&#160;</a></span>z</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Vec3::z</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Composantes du vecteur (ou r, g, b pour les couleurs) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00038">38</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>include/raytracer/core/<a class="el" href="vec3_8cuh_source.html">vec3.cuh</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li><li class="navelem"><a href="classrt_1_1_vec3.html">Vec3</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

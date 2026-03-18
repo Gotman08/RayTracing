@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la classe rt::Ray</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classrt_1_1_ray.html','','classrt_1_1_ray-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la classe rt::Ray</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Represente un rayon defini par une origine, une direction et un temps.  
+ <a href="#details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:aa515c924b029444b1c3e11f1dc2501d2" id="r_aa515c924b029444b1c3e11f1dc2501d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa515c924b029444b1c3e11f1dc2501d2">Ray</a> ()</td></tr>
+<tr class="memdesc:aa515c924b029444b1c3e11f1dc2501d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur par defaut.  <br /></td></tr>
+<tr class="memitem:ae6c2912840e1bc392fbdcc923434358b" id="r_ae6c2912840e1bc392fbdcc923434358b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6c2912840e1bc392fbdcc923434358b">Ray</a> (const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;<a class="el" href="#aa99772ea31f4d70b0e74fe410aa73d77">origin</a>, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;<a class="el" href="#a41b93c59c49ddfa28af795362456f0f1">direction</a>, float <a class="el" href="#a2ead97480a0121a4459a51909d657e82">time</a>=0.0f)</td></tr>
+<tr class="memdesc:ae6c2912840e1bc392fbdcc923434358b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur parametrique du rayon.  <br /></td></tr>
+<tr class="memitem:aa99772ea31f4d70b0e74fe410aa73d77" id="r_aa99772ea31f4d70b0e74fe410aa73d77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa99772ea31f4d70b0e74fe410aa73d77">origin</a> () const</td></tr>
+<tr class="memdesc:aa99772ea31f4d70b0e74fe410aa73d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesseur pour l'origine du rayon.  <br /></td></tr>
+<tr class="memitem:a41b93c59c49ddfa28af795362456f0f1" id="r_a41b93c59c49ddfa28af795362456f0f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41b93c59c49ddfa28af795362456f0f1">direction</a> () const</td></tr>
+<tr class="memdesc:a41b93c59c49ddfa28af795362456f0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesseur pour la direction du rayon.  <br /></td></tr>
+<tr class="memitem:a2ead97480a0121a4459a51909d657e82" id="r_a2ead97480a0121a4459a51909d657e82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ead97480a0121a4459a51909d657e82">time</a> () const</td></tr>
+<tr class="memdesc:a2ead97480a0121a4459a51909d657e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesseur pour le temps du rayon.  <br /></td></tr>
+<tr class="memitem:a6c0c5bb288f539fc906ea170aa0d8c8a" id="r_a6c0c5bb288f539fc906ea170aa0d8c8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c0c5bb288f539fc906ea170aa0d8c8a">at</a> (float t) const</td></tr>
+<tr class="memdesc:a6c0c5bb288f539fc906ea170aa0d8c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le point a la position parametrique t le long du rayon.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:ad247fbf2effcc7cae1980be2c4da4f6e" id="r_ad247fbf2effcc7cae1980be2c4da4f6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad247fbf2effcc7cae1980be2c4da4f6e">orig</a></td></tr>
+<tr class="memitem:a34bf3b676732328cfc1ed0aed52271ba" id="r_a34bf3b676732328cfc1ed0aed52271ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34bf3b676732328cfc1ed0aed52271ba">dir</a></td></tr>
+<tr class="memitem:abf7b9d5f8fdda3e51ebe9ca284ec8dd3" id="r_abf7b9d5f8fdda3e51ebe9ca284ec8dd3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf7b9d5f8fdda3e51ebe9ca284ec8dd3">tm</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Represente un rayon defini par une origine, une direction et un temps. </p>
+<p>Le rayon est modelise par l'equation parametrique P(t) = orig + t * dir, ou t est un parametre reel. En faisant varier t, on obtient tous les points le long du rayon. Le champ temps permet de gerer le motion blur en associant un instant a chaque rayon lance. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00024">24</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a id="aa515c924b029444b1c3e11f1dc2501d2" name="aa515c924b029444b1c3e11f1dc2501d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa515c924b029444b1c3e11f1dc2501d2">&#9670;&#160;</a></span>Ray() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Ray::Ray </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur par defaut. </p>
+<p>Cree un rayon a l'origine avec une direction nulle et un temps de 0 </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00034">34</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ae6c2912840e1bc392fbdcc923434358b" name="ae6c2912840e1bc392fbdcc923434358b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6c2912840e1bc392fbdcc923434358b">&#9670;&#160;</a></span>Ray() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Ray::Ray </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>origin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>direction</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>time</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur parametrique du rayon. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">origin</td><td>Le point d'origine du rayon </td></tr>
+    <tr><td class="paramname">direction</td><td>La direction du rayon </td></tr>
+    <tr><td class="paramname">time</td><td>L'instant du rayon (defaut : 0.0) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00042">42</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="a6c0c5bb288f539fc906ea170aa0d8c8a" name="a6c0c5bb288f539fc906ea170aa0d8c8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c0c5bb288f539fc906ea170aa0d8c8a">&#9670;&#160;</a></span>at()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> rt::Ray::at </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule le point a la position parametrique t le long du rayon. </p>
+<p>Applique la formule P(t) = origine + t * direction. Avec t = 0 on obtient l'origine, t &gt; 0 avance dans la direction. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le parametre de position le long du rayon </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le point 3D correspondant sur le rayon </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00070">70</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a41b93c59c49ddfa28af795362456f0f1" name="a41b93c59c49ddfa28af795362456f0f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41b93c59c49ddfa28af795362456f0f1">&#9670;&#160;</a></span>direction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp; rt::Ray::direction </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Accesseur pour la direction du rayon. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>Reference constante vers le vecteur direction </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00055">55</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aa99772ea31f4d70b0e74fe410aa73d77" name="aa99772ea31f4d70b0e74fe410aa73d77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa99772ea31f4d70b0e74fe410aa73d77">&#9670;&#160;</a></span>origin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> const <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> &amp; rt::Ray::origin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Accesseur pour l'origine du rayon. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>Reference constante vers le point d'origine </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00049">49</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a2ead97480a0121a4459a51909d657e82" name="a2ead97480a0121a4459a51909d657e82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ead97480a0121a4459a51909d657e82">&#9670;&#160;</a></span>time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float rt::Ray::time </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Accesseur pour le temps du rayon. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>La valeur du temps associe au rayon </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00061">61</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="a34bf3b676732328cfc1ed0aed52271ba" name="a34bf3b676732328cfc1ed0aed52271ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34bf3b676732328cfc1ed0aed52271ba">&#9670;&#160;</a></span>dir</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Ray::dir</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Direction du rayon (pas forcement normalisee) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00027">27</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ad247fbf2effcc7cae1980be2c4da4f6e" name="ad247fbf2effcc7cae1980be2c4da4f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad247fbf2effcc7cae1980be2c4da4f6e">&#9670;&#160;</a></span>orig</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> rt::Ray::orig</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Point d'origine du rayon </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00026">26</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<a id="abf7b9d5f8fdda3e51ebe9ca284ec8dd3" name="abf7b9d5f8fdda3e51ebe9ca284ec8dd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf7b9d5f8fdda3e51ebe9ca284ec8dd3">&#9670;&#160;</a></span>tm</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Ray::tm</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Instant auquel le rayon est lance (pour le motion blur) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="ray_8cuh_source.html#l00028">28</a> du fichier <a class="el" href="ray_8cuh_source.html">ray.cuh</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>include/raytracer/core/<a class="el" href="ray_8cuh_source.html">ray.cuh</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li><li class="navelem"><a href="classrt_1_1_ray.html">Ray</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

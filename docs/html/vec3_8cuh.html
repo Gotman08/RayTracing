@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence du fichier include/raytracer/core/vec3.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('vec3_8cuh.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence du fichier vec3.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Definition de la classe Vec3 et des fonctions utilitaires associees.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;cmath&gt;</code><br />
+<code>#include &quot;<a class="el" href="cuda__compat_8cuh_source.html">raytracer/core/cuda_compat.cuh</a>&quot;</code><br />
+</div>
+<p><a href="vec3_8cuh_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:rt_3A_3AVec3" id="r_rt_3A_3AVec3"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrt_1_1_vec3.html">rt::Vec3</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vecteur 3D a composantes flottantes.  <a href="classrt_1_1_vec3.html#details">Plus de détails...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espaces de nommage</h2></td></tr>
+<tr class="memitem:rt" id="r_rt"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html">rt</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a862b556442cf500ccad6201275ebc260" id="r_a862b556442cf500ccad6201275ebc260"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a862b556442cf500ccad6201275ebc260">RAYTRACER_CORE_VEC3_CUH</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Définitions de type</h2></td></tr>
+<tr class="memitem:a679fd997c4225984367e96dfc1f15c59" id="r_a679fd997c4225984367e96dfc1f15c59"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">rt::Point3</a> = <a class="el" href="classrt_1_1_vec3.html">Vec3</a></td></tr>
+<tr class="memdesc:a679fd997c4225984367e96dfc1f15c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias de type : un <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59" title="Alias de type : un Point3 est un Vec3 utilise comme position.">Point3</a> est un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> utilise comme position.  <br /></td></tr>
+<tr class="memitem:a833d4cf4591664e7e913f7e550abc82a" id="r_a833d4cf4591664e7e913f7e550abc82a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">rt::Color</a> = <a class="el" href="classrt_1_1_vec3.html">Vec3</a></td></tr>
+<tr class="memdesc:a833d4cf4591664e7e913f7e550abc82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias de type : une <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a" title="Alias de type : une Color est un Vec3 utilise comme couleur RGB.">Color</a> est un <a class="el" href="classrt_1_1_vec3.html" title="Vecteur 3D a composantes flottantes.">Vec3</a> utilise comme couleur RGB.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:ac839f506d17030766082bbb5f252a4ac" id="r_ac839f506d17030766082bbb5f252a4ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#ac839f506d17030766082bbb5f252a4ac">rt::operator*</a> (float t, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:ac839f506d17030766082bbb5f252a4ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplication scalaire * vecteur (commutativite)  <br /></td></tr>
+<tr class="memitem:a02de65a5330009fef7575fc46d3ab2c8" id="r_a02de65a5330009fef7575fc46d3ab2c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a02de65a5330009fef7575fc46d3ab2c8">rt::dot</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;u, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:a02de65a5330009fef7575fc46d3ab2c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le produit scalaire de deux vecteurs.  <br /></td></tr>
+<tr class="memitem:a21b9c6568ff24a1b2e307fa319fd6fb9" id="r_a21b9c6568ff24a1b2e307fa319fd6fb9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a21b9c6568ff24a1b2e307fa319fd6fb9">rt::cross</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;u, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:a21b9c6568ff24a1b2e307fa319fd6fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule le produit vectoriel de deux vecteurs.  <br /></td></tr>
+<tr class="memitem:a3911bca4800ed1c8b2e139521cb9e56a" id="r_a3911bca4800ed1c8b2e139521cb9e56a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a3911bca4800ed1c8b2e139521cb9e56a">rt::reflect</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;n)</td></tr>
+<tr class="memdesc:a3911bca4800ed1c8b2e139521cb9e56a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la reflexion d'un vecteur par rapport a une normale.  <br /></td></tr>
+<tr class="memitem:aebda26be983fa59fb63155f7583f7d79" id="r_aebda26be983fa59fb63155f7583f7d79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#aebda26be983fa59fb63155f7583f7d79">rt::refract</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;uv, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;n, float etai_over_etat)</td></tr>
+<tr class="memdesc:aebda26be983fa59fb63155f7583f7d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la refraction d'un vecteur selon la loi de Snell-Descartes.  <br /></td></tr>
+<tr class="memitem:a412268aee9001dd382684925105832ac" id="r_a412268aee9001dd382684925105832ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a412268aee9001dd382684925105832ac">rt::unit_vector</a> (const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;v)</td></tr>
+<tr class="memdesc:a412268aee9001dd382684925105832ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne le vecteur unitaire (normalise) d'un vecteur donne.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a028cc11d0f9e05b53695b6f9a0840208" id="r_a028cc11d0f9e05b53695b6f9a0840208"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a028cc11d0f9e05b53695b6f9a0840208">rt::VEC3_PI</a> = 3.14159265358979323846f</td></tr>
+<tr class="memdesc:a028cc11d0f9e05b53695b6f9a0840208"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constante Pi en simple precision.  <br /></td></tr>
+<tr class="memitem:afa9c483dc1590a7babc933214351b0de" id="r_afa9c483dc1590a7babc933214351b0de"><td class="memItemLeft" align="right" valign="top">constexpr float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#afa9c483dc1590a7babc933214351b0de">rt::VEC3_TWO_PI</a> = 2.0f * <a class="el" href="namespacert.html#a028cc11d0f9e05b53695b6f9a0840208">VEC3_PI</a></td></tr>
+<tr class="memdesc:afa9c483dc1590a7babc933214351b0de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constante 2*Pi en simple precision, utile pour les angles en radians.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Definition de la classe Vec3 et des fonctions utilitaires associees. </p>
+<p>Ce fichier contient la classe Vec3 qui represente un vecteur 3D. Elle est utilisee pour modeliser des positions, des directions et des couleurs dans le raytracer. Toutes les methodes sont compatibles avec CUDA (host et device). Des fonctions de generation aleatoire sur GPU (curand) sont aussi fournies pour l'echantillonnage Monte Carlo. </p>
+
+<p class="definition">Définition dans le fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentation des macros</h2>
+<a id="a862b556442cf500ccad6201275ebc260" name="a862b556442cf500ccad6201275ebc260"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a862b556442cf500ccad6201275ebc260">&#9670;&#160;</a></span>RAYTRACER_CORE_VEC3_CUH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RAYTRACER_CORE_VEC3_CUH</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="vec3_8cuh_source.html#l00002">2</a> du fichier <a class="el" href="vec3_8cuh_source.html">vec3.cuh</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_5f371c8f98a89310fdec0a60fd23a137.html">raytracer</a></li><li class="navelem"><a href="dir_e33a60c84930c9c21a71e042924971c7.html">core</a></li><li class="navelem"><a href="vec3_8cuh.html">vec3.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

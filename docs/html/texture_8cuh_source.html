@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer:  Fichier source de include/raytracer/textures/texture.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('texture_8cuh_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">texture.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="texture_8cuh.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef RAYTRACER_TEXTURES_TEXTURE_CUH</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno"><a class="line" href="texture_8cuh.html#a304a31ab647c0f3b6d614f341ea799b9">    2</a></span><span class="preprocessor">#define RAYTRACER_TEXTURES_TEXTURE_CUH</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="vec3_8cuh.html">raytracer/core/vec3.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacert.html">rt</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span></div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classrt_1_1_texture.html">   22</a></span><span class="keyword">class </span><a class="code hl_function" href="classrt_1_1_texture.html#a94585a5516305f87c73abe83db676346">Texture</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classrt_1_1_texture.html#a66609732a8dd4f94aea09a70bfd2b3aa">   24</a></span>    <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> <a class="code hl_variable" href="classrt_1_1_texture.html#a66609732a8dd4f94aea09a70bfd2b3aa">color</a>;  </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classrt_1_1_texture.html#a94585a5516305f87c73abe83db676346">   26</a></span>    <a class="code hl_define" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="code hl_define" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="code hl_function" href="classrt_1_1_texture.html#a94585a5516305f87c73abe83db676346">Texture</a>() : <a class="code hl_variable" href="classrt_1_1_texture.html#a66609732a8dd4f94aea09a70bfd2b3aa">color</a>(1, 1, 1) {}</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classrt_1_1_texture.html#a4aaac97c5db65bb6af5a39b78bfed502">   32</a></span>    <a class="code hl_define" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="code hl_define" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="code hl_function" href="classrt_1_1_texture.html#a4aaac97c5db65bb6af5a39b78bfed502">Texture</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a>&amp; c) : <a class="code hl_variable" href="classrt_1_1_texture.html#a66609732a8dd4f94aea09a70bfd2b3aa">color</a>(c) {}</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classrt_1_1_texture.html#ab88328e40d44f4a1a3c90f957c3ccd8a">   44</a></span>    <a class="code hl_define" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="code hl_define" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="code hl_typedef" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> <a class="code hl_function" href="classrt_1_1_texture.html#ab88328e40d44f4a1a3c90f957c3ccd8a">value</a>(<span class="keywordtype">float</span> u, <span class="keywordtype">float</span> v, <span class="keyword">const</span> <a class="code hl_typedef" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>&amp; p)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classrt_1_1_texture.html#a66609732a8dd4f94aea09a70bfd2b3aa">color</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
+</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>};</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassrt_1_1_texture_html_a4aaac97c5db65bb6af5a39b78bfed502"><div class="ttname"><a href="classrt_1_1_texture.html#a4aaac97c5db65bb6af5a39b78bfed502">rt::Texture::Texture</a></div><div class="ttdeci">__host__ __device__ Texture(const Color &amp;c)</div><div class="ttdoc">Constructeur avec une couleur donnee.</div><div class="ttdef"><b>Definition</b> <a href="#l00032">texture.cuh:32</a></div></div>
+<div class="ttc" id="aclassrt_1_1_texture_html_a66609732a8dd4f94aea09a70bfd2b3aa"><div class="ttname"><a href="classrt_1_1_texture.html#a66609732a8dd4f94aea09a70bfd2b3aa">rt::Texture::color</a></div><div class="ttdeci">Color color</div><div class="ttdoc">Couleur de la texture (blanc par defaut)</div><div class="ttdef"><b>Definition</b> <a href="#l00024">texture.cuh:24</a></div></div>
+<div class="ttc" id="aclassrt_1_1_texture_html_a94585a5516305f87c73abe83db676346"><div class="ttname"><a href="classrt_1_1_texture.html#a94585a5516305f87c73abe83db676346">rt::Texture::Texture</a></div><div class="ttdeci">__host__ __device__ Texture()</div><div class="ttdef"><b>Definition</b> <a href="#l00026">texture.cuh:26</a></div></div>
+<div class="ttc" id="aclassrt_1_1_texture_html_ab88328e40d44f4a1a3c90f957c3ccd8a"><div class="ttname"><a href="classrt_1_1_texture.html#ab88328e40d44f4a1a3c90f957c3ccd8a">rt::Texture::value</a></div><div class="ttdeci">__host__ __device__ Color value(float u, float v, const Point3 &amp;p) const</div><div class="ttdoc">Retourne la couleur de la texture aux coordonnees donnees.</div><div class="ttdef"><b>Definition</b> <a href="#l00044">texture.cuh:44</a></div></div>
+<div class="ttc" id="acuda__compat_8cuh_html_a803050db3c78e0db3ea59a0c35499622"><div class="ttname"><a href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a></div><div class="ttdeci">#define __host__</div><div class="ttdoc">Macro vide en mode CPU (remplace le qualificateur CUDA host)</div><div class="ttdef"><b>Definition</b> <a href="cuda__compat_8cuh_source.html#l00021">cuda_compat.cuh:21</a></div></div>
+<div class="ttc" id="acuda__compat_8cuh_html_ad54e07d96efd9a36dfca1a9f27776d62"><div class="ttname"><a href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a></div><div class="ttdeci">#define __device__</div><div class="ttdoc">Macro vide en mode CPU (remplace le qualificateur CUDA device)</div><div class="ttdef"><b>Definition</b> <a href="cuda__compat_8cuh_source.html#l00025">cuda_compat.cuh:25</a></div></div>
+<div class="ttc" id="anamespacert_html"><div class="ttname"><a href="namespacert.html">rt</a></div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00017">bvh.cuh:17</a></div></div>
+<div class="ttc" id="anamespacert_html_a679fd997c4225984367e96dfc1f15c59"><div class="ttname"><a href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">rt::Point3</a></div><div class="ttdeci">Vec3 Point3</div><div class="ttdoc">Alias de type : un Point3 est un Vec3 utilise comme position.</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00194">vec3.cuh:194</a></div></div>
+<div class="ttc" id="anamespacert_html_a833d4cf4591664e7e913f7e550abc82a"><div class="ttname"><a href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">rt::Color</a></div><div class="ttdeci">Vec3 Color</div><div class="ttdoc">Alias de type : une Color est un Vec3 utilise comme couleur RGB.</div><div class="ttdef"><b>Definition</b> <a href="vec3_8cuh_source.html#l00196">vec3.cuh:196</a></div></div>
+<div class="ttc" id="avec3_8cuh_html"><div class="ttname"><a href="vec3_8cuh.html">vec3.cuh</a></div><div class="ttdoc">Definition de la classe Vec3 et des fonctions utilitaires associees.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_5f371c8f98a89310fdec0a60fd23a137.html">raytracer</a></li><li class="navelem"><a href="dir_5f4424359d692adee24a54ddbcda62fe.html">textures</a></li><li class="navelem"><a href="texture_8cuh.html">texture.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

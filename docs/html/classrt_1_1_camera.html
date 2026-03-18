@@ -1,0 +1,595 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la classe rt::Camera</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classrt_1_1_camera.html','','classrt_1_1_camera-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la classe rt::Camera</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><a class="el" href="classrt_1_1_camera.html" title="Camera avec projection perspective, profondeur de champ et motion blur.">Camera</a> avec projection perspective, profondeur de champ et motion blur.  
+ <a href="#details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:aecb50fa6cc37e704f604c70681afcf51" id="r_aecb50fa6cc37e704f604c70681afcf51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecb50fa6cc37e704f604c70681afcf51">initialize</a> (int width, int height, <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> lookfrom, <a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> lookat, <a class="el" href="classrt_1_1_vec3.html">Vec3</a> vup, float vfov, float aperture=0.0f, float focus_dist=10.0f, float t0=0.0f, float t1=0.0f)</td></tr>
+<tr class="memdesc:aecb50fa6cc37e704f604c70681afcf51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure la camera avec tous ses parametres.  <br /></td></tr>
+<tr class="memitem:a5395c764d2c26c618bd23f92b120748b" id="r_a5395c764d2c26c618bd23f92b120748b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_ray.html">Ray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5395c764d2c26c618bd23f92b120748b">get_ray</a> (int i, int j, curandState *rand_state) const</td></tr>
+<tr class="memdesc:a5395c764d2c26c618bd23f92b120748b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere un rayon pour le pixel (i, j) sur GPU.  <br /></td></tr>
+<tr class="memitem:a5c93a0c6f4a8101a694b7eb918213f7f" id="r_a5c93a0c6f4a8101a694b7eb918213f7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_ray.html">Ray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c93a0c6f4a8101a694b7eb918213f7f">get_ray_cpu</a> (int i, int j, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng) const</td></tr>
+<tr class="memdesc:a5c93a0c6f4a8101a694b7eb918213f7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genere un rayon pour le pixel (i, j) sur CPU.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:a0e321c8bffac168d05533cc7c25ec6a2" id="r_a0e321c8bffac168d05533cc7c25ec6a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e321c8bffac168d05533cc7c25ec6a2">center</a></td></tr>
+<tr class="memdesc:a0e321c8bffac168d05533cc7c25ec6a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position de la camera dans la scene.  <br /></td></tr>
+<tr class="memitem:a4eabe67aeb31ed8e7424f9526a405a62" id="r_a4eabe67aeb31ed8e7424f9526a405a62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4eabe67aeb31ed8e7424f9526a405a62">pixel00_loc</a></td></tr>
+<tr class="memdesc:a4eabe67aeb31ed8e7424f9526a405a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position du pixel (0,0) dans l'espace monde.  <br /></td></tr>
+<tr class="memitem:ad77589b4b2cab0269fb2dbe4b93a7dc2" id="r_ad77589b4b2cab0269fb2dbe4b93a7dc2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad77589b4b2cab0269fb2dbe4b93a7dc2">pixel_delta_u</a></td></tr>
+<tr class="memdesc:ad77589b4b2cab0269fb2dbe4b93a7dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decalage horizontal entre deux pixels adjacents.  <br /></td></tr>
+<tr class="memitem:af754c8cc1b6db0f95d0697c39415d870" id="r_af754c8cc1b6db0f95d0697c39415d870"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af754c8cc1b6db0f95d0697c39415d870">pixel_delta_v</a></td></tr>
+<tr class="memdesc:af754c8cc1b6db0f95d0697c39415d870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decalage vertical entre deux pixels adjacents.  <br /></td></tr>
+<tr class="memitem:a01f80018c2cea0b864893630c7d40c08" id="r_a01f80018c2cea0b864893630c7d40c08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01f80018c2cea0b864893630c7d40c08">u</a></td></tr>
+<tr class="memitem:aa8a037b03daaa7c0d3c793b2a8ff40ac" id="r_aa8a037b03daaa7c0d3c793b2a8ff40ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8a037b03daaa7c0d3c793b2a8ff40ac">v</a></td></tr>
+<tr class="memitem:a4cb09da7e6bd1a5f952f67da9b0b8a19" id="r_a4cb09da7e6bd1a5f952f67da9b0b8a19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4cb09da7e6bd1a5f952f67da9b0b8a19">w</a></td></tr>
+<tr class="memdesc:a4cb09da7e6bd1a5f952f67da9b0b8a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base orthonormee de la camera (u=droite, v=haut, w=arriere)  <br /></td></tr>
+<tr class="memitem:abe43aec9dda5bd40854d1124e17a3593" id="r_abe43aec9dda5bd40854d1124e17a3593"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe43aec9dda5bd40854d1124e17a3593">defocus_angle</a></td></tr>
+<tr class="memdesc:abe43aec9dda5bd40854d1124e17a3593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle d'ouverture pour la profondeur de champ (0 = pas de flou)  <br /></td></tr>
+<tr class="memitem:a18d0b54ed1c96dcc1272cc2e66855064" id="r_a18d0b54ed1c96dcc1272cc2e66855064"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18d0b54ed1c96dcc1272cc2e66855064">defocus_disk_u</a></td></tr>
+<tr class="memdesc:a18d0b54ed1c96dcc1272cc2e66855064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vecteur horizontal du disque de defocalisation.  <br /></td></tr>
+<tr class="memitem:a3447453bddba061f58d83c716387e995" id="r_a3447453bddba061f58d83c716387e995"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3447453bddba061f58d83c716387e995">defocus_disk_v</a></td></tr>
+<tr class="memdesc:a3447453bddba061f58d83c716387e995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vecteur vertical du disque de defocalisation.  <br /></td></tr>
+<tr class="memitem:aefbd8c484cd359ad2b48ed010933b333" id="r_aefbd8c484cd359ad2b48ed010933b333"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aefbd8c484cd359ad2b48ed010933b333">shutter_open</a></td></tr>
+<tr class="memdesc:aefbd8c484cd359ad2b48ed010933b333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instant d'ouverture de l'obturateur (pour le motion blur)  <br /></td></tr>
+<tr class="memitem:a07a9f0539028a1783a3903a640816abc" id="r_a07a9f0539028a1783a3903a640816abc"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07a9f0539028a1783a3903a640816abc">shutter_close</a></td></tr>
+<tr class="memdesc:a07a9f0539028a1783a3903a640816abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instant de fermeture de l'obturateur (pour le motion blur)  <br /></td></tr>
+<tr class="memitem:a1620977d3be452d063fa073d9315f83a" id="r_a1620977d3be452d063fa073d9315f83a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1620977d3be452d063fa073d9315f83a">image_width</a></td></tr>
+<tr class="memdesc:a1620977d3be452d063fa073d9315f83a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Largeur de l'image en pixels.  <br /></td></tr>
+<tr class="memitem:a3e16b481b001781c53dc524be4cd8f07" id="r_a3e16b481b001781c53dc524be4cd8f07"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e16b481b001781c53dc524be4cd8f07">image_height</a></td></tr>
+<tr class="memdesc:a3e16b481b001781c53dc524be4cd8f07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hauteur de l'image en pixels.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p><a class="el" href="classrt_1_1_camera.html" title="Camera avec projection perspective, profondeur de champ et motion blur.">Camera</a> avec projection perspective, profondeur de champ et motion blur. </p>
+<p>Cette classe represente une camera virtuelle dans la scene 3D. Elle permet de configurer la position, l'orientation, le champ de vision (FOV), l'ouverture pour la profondeur de champ, et l'obturateur pour le motion blur. La camera genere des rayons primaires pour chaque pixel de l'image avec un jitter aleatoire pour l'anti-aliasing. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00027">27</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="a5395c764d2c26c618bd23f92b120748b" name="a5395c764d2c26c618bd23f92b120748b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5395c764d2c26c618bd23f92b120748b">&#9670;&#160;</a></span>get_ray()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_ray.html">Ray</a> rt::Camera::get_ray </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>i</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>j</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_state</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere un rayon pour le pixel (i, j) sur GPU. </p>
+<p>Le rayon est perturbe aleatoirement a l'interieur du pixel (jitter) pour l'anti-aliasing. Si la profondeur de champ est activee, l'origine du rayon est echantillonnee sur le disque de defocalisation. Le temps du rayon est aleatoire entre shutter_open et shutter_close pour le motion blur. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>Coordonnee horizontale du pixel (colonne) </td></tr>
+    <tr><td class="paramname">j</td><td>Coordonnee verticale du pixel (ligne) </td></tr>
+    <tr><td class="paramname">rand_state</td><td>Etat du generateur aleatoire CUDA pour ce thread </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un rayon partant de la camera vers le pixel (i, j) avec jitter </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00108">108</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a5c93a0c6f4a8101a694b7eb918213f7f" name="a5c93a0c6f4a8101a694b7eb918213f7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c93a0c6f4a8101a694b7eb918213f7f">&#9670;&#160;</a></span>get_ray_cpu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_ray.html">Ray</a> rt::Camera::get_ray_cpu </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>i</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>j</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rng</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Genere un rayon pour le pixel (i, j) sur CPU. </p>
+<p>Version CPU de <a class="el" href="#a5395c764d2c26c618bd23f92b120748b" title="Genere un rayon pour le pixel (i, j) sur GPU.">get_ray()</a>. Meme logique que la version GPU mais utilise un generateur aleatoire CPU au lieu de curand. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>Coordonnee horizontale du pixel (colonne) </td></tr>
+    <tr><td class="paramname">j</td><td>Coordonnee verticale du pixel (ligne) </td></tr>
+    <tr><td class="paramname">rng</td><td>Reference vers le generateur aleatoire CPU </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un rayon partant de la camera vers le pixel (i, j) avec jitter </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00133">133</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aecb50fa6cc37e704f604c70681afcf51" name="aecb50fa6cc37e704f604c70681afcf51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecb50fa6cc37e704f604c70681afcf51">&#9670;&#160;</a></span>initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> void rt::Camera::initialize </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a></td>          <td class="paramname"><span class="paramname"><em>lookfrom</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a></td>          <td class="paramname"><span class="paramname"><em>lookat</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_vec3.html">Vec3</a></td>          <td class="paramname"><span class="paramname"><em>vup</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>vfov</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>aperture</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>focus_dist</em></span><span class="paramdefsep"> = </span><span class="paramdefval">10.0f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>t0</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>t1</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configure la camera avec tous ses parametres. </p>
+<p>Calcule le viewport, la base orthonormee et les parametres de defocalisation a partir des parametres fournis. Doit etre appelee avant de generer des rayons. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>Largeur de l'image en pixels </td></tr>
+    <tr><td class="paramname">height</td><td>Hauteur de l'image en pixels </td></tr>
+    <tr><td class="paramname">lookfrom</td><td>Position de la camera dans la scene </td></tr>
+    <tr><td class="paramname">lookat</td><td>Point vise par la camera </td></tr>
+    <tr><td class="paramname">vup</td><td>Vecteur "haut" du monde (pour definir l'orientation) </td></tr>
+    <tr><td class="paramname">vfov</td><td>Champ de vision vertical en degres </td></tr>
+    <tr><td class="paramname">aperture</td><td>Angle d'ouverture pour la profondeur de champ (0 = pas de flou) </td></tr>
+    <tr><td class="paramname">focus_dist</td><td>Distance de mise au point </td></tr>
+    <tr><td class="paramname">t0</td><td>Instant d'ouverture de l'obturateur </td></tr>
+    <tr><td class="paramname">t1</td><td>Instant de fermeture de l'obturateur </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00059">59</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="a0e321c8bffac168d05533cc7c25ec6a2" name="a0e321c8bffac168d05533cc7c25ec6a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e321c8bffac168d05533cc7c25ec6a2">&#9670;&#160;</a></span>center</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> rt::Camera::center</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Position de la camera dans la scene. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00029">29</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="abe43aec9dda5bd40854d1124e17a3593" name="abe43aec9dda5bd40854d1124e17a3593"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe43aec9dda5bd40854d1124e17a3593">&#9670;&#160;</a></span>defocus_angle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Camera::defocus_angle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Angle d'ouverture pour la profondeur de champ (0 = pas de flou) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00034">34</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a18d0b54ed1c96dcc1272cc2e66855064" name="a18d0b54ed1c96dcc1272cc2e66855064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18d0b54ed1c96dcc1272cc2e66855064">&#9670;&#160;</a></span>defocus_disk_u</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Camera::defocus_disk_u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Vecteur horizontal du disque de defocalisation. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00035">35</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a3447453bddba061f58d83c716387e995" name="a3447453bddba061f58d83c716387e995"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3447453bddba061f58d83c716387e995">&#9670;&#160;</a></span>defocus_disk_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Camera::defocus_disk_v</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Vecteur vertical du disque de defocalisation. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00036">36</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a3e16b481b001781c53dc524be4cd8f07" name="a3e16b481b001781c53dc524be4cd8f07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e16b481b001781c53dc524be4cd8f07">&#9670;&#160;</a></span>image_height</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rt::Camera::image_height</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Hauteur de l'image en pixels. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00041">41</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a1620977d3be452d063fa073d9315f83a" name="a1620977d3be452d063fa073d9315f83a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1620977d3be452d063fa073d9315f83a">&#9670;&#160;</a></span>image_width</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rt::Camera::image_width</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Largeur de l'image en pixels. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00040">40</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a4eabe67aeb31ed8e7424f9526a405a62" name="a4eabe67aeb31ed8e7424f9526a405a62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eabe67aeb31ed8e7424f9526a405a62">&#9670;&#160;</a></span>pixel00_loc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> rt::Camera::pixel00_loc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Position du pixel (0,0) dans l'espace monde. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00030">30</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ad77589b4b2cab0269fb2dbe4b93a7dc2" name="ad77589b4b2cab0269fb2dbe4b93a7dc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad77589b4b2cab0269fb2dbe4b93a7dc2">&#9670;&#160;</a></span>pixel_delta_u</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Camera::pixel_delta_u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decalage horizontal entre deux pixels adjacents. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00031">31</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="af754c8cc1b6db0f95d0697c39415d870" name="af754c8cc1b6db0f95d0697c39415d870"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af754c8cc1b6db0f95d0697c39415d870">&#9670;&#160;</a></span>pixel_delta_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Camera::pixel_delta_v</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decalage vertical entre deux pixels adjacents. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00032">32</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a07a9f0539028a1783a3903a640816abc" name="a07a9f0539028a1783a3903a640816abc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07a9f0539028a1783a3903a640816abc">&#9670;&#160;</a></span>shutter_close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Camera::shutter_close</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Instant de fermeture de l'obturateur (pour le motion blur) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00038">38</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aefbd8c484cd359ad2b48ed010933b333" name="aefbd8c484cd359ad2b48ed010933b333"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefbd8c484cd359ad2b48ed010933b333">&#9670;&#160;</a></span>shutter_open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::Camera::shutter_open</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Instant d'ouverture de l'obturateur (pour le motion blur) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00037">37</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a01f80018c2cea0b864893630c7d40c08" name="a01f80018c2cea0b864893630c7d40c08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01f80018c2cea0b864893630c7d40c08">&#9670;&#160;</a></span>u</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Camera::u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00033">33</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aa8a037b03daaa7c0d3c793b2a8ff40ac" name="aa8a037b03daaa7c0d3c793b2a8ff40ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8a037b03daaa7c0d3c793b2a8ff40ac">&#9670;&#160;</a></span>v</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Camera::v</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00033">33</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a4cb09da7e6bd1a5f952f67da9b0b8a19" name="a4cb09da7e6bd1a5f952f67da9b0b8a19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cb09da7e6bd1a5f952f67da9b0b8a19">&#9670;&#160;</a></span>w</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::Camera::w</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Base orthonormee de la camera (u=droite, v=haut, w=arriere) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="camera_8cuh_source.html#l00033">33</a> du fichier <a class="el" href="camera_8cuh_source.html">camera.cuh</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>include/raytracer/camera/<a class="el" href="camera_8cuh_source.html">camera.cuh</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li><li class="navelem"><a href="classrt_1_1_camera.html">Camera</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

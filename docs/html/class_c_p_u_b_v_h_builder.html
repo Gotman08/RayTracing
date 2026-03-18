@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la classe CPUBVHBuilder</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('class_c_p_u_b_v_h_builder.html','','class_c_p_u_b_v_h_builder-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la classe CPUBVHBuilder</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Constructeur de <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> (Bounding Volume Hierarchy) pour le CPU.  
+ <a href="#details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:ae8fcf8eb36467f53144e905d4eefef38" id="r_ae8fcf8eb36467f53144e905d4eefef38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8fcf8eb36467f53144e905d4eefef38">build</a> (<a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a> *objects, int count)</td></tr>
+<tr class="memdesc:ae8fcf8eb36467f53144e905d4eefef38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construit le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> a partir d'un tableau d'objets.  <br /></td></tr>
+<tr class="memitem:afba3a018eaabe9d405205e6d30678a9e" id="r_afba3a018eaabe9d405205e6d30678a9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_b_v_h.html">BVH</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afba3a018eaabe9d405205e6d30678a9e">create_bvh</a> ()</td></tr>
+<tr class="memdesc:afba3a018eaabe9d405205e6d30678a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cree et retourne une structure <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> utilisable pour le rendu.  <br /></td></tr>
+<tr class="memitem:a8548b9080b15a95600965c7daef80d94" id="r_a8548b9080b15a95600965c7daef80d94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8548b9080b15a95600965c7daef80d94">free_bvh</a> (<a class="el" href="classrt_1_1_b_v_h.html">BVH</a> &amp;bvh)</td></tr>
+<tr class="memdesc:a8548b9080b15a95600965c7daef80d94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Libere la memoire allouee par <a class="el" href="#afba3a018eaabe9d405205e6d30678a9e" title="Cree et retourne une structure BVH utilisable pour le rendu.">create_bvh()</a>  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:ac17ad94580bff596777b700c002650da" id="r_ac17ad94580bff596777b700c002650da"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structrt_1_1_b_v_h_node.html">BVHNode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac17ad94580bff596777b700c002650da">nodes</a></td></tr>
+<tr class="memdesc:ac17ad94580bff596777b700c002650da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Liste des noeuds du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> (internes et feuilles)  <br /></td></tr>
+<tr class="memitem:a3366f646411e846f0b8d42ea1b957a3c" id="r_a3366f646411e846f0b8d42ea1b957a3c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3366f646411e846f0b8d42ea1b957a3c">primitives</a></td></tr>
+<tr class="memdesc:a3366f646411e846f0b8d42ea1b957a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Liste des primitives (objets) triees par le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Constructeur de <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> (Bounding Volume Hierarchy) pour le CPU. </p>
+<p>Version CPU du constructeur de <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>, independante de CUDA. Construit un arbre binaire de volumes englobants (<a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a>) pour accelerer les tests d'intersection rayon-scene. L'algorithme utilise une approche recursive top-down avec tri selon l'axe le plus long de la boite englobante et decoupe au milieu (median split). Les noeuds et primitives sont stockes dans des std::vector pour une gestion memoire simple cote host. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="main__cpu_8cpp_source.html#l00062">62</a> du fichier <a class="el" href="main__cpu_8cpp_source.html">main_cpu.cpp</a>.</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="ae8fcf8eb36467f53144e905d4eefef38" name="ae8fcf8eb36467f53144e905d4eefef38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8fcf8eb36467f53144e905d4eefef38">&#9670;&#160;</a></span>build()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CPUBVHBuilder::build </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a> *</td>          <td class="paramname"><span class="paramname"><em>objects</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>count</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construit le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> a partir d'un tableau d'objets. </p>
+<p>Copie les objets dans le vecteur interne, puis lance la construction recursive de l'arbre. Reserve la memoire necessaire (2*count noeuds maximum pour un arbre binaire). </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">objects</td><td>Tableau d'objets <a class="el" href="structrt_1_1_hittable_object.html" title="Represente un objet complet de la scene avec son type, ses donnees et sa boite englobante.">HittableObject</a> a organiser dans le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> </td></tr>
+    <tr><td class="paramname">count</td><td>Nombre d'objets dans le tableau </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="main__cpu_8cpp_source.html#l00075">75</a> du fichier <a class="el" href="main__cpu_8cpp_source.html">main_cpu.cpp</a>.</p>
+
+</div>
+</div>
+<a id="afba3a018eaabe9d405205e6d30678a9e" name="afba3a018eaabe9d405205e6d30678a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afba3a018eaabe9d405205e6d30678a9e">&#9670;&#160;</a></span>create_bvh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_b_v_h.html">BVH</a> CPUBVHBuilder::create_bvh </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cree et retourne une structure <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> utilisable pour le rendu. </p>
+<p>Alloue des tableaux dynamiques (new[]) et copie les noeuds et primitives depuis les vecteurs internes. La structure <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> retournee est autonome et peut etre utilisee independamment du builder. </p><dl class="section return"><dt>Renvoie</dt><dd>Structure <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> contenant les noeuds et primitives copies </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="main__cpu_8cpp_source.html#l00092">92</a> du fichier <a class="el" href="main__cpu_8cpp_source.html">main_cpu.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8548b9080b15a95600965c7daef80d94" name="a8548b9080b15a95600965c7daef80d94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8548b9080b15a95600965c7daef80d94">&#9670;&#160;</a></span>free_bvh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CPUBVHBuilder::free_bvh </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_b_v_h.html">BVH</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>bvh</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Libere la memoire allouee par <a class="el" href="#afba3a018eaabe9d405205e6d30678a9e" title="Cree et retourne une structure BVH utilisable pour le rendu.">create_bvh()</a> </p>
+<p>Supprime les tableaux de noeuds et de primitives alloues dynamiquement, puis remet les pointeurs a nullptr pour eviter les double-free. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bvh</td><td>Reference vers la structure <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> a liberer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="main__cpu_8cpp_source.html#l00113">113</a> du fichier <a class="el" href="main__cpu_8cpp_source.html">main_cpu.cpp</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="ac17ad94580bff596777b700c002650da" name="ac17ad94580bff596777b700c002650da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac17ad94580bff596777b700c002650da">&#9670;&#160;</a></span>nodes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structrt_1_1_b_v_h_node.html">BVHNode</a>&gt; CPUBVHBuilder::nodes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Liste des noeuds du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> (internes et feuilles) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="main__cpu_8cpp_source.html#l00064">64</a> du fichier <a class="el" href="main__cpu_8cpp_source.html">main_cpu.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3366f646411e846f0b8d42ea1b957a3c" name="a3366f646411e846f0b8d42ea1b957a3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3366f646411e846f0b8d42ea1b957a3c">&#9670;&#160;</a></span>primitives</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a>&gt; CPUBVHBuilder::primitives</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Liste des primitives (objets) triees par le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="main__cpu_8cpp_source.html#l00065">65</a> du fichier <a class="el" href="main__cpu_8cpp_source.html">main_cpu.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>src/<a class="el" href="main__cpu_8cpp_source.html">main_cpu.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="class_c_p_u_b_v_h_builder.html">CPUBVHBuilder</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

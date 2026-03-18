@@ -1,6 +1,15 @@
 #ifndef RAYTRACER_RENDERING_CPU_RENDERER_CUH
 #define RAYTRACER_RENDERING_CPU_RENDERER_CUH
 
+/**
+ * @file cpu_renderer.cuh
+ * @brief Moteur de rendu CPU du raytracer, parallelise avec OpenMP
+ * @details Ce fichier contient la version CPU du moteur de rendu. L'algorithme est
+ *          identique a la version GPU (ray_color + multi-echantillonnage + tone mapping),
+ *          mais il utilise CPURandom au lieu de curand et OpenMP pour la parallelisation.
+ *          Chaque thread OpenMP traite une ligne complete de l'image.
+ */
+
 #include <omp.h>
 #include <vector>
 #include <cmath>
@@ -18,6 +27,20 @@
 
 namespace rt {
 
+/**
+ * @brief Calcule la couleur d'un rayon sur CPU par rebonds successifs
+ * @details Version CPU de ray_color(). L'algorithme est le meme : on suit le rayon
+ *          de rebond en rebond, en accumulant l'attenuation de chaque materiau.
+ *          Si le rayon ne touche rien, on retourne la couleur du ciel ou du fond.
+ *          La seule difference est l'utilisation de CPURandom au lieu de curand
+ *          et de scatter_cpu() au lieu de scatter().
+ * @param initial_ray Le rayon initial lance depuis la camera
+ * @param bvh La structure d'acceleration BVH contenant la scene
+ * @param max_depth Le nombre maximal de rebonds autorises
+ * @param config La configuration du rendu (ciel, fond, etc.)
+ * @param rng Le generateur de nombres aleatoires CPU pour ce thread
+ * @return La couleur finale calculee pour ce rayon
+ */
 inline Color ray_color_cpu(
     const Ray& initial_ray,
     const BVH& bvh,
@@ -55,6 +78,19 @@ inline Color ray_color_cpu(
     return accumulated;
 }
 
+/**
+ * @brief Fonction de rendu CPU parallelisee avec OpenMP
+ * @details Cette fonction parcourt tous les pixels de l'image en parallele grace
+ *          a OpenMP. Chaque thread gere une ligne complete de l'image et possede
+ *          son propre generateur aleatoire (CPURandom) pour eviter les conflits.
+ *          Pour chaque pixel, on lance plusieurs rayons (multi-echantillonnage),
+ *          on fait la moyenne, puis on applique le tone mapping de Reinhard et
+ *          la correction gamma avant de clamper dans [0, 1].
+ * @param frame_buffer Le buffer de sortie contenant les couleurs des pixels
+ * @param camera La camera utilisee pour generer les rayons
+ * @param bvh La structure d'acceleration BVH de la scene
+ * @param config La configuration du rendu (resolution, samples, profondeur, etc.)
+ */
 inline void render_cpu(
     Color* frame_buffer,
     const Camera& camera,

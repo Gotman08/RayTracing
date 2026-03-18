@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence du fichier include/raytracer/rendering/material_dispatch.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('material__dispatch_8cuh.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence du fichier material_dispatch.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Dispatch de l'interaction rayon-materiau selon le type de materiau.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="vec3_8cuh_source.html">raytracer/core/vec3.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ray_8cuh_source.html">raytracer/core/ray.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="hit__record_8cuh_source.html">raytracer/core/hit_record.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="material_8cuh_source.html">raytracer/materials/material.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="lambertian_8cuh_source.html">raytracer/materials/lambertian.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="metal_8cuh_source.html">raytracer/materials/metal.cuh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="dielectric_8cuh_source.html">raytracer/materials/dielectric.cuh</a>&quot;</code><br />
+</div>
+<p><a href="material__dispatch_8cuh_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espaces de nommage</h2></td></tr>
+<tr class="memitem:rt" id="r_rt"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html">rt</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a139cc6d5abf65d3214772e53e70da6da" id="r_a139cc6d5abf65d3214772e53e70da6da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a139cc6d5abf65d3214772e53e70da6da">RAYTRACER_RENDERING_MATERIAL_DISPATCH_CUH</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a39c99a179d64564065e8a287512c2967" id="r_a39c99a179d64564065e8a287512c2967"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a39c99a179d64564065e8a287512c2967">rt::scatter</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, curandState *rand_state)</td></tr>
+<tr class="memdesc:a39c99a179d64564065e8a287512c2967"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatche l'interaction rayon-materiau selon le type de materiau (version GPU)  <br /></td></tr>
+<tr class="memitem:a53f12cdb6580010fd1f0f7a7c518c3ea" id="r_a53f12cdb6580010fd1f0f7a7c518c3ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacert.html#a53f12cdb6580010fd1f0f7a7c518c3ea">rt::scatter_cpu</a> (const <a class="el" href="classrt_1_1_material.html">Material</a> &amp;mat, const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r_in, const <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec, <a class="el" href="namespacert.html#a833d4cf4591664e7e913f7e550abc82a">Color</a> &amp;attenuation, <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;scattered, <a class="el" href="classrt_1_1_c_p_u_random.html">CPURandom</a> &amp;rng)</td></tr>
+<tr class="memdesc:a53f12cdb6580010fd1f0f7a7c518c3ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatche l'interaction rayon-materiau selon le type de materiau (version CPU)  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Dispatch de l'interaction rayon-materiau selon le type de materiau. </p>
+<p>Ce fichier contient les fonctions de dispatch qui redirigent l'appel de diffusion (scatter) vers la bonne implementation selon le type du materiau (lambertien, metal ou dielectrique). Il existe une version GPU (scatter) et une version CPU (scatter_cpu) qui utilisent des generateurs aleatoires differents. </p>
+
+<p class="definition">Définition dans le fichier <a class="el" href="material__dispatch_8cuh_source.html">material_dispatch.cuh</a>.</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentation des macros</h2>
+<a id="a139cc6d5abf65d3214772e53e70da6da" name="a139cc6d5abf65d3214772e53e70da6da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139cc6d5abf65d3214772e53e70da6da">&#9670;&#160;</a></span>RAYTRACER_RENDERING_MATERIAL_DISPATCH_CUH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RAYTRACER_RENDERING_MATERIAL_DISPATCH_CUH</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="material__dispatch_8cuh_source.html#l00002">2</a> du fichier <a class="el" href="material__dispatch_8cuh_source.html">material_dispatch.cuh</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_5f371c8f98a89310fdec0a60fd23a137.html">raytracer</a></li><li class="navelem"><a href="dir_283c3f7ed10bfcd81111a9d1a93d6708.html">rendering</a></li><li class="navelem"><a href="material__dispatch_8cuh.html">material_dispatch.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

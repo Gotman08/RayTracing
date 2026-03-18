@@ -1,17 +1,41 @@
 #ifndef RAYTRACER_ACCELERATION_BVH_BUILDER_CUH
 #define RAYTRACER_ACCELERATION_BVH_BUILDER_CUH
 
+/**
+ * @file bvh_builder.cuh
+ * @brief Construction du BVH sur CPU et transfert vers GPU/CPU
+ * @details Ce fichier contient la classe BVHBuilder qui construit la hierarchie
+ *          de volumes englobants (BVH) de facon recursive sur le CPU, puis permet
+ *          de copier la structure resultante en memoire GPU (via CUDA) ou en
+ *          memoire CPU pour le rendu.
+ */
+
 #include "raytracer/acceleration/bvh.cuh"
 #include <vector>
 #include <algorithm>
 
 namespace rt {
 
+/**
+ * @brief Constructeur de BVH sur CPU
+ * @details Cette classe construit l'arbre BVH de maniere recursive en triant
+ *          les primitives selon l'axe le plus long de leur boite englobante,
+ *          puis en coupant au milieu. Une fois construit, le BVH peut etre
+ *          transfere en memoire GPU ou CPU pour etre utilise lors du rendu.
+ */
 class BVHBuilder {
 public:
-    std::vector<BVHNode> nodes;
-    std::vector<HittableObject> primitives;
+    std::vector<BVHNode> nodes;          ///< Tableau des noeuds construits
+    std::vector<HittableObject> primitives;  ///< Tableau des primitives (triees lors de la construction)
 
+    /**
+     * @brief Lance la construction du BVH a partir d'un tableau d'objets
+     * @details Copie les objets dans le vecteur interne, puis appelle la methode
+     *          recursive build_recursive() pour construire l'arbre de bas en haut.
+     *          Le tableau de noeuds est reserve a 2*count pour eviter les reallocations.
+     * @param objects Tableau d'objets hittables a organiser dans le BVH
+     * @param count Nombre d'objets dans le tableau
+     */
     void build(HittableObject* objects, int count) {
         primitives.assign(objects, objects + count);
         nodes.clear();
@@ -22,6 +46,13 @@ public:
         build_recursive(0, count);
     }
 
+    /**
+     * @brief Copie le BVH construit en memoire GPU (CUDA)
+     * @details Alloue de la memoire sur le GPU avec cudaMalloc et copie les tableaux
+     *          de noeuds et de primitives du CPU vers le GPU. Le BVH retourne est
+     *          pret a etre utilise dans un kernel CUDA pour le rendu.
+     * @return Un objet BVH dont les pointeurs nodes et primitives sont en memoire GPU
+     */
     BVH create_gpu_bvh() {
         BVH bvh;
         bvh.num_nodes = static_cast<int>(nodes.size());
@@ -38,6 +69,12 @@ public:
         return bvh;
     }
 
+    /**
+     * @brief Libere la memoire GPU occupee par le BVH
+     * @details Appelle cudaFree sur les tableaux de noeuds et de primitives,
+     *          puis met les pointeurs a nullptr pour eviter les double-free.
+     * @param bvh Reference vers le BVH dont la memoire GPU doit etre liberee
+     */
     void free_gpu_bvh(BVH& bvh) {
         if (bvh.nodes) cudaFree(bvh.nodes);
         if (bvh.primitives) cudaFree(bvh.primitives);
@@ -45,6 +82,12 @@ public:
         bvh.primitives = nullptr;
     }
 
+    /**
+     * @brief Copie le BVH construit en memoire CPU (allocation dynamique)
+     * @details Alloue de la memoire sur le CPU avec new[] et copie les tableaux
+     *          de noeuds et de primitives. Utile pour le rendu CPU sans CUDA.
+     * @return Un objet BVH dont les pointeurs nodes et primitives sont en memoire CPU
+     */
     BVH create_cpu_bvh() {
         BVH bvh;
         bvh.num_nodes = static_cast<int>(nodes.size());
@@ -59,6 +102,12 @@ public:
         return bvh;
     }
 
+    /**
+     * @brief Libere la memoire CPU occupee par le BVH
+     * @details Appelle delete[] sur les tableaux de noeuds et de primitives,
+     *          puis met les pointeurs a nullptr.
+     * @param bvh Reference vers le BVH dont la memoire CPU doit etre liberee
+     */
     void free_cpu_bvh(BVH& bvh) {
         if (bvh.nodes) delete[] bvh.nodes;
         if (bvh.primitives) delete[] bvh.primitives;
@@ -67,6 +116,18 @@ public:
     }
 
 private:
+    /**
+     * @brief Construit l'arbre BVH de facon recursive
+     * @details Pour le sous-ensemble de primitives [start, end), calcule la boite
+     *          englobante globale, puis :
+     *          - Si une seule primitive : cree une feuille
+     *          - Sinon : trie les primitives selon l'axe le plus long de la boite
+     *            englobante, coupe au milieu, et construit recursivement les deux
+     *            sous-arbres (gauche et droit)
+     * @param start Indice de debut dans le tableau de primitives (inclus)
+     * @param end Indice de fin dans le tableau de primitives (exclus)
+     * @return L'indice du noeud cree dans le tableau nodes
+     */
     int build_recursive(int start, int end) {
         int node_idx = static_cast<int>(nodes.size());
         nodes.emplace_back();

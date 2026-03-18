@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la structure rt::HitRecord</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('structrt_1_1_hit_record.html','','structrt_1_1_hit_record-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la structure rt::HitRecord</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Stocke toutes les informations relatives a une intersection rayon-objet.  
+ <a href="#details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:a052e7bea087ceb02af2f62dafb417b81" id="r_a052e7bea087ceb02af2f62dafb417b81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a052e7bea087ceb02af2f62dafb417b81">set_face_normal</a> (const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r, const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;outward_normal)</td></tr>
+<tr class="memdesc:a052e7bea087ceb02af2f62dafb417b81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine si le rayon touche la face avant ou arriere et ajuste la normale.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:a5ce6b92b15d9c949f513495f5bd716b7" id="r_a5ce6b92b15d9c949f513495f5bd716b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ce6b92b15d9c949f513495f5bd716b7">p</a></td></tr>
+<tr class="memitem:afd96f90c771ee993db71e1b3c2c452f5" id="r_afd96f90c771ee993db71e1b3c2c452f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_vec3.html">Vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd96f90c771ee993db71e1b3c2c452f5">normal</a></td></tr>
+<tr class="memitem:aa94ca032a41dd2bcc2e5f7bba8e6f603" id="r_aa94ca032a41dd2bcc2e5f7bba8e6f603"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_material.html">Material</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa94ca032a41dd2bcc2e5f7bba8e6f603">mat</a></td></tr>
+<tr class="memitem:a520ff80ae7f4b7f5c2b250609663ed68" id="r_a520ff80ae7f4b7f5c2b250609663ed68"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a520ff80ae7f4b7f5c2b250609663ed68">t</a></td></tr>
+<tr class="memitem:adb0997538ee85f30d297c0122d60d0a2" id="r_adb0997538ee85f30d297c0122d60d0a2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb0997538ee85f30d297c0122d60d0a2">u</a></td></tr>
+<tr class="memitem:aa1cbca8a3074c21bd2631acb703cff2c" id="r_aa1cbca8a3074c21bd2631acb703cff2c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1cbca8a3074c21bd2631acb703cff2c">v</a></td></tr>
+<tr class="memitem:a9a8599b77c8e30239f6b9f1ffb54d427" id="r_a9a8599b77c8e30239f6b9f1ffb54d427"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a8599b77c8e30239f6b9f1ffb54d427">front_face</a></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Stocke toutes les informations relatives a une intersection rayon-objet. </p>
+<p>Declaration anticipee de la classe <a class="el" href="classrt_1_1_material.html" title="Represente un materiau generique attache a un objet de la scene.">Material</a></p>
+<p>Cette structure est remplie par les fonctions d'intersection des objets geometriques (spheres, triangles, etc.) et est ensuite utilisee par les materiaux pour calculer la couleur et la direction du rayon rebondi. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00026">26</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="a052e7bea087ceb02af2f62dafb417b81" name="a052e7bea087ceb02af2f62dafb417b81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a052e7bea087ceb02af2f62dafb417b81">&#9670;&#160;</a></span>set_face_normal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> void rt::HitRecord::set_face_normal </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_vec3.html">Vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>outward_normal</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine si le rayon touche la face avant ou arriere et ajuste la normale. </p>
+<p>Compare la direction du rayon avec la normale sortante de la geometrie. Si le produit scalaire est negatif, le rayon arrive de l'exterieur (front face). La normale stockee est toujours orientee contre la direction du rayon, ce qui est necessaire pour les calculs d'eclairage et de refraction. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Le rayon qui a touche l'objet </td></tr>
+    <tr><td class="paramname">outward_normal</td><td>La normale geometrique sortante (doit etre unitaire) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00044">44</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="a9a8599b77c8e30239f6b9f1ffb54d427" name="a9a8599b77c8e30239f6b9f1ffb54d427"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a8599b77c8e30239f6b9f1ffb54d427">&#9670;&#160;</a></span>front_face</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool rt::HitRecord::front_face</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>true si le rayon frappe la face exterieure de l'objet </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00033">33</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aa94ca032a41dd2bcc2e5f7bba8e6f603" name="aa94ca032a41dd2bcc2e5f7bba8e6f603"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa94ca032a41dd2bcc2e5f7bba8e6f603">&#9670;&#160;</a></span>mat</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_material.html">Material</a>* rt::HitRecord::mat</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointeur vers le materiau de l'objet touche </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00029">29</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+
+</div>
+</div>
+<a id="afd96f90c771ee993db71e1b3c2c452f5" name="afd96f90c771ee993db71e1b3c2c452f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd96f90c771ee993db71e1b3c2c452f5">&#9670;&#160;</a></span>normal</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_vec3.html">Vec3</a> rt::HitRecord::normal</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Normale a la surface au point d'intersection (toujours orientee vers l'exterieur du cote du rayon) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00028">28</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a5ce6b92b15d9c949f513495f5bd716b7" name="a5ce6b92b15d9c949f513495f5bd716b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ce6b92b15d9c949f513495f5bd716b7">&#9670;&#160;</a></span>p</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacert.html#a679fd997c4225984367e96dfc1f15c59">Point3</a> rt::HitRecord::p</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Point d'intersection dans l'espace 3D </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00027">27</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a520ff80ae7f4b7f5c2b250609663ed68" name="a520ff80ae7f4b7f5c2b250609663ed68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a520ff80ae7f4b7f5c2b250609663ed68">&#9670;&#160;</a></span>t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::HitRecord::t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parametre t du rayon au point d'intersection (P = orig + t * dir) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00030">30</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+
+</div>
+</div>
+<a id="adb0997538ee85f30d297c0122d60d0a2" name="adb0997538ee85f30d297c0122d60d0a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb0997538ee85f30d297c0122d60d0a2">&#9670;&#160;</a></span>u</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::HitRecord::u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Coordonnee de texture u (horizontale) dans [0, 1] </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00031">31</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aa1cbca8a3074c21bd2631acb703cff2c" name="aa1cbca8a3074c21bd2631acb703cff2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1cbca8a3074c21bd2631acb703cff2c">&#9670;&#160;</a></span>v</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float rt::HitRecord::v</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Coordonnee de texture v (verticale) dans [0, 1] </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hit__record_8cuh_source.html#l00032">32</a> du fichier <a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>include/raytracer/core/<a class="el" href="hit__record_8cuh_source.html">hit_record.cuh</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li><li class="navelem"><a href="structrt_1_1_hit_record.html">HitRecord</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

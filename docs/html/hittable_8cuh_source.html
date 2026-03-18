@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer:  Fichier source de include/raytracer/geometry/hittable.cuh</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('hittable_8cuh_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">hittable.cuh</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="hittable_8cuh.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef RAYTRACER_GEOMETRY_HITTABLE_CUH</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno"><a class="line" href="hittable_8cuh.html#ab2dc76c0999c9000367bf30de3b83af5">    2</a></span><span class="preprocessor">#define RAYTRACER_GEOMETRY_HITTABLE_CUH</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="vec3_8cuh.html">raytracer/core/vec3.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="ray_8cuh.html">raytracer/core/ray.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="aabb_8cuh.html">raytracer/core/aabb.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="interval_8cuh.html">raytracer/core/interval.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="hit__record_8cuh.html">raytracer/core/hit_record.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacert.html">rt</a> {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span></div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">   27</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a> {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">   28</a></span>    <a class="code hl_enumvalue" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">SPHERE</a>, </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825aad6990fc23cd957328515fde2db852a3">   29</a></span>    <a class="code hl_enumvalue" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825aad6990fc23cd957328515fde2db852a3">PLANE</a>   </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>};</div>
+</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span></div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="};">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classrt_1_1_hittable.html">   40</a></span><span class="keyword">class </span><a class="code hl_function" href="classrt_1_1_hittable.html#a578f1edd03139eee3533867ba07f7945">Hittable</a> {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classrt_1_1_hittable.html#aaee5b5c064493141569f919bd8fedb69">   42</a></span>    <a class="code hl_enumeration" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a> <a class="code hl_variable" href="classrt_1_1_hittable.html#aaee5b5c064493141569f919bd8fedb69">type</a>; </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classrt_1_1_hittable.html#a9efe833a42a38a5fa4a5b65a8282ad22">   43</a></span>    <a class="code hl_class" href="classrt_1_1_a_a_b_b.html">AABB</a> <a class="code hl_variable" href="classrt_1_1_hittable.html#a9efe833a42a38a5fa4a5b65a8282ad22">bbox</a>;         </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="classrt_1_1_hittable.html#a578f1edd03139eee3533867ba07f7945">   49</a></span>    <a class="code hl_define" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="code hl_define" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="code hl_function" href="classrt_1_1_hittable.html#a578f1edd03139eee3533867ba07f7945">Hittable</a>() : <a class="code hl_variable" href="classrt_1_1_hittable.html#aaee5b5c064493141569f919bd8fedb69">type</a>(<a class="code hl_enumeration" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a>::<a class="code hl_enumvalue" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">SPHERE</a>) {}</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="classrt_1_1_hittable.html#ac318a8a70025dfe7f0c01ab551c3b37c">   55</a></span>    <a class="code hl_define" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="code hl_define" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="code hl_function" href="classrt_1_1_hittable.html#ac318a8a70025dfe7f0c01ab551c3b37c">Hittable</a>(<a class="code hl_enumeration" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a> t) : <a class="code hl_variable" href="classrt_1_1_hittable.html#aaee5b5c064493141569f919bd8fedb69">type</a>(t) {}</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">   61</a></span>    <a class="code hl_define" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="code hl_define" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <span class="keyword">const</span> <a class="code hl_class" href="classrt_1_1_a_a_b_b.html">AABB</a>&amp; <a class="code hl_function" href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">bounding_box</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classrt_1_1_hittable.html#a9efe833a42a38a5fa4a5b65a8282ad22">bbox</a>; }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>};</div>
+</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aaabb_8cuh_html"><div class="ttname"><a href="aabb_8cuh.html">aabb.cuh</a></div><div class="ttdoc">Definition de la classe AABB (Axis-Aligned Bounding Box)</div></div>
+<div class="ttc" id="aclassrt_1_1_a_a_b_b_html"><div class="ttname"><a href="classrt_1_1_a_a_b_b.html">rt::AABB</a></div><div class="ttdoc">Boite englobante alignee aux axes (Axis-Aligned Bounding Box)</div><div class="ttdef"><b>Definition</b> <a href="aabb_8cuh_source.html#l00029">aabb.cuh:29</a></div></div>
+<div class="ttc" id="aclassrt_1_1_hittable_html_a578f1edd03139eee3533867ba07f7945"><div class="ttname"><a href="classrt_1_1_hittable.html#a578f1edd03139eee3533867ba07f7945">rt::Hittable::Hittable</a></div><div class="ttdeci">__host__ __device__ Hittable()</div><div class="ttdoc">Constructeur par defaut.</div><div class="ttdef"><b>Definition</b> <a href="#l00049">hittable.cuh:49</a></div></div>
+<div class="ttc" id="aclassrt_1_1_hittable_html_a9efe833a42a38a5fa4a5b65a8282ad22"><div class="ttname"><a href="classrt_1_1_hittable.html#a9efe833a42a38a5fa4a5b65a8282ad22">rt::Hittable::bbox</a></div><div class="ttdeci">AABB bbox</div><div class="ttdoc">Boite englobante alignee sur les axes (Axis-Aligned Bounding Box)</div><div class="ttdef"><b>Definition</b> <a href="#l00043">hittable.cuh:43</a></div></div>
+<div class="ttc" id="aclassrt_1_1_hittable_html_aaee5b5c064493141569f919bd8fedb69"><div class="ttname"><a href="classrt_1_1_hittable.html#aaee5b5c064493141569f919bd8fedb69">rt::Hittable::type</a></div><div class="ttdeci">HittableType type</div><div class="ttdoc">Type de l&#39;objet (SPHERE ou PLANE)</div><div class="ttdef"><b>Definition</b> <a href="#l00042">hittable.cuh:42</a></div></div>
+<div class="ttc" id="aclassrt_1_1_hittable_html_ab18e54778652e4257e4fff79da4c1473"><div class="ttname"><a href="classrt_1_1_hittable.html#ab18e54778652e4257e4fff79da4c1473">rt::Hittable::bounding_box</a></div><div class="ttdeci">__host__ __device__ const AABB &amp; bounding_box() const</div><div class="ttdoc">Retourne la boite englobante de l&#39;objet.</div><div class="ttdef"><b>Definition</b> <a href="#l00061">hittable.cuh:61</a></div></div>
+<div class="ttc" id="aclassrt_1_1_hittable_html_ac318a8a70025dfe7f0c01ab551c3b37c"><div class="ttname"><a href="classrt_1_1_hittable.html#ac318a8a70025dfe7f0c01ab551c3b37c">rt::Hittable::Hittable</a></div><div class="ttdeci">__host__ __device__ Hittable(HittableType t)</div><div class="ttdoc">Constructeur avec type specifie.</div><div class="ttdef"><b>Definition</b> <a href="#l00055">hittable.cuh:55</a></div></div>
+<div class="ttc" id="acuda__compat_8cuh_html_a803050db3c78e0db3ea59a0c35499622"><div class="ttname"><a href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a></div><div class="ttdeci">#define __host__</div><div class="ttdoc">Macro vide en mode CPU (remplace le qualificateur CUDA host)</div><div class="ttdef"><b>Definition</b> <a href="cuda__compat_8cuh_source.html#l00021">cuda_compat.cuh:21</a></div></div>
+<div class="ttc" id="acuda__compat_8cuh_html_ad54e07d96efd9a36dfca1a9f27776d62"><div class="ttname"><a href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a></div><div class="ttdeci">#define __device__</div><div class="ttdoc">Macro vide en mode CPU (remplace le qualificateur CUDA device)</div><div class="ttdef"><b>Definition</b> <a href="cuda__compat_8cuh_source.html#l00025">cuda_compat.cuh:25</a></div></div>
+<div class="ttc" id="ahit__record_8cuh_html"><div class="ttname"><a href="hit__record_8cuh.html">hit_record.cuh</a></div><div class="ttdoc">Definition de la structure HitRecord pour stocker les informations d&#39;intersection.</div></div>
+<div class="ttc" id="ainterval_8cuh_html"><div class="ttname"><a href="interval_8cuh.html">interval.cuh</a></div><div class="ttdoc">Definition de la classe Interval pour gerer des plages de valeurs [min, max].</div></div>
+<div class="ttc" id="anamespacert_html"><div class="ttname"><a href="namespacert.html">rt</a></div><div class="ttdef"><b>Definition</b> <a href="bvh_8cuh_source.html#l00017">bvh.cuh:17</a></div></div>
+<div class="ttc" id="anamespacert_html_a3c2d0fed8c6db4a36f2d0db118b6e825"><div class="ttname"><a href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">rt::HittableType</a></div><div class="ttdeci">HittableType</div><div class="ttdoc">Enumeration des differents types d&#39;objets geometriques supportes.</div><div class="ttdef"><b>Definition</b> <a href="#l00027">hittable.cuh:27</a></div></div>
+<div class="ttc" id="anamespacert_html_a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43"><div class="ttname"><a href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825a6f7cea7381e843e2ee0338b4a92b0d43">rt::HittableType::SPHERE</a></div><div class="ttdeci">@ SPHERE</div><div class="ttdoc">Objet de type sphere.</div><div class="ttdef"><b>Definition</b> <a href="#l00028">hittable.cuh:28</a></div></div>
+<div class="ttc" id="anamespacert_html_a3c2d0fed8c6db4a36f2d0db118b6e825aad6990fc23cd957328515fde2db852a3"><div class="ttname"><a href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825aad6990fc23cd957328515fde2db852a3">rt::HittableType::PLANE</a></div><div class="ttdeci">@ PLANE</div><div class="ttdoc">Objet de type plan infini.</div><div class="ttdef"><b>Definition</b> <a href="#l00029">hittable.cuh:29</a></div></div>
+<div class="ttc" id="aray_8cuh_html"><div class="ttname"><a href="ray_8cuh.html">ray.cuh</a></div><div class="ttdoc">Definition de la classe Ray representant un rayon lumineux.</div></div>
+<div class="ttc" id="avec3_8cuh_html"><div class="ttname"><a href="vec3_8cuh.html">vec3.cuh</a></div><div class="ttdoc">Definition de la classe Vec3 et des fonctions utilitaires associees.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_5f371c8f98a89310fdec0a60fd23a137.html">raytracer</a></li><li class="navelem"><a href="dir_bf6f0613fddb8ed6e9212cbfdfd78b57.html">geometry</a></li><li class="navelem"><a href="hittable_8cuh.html">hittable.cuh</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

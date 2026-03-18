@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la classe rt::BVH</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classrt_1_1_b_v_h.html','','classrt_1_1_b_v_h-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la classe rt::BVH</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Structure d'acceleration par hierarchie de volumes englobants.  
+ <a href="#details">Plus de détails...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:aa575e4353aaf59a5005eff02004c62ed" id="r_aa575e4353aaf59a5005eff02004c62ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa575e4353aaf59a5005eff02004c62ed">BVH</a> ()</td></tr>
+<tr class="memitem:a95e533f7121cdc27aed8cba8265aa646" id="r_a95e533f7121cdc27aed8cba8265aa646"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95e533f7121cdc27aed8cba8265aa646">hit</a> (const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;r, <a class="el" href="classrt_1_1_interval.html">Interval</a> ray_t, <a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;rec) const</td></tr>
+<tr class="memdesc:a95e533f7121cdc27aed8cba8265aa646"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traversee iterative du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> pour trouver l'intersection la plus proche.  <br /></td></tr>
+<tr class="memitem:a89ffb16bec1ac67563299a8fc361a8b4" id="r_a89ffb16bec1ac67563299a8fc361a8b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89ffb16bec1ac67563299a8fc361a8b4">bounding_box</a> () const</td></tr>
+<tr class="memdesc:a89ffb16bec1ac67563299a8fc361a8b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne la boite englobante de la racine du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:aa6f541b4f316fdd5ab78ed214d4aab12" id="r_aa6f541b4f316fdd5ab78ed214d4aab12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrt_1_1_b_v_h_node.html">BVHNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6f541b4f316fdd5ab78ed214d4aab12">nodes</a></td></tr>
+<tr class="memdesc:aa6f541b4f316fdd5ab78ed214d4aab12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tableau de noeuds du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> (memoire GPU ou CPU)  <br /></td></tr>
+<tr class="memitem:a9e9696e69c4a21072a19a128d20e8958" id="r_a9e9696e69c4a21072a19a128d20e8958"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e9696e69c4a21072a19a128d20e8958">primitives</a></td></tr>
+<tr class="memdesc:a9e9696e69c4a21072a19a128d20e8958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tableau des primitives de la scene.  <br /></td></tr>
+<tr class="memitem:ac6b27d875ee6d3ba86de01563e06edc4" id="r_ac6b27d875ee6d3ba86de01563e06edc4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6b27d875ee6d3ba86de01563e06edc4">num_nodes</a></td></tr>
+<tr class="memdesc:ac6b27d875ee6d3ba86de01563e06edc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nombre total de noeuds dans l'arbre.  <br /></td></tr>
+<tr class="memitem:a1234229117f938b8d2a5027ad9ce9241" id="r_a1234229117f938b8d2a5027ad9ce9241"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1234229117f938b8d2a5027ad9ce9241">num_primitives</a></td></tr>
+<tr class="memdesc:a1234229117f938b8d2a5027ad9ce9241"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nombre total de primitives.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Structure d'acceleration par hierarchie de volumes englobants. </p>
+<p>Le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> organise les primitives de la scene dans un arbre binaire de boites englobantes. Cela permet de rejeter rapidement les rayons qui ne touchent pas un groupe de primitives, ce qui accelere enormement le rendu par rapport a un test d'intersection avec chaque primitive. La structure est stockee sous forme de tableau plat (pas de pointeurs) pour etre compatible avec la memoire GPU. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="bvh_8cuh_source.html#l00045">45</a> du fichier <a class="el" href="bvh_8cuh_source.html">bvh.cuh</a>.</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a id="aa575e4353aaf59a5005eff02004c62ed" name="aa575e4353aaf59a5005eff02004c62ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa575e4353aaf59a5005eff02004c62ed">&#9670;&#160;</a></span>BVH()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::BVH::BVH </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="bvh_8cuh_source.html#l00052">52</a> du fichier <a class="el" href="bvh_8cuh_source.html">bvh.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="a89ffb16bec1ac67563299a8fc361a8b4" name="a89ffb16bec1ac67563299a8fc361a8b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89ffb16bec1ac67563299a8fc361a8b4">&#9670;&#160;</a></span>bounding_box()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> <a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a> rt::BVH::bounding_box </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne la boite englobante de la racine du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a>. </p>
+<p>La boite englobante de la racine contient toute la scene. Si le <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> est vide, retourne une <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> par defaut. </p><dl class="section return"><dt>Renvoie</dt><dd>La boite englobante <a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> de l'ensemble de la scene </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="bvh_8cuh_source.html#l00106">106</a> du fichier <a class="el" href="bvh_8cuh_source.html">bvh.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a95e533f7121cdc27aed8cba8265aa646" name="a95e533f7121cdc27aed8cba8265aa646"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95e533f7121cdc27aed8cba8265aa646">&#9670;&#160;</a></span>hit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> bool rt::BVH::hit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classrt_1_1_ray.html">Ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrt_1_1_interval.html">Interval</a></td>          <td class="paramname"><span class="paramname"><em>ray_t</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrt_1_1_hit_record.html">HitRecord</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Traversee iterative du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> pour trouver l'intersection la plus proche. </p>
+<p>Utilise une pile locale (tableau de taille fixe 64) au lieu de la recursion pour etre compatible GPU. Parcourt l'arbre en profondeur et teste l'intersection avec les boites englobantes avant de tester les primitives, ce qui permet d'eliminer rapidement les branches inutiles. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Le rayon a tester </td></tr>
+    <tr><td class="paramname">ray_t</td><td>Intervalle de distance valide pour l'intersection [tmin, tmax] </td></tr>
+    <tr><td class="paramname">rec</td><td>Enregistrement d'intersection rempli si un hit est trouve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true si le rayon intersecte au moins une primitive, false sinon </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="bvh_8cuh_source.html#l00066">66</a> du fichier <a class="el" href="bvh_8cuh_source.html">bvh.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="aa6f541b4f316fdd5ab78ed214d4aab12" name="aa6f541b4f316fdd5ab78ed214d4aab12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6f541b4f316fdd5ab78ed214d4aab12">&#9670;&#160;</a></span>nodes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structrt_1_1_b_v_h_node.html">BVHNode</a>* rt::BVH::nodes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tableau de noeuds du <a class="el" href="classrt_1_1_b_v_h.html" title="Structure d&#39;acceleration par hierarchie de volumes englobants.">BVH</a> (memoire GPU ou CPU) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="bvh_8cuh_source.html#l00047">47</a> du fichier <a class="el" href="bvh_8cuh_source.html">bvh.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ac6b27d875ee6d3ba86de01563e06edc4" name="ac6b27d875ee6d3ba86de01563e06edc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6b27d875ee6d3ba86de01563e06edc4">&#9670;&#160;</a></span>num_nodes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rt::BVH::num_nodes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Nombre total de noeuds dans l'arbre. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="bvh_8cuh_source.html#l00049">49</a> du fichier <a class="el" href="bvh_8cuh_source.html">bvh.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a1234229117f938b8d2a5027ad9ce9241" name="a1234229117f938b8d2a5027ad9ce9241"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1234229117f938b8d2a5027ad9ce9241">&#9670;&#160;</a></span>num_primitives</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rt::BVH::num_primitives</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Nombre total de primitives. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="bvh_8cuh_source.html#l00050">50</a> du fichier <a class="el" href="bvh_8cuh_source.html">bvh.cuh</a>.</p>
+
+</div>
+</div>
+<a id="a9e9696e69c4a21072a19a128d20e8958" name="a9e9696e69c4a21072a19a128d20e8958"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e9696e69c4a21072a19a128d20e8958">&#9670;&#160;</a></span>primitives</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structrt_1_1_hittable_object.html">HittableObject</a>* rt::BVH::primitives</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tableau des primitives de la scene. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="bvh_8cuh_source.html#l00048">48</a> du fichier <a class="el" href="bvh_8cuh_source.html">bvh.cuh</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>include/raytracer/acceleration/<a class="el" href="bvh_8cuh_source.html">bvh.cuh</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li><li class="navelem"><a href="classrt_1_1_b_v_h.html">BVH</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CUDA Ray Tracer: Référence de la classe rt::Hittable</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">CUDA Ray Tracer
+   </div>
+   <div id="projectbrief">Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('classrt_1_1_hittable.html','','classrt_1_1_hittable-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Référence de la classe rt::Hittable</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Classe de base pour tous les objets de la scene pouvant etre intersectes par un rayon.  
+ <a href="#details">Plus de détails...</a></p>
+<div class="dynheader">
+Graphe d'héritage de rt::Hittable:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classrt_1_1_hittable.png" usemap="#rt_3A_3AHittable_map" alt=""/>
+  <map id="rt_3A_3AHittable_map" name="rt_3A_3AHittable_map">
+<area href="classrt_1_1_plane.html" title="Represente un plan infini dans la scene 3D." alt="rt::Plane" shape="rect" coords="0,56,68,80"/>
+<area href="classrt_1_1_sphere.html" title="Represente une sphere dans la scene 3D." alt="rt::Sphere" shape="rect" coords="78,56,146,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:a578f1edd03139eee3533867ba07f7945" id="r_a578f1edd03139eee3533867ba07f7945"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a578f1edd03139eee3533867ba07f7945">Hittable</a> ()</td></tr>
+<tr class="memdesc:a578f1edd03139eee3533867ba07f7945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur par defaut.  <br /></td></tr>
+<tr class="memitem:ac318a8a70025dfe7f0c01ab551c3b37c" id="r_ac318a8a70025dfe7f0c01ab551c3b37c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac318a8a70025dfe7f0c01ab551c3b37c">Hittable</a> (<a class="el" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a> t)</td></tr>
+<tr class="memdesc:ac318a8a70025dfe7f0c01ab551c3b37c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur avec type specifie.  <br /></td></tr>
+<tr class="memitem:ab18e54778652e4257e4fff79da4c1473" id="r_ab18e54778652e4257e4fff79da4c1473"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> const <a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab18e54778652e4257e4fff79da4c1473">bounding_box</a> () const</td></tr>
+<tr class="memdesc:ab18e54778652e4257e4fff79da4c1473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne la boite englobante de l'objet.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Attributs publics</h2></td></tr>
+<tr class="memitem:aaee5b5c064493141569f919bd8fedb69" id="r_aaee5b5c064493141569f919bd8fedb69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaee5b5c064493141569f919bd8fedb69">type</a></td></tr>
+<tr class="memdesc:aaee5b5c064493141569f919bd8fedb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type de l'objet (SPHERE ou PLANE)  <br /></td></tr>
+<tr class="memitem:a9efe833a42a38a5fa4a5b65a8282ad22" id="r_a9efe833a42a38a5fa4a5b65a8282ad22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9efe833a42a38a5fa4a5b65a8282ad22">bbox</a></td></tr>
+<tr class="memdesc:a9efe833a42a38a5fa4a5b65a8282ad22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boite englobante alignee sur les axes (Axis-Aligned Bounding Box)  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Classe de base pour tous les objets de la scene pouvant etre intersectes par un rayon. </p>
+<p>Cette classe stocke le type de l'objet et sa boite englobante (<a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a>). Les classes derivees (<a class="el" href="classrt_1_1_sphere.html" title="Represente une sphere dans la scene 3D.">Sphere</a>, <a class="el" href="classrt_1_1_plane.html" title="Represente un plan infini dans la scene 3D.">Plane</a>) heritent de <a class="el" href="classrt_1_1_hittable.html" title="Classe de base pour tous les objets de la scene pouvant etre intersectes par un rayon.">Hittable</a> et implementent leur propre methode hit() pour calculer l'intersection avec un rayon. Compatible host (CPU) et device (GPU) grace aux qualificateurs CUDA. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hittable_8cuh_source.html#l00040">40</a> du fichier <a class="el" href="hittable_8cuh_source.html">hittable.cuh</a>.</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a id="a578f1edd03139eee3533867ba07f7945" name="a578f1edd03139eee3533867ba07f7945"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a578f1edd03139eee3533867ba07f7945">&#9670;&#160;</a></span>Hittable() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Hittable::Hittable </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur par defaut. </p>
+<p>Initialise l'objet comme une sphere par defaut. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hittable_8cuh_source.html#l00049">49</a> du fichier <a class="el" href="hittable_8cuh_source.html">hittable.cuh</a>.</p>
+
+</div>
+</div>
+<a id="ac318a8a70025dfe7f0c01ab551c3b37c" name="ac318a8a70025dfe7f0c01ab551c3b37c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac318a8a70025dfe7f0c01ab551c3b37c">&#9670;&#160;</a></span>Hittable() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> rt::Hittable::Hittable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a></td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur avec type specifie. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Le type de l'objet geometrique a creer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="hittable_8cuh_source.html#l00055">55</a> du fichier <a class="el" href="hittable_8cuh_source.html">hittable.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentation des fonctions membres</h2>
+<a id="ab18e54778652e4257e4fff79da4c1473" name="ab18e54778652e4257e4fff79da4c1473"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab18e54778652e4257e4fff79da4c1473">&#9670;&#160;</a></span>bounding_box()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cuda__compat_8cuh.html#a803050db3c78e0db3ea59a0c35499622">__host__</a> <a class="el" href="cuda__compat_8cuh.html#ad54e07d96efd9a36dfca1a9f27776d62">__device__</a> const <a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a> &amp; rt::Hittable::bounding_box </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne la boite englobante de l'objet. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>Reference constante vers l'<a class="el" href="classrt_1_1_a_a_b_b.html" title="Boite englobante alignee aux axes (Axis-Aligned Bounding Box)">AABB</a> de l'objet. </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="hittable_8cuh_source.html#l00061">61</a> du fichier <a class="el" href="hittable_8cuh_source.html">hittable.cuh</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Documentation des données membres</h2>
+<a id="a9efe833a42a38a5fa4a5b65a8282ad22" name="a9efe833a42a38a5fa4a5b65a8282ad22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9efe833a42a38a5fa4a5b65a8282ad22">&#9670;&#160;</a></span>bbox</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrt_1_1_a_a_b_b.html">AABB</a> rt::Hittable::bbox</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Boite englobante alignee sur les axes (Axis-Aligned Bounding Box) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hittable_8cuh_source.html#l00043">43</a> du fichier <a class="el" href="hittable_8cuh_source.html">hittable.cuh</a>.</p>
+
+</div>
+</div>
+<a id="aaee5b5c064493141569f919bd8fedb69" name="aaee5b5c064493141569f919bd8fedb69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaee5b5c064493141569f919bd8fedb69">&#9670;&#160;</a></span>type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacert.html#a3c2d0fed8c6db4a36f2d0db118b6e825">HittableType</a> rt::Hittable::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type de l'objet (SPHERE ou PLANE) </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="hittable_8cuh_source.html#l00042">42</a> du fichier <a class="el" href="hittable_8cuh_source.html">hittable.cuh</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>include/raytracer/geometry/<a class="el" href="hittable_8cuh_source.html">hittable.cuh</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespacert.html">rt</a></li><li class="navelem"><a href="classrt_1_1_hittable.html">Hittable</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>
