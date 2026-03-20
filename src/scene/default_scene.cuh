@@ -86,14 +86,14 @@ inline void create_default_scene(
 
     config.use_sky = true;
     config.sky = Sky(
-        Color(0.02f, 0.02f, 0.06f),
-        Color(0.0f, 0.0f, 0.02f)
+        Color(0.35f, 0.35f, 0.45f),
+        Color(0.08f, 0.08f, 0.2f)
     );
-    config.sky.set_sun(Vec3(1.0f, 0.8f, 0.3f), 3.0f, 0.015f);
+    config.sky.set_sun(Vec3(1.0f, 0.8f, 0.3f), 8.0f, 0.05f);
 
     add_sphere(objects, materials, obj_count, mat_count,
         Point3(0, -1000, 0), 1000.0f,
-        create_lambertian(Color(0.05f, 0.05f, 0.08f)));
+        create_lambertian(Color(0.15f, 0.15f, 0.2f)));
 
     add_sphere(objects, materials, obj_count, mat_count,
         Point3(0, 2, 0), 2.0f,
