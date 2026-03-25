@@ -1,0 +1,631 @@
+% =============================================================================
+% Rapport de Projet : Ray Tracer CUDA/CPU
+% =============================================================================
+\documentclass[12pt,a4paper]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+% --- Geometry ---
+\geometry{margin=2.5cm}
+
+% --- Code style ---
+\definecolor{codebg}{RGB}{245,245,248}
+\definecolor{codecomment}{RGB}{100,120,140}
+\definecolor{codekeyword}{RGB}{0,100,180}
+\definecolor{codestring}{RGB}{180,60,40}
+
+\lstdefinestyle{cudastyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{codekeyword}\bfseries,
+    commentstyle=\color{codecomment}\itshape,
+    stringstyle=\color{codestring},
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{gray!40},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt,
+    tabsize=4,
+    showstringspaces=false,
+    language=C++,
+    morekeywords={__global__,__device__,__host__,__forceinline__,
+                  dim3,curandState,Color,Ray,BVH,HitRecord,
+                  Interval,RenderConfig,Camera,Material,
+                  MaterialType,CPURandom,Vec3,Point3,AABB,BVHNode},
+    literate={->}{$\rightarrow$}1
+}
+\lstset{style=cudastyle}
+
+% --- Headers ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Ray Tracer CUDA/CPU}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Title ---
+\title{
+    \vspace{-1cm}
+    \textbf{Ray Tracer Haute Performance}\\[0.3cm]
+    \large Architecture CPU/GPU avec CUDA et OpenMP\\[0.2cm]
+    \normalsize Projet HPC -- Romeo2025
+}
+\author{Nicolas}
+\date{Mars 2026}
+
+% =============================================================================
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\vspace{0.5cm}
+\begin{abstract}
+Ce rapport détaille le développement de mon moteur de rendu par lancer de rayons, conçu pour exploiter à la fois le GPU (via CUDA) et le CPU (via OpenMP). Mon objectif principal a été de concevoir une architecture hybride capable de s'adapter aux contraintes très différentes de ces deux cibles --- BVH itératif sans récursion, dispatch par énumération sans vtables, gestion manuelle de la mémoire GPU. J'ai testé le moteur sur deux plateformes : mon PC portable (RTX 4070) et le cluster HPC Romeo de l'Université de Reims (NVIDIA GH200 H100). Un mode interactif temps réel via l'interopérabilité CUDA-OpenGL est également présenté.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% =============================================================================
+\section{Introduction}
+% =============================================================================
+
+La synthèse d'images par path tracing offre un réalisme inégalé --- réflexions, réfractions, ombres douces, illumination globale --- mais son coût calculatoire la rend difficilement applicable sans accélération matérielle. Pour chaque pixel, il faut lancer des dizaines, voire des centaines de rayons, les suivre de rebond en rebond dans la scène, et accumuler la contribution lumineuse de chaque interaction. L'objectif de ce projet était de confronter ce problème en exploitant la puissance massivement parallèle des GPU modernes.
+
+J'ai implémenté un \textbf{path tracer} basé sur la méthode de Monte Carlo : pour chaque pixel, on lance de nombreux rayons dans des directions légèrement différentes (échantillonnage stochastique), et on moyenne les résultats pour obtenir une estimation non biaisée de la couleur. Plus on augmente le nombre d'échantillons par pixel (\textit{SPP -- Samples Per Pixel}), plus l'image converge vers la solution correcte, mais plus le temps de calcul augmente linéairement.
+
+Ce problème est intrinsèquement parallélisable : chaque pixel est indépendant des autres, ce qui en fait un candidat idéal pour l'accélération GPU. J'ai donc développé deux chemins de rendu complets, partageant le même algorithme mais adaptés à leurs architectures respectives :
+\begin{itemize}
+    \item \textbf{GPU (CUDA)} : chaque thread CUDA calcule un pixel complet, exploitant les milliers de cœurs du GPU.
+    \item \textbf{CPU (OpenMP)} : les lignes de l'image sont distribuées sur les cœurs CPU disponibles. Cette version m'a servi à la fois de version portable et de référence pour valider la correction du rendu GPU.
+\end{itemize}
+
+Le projet est développé en C++17 avec CUDA, et a été testé sur deux plateformes : mon PC portable (RTX 4070 Laptop) et le cluster HPC Romeo2025 de l'Université de Reims (NVIDIA GH200 H100). Le code source complet est disponible sur le dépôt Git associé à ce rapport.
+
+% =============================================================================
+\section{Architecture générale}
+% =============================================================================
+
+\subsection{Organisation modulaire}
+
+Pour garantir la maintenabilité du code entre les versions CPU et GPU, j'ai opté pour une architecture modulaire stricte, où chaque module a une responsabilité clairement définie :
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}ll@{}}
+\multicolumn{2}{@{}l@{}}{\texttt{include/raytracer/}} \\
+\quad \texttt{core/}          & Fondations : Vec3, Ray, AABB, Interval, Timer \\
+\quad \texttt{geometry/}      & Primitives : Sphere, Plan, HittableList \\
+\quad \texttt{materials/}     & Matériaux : Lambertien, Métal, Diélectrique \\
+\quad \texttt{acceleration/}  & Structure d'accélération : BVH \\
+\quad \texttt{camera/}        & Caméra perspective avec profondeur de champ \\
+\quad \texttt{environment/}   & Ciel avec gradient et soleil \\
+\quad \texttt{rendering/}     & Moteurs de rendu GPU et CPU, tone mapping \\
+\quad \texttt{interactive/}   & Mode temps réel (GLFW, OpenGL, interop CUDA) \\[4pt]
+\multicolumn{2}{@{}l@{}}{\texttt{src/}} \\
+\quad \texttt{main.cu}        & Point d'entrée GPU \\
+\quad \texttt{main\_cpu.cpp}  & Point d'entrée CPU-only (sans CUDA) \\
+\quad \texttt{scene/}         & Construction de la scène par défaut \\
+\quad \texttt{cli/}           & Parsing des arguments \\
+\quad \texttt{io/}            & Écriture d'images (PNG via stb\_image) \\
+\end{tabular}
+\end{table}
+
+\subsection{Pipeline de rendu}
+
+Le pipeline de rendu suit les étapes suivantes, identiques pour les chemins CPU et GPU :
+
+\begin{enumerate}
+    \item \textbf{Parsing des arguments} : résolution, SPP, profondeur maximale, mode (CPU/GPU/interactif).
+    \item \textbf{Création de la scène} : instanciation des objets, matériaux et caméra.
+    \item \textbf{Construction du BVH} : organisation des primitives en arbre de volumes englobants (toujours sur CPU).
+    \item \textbf{Rendu} : lancement du calcul (kernel CUDA ou boucle OpenMP).
+    \item \textbf{Post-traitement} : tone mapping de Reinhard et correction gamma.
+    \item \textbf{Sauvegarde} : écriture de l'image finale au format PNG.
+\end{enumerate}
+
+En mode GPU, les étapes 3 et 4 incluent un transfert des données du CPU vers le GPU (\textit{Host-to-Device}), puis un transfert inverse du framebuffer résultat (\textit{Device-to-Host}).
+
+\subsection{Système de build}
+
+Le projet utilise CMake (version 3.18+) avec trois modes de compilation :
+\begin{itemize}
+    \item \textbf{Par défaut} : CUDA + OpenMP (GPU avec fallback CPU via \texttt{--cpu}).
+    \item \textbf{CPU-only} : compilation sans CUDA (\texttt{-DBUILD\_CPU\_ONLY=ON}).
+    \item \textbf{Tests} : suite de tests unitaires sans dépendance CUDA.
+\end{itemize}
+
+Les architectures GPU ciblées sont configurables : sm\_90 (Hopper/H100) par défaut, avec support sm\_80 (Ampere) et sm\_70 (Volta).
+
+% =============================================================================
+\section{Algorithmes de rendu}
+% =============================================================================
+
+\subsection{Path tracing itératif}
+
+Le cœur du moteur est la fonction \texttt{ray\_color}, qui calcule la couleur d'un rayon en suivant ses rebonds successifs dans la scène. Dès le début du projet, j'ai fait le choix d'une \textbf{boucle itérative} plutôt que de la récursion classique, car sur GPU la pile d'appels est extrêmement limitée et un dépassement provoquerait un crash silencieux :
+
+\begin{lstlisting}[caption={Calcul itératif de la couleur d'un rayon (GPU)}]
+__device__ Color ray_color(const Ray& initial_ray,
+    const BVH& bvh, int max_depth,
+    const RenderConfig& config, curandState* rand_state)
+{
+    Color accumulated(0, 0, 0);
+    Color attenuation(1, 1, 1);
+    Ray current_ray = initial_ray;
+
+    for (int depth = 0; depth < max_depth; depth++) {
+        HitRecord rec;
+        if (bvh.hit(current_ray, Interval(0.001f, INFINITY_F), rec)) {
+            Ray scattered;
+            Color scatter_attenuation;
+            if (scatter(*rec.mat, current_ray, rec,
+                        scatter_attenuation, scattered, rand_state)) {
+                attenuation = attenuation * scatter_attenuation;
+                current_ray = scattered;
+            } else { break; }
+        } else {
+            accumulated += attenuation * config.sky.get_color(
+                current_ray.direction());
+            break;
+        }
+    }
+    return accumulated;
+}
+\end{lstlisting}
+
+À chaque rebond, l'atténuation est multipliée par la couleur du matériau touché. Si le rayon atteint le ciel (aucune intersection), la couleur du ciel est pondérée par l'atténuation accumulée. Si la profondeur maximale est dépassée, le rayon retourne noir (absorption totale).
+
+\subsection{Matériaux}
+
+Trois types de matériaux sont implémentés. L'un des premiers défis a été de choisir comment dispatcher le comportement de chaque matériau : en C++ classique, on utiliserait des fonctions virtuelles, mais les vtables ne sont pas supportées sur GPU. J'ai donc opté pour un dispatch par énumération via \texttt{switch}, ce qui m'a obligé à repenser complètement la hiérarchie de classes habituelle :
+
+\begin{lstlisting}[caption={Dispatch des matériaux par énumération}]
+__device__ bool scatter(const Material& mat, const Ray& r_in,
+    const HitRecord& rec, Color& attenuation,
+    Ray& scattered, curandState* rand_state) {
+    switch (mat.type) {
+        case MaterialType::LAMBERTIAN:
+            return scatter_lambertian(mat, r_in, rec,
+                       attenuation, scattered, rand_state);
+        case MaterialType::METAL:
+            return scatter_metal(mat, r_in, rec,
+                       attenuation, scattered, rand_state);
+        case MaterialType::DIELECTRIC:
+            return scatter_dielectric(mat, r_in, rec,
+                       attenuation, scattered, rand_state);
+    }
+    return false;
+}
+\end{lstlisting}
+
+Pour simuler différentes surfaces, j'ai implémenté trois comportements physiques. Les surfaces mates utilisent une dispersion lambertienne : le rayon rebondit dans une direction aléatoire autour de la normale. Les métaux intègrent un paramètre de rugosité (\texttt{fuzz}) qui perturbe la réflexion --- à 0 on obtient un miroir parfait, à 1 une surface très diffuse. Le verre m'a donné le plus de fil à retordre : il a fallu implémenter l'approximation de Schlick pour calculer la probabilité de réflexion vs. réfraction selon l'angle d'incidence, et gérer correctement les cas limites de réflexion totale interne :
+
+\begin{equation}
+    R(\theta) = R_0 + (1 - R_0)(1 - \cos\theta)^5 \quad \text{avec} \quad R_0 = \left(\frac{n_1 - n_2}{n_1 + n_2}\right)^2
+\end{equation}
+
+Lorsque l'angle d'incidence dépasse l'angle critique ($n_1 \sin\theta > n_2$), une réflexion totale interne se produit automatiquement.
+
+\subsection{Structure d'accélération BVH}
+
+Pour éviter de tester l'intersection de chaque rayon avec chaque objet de la scène (complexité $O(n)$ par rayon), j'utilise un \textbf{BVH} (\textit{Bounding Volume Hierarchy}), qui organise les primitives dans un arbre binaire de boîtes englobantes alignées sur les axes (AABB). Cela réduit la complexité moyenne à $O(\log n)$.
+
+\subsubsection{Construction (CPU)}
+
+La construction est effectuée sur le CPU par une approche \textit{top-down} récursive :
+\begin{enumerate}
+    \item Calculer l'AABB de toutes les primitives dans le sous-ensemble courant.
+    \item Si une seule primitive : créer un nœud feuille.
+    \item Sinon : trier les primitives par centroïde selon l'axe le plus long de l'AABB, diviser au milieu, et construire récursivement les sous-arbres gauche et droit.
+\end{enumerate}
+
+\subsubsection{Traversée itérative (GPU-compatible)}
+
+La traversée utilise une \textbf{pile locale de taille fixe} (64 éléments) au lieu de la récursion, ce qui est indispensable sur GPU où la pile d'appels est limitée. J'ai dimensionné cette pile à 64 entrées car pour ma scène de $\sim$200 objets, la profondeur maximale du BVH binaire est d'environ $\log_2(200) \approx 8$, ce qui laisse une large marge de sécurité :
+
+\begin{lstlisting}[caption={Traversée itérative du BVH avec pile locale}]
+__host__ __device__ bool BVH::hit(const Ray& r,
+    Interval ray_t, HitRecord& rec) const {
+    bool hit_anything = false;
+    float closest_so_far = ray_t.max;
+    int stack[64];
+    int stack_ptr = 0;
+    stack[stack_ptr++] = 0;  // Racine
+
+    while (stack_ptr > 0) {
+        int node_idx = stack[--stack_ptr];
+        const BVHNode& node = nodes[node_idx];
+        if (!node.bounds.hit(r,
+            Interval(ray_t.min, closest_so_far)))
+            continue;
+        if (node.is_leaf) {
+            HitRecord temp_rec;
+            if (primitives[node.primitive_idx].hit(r,
+                Interval(ray_t.min, closest_so_far), temp_rec)) {
+                hit_anything = true;
+                closest_so_far = temp_rec.t;
+                rec = temp_rec;
+            }
+        } else {
+            if (node.right >= 0) stack[stack_ptr++] = node.right;
+            if (node.left >= 0) stack[stack_ptr++] = node.left;
+        }
+    }
+    return hit_anything;
+}
+\end{lstlisting}
+
+Le BVH est stocké sous forme de \textbf{tableau plat} (indices entiers pour les enfants, pas de pointeurs), ce qui permet un transfert direct vers la mémoire GPU sans restructuration.
+
+\subsection{Tone mapping et correction gamma}
+
+Les couleurs calculées par le path tracer sont en espace linéaire HDR (valeurs potentiellement supérieures à 1). Deux étapes de post-traitement sont appliquées :
+
+\begin{lstlisting}[caption={Tone mapping de Reinhard et correction gamma}]
+__host__ __device__ Color apply_tone_mapping(const Color& hdr) {
+    return Color(hdr.x / (1.0f + hdr.x),
+                 hdr.y / (1.0f + hdr.y),
+                 hdr.z / (1.0f + hdr.z));
+}
+
+__host__ __device__ Color gamma_correct(const Color& linear,
+                                         float gamma = 2.2f) {
+    float inv = 1.0f / gamma;
+    return Color(powf(fmaxf(0.0f, linear.x), inv),
+                 powf(fmaxf(0.0f, linear.y), inv),
+                 powf(fmaxf(0.0f, linear.z), inv));
+}
+\end{lstlisting}
+
+L'opérateur de Reinhard ($x \mapsto x/(1+x)$) compresse doucement les hautes lumières sans les écrêter. La correction gamma ($x \mapsto x^{1/2.2}$) convertit l'espace linéaire en sRGB pour un affichage correct à l'écran.
+
+% =============================================================================
+\section{Implémentation GPU (CUDA)}
+% =============================================================================
+
+\subsection{Architecture du kernel de rendu}
+
+Le kernel principal associe \textbf{un thread CUDA à un pixel} de l'image. Les threads sont organisés en blocs 2D de $16 \times 16 = 256$ threads, formant une grille 2D couvrant l'ensemble du framebuffer :
+
+\begin{lstlisting}[caption={Lancement du kernel de rendu}]
+constexpr int BLOCK_SIZE = 16;
+dim3 blocks((width + BLOCK_SIZE - 1) / BLOCK_SIZE,
+            (height + BLOCK_SIZE - 1) / BLOCK_SIZE);
+dim3 threads(BLOCK_SIZE, BLOCK_SIZE);
+
+render_kernel<<<blocks, threads>>>(d_frame_buffer, camera,
+    bvh, config, d_rand_states);
+\end{lstlisting}
+
+Chaque thread effectue la totalité du travail pour son pixel : génération des rayons, multi-échantillonnage (boucle sur les SPP), accumulation des couleurs, et application du tone mapping. Cette stratégie maximise l'indépendance des threads et élimine toute synchronisation.
+
+\subsection{Gestion de la mémoire GPU}
+
+Le transfert des données entre CPU et GPU suit un schéma précis :
+
+\begin{enumerate}
+    \item \textbf{Allocation} : framebuffer, états aléatoires (curandState), et matériaux sont alloués sur le GPU via \texttt{cudaMalloc}.
+    \item \textbf{Upload des matériaux} (H2D) : le tableau de matériaux est copié sur le GPU.
+    \item \textbf{Fixup des pointeurs} : étape critique détaillée ci-dessous.
+    \item \textbf{Upload du BVH} (H2D) : les tableaux de nœuds et de primitives sont copiés sur le GPU.
+    \item \textbf{Download du résultat} (D2H) : après le rendu, le framebuffer GPU est rapatrié vers le CPU pour sauvegarde.
+\end{enumerate}
+
+\subsubsection{Fixup des pointeurs host $\rightarrow$ device}
+
+C'est l'un des problèmes les plus vicieux que j'ai rencontrés pendant le développement. Chaque objet de la scène (\texttt{Sphere}, \texttt{Plane}) contient un pointeur \texttt{Material*} qui, côté CPU, pointe vers un élément du tableau \texttt{h\_materials[]}. Or, ces adresses host sont invalides sur le GPU --- déréférencer un pointeur host dans un kernel provoque soit un crash silencieux, soit une corruption mémoire sans aucun message d'erreur. J'ai perdu pas mal de temps à comprendre pourquoi mes rendus GPU produisaient des couleurs aberrantes avant de réaliser que le problème venait de là.
+
+Pour contourner cette limitation, j'ai mis en place un mécanisme de fixup : avant chaque transfert, mon code parcourt la scène pour substituer les adresses host par leurs équivalents device pré-calculés. Concrètement, pour chaque objet, je compare son \texttt{Material*} avec les adresses du tableau host (\texttt{\&h\_materials[m]}), et une fois l'index \texttt{m} trouvé, je le remplace par \texttt{d\_materials + m}. Deux fonctions helpers, \texttt{get\_material\_ptr()} et \texttt{set\_material\_ptr()}, encapsulent l'accès au pointeur matériau à travers l'union \texttt{HittableObject} (qui peut être une sphère ou un plan).
+
+Cette opération en $O(n \times m)$ ne coûte quasiment rien en temps CPU ($<$0.01 ms), mais elle est absolument vitale : elle doit avoir lieu \textit{après} l'upload des matériaux et \textit{avant} la construction du BVH, sans quoi les primitives GPU référenceraient des adresses invalides.
+
+La consommation mémoire GPU typique pour une image 800$\times$600 est :
+\begin{itemize}
+    \item Framebuffer : $800 \times 600 \times 12$ octets $\approx$ 5.8 Mo (3 floats par pixel)
+    \item États curand : $800 \times 600 \times 48$ octets $\approx$ 23 Mo
+    \item BVH + matériaux : $< 2$ Mo pour les scènes testées
+\end{itemize}
+
+\subsection{Génération de nombres aléatoires}
+
+Le path tracing repose sur l'échantillonnage aléatoire. Sur GPU, chaque pixel dispose de son propre état \texttt{curandState}. En analysant les résultats du profiling, j'ai constaté que l'initialisation classique de \texttt{curand\_init} avec des séquences différentes représentait un goulot d'étranglement inattendu --- presque 10\% du temps total. J'ai donc remplacé cette approche par le \textbf{hachage de Wang} comme graine rapide, ce qui a considérablement réduit ce surcoût :
+
+\begin{lstlisting}[caption={Initialisation rapide des états aléatoires via Wang hash}]
+__device__ __forceinline__ unsigned int wang_hash(unsigned int seed) {
+    seed = (seed ^ 61) ^ (seed >> 16);
+    seed *= 9;
+    seed = seed ^ (seed >> 4);
+    seed *= 0x27d4eb2d;
+    seed = seed ^ (seed >> 15);
+    return seed;
+}
+\end{lstlisting}
+
+Ce hachage produit des graines bien distribuées en $O(1)$ par pixel, évitant les corrélations entre pixels voisins tout en étant beaucoup plus rapide que l'initialisation classique.
+
+\subsection{Choix de conception pour le GPU}
+
+L'adaptation du code C++17 à CUDA a été l'un des aspects les plus formateurs du projet. Le modèle de programmation CUDA impose des contraintes fortes qui m'ont obligé à repenser complètement l'architecture orientée objet classique :
+
+\begin{itemize}
+    \item \textbf{Pas de fonctions virtuelles} : le dispatch des matériaux utilise un \texttt{switch} sur une énumération au lieu du polymorphisme, car les vtables ne sont pas supportées sur le GPU. Ce choix impacte toute la hiérarchie de classes.
+    \item \textbf{Pas de récursion} : la traversée du BVH et le suivi des rayons utilisent des boucles itératives avec des piles locales. Le passage à l'itératif a nécessité de réécrire l'algorithme de traversée depuis zéro.
+    \item \textbf{Structure plate du BVH} : les nœuds et primitives sont stockés dans des tableaux indexés (pas de pointeurs), permettant un transfert mémoire direct.
+    \item \textbf{Qualificateurs \texttt{\_\_host\_\_ \_\_device\_\_}} : les fonctions mathématiques et le tone mapping sont annotées pour fonctionner à la fois sur CPU et GPU, évitant la duplication de code.
+\end{itemize}
+
+La transition vers le GPU s'est avérée particulièrement ardue en termes de débogage. Privé du confort de \texttt{gdb} ou Valgrind, j'ai passé un temps considérable à traquer des rendus corrompus --- des écrans noirs ou des couleurs aberrantes sans aucun message d'erreur. Ce n'est qu'en intégrant systématiquement \texttt{cudaGetLastError()} après chaque appel CUDA et en utilisant \texttt{cuda-memcheck} que j'ai pu localiser les accès mémoire invalides et les dépassements de pile.
+
+\subsection{Mode interactif (CUDA-OpenGL interop)}
+
+Le mode interactif permet un rendu temps réel avec contrôle de la caméra (WASD + souris). Il exploite l'interopérabilité CUDA-OpenGL pour un affichage sans copie vers le CPU :
+
+\begin{enumerate}
+    \item Un \textit{Pixel Buffer Object} (PBO) OpenGL est créé et enregistré auprès de CUDA.
+    \item À chaque frame, le kernel \texttt{render\_kernel\_accumulate} ajoute des échantillons au buffer d'accumulation.
+    \item Le kernel \texttt{convert\_to\_rgba8} convertit le buffer HDR en RGBA 8 bits directement dans le PBO.
+    \item OpenGL affiche le PBO comme texture à l'écran.
+\end{enumerate}
+
+Le rendu est \textbf{progressif} : tant que la caméra ne bouge pas, les échantillons s'accumulent pour affiner l'image. Un déplacement réinitialise le buffer et relance l'accumulation.
+
+% =============================================================================
+\section{Implémentation CPU (OpenMP)}
+% =============================================================================
+
+La version CPU utilise le même algorithme que la version GPU, avec deux différences principales :
+
+\begin{enumerate}
+    \item \textbf{Parallélisation} : OpenMP distribue les lignes de l'image entre les threads CPU :
+\end{enumerate}
+
+\begin{lstlisting}[caption={Rendu CPU parallélisé avec OpenMP}]
+void render_cpu(Color* frame_buffer, const Camera& camera,
+    const BVH& bvh, const RenderConfig& config) {
+    const int width = config.width;
+    const int height = config.height;
+    const int samples = config.samples_per_pixel;
+
+    #pragma omp parallel for schedule(dynamic, 1)
+    for (int j = 0; j < height; j++) {
+        CPURandom rng(j * 1337 + 42);
+        for (int i = 0; i < width; i++) {
+            Color pixel_color(0, 0, 0);
+            for (int s = 0; s < samples; s++) {
+                Ray r = camera.get_ray_cpu(i, j, rng);
+                pixel_color += ray_color_cpu(r, bvh,
+                    config.max_depth, config, rng);
+            }
+            pixel_color = pixel_color / float(samples);
+            pixel_color = apply_tone_mapping(pixel_color);
+            pixel_color = gamma_correct(pixel_color);
+            frame_buffer[j * width + i] = pixel_color;
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{enumerate}
+    \setcounter{enumi}{1}
+    \item \textbf{Générateur aléatoire} : chaque thread OpenMP utilise une instance de \texttt{CPURandom} basée sur Mersenne Twister (\texttt{std::mt19937}), initialisée avec une graine unique par ligne.
+\end{enumerate}
+
+L'ordonnancement \texttt{schedule(dynamic, 1)} distribue les lignes une par une aux threads disponibles, ce qui assure un bon équilibrage de charge même si certaines lignes sont plus coûteuses (par exemple, celles traversant des objets transparents avec de nombreux rebonds).
+
+La version CPU m'a été précieuse à plusieurs titres. D'abord pour la \textbf{portabilité} : elle fonctionne sans carte NVIDIA ni CUDA, ce qui m'a permis de développer et tester sur n'importe quelle machine. Ensuite pour le \textbf{débogage} : les outils CPU (Valgrind, gdb) étant bien plus matures, j'ai systématiquement validé mes algorithmes côté CPU avant de les porter sur GPU. Enfin, elle sert de \textbf{référence} (ground truth) pour vérifier que le rendu GPU produit des images identiques --- toute divergence entre les deux versions signale immédiatement un bug dans le portage CUDA.
+
+% =============================================================================
+\section{Analyse comparative et speedup}
+% =============================================================================
+
+\subsection{Protocole de mesure}
+
+Les benchmarks sont réalisés avec le flag \texttt{--profile} qui active le chronométrage de chaque étape du pipeline. Les métriques collectées sont :
+\begin{itemize}
+    \item \textbf{Temps total} : durée totale du rendu (hors initialisation et sauvegarde).
+    \item \textbf{MRays/s} : nombre de rayons primaires lancés par seconde ($= \frac{W \times H \times SPP}{temps}$).
+    \item \textbf{Speedup} : ratio du temps CPU sur le temps GPU ($S = T_{CPU} / T_{GPU}$).
+\end{itemize}
+
+\textbf{Matériel de test} :
+
+\begin{itemize}
+    \item \textbf{Machine locale (PC portable)} :
+    \begin{itemize}
+        \item GPU : NVIDIA RTX 4070 Laptop (5888 cœurs CUDA, 8 Go GDDR6X)
+        \item CPU : 20 cœurs logiques (via WSL2 Ubuntu 24.04, OpenMP)
+    \end{itemize}
+    \item \textbf{Cluster HPC Romeo (Université de Reims)} :
+    \begin{itemize}
+        \item GPU : NVIDIA GH200 120 Go HBM3 (H100 SXM, architecture Hopper)
+        \item CPU : ARM Neoverse V2 (72 cœurs physiques, 16 threads utilisés, OpenMP)
+        \item CUDA 12.6, GCC 11.4.1
+    \end{itemize}
+\end{itemize}
+
+\subsection{Résultats}
+
+Sur mon PC portable (RTX 4070 Laptop), j'ai mesuré un throughput GPU de $\sim$270 MRays/s en 1080p et un speedup de \textbf{73--165$\times$} par rapport au CPU x86 sous WSL2 (1.7--3.0 MRays/s). Ce speedup très élevé m'a d'abord surpris, avant que je réalise qu'il s'expliquait en partie par la lenteur du CPU sous la couche de virtualisation WSL2, comme je le discute plus bas.
+
+Les résultats les plus significatifs proviennent du cluster HPC Romeo (données brutes en annexe, tableaux~\ref{tab:benchmarks_romeo_gpu} et \ref{tab:benchmarks_romeo_cpu}). Le GH200 atteint un throughput GPU maximal de \textbf{1\,479 MRays/s} en 4K, soit environ \textbf{5.3$\times$} plus rapide que la RTX 4070 Laptop. Côté CPU, le Neoverse V2 atteint 33--36 MRays/s, ce qui donne un speedup GPU/CPU de \textbf{21--39$\times$} --- nettement inférieur au laptop (73--165$\times$), mais pour des raisons intéressantes que j'analyse dans la discussion ci-dessous.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../output/chart_gpu_comparison.png}
+    \caption{Comparaison des performances GPU : RTX 4070 Laptop vs GH200 H100 (MRays/s)}
+    \label{fig:gpu_comparison}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../output/chart_cpu_vs_gpu.png}
+    \caption{Temps de rendu CPU vs GPU sur GH200 (échelle logarithmique)}
+    \label{fig:cpu_vs_gpu}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../output/chart_scaling.png}
+    \caption{Scaling GPU : throughput en fonction de la résolution sur GH200}
+    \label{fig:scaling}
+\end{figure}
+
+\subsection{Analyse du profiling GPU}
+
+Le profiling détaillé du chemin GPU révèle la répartition suivante du temps :
+
+\begin{table}[H]
+\centering
+\caption{Décomposition du temps GPU (800$\times$600, 100 SPP)}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Étape} & \textbf{Temps (ms)} & \textbf{Proportion} \\
+\midrule
+Allocation mémoire GPU & 3.56 & 1.37\% \\
+Upload matériaux (H2D) & 1.78 & 0.69\% \\
+Fixup pointeurs & 0.01 & $<$0.01\% \\
+Construction BVH (CPU) & 0.15 & 0.06\% \\
+Upload BVH (H2D) & 0.19 & 0.07\% \\
+Init états aléatoires & 24.13 & 9.31\% \\
+\textbf{Kernel de rendu} & \textbf{219.06} & \textbf{84.49\%} \\
+Download framebuffer (D2H) & 10.31 & 3.98\% \\
+\bottomrule
+\end{tabular}
+\label{tab:profiling}
+\end{table}
+
+Le kernel de rendu domine largement le temps d'exécution ($\sim$84\%), ce qui confirme que les transferts mémoire ne sont pas un goulot d'étranglement pour les configurations testées. L'initialisation des états curand représente $\sim$9\% du temps, et le download du framebuffer $\sim$4\%. Ces proportions diminuent à mesure que le nombre de SPP augmente (le kernel domine davantage).
+
+Sur le GH200, le profiling de la configuration 1920$\times$1080 @ 500 SPP révèle que le kernel de rendu occupe \textbf{75.2\%} du temps total (719.7 ms sur 956.8 ms), tandis que la sauvegarde d'image représente 24.5\%. Les transferts mémoire (H2D + D2H) restent négligeables ($<$0.2\%), ce qui est cohérent avec la bande passante HBM3 de 4 To/s du GH200.
+
+\subsection{Discussion}
+
+\subsubsection{Comparaison des plateformes}
+
+Les benchmarks sur deux plateformes distinctes révèlent un résultat qui m'a surpris : le speedup GPU/CPU varie énormément selon la machine.
+
+Sur le \textbf{PC portable}, le speedup atteint 73--165$\times$, tandis que sur le \textbf{GH200 de Romeo}, il n'est ``que'' de 21--39$\times$. Cela ne signifie pas que le GPU du GH200 est moins efficace --- au contraire, il est 5.3$\times$ plus rapide en throughput brut. La différence vient du CPU : le Neoverse V2 atteint 33--36 MRays/s, soit environ 12$\times$ plus rapide que le CPU x86 sous WSL2 (1.7--3.0 MRays/s).
+
+Plusieurs facteurs expliquent cet écart CPU considérable :
+\begin{itemize}
+    \item \textbf{Surcoût de virtualisation WSL2} : sur le laptop, le code CPU tourne dans une machine virtuelle Hyper-V, ce qui ajoute une couche d'indirection sur les accès mémoire et les appels système. Le CPU du laptop n'est pas intrinsèquement 12$\times$ plus lent que le Neoverse V2.
+    \item \textbf{Architecture serveur vs. mobile} : le Neoverse V2 est conçu pour le calcul HPC serveur, avec des caches L2/L3 plus larges et une exécution out-of-order plus agressive que le CPU mobile du laptop.
+    \item \textbf{Bande passante mémoire} : le GH200 utilise de la DDR5 à accès natif, alors que WSL2 passe par une couche de traduction mémoire supplémentaire.
+\end{itemize}
+
+En termes de throughput GPU pur, le GH200 H100 atteint \textbf{1\,479 MRays/s} en 4K contre \textbf{274 MRays/s} pour la RTX 4070 en 1080p, soit un facteur \textbf{5.3$\times$} (cf. figure~\ref{fig:gpu_comparison}). Ce ratio s'explique par l'architecture Hopper (H100) vs Ada Lovelace (RTX 4070), ainsi que la bande passante HBM3 (4 To/s) vs GDDR6X (256 Go/s).
+
+\subsubsection{Scaling GPU}
+
+La figure~\ref{fig:scaling} montre que le throughput GPU croît avec la résolution puis se stabilise autour de 1\,450 MRays/s au-delà de 1080p. Ce comportement est typique : en basse résolution (640$\times$480 = 307K pixels $\times$ 100 SPP = 30.7M rayons), les 132 SM du H100 ne sont pas entièrement saturés. À partir de 1080p (207M rayons), le GPU est pleinement exploité et le throughput est borné par la puissance de calcul.
+
+\subsubsection{Facteurs limitants}
+
+\begin{itemize}
+    \item \textbf{Divergence de warps} : les rayons d'un même warp (32 threads) peuvent toucher des matériaux différents, causant une sérialisation du dispatch. L'impact est modéré car les matériaux sont spatialement cohérents.
+    \item \textbf{Profondeur de pile BVH} : la pile locale de 64 éléments par thread consomme $64 \times 4 = 256$ octets de registres/mémoire locale par thread.
+    \item \textbf{Overhead en basse résolution} : l'initialisation des états curand et l'allocation mémoire représentent une part significative du temps pour les petites images, limitant le speedup.
+\end{itemize}
+
+% =============================================================================
+\section{Résultats visuels}
+% =============================================================================
+
+La scène de test est un système solaire stylisé comprenant un soleil métallique, des planètes de matériaux variés (diffus, métallique, verre), un anneau orbital de micro-sphères, et des étoiles en arrière-plan. La figure~\ref{fig:rendus} montre les images obtenues.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../output/output_gpu.png}
+        \caption{Rendu GPU (CUDA)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../output/output_cpu.png}
+        \caption{Rendu CPU (OpenMP)}
+    \end{subfigure}
+    \caption{Comparaison des rendus GPU et CPU (800$\times$600, 100 SPP). Les images sont visuellement identiques, confirmant la correction des deux implémentations.}
+    \label{fig:rendus}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../output/output_solar.png}
+    \caption{Scène du système solaire stylisé (rendu haute qualité)}
+    \label{fig:solar}
+\end{figure}
+
+% =============================================================================
+\section{Conclusion}
+% =============================================================================
+
+Ce projet m'a permis de confronter concrètement les réalités de la programmation GPU haute performance. La principale difficulté n'a pas été l'algorithme de ray tracing en lui-même --- bien documenté dans la littérature --- mais son adaptation aux contraintes de CUDA : abandonner le polymorphisme au profit d'un dispatch par énumération, réécrire la traversée BVH en itératif, gérer manuellement les transferts mémoire et traquer des bugs de pointeurs host/device qui ne produisaient aucun message d'erreur.
+
+Les résultats obtenus valident cette approche : un speedup de 21--39$\times$ sur le GH200 (et jusqu'à 165$\times$ sur le laptop, amplifié par le surcoût WSL2), avec un throughput GPU culminant à 1\,479 MRays/s en 4K. La portabilité du code a été confirmée par son exécution sur deux architectures distinctes (x86\_64 et ARM aarch64) sans modification du source.
+
+L'un des enseignements les plus marquants pour moi est la sensibilité du speedup au contexte d'exécution : le même code donne des ratios très différents selon que le CPU de référence est un processeur mobile sous virtualisation ou un Neoverse V2 serveur. Cela m'a appris qu'un speedup GPU doit toujours être interprété en regard de la baseline CPU choisie --- un chiffre impressionnant peut masquer une baseline faible.
+
+Si je devais poursuivre ce projet, ma priorité serait l'importance sampling, qui permettrait de guider les rayons vers les sources lumineuses et réduirait le bruit beaucoup plus efficacement qu'en augmentant la force brute des échantillons. À plus long terme, déporter la construction du BVH directement sur le GPU via un algorithme de type LBVH me permettrait d'éliminer le dernier goulet d'étranglement lié aux transferts mémoire. Le support de textures UV et du multi-GPU ouvrirait enfin la voie à des scènes plus riches et plus complexes.
+
+\vspace{1cm}
+\noindent\textbf{Code source :} Le code complet du projet est disponible sur le dépôt Git associé.
+
+% =============================================================================
+\appendix
+\section{Données brutes de benchmark}
+% =============================================================================
+
+\begin{table}[H]
+\centering
+\caption{Performances GPU sur NVIDIA GH200 H100 (Romeo)}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Résolution} & \textbf{SPP} & \textbf{Temps (s)} & \textbf{MRays/s} \\
+\midrule
+640$\times$480 & 100 & 0.045 & 683 \\
+1280$\times$720 & 100 & 0.073 & 1\,262 \\
+1920$\times$1080 & 100 & 0.147 & 1\,411 \\
+1920$\times$1080 & 500 & 0.719 & 1\,442 \\
+3840$\times$2160 & 100 & 0.569 & 1\,458 \\
+3840$\times$2160 & 500 & 2.804 & 1\,479 \\
+\bottomrule
+\end{tabular}
+\label{tab:benchmarks_romeo_gpu}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Performances CPU sur GH200 ARM Neoverse V2 (16 threads)}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Résolution} & \textbf{SPP} & \textbf{CPU (s)} & \textbf{CPU MRays/s} & \textbf{GPU (s)} & \textbf{Speedup} \\
+\midrule
+640$\times$480 & 100 & 0.933 & 33 & 0.045 & 21$\times$ \\
+1280$\times$720 & 100 & 2.558 & 36 & 0.073 & 35$\times$ \\
+1920$\times$1080 & 100 & 5.805 & 36 & 0.147 & 39$\times$ \\
+\bottomrule
+\end{tabular}
+\label{tab:benchmarks_romeo_cpu}
+\end{table}
+
+\end{document}

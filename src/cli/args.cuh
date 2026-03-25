@@ -27,7 +27,7 @@ struct Args {
     int height = 600;                       ///< Hauteur de l'image en pixels (defaut : 600)
     int samples = 100;                      ///< Nombre de samples (rayons) par pixel (defaut : 100)
     int depth = 50;                         ///< Profondeur maximale de rebonds des rayons (defaut : 50)
-    std::string output_file = "output.png"; ///< Chemin du fichier image de sortie (defaut : "output.png")
+    std::string output_file = "output/output.png"; ///< Chemin du fichier image de sortie (defaut : "output/output.png")
     bool show_info = false;                 ///< Afficher les informations du GPU et quitter
     bool quiet = false;                     ///< Mode silencieux : supprime les messages de progression
 
@@ -56,7 +56,7 @@ inline void print_usage(const char* program) {
     std::cout << "  -h, --height <int>     Hauteur image (defaut: 600)\n";
     std::cout << "  -s, --samples <int>    Samples par pixel (defaut: 100)\n";
     std::cout << "  -d, --depth <int>      Rebonds max (defaut: 50)\n";
-    std::cout << "  -o, --output <file>    Fichier sortie (defaut: output.png)\n";
+    std::cout << "  -o, --output <file>    Fichier sortie (defaut: output/output.png)\n";
     std::cout << "  --info                 Afficher info GPU\n";
     std::cout << "  --quiet                Mode silencieux\n";
     std::cout << "  --cpu                  Rendu CPU (OpenMP)\n";

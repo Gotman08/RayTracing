@@ -1,14 +1,28 @@
 # Build directories
 build/
+build_*/
 out/
 cmake-build-*/
+
 
 # Output files
 output/*.ppm
 output/*.png
 output/*.jpg
 output/*.exr
+output/*.bmp
+output/*.qdstrm
 !output/.gitkeep
+
+# LaTeX artifacts (in rapport/)
+rapport/*.aux
+rapport/*.log
+rapport/*.out
+rapport/*.toc
+rapport/*.pdf
+
+# Doxygen generated docs
+docs/html/
 
 # IDE
 .vscode/

@@ -1,0 +1,114 @@
+Première étape du projet:
+Mettre en places les fonctions utilitaires (Point3D, Vecteur3D, Vue, ... ) que vous jugerez utiles;
+Définir les objets plans et sphères ainsi que les méthodes nécessaires pour calculer les intersections avec un rayon;
+Générer les vues;
+Les enregistrer sous forme d'un fichier *.ppm;
+Définir pour chaque classe les tests unitaires permettants de valider leur bon fonctionnement.
+
+L'évaluation aura lieu le 7 Avril de 13h à 16h.
+Date limite de dépôt de votre rapport de projet le Lundi 30 Mars. N'attendez pas la dernière minute.
+
+
+Travail demandé:
+Un rapport de 8 à 10 pages présentant l'architecture de votre Raytraceur. Vous présenterez les intérêts comparés de la solution CPU, GPU et éventuellement hybride.  Vous analyserez les résultats obtenus pour chaque solution et le speed up effectif.  Le mémoire ne doit contenir que le code essentiel à vos explications. L'ensemble du code produit sera fourni sous forme d'un lien git.
+Présentation de 15 minutes le jours de la soutenance. La présence de tous est obligatoire. Les diapos ne sont pas à rendre.
+
+=
+Pancipe de fonctionnement d'un
+say
+haceur
+Définir des objets
+Spécifier un matériau pour chaque objet
+Définir des sources de lumière
+Définir une fente d'asservation dont la surface est courte
+de pixels.
+Pour chaque pul
+Lance un rayon depuis le centre du pixel ver les objets
+Déterminer la plus courte dest ance d'intersection entre
+le
+rayon et les objets (si elle siste
+Si le
+rayon
+rencontre un objet
+les sources Utiliser lematériande lede ser la couleur
+du pixel. ↑
+smon
+Defmir la couleur du puel à noir
+I
+Rayons
+Un
+rayon
+est défini comme une drate infinie
+telle
+que
+tout point p
+de cette drate est
+All
+que
+p = o + dt [1]
+O :
+represente le point orgne
+du
+rayon
+d : est le vecteur direction
+t : est un paramètre tEj-y, + o [
+# Intersection Rayon -
+Object 3 .
+1 ,
+Precion de base consiste à rechercher les
+intersections entre un rayon d'origine 0 et de direction
+↓ avec les objets de la scène , puis de détermina
+si elle existe la plus petite distance- Les points
+d'intersection recherchés se cituent dans l'intervalle
+to, +[
+3 . 2 Cas des surfaces implicites
+sat une surface s définie par fla,giz)=0
+aloo rechercher l'intersection entre Set
+an sayon (0,
+d) revient à rechercher tEto ,
++[
+-q [2] f(0 + pt) = 0
+3 . 3 Cas du plan
+Sat un plan il
+défini par sa normale
+in et un point a
+Alors le point p
+est un point de
+plan t / ,
+a) si
+et seulement si le vecteur (p-a) est athogonal au vecteur in , ce que
+l'on traduit par
+(p-a) - n = 0 [3]
+Par alleurs si le point p
+est un point d'un
+ragon p = o + Ed alas
+alors 10 + td-a)- =0
+on cherche donc t = (a =
+0) ·n/ don [4]
+3.4 Cas de la sphère
+Difinition : Un point p quelconque appartient
+à la sphere s de centre c et de rayon
+~ si et seulement si
+(p -c) .
+(p -c - r = 0 [5]
+si par
+ailleurs le point p appartient an
+rayon
+R (0 ,
+d) alors
+p = 0 + td
+et en remplaçant p par son expression dans [s)
+on obtient
+(0 + td -c) . (0 + Ed -c) = 0
+sait (dod(t + [2(0 -
+c)· d Jt + 10 -c. (0-
+c) -vo
+ce qui correspont à l'équation du second
+degre
+at + bt + c = 0
+avec
+a = d .d
+b = 2(0 -c) - d
+c = 10 -
+c) . 10 -c) -p2
+sait -hac

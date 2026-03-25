@@ -177,8 +177,8 @@ int run_interactive_mode(
                           powf(fmaxf(0.0f, c.z), 1.0f/2.2f));
             }
 
-            save_image("screenshot.png", h_buffer.data(), config.width, config.height);
-            std::cout << "Screenshot saved: screenshot.png (" << samples << " SPP)\n";
+            save_image("output/screenshot.png", h_buffer.data(), config.width, config.height);
+            std::cout << "Screenshot saved: output/screenshot.png (" << samples << " SPP)\n";
         }
 
         frame_count++;
