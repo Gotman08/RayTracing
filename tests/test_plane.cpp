@@ -1,17 +1,9 @@
 /**
  * @file test_plane.cpp
- * @brief Tests unitaires pour l'intersection rayon-plan
- *
- * Ce fichier teste la methode hit() de la classe Plane qui calcule
- * l'intersection entre un rayon et un plan infini. On verifie les cas
- * classiques : intersection perpendiculaire, oblique, rayon parallele
- * au plan, rayon pointant dans la direction opposee, rayon venant
- * de derriere, contraintes d'intervalle de t. On teste aussi les
- * normales (face avant/arriere, unitaire) et des configurations
- * geometriques variees (plan vertical, plan diagonal, plan decale).
+ * @brief Tests Plane::hit() : perp, oblique, parallele, normales
  */
 
-#include <iostream>
+#include <gtest/gtest.h>
 #include <cmath>
 
 #include "raytracer/core/ray.cuh"
@@ -21,61 +13,11 @@
 
 using namespace rt;
 
-/**
- * @brief Macro d'assertion simple pour les tests
- *
- * Verifie qu'une expression booleenne est vraie. Affiche un message
- * d'erreur avec le fichier et la ligne en cas d'echec.
- */
-#define TEST_ASSERT(expr) \
-    do { \
-        if (!(expr)) { \
-            std::cerr << "    FAILED: " << #expr << " at " << __FILE__ << ":" << __LINE__ << "\n"; \
-            return false; \
-        } \
-    } while(0)
-
-/**
- * @brief Macro d'assertion avec tolerance pour les comparaisons flottantes
- *
- * Compare deux valeurs flottantes avec une tolerance eps.
- */
-#define TEST_ASSERT_NEAR(a, b, eps) \
-    do { \
-        if (std::abs((a) - (b)) > (eps)) { \
-            std::cerr << "    FAILED: " << #a << " (" << (a) << ") != " << #b << " (" << (b) << ")" \
-                      << " at " << __FILE__ << ":" << __LINE__ << "\n"; \
-            return false; \
-        } \
-    } while(0)
-
-/**
- * @brief Macro d'execution d'un test unitaire
- *
- * Lance un test, affiche son resultat et incremente les compteurs.
- */
-#define RUN_TEST(test_func) \
-    do { \
-        if (test_func()) { \
-            std::cout << "  [PASS] " << #test_func << "\n"; \
-            passed++; \
-        } else { \
-            std::cout << "  [FAIL] " << #test_func << "\n"; \
-            failed++; \
-        } \
-        total++; \
-    } while(0)
-
 constexpr float EPS = 1e-5f;
 
 
-/**
- * @brief Teste l'intersection perpendiculaire d'un rayon avec un plan horizontal
- *
- * Un rayon vertical descendant depuis y=5 vers un plan horizontal (y=0)
- * doit toucher a t=5 au point y=0.
- */
-bool test_plane_ray_perpendicular() {
+/** @brief Rayon perp au sol y=0 -> t=5 depuis y=5 */
+TEST(PlaneTest, RayPerpendicular) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 5.0f, 0.0f), Vec3(0.0f, -1.0f, 0.0f));
@@ -83,21 +25,14 @@ bool test_plane_ray_perpendicular() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == true);
+    EXPECT_TRUE(hit == true);
 
-    TEST_ASSERT_NEAR(rec.t, 5.0f, EPS);
-    TEST_ASSERT_NEAR(rec.p.y, 0.0f, EPS);
-
-    return true;
+    EXPECT_NEAR(rec.t, 5.0f, EPS);
+    EXPECT_NEAR(rec.p.y, 0.0f, EPS);
 }
 
-/**
- * @brief Teste l'intersection d'un rayon oblique avec un plan horizontal
- *
- * Un rayon en diagonale (direction normalisee (0,-1,-1)) doit toucher
- * le plan y=0 au point ou y vaut exactement 0.
- */
-bool test_plane_ray_oblique() {
+/** @brief Rayon oblique (0,-1,-1) touche y=0 */
+TEST(PlaneTest, RayOblique) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 5.0f, 5.0f), Vec3(0.0f, -1.0f, -1.0f).normalized());
@@ -105,20 +40,13 @@ bool test_plane_ray_oblique() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == true);
+    EXPECT_TRUE(hit == true);
 
-    TEST_ASSERT_NEAR(rec.p.y, 0.0f, EPS);
-
-    return true;
+    EXPECT_NEAR(rec.p.y, 0.0f, EPS);
 }
 
-/**
- * @brief Teste un rayon parallele au plan (aucune intersection)
- *
- * Un rayon se deplacant le long de l'axe X au dessus du plan horizontal
- * ne doit jamais le toucher car il est parallele.
- */
-bool test_plane_ray_parallel() {
+/** @brief Rayon parallele au plan -> miss */
+TEST(PlaneTest, RayParallel) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 5.0f, 0.0f), Vec3(1.0f, 0.0f, 0.0f));
@@ -126,18 +54,11 @@ bool test_plane_ray_parallel() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == false);
-
-    return true;
+    EXPECT_TRUE(hit == false);
 }
 
-/**
- * @brief Teste un rayon pointant dans la direction opposee au plan
- *
- * Le rayon est au dessus du plan et pointe vers le haut (y positif),
- * donc il s'eloigne du plan et ne doit pas l'intersecter.
- */
-bool test_plane_ray_pointing_away() {
+/** @brief Rayon qui s'eloigne du plan -> miss */
+TEST(PlaneTest, RayPointingAway) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 5.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
@@ -145,19 +66,11 @@ bool test_plane_ray_pointing_away() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == false);
-
-    return true;
+    EXPECT_TRUE(hit == false);
 }
 
-/**
- * @brief Teste un rayon arrivant par l'arriere du plan
- *
- * Le rayon part de y=-5 et monte vers le plan. L'intersection
- * existe mais front_face doit etre false car le rayon touche
- * la face arriere du plan.
- */
-bool test_plane_ray_from_behind() {
+/** @brief Rayon par l'arriere -> hit, front_face=false */
+TEST(PlaneTest, RayFromBehind) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, -5.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
@@ -165,20 +78,13 @@ bool test_plane_ray_from_behind() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == true);
+    EXPECT_TRUE(hit == true);
 
-    TEST_ASSERT(rec.front_face == false);
-
-    return true;
+    EXPECT_TRUE(rec.front_face == false);
 }
 
-/**
- * @brief Teste qu'un intervalle de t trop restrictif exclut l'intersection
- *
- * Le rayon touche le plan a t=5, mais l'intervalle autorise est
- * [0.001, 3.0], donc l'intersection doit etre rejetee.
- */
-bool test_plane_ray_interval_excludes() {
+/** @brief t=5 hors intervalle [0.001,3] -> rejete */
+TEST(PlaneTest, RayIntervalExcludes) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 5.0f, 0.0f), Vec3(0.0f, -1.0f, 0.0f));
@@ -186,19 +92,12 @@ bool test_plane_ray_interval_excludes() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == false);
-
-    return true;
+    EXPECT_TRUE(hit == false);
 }
 
 
-/**
- * @brief Teste la normale pour un impact sur la face avant du plan
- *
- * Le rayon arrive du cote de la normale, donc front_face = true
- * et la normale pointe vers le rayon (y=1).
- */
-bool test_plane_normal_front_face() {
+/** @brief Face avant -> n.y=1, front_face=true */
+TEST(PlaneTest, NormalFrontFace) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 5.0f, 0.0f), Vec3(0.0f, -1.0f, 0.0f));
@@ -207,19 +106,12 @@ bool test_plane_normal_front_face() {
 
     plane.hit(ray, ray_t, rec);
 
-    TEST_ASSERT_NEAR(rec.normal.y, 1.0f, EPS);
-    TEST_ASSERT(rec.front_face == true);
-
-    return true;
+    EXPECT_NEAR(rec.normal.y, 1.0f, EPS);
+    EXPECT_TRUE(rec.front_face == true);
 }
 
-/**
- * @brief Teste la normale pour un impact sur la face arriere du plan
- *
- * Le rayon arrive du cote oppose a la normale, donc front_face = false
- * et la normale est inversee (y=-1) pour pointer vers le rayon.
- */
-bool test_plane_normal_back_face() {
+/** @brief Face arriere -> n.y=-1 inversee, front_face=false */
+TEST(PlaneTest, NormalBackFace) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, -5.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
@@ -228,20 +120,12 @@ bool test_plane_normal_back_face() {
 
     plane.hit(ray, ray_t, rec);
 
-    TEST_ASSERT_NEAR(rec.normal.y, -1.0f, EPS);
-    TEST_ASSERT(rec.front_face == false);
-
-    return true;
+    EXPECT_NEAR(rec.normal.y, -1.0f, EPS);
+    EXPECT_TRUE(rec.front_face == false);
 }
 
-/**
- * @brief Teste que la normale au plan est toujours unitaire
- *
- * Meme si la normale fournie au constructeur n'est pas unitaire
- * (ici (0, 5, 0)), la normale dans le HitRecord doit avoir
- * une longueur de 1.
- */
-bool test_plane_normal_is_unit() {
+/** @brief Normale non-unitaire au ctor -> unitaire dans HitRecord */
+TEST(PlaneTest, NormalIsUnit) {
     Plane plane(Point3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 5.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 5.0f, 0.0f), Vec3(0.0f, -1.0f, 0.0f));
@@ -251,19 +135,12 @@ bool test_plane_normal_is_unit() {
     plane.hit(ray, ray_t, rec);
 
     float len = rec.normal.length();
-    TEST_ASSERT_NEAR(len, 1.0f, EPS);
-
-    return true;
+    EXPECT_NEAR(len, 1.0f, EPS);
 }
 
 
-/**
- * @brief Teste l'intersection avec un plan vertical (normal selon X)
- *
- * Un plan vertical en x=3 avec la normale (1,0,0) doit etre touche
- * par un rayon horizontal a t=3.
- */
-bool test_plane_vertical_xz() {
+/** @brief Plan vertical x=3 -> rayon horizontal touche a t=3 */
+TEST(PlaneTest, VerticalXz) {
     Plane plane(Point3(3.0f, 0.0f, 0.0f), Vec3(1.0f, 0.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 0.0f, 0.0f), Vec3(1.0f, 0.0f, 0.0f));
@@ -271,20 +148,13 @@ bool test_plane_vertical_xz() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == true);
-    TEST_ASSERT_NEAR(rec.t, 3.0f, EPS);
-    TEST_ASSERT_NEAR(rec.p.x, 3.0f, EPS);
-
-    return true;
+    EXPECT_TRUE(hit == true);
+    EXPECT_NEAR(rec.t, 3.0f, EPS);
+    EXPECT_NEAR(rec.p.x, 3.0f, EPS);
 }
 
-/**
- * @brief Teste l'intersection avec un plan diagonal (normale a 45 degres)
- *
- * Verifie que le point d'impact appartient bien au plan en testant
- * que le produit scalaire entre (p - point_du_plan) et la normale est nul.
- */
-bool test_plane_diagonal() {
+/** @brief Plan diagonal 45deg -> dot(impact-ref, n) = 0 */
+TEST(PlaneTest, Diagonal) {
     Vec3 normal = Vec3(1.0f, 1.0f, 0.0f).normalized();
     Plane plane(Point3(5.0f, 5.0f, 0.0f), normal, nullptr);
 
@@ -293,22 +163,15 @@ bool test_plane_diagonal() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == true);
+    EXPECT_TRUE(hit == true);
 
     Vec3 diff = rec.p - Point3(5.0f, 5.0f, 0.0f);
     float check = dot(diff, normal);
-    TEST_ASSERT_NEAR(check, 0.0f, EPS);
-
-    return true;
+    EXPECT_NEAR(check, 0.0f, EPS);
 }
 
-/**
- * @brief Teste l'intersection avec un plan decale en hauteur (y=10)
- *
- * Le plan horizontal est a y=10 au lieu de y=0. Le rayon depuis y=15
- * doit toucher a t=5 au point y=10.
- */
-bool test_plane_offset_point() {
+/** @brief Plan decale y=10 -> hit a t=5 depuis y=15 */
+TEST(PlaneTest, OffsetPoint) {
     Plane plane(Point3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), nullptr);
 
     Ray ray(Point3(0.0f, 15.0f, 0.0f), Vec3(0.0f, -1.0f, 0.0f));
@@ -316,36 +179,7 @@ bool test_plane_offset_point() {
     HitRecord rec;
 
     bool hit = plane.hit(ray, ray_t, rec);
-    TEST_ASSERT(hit == true);
-    TEST_ASSERT_NEAR(rec.p.y, 10.0f, EPS);
-    TEST_ASSERT_NEAR(rec.t, 5.0f, EPS);
-
-    return true;
-}
-
-
-/**
- * @brief Execute l'ensemble des tests unitaires pour Plane
- *
- * Lance tous les tests d'intersection rayon-plan et met a jour les compteurs.
- *
- * @param passed Compteur de tests reussis
- * @param failed Compteur de tests echoues
- * @param total Compteur du nombre total de tests executes
- */
-void run_plane_tests(int& passed, int& failed, int& total) {
-    RUN_TEST(test_plane_ray_perpendicular);
-    RUN_TEST(test_plane_ray_oblique);
-    RUN_TEST(test_plane_ray_parallel);
-    RUN_TEST(test_plane_ray_pointing_away);
-    RUN_TEST(test_plane_ray_from_behind);
-    RUN_TEST(test_plane_ray_interval_excludes);
-
-    RUN_TEST(test_plane_normal_front_face);
-    RUN_TEST(test_plane_normal_back_face);
-    RUN_TEST(test_plane_normal_is_unit);
-
-    RUN_TEST(test_plane_vertical_xz);
-    RUN_TEST(test_plane_diagonal);
-    RUN_TEST(test_plane_offset_point);
+    EXPECT_TRUE(hit == true);
+    EXPECT_NEAR(rec.p.y, 10.0f, EPS);
+    EXPECT_NEAR(rec.t, 5.0f, EPS);
 }

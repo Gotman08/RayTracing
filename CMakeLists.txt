@@ -28,7 +28,7 @@ endif()
 option(BUILD_TESTS "Build unit tests" OFF)
 option(ENABLE_FAST_MATH "Enable fast math optimizations" ON)
 option(ENABLE_DEBUG_OUTPUT "Enable debug output" OFF)
-option(ENABLE_INTERACTIVE "Enable interactive rendering mode with GLFW/OpenGL" ON)
+
 
 # ==============================================================================
 # C++ Standards
@@ -140,22 +140,6 @@ if(NOT BUILD_TESTS_ONLY AND NOT BUILD_CPU_ONLY)
         CUDA::curand
     )
 
-    # ==============================================================================
-    # Interactive Mode (GLFW + OpenGL)
-    # ==============================================================================
-    if(ENABLE_INTERACTIVE)
-        find_package(OpenGL REQUIRED)
-        find_package(glfw3 3.3 REQUIRED)
-        find_package(GLEW REQUIRED)
-
-        target_compile_definitions(raytracer PRIVATE ENABLE_INTERACTIVE=1)
-        target_link_libraries(raytracer OpenGL::GL glfw GLEW::GLEW)
-
-        message(STATUS "Interactive Mode: ENABLED (GLFW + OpenGL + GLEW)")
-    else()
-        message(STATUS "Interactive Mode: DISABLED")
-    endif()
-
     if(ENABLE_DEBUG_OUTPUT)
         target_compile_definitions(raytracer PRIVATE DEBUG_OUTPUT=1)
     endif()
@@ -171,8 +155,19 @@ endif()
 if(BUILD_TESTS OR BUILD_TESTS_ONLY)
     enable_testing()
 
+    # --- GoogleTest via FetchContent ---
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.14.0
+    )
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+    include(GoogleTest)
+
+    # --- Tests CPU ---
     add_executable(raytracer_tests
-        tests/test_main.cpp
         tests/test_vec3.cpp
         tests/test_ray.cpp
         tests/test_interval.cpp
@@ -183,6 +178,15 @@ if(BUILD_TESTS OR BUILD_TESTS_ONLY)
         tests/test_camera.cpp
         tests/test_tone_mapping.cpp
         tests/test_bvh.cpp
+        tests/test_hit_record.cpp
+        tests/test_texture.cpp
+        tests/test_sky.cpp
+        tests/test_geometry_utils.cpp
+        tests/test_cpu_random.cpp
+        tests/test_hittable_object.cpp
+        tests/test_hittable_list.cpp
+        tests/test_material_dispatch.cpp
+        tests/test_bvh_builder.cpp
     )
 
     target_include_directories(raytracer_tests PRIVATE
@@ -199,9 +203,44 @@ if(BUILD_TESTS OR BUILD_TESTS_ONLY)
         CXX_STANDARD_REQUIRED ON
     )
 
-    add_test(NAME unit_tests COMMAND raytracer_tests)
+    target_link_libraries(raytracer_tests PRIVATE GTest::gtest_main)
 
-    message(STATUS "Tests: ENABLED")
+    gtest_discover_tests(raytracer_tests)
+
+    message(STATUS "Tests CPU: ENABLED (GoogleTest)")
+
+    # --- Tests GPU (seulement si CUDA est disponible) ---
+    if(NOT BUILD_TESTS_ONLY AND NOT BUILD_CPU_ONLY)
+        add_executable(raytracer_gpu_tests
+            tests/test_cuda_kernels.cu
+        )
+
+        target_include_directories(raytracer_gpu_tests PRIVATE
+            ${CMAKE_SOURCE_DIR}/include
+            ${CMAKE_SOURCE_DIR}/external
+            ${CUDAToolkit_INCLUDE_DIRS}
+        )
+
+        target_compile_options(raytracer_gpu_tests PRIVATE
+            $<$<COMPILE_LANGUAGE:CUDA>:${CUDA_NVCC_FLAGS_COMMON}>
+        )
+
+        set_target_properties(raytracer_gpu_tests PROPERTIES
+            CUDA_STANDARD 17
+            CUDA_STANDARD_REQUIRED ON
+            CUDA_SEPARABLE_COMPILATION ON
+        )
+
+        target_link_libraries(raytracer_gpu_tests
+            CUDA::cudart
+            CUDA::curand
+            GTest::gtest_main
+        )
+
+        gtest_discover_tests(raytracer_gpu_tests)
+
+        message(STATUS "Tests GPU: ENABLED (GoogleTest)")
+    endif()
 endif()
 
 # ==============================================================================
