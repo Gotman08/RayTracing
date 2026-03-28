@@ -1,12 +1,5 @@
-/**
- * @file default_scene.cuh
- * @brief Creation de la scene par defaut du ray tracer
- * @details Ce fichier contient la fonction qui genere une scene originale
- *          sur le theme d'un systeme solaire stylise. La scene comprend un sol
- *          sombre, un soleil central metallique dore, plusieurs planetes de
- *          differents materiaux (verre, metal, diffus), un anneau orbital
- *          de micro-spheres et des etoiles en arriere-plan.
- */
+/** @file default_scene.cuh
+ * @brief Scene par defaut : systeme solaire stylise */
 
 #ifndef RAYTRACER_SCENE_DEFAULT_SCENE_CUH
 #define RAYTRACER_SCENE_DEFAULT_SCENE_CUH
@@ -24,19 +17,7 @@
 
 namespace rt {
 
-/**
- * @brief Ajoute une sphere a la scene avec son materiau
- * @details Fonction utilitaire qui simplifie l'ajout d'un objet sphere dans
- *          les tableaux d'objets et de materiaux. Elle cree la sphere, calcule
- *          sa boite englobante et incremente les compteurs automatiquement.
- * @param objects Tableau d'objets de la scene
- * @param materials Tableau de materiaux de la scene
- * @param obj_count Compteur d'objets (incremente automatiquement)
- * @param mat_count Compteur de materiaux (incremente automatiquement)
- * @param center Position du centre de la sphere
- * @param radius Rayon de la sphere
- * @param mat Materiau a assigner a la sphere
- */
+/** @brief Ajoute une sphere + son materiau dans les tableaux de la scene */
 inline void add_sphere(
     HittableObject* objects, Material* materials,
     int& obj_count, int& mat_count,
@@ -50,23 +31,23 @@ inline void add_sphere(
     obj_count++;
 }
 
-/**
- * @brief Cree la scene "Systeme Solaire Stylise"
- * @details Construit une scene spatiale originale avec :
- *          - Un sol sombre qui simule une surface cosmique
- *          - Un soleil central en metal dore avec une bulle de verre interne
- *          - Plusieurs planetes de tailles et materiaux varies (verre, metal, diffus)
- *          - Un anneau orbital de micro-spheres autour du soleil
- *          - Des etoiles metalliques dispersees en arriere-plan
- *          La camera est positionnee en vue plongeante cinematique.
- * @param camera Reference vers la camera a initialiser
- * @param world Reference vers la liste d'objets de la scene
- * @param objects Tableau pre-alloue pour stocker les objets HittableObject
- * @param materials Tableau pre-alloue pour stocker les materiaux Material
- * @param obj_count Compteur d'objets, incremente au fur et a mesure (entree/sortie)
- * @param mat_count Compteur de materiaux, incremente au fur et a mesure (entree/sortie)
- * @param config Configuration de rendu, utilisee pour la resolution et le ciel
- */
+// -----------------------------------------------
+// Composition exacte de la scene par defaut
+// Ces constantes permettent une allocation dynamique precise dans main.cu,
+// eliminant le magic number "estimated_objects = 200".
+// -----------------------------------------------
+
+constexpr int SCENE_FIXED_OBJECTS = 10;  ///< sol + soleil + planetes
+constexpr int SCENE_RING_COUNT    = 40;
+constexpr int SCENE_STAR_COUNT    = 30;
+constexpr int SCENE_TOTAL         = SCENE_FIXED_OBJECTS + SCENE_RING_COUNT + SCENE_STAR_COUNT;
+
+/** @brief Nb d'objets total + marge pour alloc */
+inline constexpr int count_scene_objects() {
+    return SCENE_TOTAL + 10;  // 80 objets exacts + 10 de marge = 90
+}
+
+/** @brief Construit la scene solaire : sol, soleil, planetes, anneau, etoiles */
 inline void create_default_scene(
     Camera& camera,
     HittableList& world,

@@ -1,15 +1,8 @@
 #ifndef RAYTRACER_RENDERING_RENDERER_CUH
 #define RAYTRACER_RENDERING_RENDERER_CUH
 
-/**
- * @file renderer.cuh
- * @brief Moteur de rendu GPU principal du raytracer
- * @details Ce fichier contient les kernels CUDA et fonctions device responsables
- *          du rendu par lancer de rayons sur GPU. On y trouve le calcul de la couleur
- *          d'un rayon par rebonds successifs, le kernel principal de rendu avec
- *          multi-echantillonnage, ainsi que les kernels d'initialisation des etats
- *          aleatoires et le kernel de rendu progressif pour le mode interactif.
- */
+/** @file renderer.cuh
+ * @brief Kernels CUDA du moteur de rendu GPU (ray tracing + tone mapping) */
 
 #include "raytracer/core/cuda_utils.cuh"
 #include "raytracer/core/vec3.cuh"
@@ -23,21 +16,16 @@
 
 namespace rt {
 
-/**
- * @brief Calcule la couleur d'un rayon en simulant ses rebonds successifs dans la scene
- * @details Cette fonction utilise une boucle iterative (et non recursive) pour tracer
- *          le parcours d'un rayon a travers la scene. A chaque rebond, on accumule
- *          l'attenuation du materiau touche. Si le rayon ne touche aucun objet,
- *          on retourne la couleur du ciel (ou du fond) ponderee par l'attenuation
- *          accumulee. Si le rayon depasse la profondeur maximale, la contribution
- *          est nulle (noir).
- * @param initial_ray Le rayon initial lance depuis la camera
- * @param bvh La structure d'acceleration BVH contenant la scene
- * @param max_depth Le nombre maximal de rebonds autorises
- * @param config La configuration du rendu (ciel, fond, etc.)
- * @param rand_state L'etat du generateur aleatoire curand pour ce thread
- * @return La couleur finale calculee pour ce rayon
- */
+// -----------------------------------------------
+// Memoire constante : Camera et RenderConfig sont lues par tous les threads
+// de maniere identique → le cache constant broadcast la valeur a tout le warp
+// en un seul cycle (~5 cycles vs ~500 en memoire globale).
+// Taille totale : ~184 octets, bien en dessous de la limite de 64 KB.
+// -----------------------------------------------
+__constant__ Camera d_const_camera;
+__constant__ RenderConfig d_const_config;
+
+/** @brief Trace un rayon dans la scene par rebonds iteratifs, retourne la couleur accumulee */
 __device__ inline Color ray_color(
     const Ray& initial_ray,
     const BVH& bvh,
@@ -75,63 +63,34 @@ __device__ inline Color ray_color(
     return accumulated;
 }
 
-/**
- * @brief Kernel principal de rendu GPU : chaque thread calcule la couleur d'un pixel
- * @details Chaque thread CUDA correspond a un pixel de l'image. Pour chaque pixel,
- *          on lance plusieurs rayons (multi-echantillonnage / antialiasing) a travers
- *          la scene, puis on fait la moyenne des couleurs obtenues. Ensuite, on applique
- *          le tone mapping de Reinhard et la correction gamma avant de clamper les
- *          valeurs dans [0, 1] et d'ecrire le resultat dans le frame buffer.
- * @param frame_buffer Le buffer de sortie contenant les couleurs des pixels
- * @param camera La camera utilisee pour generer les rayons
- * @param bvh La structure d'acceleration BVH de la scene
- * @param config La configuration du rendu (resolution, samples, profondeur, etc.)
- * @param rand_states Les etats aleatoires curand, un par pixel
- */
+/** @brief Kernel principal : 1 thread = 1 pixel, multi-sampling puis stockage HDR brut */
 __global__ void render_kernel(
     Color* frame_buffer,
-    Camera camera,
     BVH bvh,
-    RenderConfig config,
     curandState* rand_states
 ) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     int j = blockIdx.y * blockDim.y + threadIdx.y;
 
-    if (i >= config.width || j >= config.height) return;
+    if (i >= d_const_config.width || j >= d_const_config.height) return;
 
-    int pixel_index = j * config.width + i;
+    int pixel_index = j * d_const_config.width + i;
     curandState* local_rand_state = &rand_states[pixel_index];
 
     Color pixel_color(0, 0, 0);
 
-    for (int s = 0; s < config.samples_per_pixel; s++) {
-        Ray r = camera.get_ray(i, j, local_rand_state);
-        pixel_color += ray_color(r, bvh, config.max_depth, config, local_rand_state);
+    for (int s = 0; s < d_const_config.samples_per_pixel; s++) {
+        Ray r = d_const_camera.get_ray(i, j, local_rand_state);
+        pixel_color += ray_color(r, bvh, d_const_config.max_depth, d_const_config, local_rand_state);
     }
 
-    pixel_color = pixel_color / static_cast<float>(config.samples_per_pixel);
-
-    pixel_color = apply_tone_mapping(pixel_color);
-    pixel_color = gamma_correct(pixel_color);
-
-    pixel_color.x = fminf(1.0f, fmaxf(0.0f, pixel_color.x));
-    pixel_color.y = fminf(1.0f, fmaxf(0.0f, pixel_color.y));
-    pixel_color.z = fminf(1.0f, fmaxf(0.0f, pixel_color.z));
+    // moyenne des samples, on garde le HDR brut pour le tone mapping adaptatif
+    pixel_color = pixel_color / static_cast<float>(d_const_config.samples_per_pixel);
 
     frame_buffer[pixel_index] = pixel_color;
 }
 
-/**
- * @brief Fonction de hachage rapide de Wang pour generer des graines pseudo-aleatoires
- * @details Cette fonction prend un entier en entree et produit un hachage bien distribue.
- *          Elle est utilisee pour creer des graines uniques et variees pour chaque pixel
- *          lors de l'initialisation des etats curand, ce qui evite les correlations
- *          entre pixels voisins. C'est beaucoup plus rapide que curand_init avec
- *          des sequences differentes.
- * @param seed La valeur d'entree a hacher (typiquement l'index du pixel + un offset)
- * @return La valeur hachee, bien distribuee sur 32 bits
- */
+/** @brief Hash de Wang - graine pseudo-aleatoire rapide pour init curand */
 __device__ __forceinline__ unsigned int wang_hash(unsigned int seed) {
     seed = (seed ^ 61) ^ (seed >> 16);
     seed *= 9;
@@ -141,17 +100,7 @@ __device__ __forceinline__ unsigned int wang_hash(unsigned int seed) {
     return seed;
 }
 
-/**
- * @brief Kernel d'initialisation rapide des etats aleatoires curand via hachage
- * @details Chaque thread initialise l'etat curand de son pixel en utilisant le
- *          hachage de Wang pour creer une graine unique. Cette methode est bien plus
- *          rapide que l'initialisation classique avec des sequences differentes,
- *          car curand_init est couteux quand la sequence est grande.
- * @param rand_states Le tableau des etats curand a initialiser (un par pixel)
- * @param width La largeur de l'image en pixels
- * @param height La hauteur de l'image en pixels
- * @param seed La graine de base pour le hachage
- */
+/** @brief Init rapide des etats curand via wang_hash (1 thread/pixel) */
 __global__ void init_rand_states_fast(
     curandState* rand_states,
     int width, int height,
@@ -167,17 +116,7 @@ __global__ void init_rand_states_fast(
     curand_init(hash, 0, 0, &rand_states[pixel_index]);
 }
 
-/**
- * @brief Kernel d'initialisation classique des etats aleatoires curand
- * @details Chaque thread initialise son etat curand en utilisant une graine basee
- *          sur l'index du pixel. Cette methode est plus lente que la version rapide
- *          (init_rand_states_fast) car curand_init effectue un travail interne plus
- *          important, mais elle garantit des sequences parfaitement independantes.
- * @param rand_states Le tableau des etats curand a initialiser (un par pixel)
- * @param width La largeur de l'image en pixels
- * @param height La hauteur de l'image en pixels
- * @param seed La graine de base pour l'initialisation
- */
+/** @brief Init classique des etats curand (plus lent, sequences independantes) */
 __global__ void init_rand_states(
     curandState* rand_states,
     int width, int height,
@@ -192,47 +131,80 @@ __global__ void init_rand_states(
     curand_init(seed + pixel_index, 0, 0, &rand_states[pixel_index]);
 }
 
-#ifdef ENABLE_INTERACTIVE
-/**
- * @brief Kernel de rendu progressif pour le mode interactif
- * @details Ce kernel est utilise en mode interactif (temps reel). Au lieu de calculer
- *          tous les samples d'un coup, il accumule progressivement les echantillons
- *          dans un buffer d'accumulation. Le tone mapping et la correction gamma ne
- *          sont pas appliques ici : ils seront appliques plus tard lors de l'affichage,
- *          ce qui permet de continuer a accumuler des samples au fil des frames.
- * @param accumulation_buffer Le buffer d'accumulation des couleurs (somme des samples)
- * @param camera La camera utilisee pour generer les rayons
- * @param bvh La structure d'acceleration BVH de la scene
- * @param config La configuration du rendu
- * @param rand_states Les etats aleatoires curand, un par pixel
- * @param samples_this_frame Le nombre de samples a calculer pour cette frame
- */
-__global__ void render_kernel_accumulate(
-    Color* accumulation_buffer,
-    Camera camera,
-    BVH bvh,
-    RenderConfig config,
-    curandState* rand_states,
-    int samples_this_frame
+// -----------------------------------------------
+// Reduction parallele : calcul de la luminance moyenne de l'image
+// Utilise __shared__ memory pour la reduction intra-bloc (arbre binaire)
+// puis atomicAdd pour combiner les resultats des blocs.
+// Necessaire pour le tone mapping adaptatif de Reinhard etendu.
+// -----------------------------------------------
+
+/** @brief Reduction parallele : somme des luminances (shared mem + warp shuffle) */
+__global__ void compute_avg_luminance(
+    const Color* frame_buffer,
+    float* d_total_luminance,
+    int num_pixels
 ) {
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
-    int j = blockIdx.y * blockDim.y + threadIdx.y;
+    __shared__ float sdata[256];
 
-    if (i >= config.width || j >= config.height) return;
+    int tid = threadIdx.x;
+    int gid = blockIdx.x * blockDim.x + threadIdx.x;
 
-    int pixel_index = j * config.width + i;
-    curandState* local_rand_state = &rand_states[pixel_index];
+    // charger la luminance du pixel dans la shared memory
+    if (gid < num_pixels) {
+        Color c = frame_buffer[gid];
+        sdata[tid] = luminance(c);
+    } else {
+        sdata[tid] = 0.0f;
+    }
+    __syncthreads();
 
-    Color pixel_color(0, 0, 0);
-
-    for (int s = 0; s < samples_this_frame; s++) {
-        Ray r = camera.get_ray(i, j, local_rand_state);
-        pixel_color += ray_color(r, bvh, config.max_depth, config, local_rand_state);
+    // Etape 1 : reduction arbre binaire en shared memory pour stride > 32
+    // (stride=128 puis stride=64 : 2 iterations, 2 __syncthreads)
+    for (unsigned int stride = blockDim.x / 2; stride > 32; stride >>= 1) {
+        if (tid < stride) {
+            sdata[tid] += sdata[tid + stride];
+        }
+        __syncthreads();
     }
 
-    accumulation_buffer[pixel_index] = accumulation_buffer[pixel_index] + pixel_color;
+    // Etape 2 : warp-level reduction pour les 32 derniers elements
+    // Les threads 0-31 forment le warp 0, pas de __syncthreads necessaire.
+    // __shfl_down_sync echange les valeurs de registres entre threads du meme warp.
+    if (tid < 32) {
+        float val = sdata[tid] + sdata[tid + 32];  // stride=32 directement en registre
+        val += __shfl_down_sync(0xffffffff, val, 16);
+        val += __shfl_down_sync(0xffffffff, val, 8);
+        val += __shfl_down_sync(0xffffffff, val, 4);
+        val += __shfl_down_sync(0xffffffff, val, 2);
+        val += __shfl_down_sync(0xffffffff, val, 1);
+        if (tid == 0) atomicAdd(d_total_luminance, val);
+    }
 }
-#endif
+
+/** @brief Post-process : Reinhard adaptatif + gamma sRGB + clamp, in-place */
+__global__ void apply_tonemapping_kernel(
+    Color* frame_buffer,
+    float avg_luminance,
+    int num_pixels
+) {
+    int gid = blockIdx.x * blockDim.x + threadIdx.x;
+    if (gid >= num_pixels) return;
+
+    Color hdr = frame_buffer[gid];
+
+    // tone mapping adaptatif de Reinhard etendu
+    Color mapped = apply_adaptive_tone_mapping(hdr, avg_luminance);
+
+    // correction gamma pour l'espace sRGB
+    mapped = gamma_correct(mapped);
+
+    // clamp final dans [0, 1]
+    mapped.x = fminf(1.0f, fmaxf(0.0f, mapped.x));
+    mapped.y = fminf(1.0f, fmaxf(0.0f, mapped.y));
+    mapped.z = fminf(1.0f, fmaxf(0.0f, mapped.z));
+
+    frame_buffer[gid] = mapped;
+}
 
 }
 

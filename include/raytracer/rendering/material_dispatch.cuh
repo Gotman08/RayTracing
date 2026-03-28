@@ -1,15 +1,8 @@
 #ifndef RAYTRACER_RENDERING_MATERIAL_DISPATCH_CUH
 #define RAYTRACER_RENDERING_MATERIAL_DISPATCH_CUH
 
-/**
- * @file material_dispatch.cuh
- * @brief Dispatch de l'interaction rayon-materiau selon le type de materiau
- * @details Ce fichier contient les fonctions de dispatch qui redirigent l'appel
- *          de diffusion (scatter) vers la bonne implementation selon le type du
- *          materiau (lambertien, metal ou dielectrique). Il existe une version
- *          GPU (scatter) et une version CPU (scatter_cpu) qui utilisent des
- *          generateurs aleatoires differents.
- */
+/** @file material_dispatch.cuh
+ * @brief Dispatch scatter() selon le type de materiau (GPU + CPU) */
 
 #include "raytracer/core/vec3.cuh"
 #include "raytracer/core/ray.cuh"
@@ -21,20 +14,7 @@
 
 namespace rt {
 
-/**
- * @brief Dispatche l'interaction rayon-materiau selon le type de materiau (version GPU)
- * @details Cette fonction examine le type du materiau touche par le rayon et appelle
- *          la fonction de diffusion appropriee : lambertien (diffusion aleatoire),
- *          metal (reflexion avec flou) ou dielectrique (refraction/reflexion type verre).
- *          Elle utilise un switch sur l'enum MaterialType.
- * @param mat Le materiau de la surface touchee
- * @param r_in Le rayon incident
- * @param rec L'enregistrement du point d'intersection
- * @param attenuation La couleur d'attenuation du materiau (parametre de sortie)
- * @param scattered Le rayon diffuse produit par l'interaction (parametre de sortie)
- * @param rand_state L'etat du generateur aleatoire curand
- * @return true si le rayon a ete diffuse, false s'il a ete absorbe
- */
+/** @brief Scatter GPU - switch sur MaterialType (lambertian/metal/dielectric) */
 __device__ inline bool scatter(
     const Material& mat,
     const Ray& r_in,
@@ -55,19 +35,7 @@ __device__ inline bool scatter(
     }
 }
 
-/**
- * @brief Dispatche l'interaction rayon-materiau selon le type de materiau (version CPU)
- * @details Version CPU de scatter(). Meme logique de dispatch par switch, mais utilise
- *          les variantes CPU des fonctions de diffusion (scatter_lambertian_cpu, etc.)
- *          qui prennent un CPURandom au lieu d'un curandState.
- * @param mat Le materiau de la surface touchee
- * @param r_in Le rayon incident
- * @param rec L'enregistrement du point d'intersection
- * @param attenuation La couleur d'attenuation du materiau (parametre de sortie)
- * @param scattered Le rayon diffuse produit par l'interaction (parametre de sortie)
- * @param rng Le generateur de nombres aleatoires CPU
- * @return true si le rayon a ete diffuse, false s'il a ete absorbe
- */
+/** @brief Scatter CPU - meme dispatch, utilise CPURandom au lieu de curand */
 inline bool scatter_cpu(
     const Material& mat,
     const Ray& r_in,

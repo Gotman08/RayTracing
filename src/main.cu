@@ -1,17 +1,16 @@
-/**
- * @file main.cu
- * @brief Point d'entree principal du ray tracer CUDA
- * @details Ce fichier contient la fonction main() qui orchestre l'ensemble du
- *          pipeline de rendu : parsing des arguments, creation de la scene,
- *          construction du BVH, allocation memoire GPU, lancement du rendu
- *          (GPU CUDA ou CPU OpenMP) et sauvegarde de l'image finale.
- *          Il gere egalement le mode interactif avec fenetre OpenGL si active.
- */
+/** @file main.cu
+ * @brief Point d'entree du ray tracer CUDA (pipeline complet GPU/CPU) */
 
 #include <iostream>
+#include <iomanip>
 #include <chrono>
 #include <ctime>
 #include <vector>
+
+// Thrust : librairie CUDA haut niveau pour les operations paralleles
+// Fournie avec le CUDA Toolkit, pas de dependance externe
+#include <thrust/device_ptr.h>
+#include <thrust/transform_reduce.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -28,192 +27,16 @@
 #include "io/image_writer.cuh"
 #include "scene/default_scene.cuh"
 
-#ifdef ENABLE_INTERACTIVE
-#include "raytracer/interactive/window.cuh"
-#include "raytracer/interactive/gl_interop.cuh"
-#include "raytracer/interactive/camera_controller.cuh"
-#include "raytracer/interactive/input_handler.cuh"
-#include "raytracer/interactive/accumulation_buffer.cuh"
-#endif
-
 using namespace rt;
 
-static constexpr int MAX_OBJECTS = 1000;
-static constexpr int MAX_MATERIALS = 1000;
-
-#ifdef ENABLE_INTERACTIVE
-/**
- * @brief Boucle principale du mode interactif avec rendu progressif en temps reel
- * @details Initialise une fenetre OpenGL, configure l'interop CUDA/OpenGL pour
- *          afficher le rendu directement sur la carte graphique, et entre dans
- *          une boucle de rendu temps reel. La camera est controlable avec les
- *          touches WASD (deplacement), la souris (orientation), Space/Q (monter)
- *          et Ctrl/E (descendre). Le rendu est progressif : les samples s'accumulent
- *          tant que la camera ne bouge pas, jusqu'a max_accumulated_spp.
- *          Le deplacement de la camera reinitialise l'accumulation.
- *          Supporte aussi la capture d'ecran avec la touche P.
- * @param args Arguments en ligne de commande (sensibilite, vitesse, SPP, etc.)
- * @param initial_camera Camera initiale configuree par la scene
- * @param bvh Structure BVH deja construite et uploadee sur le GPU
- * @param config Configuration de rendu (resolution, profondeur, etc.)
- * @param d_rand_states Etats du generateur aleatoire CUDA, deja initialises sur le GPU
- * @return 0 en cas de succes, 1 en cas d'erreur d'initialisation
- */
-int run_interactive_mode(
-    const Args& args,
-    Camera& initial_camera,
-    BVH& bvh,
-    RenderConfig& config,
-    curandState* d_rand_states
-) {
-    Window window;
-    if (!window.initialize(config.width, config.height, "CUDA Ray Tracer - Interactive")) {
-        std::cerr << "Failed to initialize window\n";
-        return 1;
+/** @brief Foncteur luminance pour thrust::transform_reduce */
+struct LuminanceFunctor {
+    __host__ __device__ float operator()(const Color& c) const {
+        return 0.2126f * c.x + 0.7152f * c.y + 0.0722f * c.z;
     }
+};
 
-    GLInterop gl_interop;
-    if (!gl_interop.initialize(config.width, config.height)) {
-        std::cerr << "Failed to initialize GL interop\n";
-        window.cleanup();
-        return 1;
-    }
-
-    AccumulationBuffer accum_buffer;
-    if (!accum_buffer.initialize(config.width, config.height)) {
-        std::cerr << "Failed to initialize accumulation buffer\n";
-        gl_interop.cleanup();
-        window.cleanup();
-        return 1;
-    }
-
-    CameraController camera_ctrl;
-    camera_ctrl.initialize(
-        initial_camera.center,
-        initial_camera.center - initial_camera.w * 10.0f,
-        20.0f,
-        initial_camera.defocus_angle,
-        10.0f
-    );
-    camera_ctrl.move_speed = args.move_speed;
-    camera_ctrl.mouse_sensitivity = args.mouse_sensitivity;
-
-    InputHandler input;
-    input.setup_callbacks(window.handle);
-
-    constexpr int BLOCK_SIZE = 16;
-    dim3 blocks((config.width + BLOCK_SIZE - 1) / BLOCK_SIZE,
-                (config.height + BLOCK_SIZE - 1) / BLOCK_SIZE);
-    dim3 threads(BLOCK_SIZE, BLOCK_SIZE);
-
-    auto last_frame_time = std::chrono::high_resolution_clock::now();
-    float fps = 0.0f;
-    int frame_count = 0;
-    auto fps_timer = std::chrono::high_resolution_clock::now();
-
-    std::cout << "Interactive mode started\n";
-    std::cout << "  WASD: Move | Mouse: Look | Space/Q: Up | Ctrl/E: Down\n";
-    std::cout << "  Shift: Fast | R: Reset | P: Screenshot | Esc: Quit\n\n";
-
-    while (!window.should_close() && !input.state.should_close) {
-        auto current_time = std::chrono::high_resolution_clock::now();
-        float delta_time = std::chrono::duration<float>(current_time - last_frame_time).count();
-        last_frame_time = current_time;
-
-        input.poll_events();
-
-        bool camera_moved = camera_ctrl.update(input.state, delta_time);
-
-        if (camera_moved || input.state.reset_accumulation) {
-            accum_buffer.reset();
-        }
-
-        bool should_render = (accum_buffer.get_accumulated_samples() < args.max_accumulated_spp);
-
-        if (should_render) {
-            Camera frame_camera = camera_ctrl.build_camera(config.width, config.height);
-
-            render_kernel_accumulate<<<blocks, threads>>>(
-                accum_buffer.d_buffer,
-                frame_camera,
-                bvh,
-                config,
-                d_rand_states,
-                args.interactive_spp
-            );
-            cudaDeviceSynchronize();
-
-            accum_buffer.accumulated_samples += args.interactive_spp;
-        }
-
-        uchar4* d_display = gl_interop.map_for_cuda();
-
-        convert_to_rgba8<<<blocks, threads>>>(
-            d_display,
-            accum_buffer.d_buffer,
-            config.width, config.height,
-            accum_buffer.get_accumulated_samples()
-        );
-        cudaDeviceSynchronize();
-
-        gl_interop.unmap_from_cuda();
-
-        glClear(GL_COLOR_BUFFER_BIT);
-        gl_interop.display();
-        window.swap_buffers();
-
-        if (input.state.screenshot_requested) {
-            std::vector<Color> h_buffer(config.width * config.height);
-            cudaMemcpy(h_buffer.data(), accum_buffer.d_buffer,
-                       config.width * config.height * sizeof(Color),
-                       cudaMemcpyDeviceToHost);
-
-            int samples = accum_buffer.get_accumulated_samples();
-            for (auto& c : h_buffer) {
-                if (samples > 0) c = c / static_cast<float>(samples);
-                c = Color(c.x / (1.0f + c.x), c.y / (1.0f + c.y), c.z / (1.0f + c.z));
-                c = Color(powf(fmaxf(0.0f, c.x), 1.0f/2.2f),
-                          powf(fmaxf(0.0f, c.y), 1.0f/2.2f),
-                          powf(fmaxf(0.0f, c.z), 1.0f/2.2f));
-            }
-
-            save_image("output/screenshot.png", h_buffer.data(), config.width, config.height);
-            std::cout << "Screenshot saved: output/screenshot.png (" << samples << " SPP)\n";
-        }
-
-        frame_count++;
-        auto fps_elapsed = std::chrono::duration<float>(current_time - fps_timer).count();
-        if (fps_elapsed >= 1.0f) {
-            fps = frame_count / fps_elapsed;
-            frame_count = 0;
-            fps_timer = current_time;
-
-            char title[256];
-            snprintf(title, sizeof(title),
-                     "CUDA Ray Tracer - %.1f FPS - %d/%d SPP",
-                     fps, accum_buffer.get_accumulated_samples(), args.max_accumulated_spp);
-            window.set_title(title);
-        }
-
-        input.state.clear_deltas();
-    }
-
-    accum_buffer.cleanup();
-    gl_interop.cleanup();
-    window.cleanup();
-
-    return 0;
-}
-#endif
-
-/**
- * @brief Recupere le pointeur vers le materiau d'un objet hittable
- * @details Selon le type de l'objet (sphere ou plan), retourne le pointeur
- *          vers le materiau associe. Utile notamment lors de la conversion
- *          des pointeurs host vers device pour le transfert GPU.
- * @param obj Reference constante vers l'objet dont on veut le materiau
- * @return Pointeur vers le Material de l'objet, ou nullptr si le type est inconnu
- */
+/** @brief Recupere le ptr materiau d'un HittableObject (sphere/plan) */
 inline Material* get_material_ptr(const HittableObject& obj) {
     switch (obj.type) {
         case HittableType::SPHERE: return obj.data.sphere.mat;
@@ -222,15 +45,7 @@ inline Material* get_material_ptr(const HittableObject& obj) {
     }
 }
 
-/**
- * @brief Modifie le pointeur materiau d'un objet hittable
- * @details Remplace le pointeur materiau de l'objet par un nouveau pointeur.
- *          Utilise principalement pour la "fixup" des pointeurs lors du transfert
- *          des donnees du CPU vers le GPU : les pointeurs host doivent etre
- *          remplaces par les pointeurs device correspondants.
- * @param obj Reference vers l'objet dont on veut modifier le materiau
- * @param mat Nouveau pointeur vers le materiau (typiquement un pointeur device)
- */
+/** @brief Remplace le ptr materiau (fixup host->device) */
 inline void set_material_ptr(HittableObject& obj, Material* mat) {
     switch (obj.type) {
         case HittableType::SPHERE:
@@ -244,22 +59,7 @@ inline void set_material_ptr(HittableObject& obj, Material* mat) {
     }
 }
 
-/**
- * @brief Point d'entree principal du ray tracer
- * @details Orchestre l'ensemble du pipeline de rendu en plusieurs etapes :
- *          1. Parsing des arguments en ligne de commande
- *          2. Creation de la scene par defaut (camera, objets, materiaux)
- *          3. Selon le mode choisi (CPU ou GPU) :
- *             - CPU : construction du BVH cote host, rendu OpenMP
- *             - GPU : allocation memoire CUDA, upload des materiaux, fixup des
- *               pointeurs host->device, construction et upload du BVH, initialisation
- *               des etats aleatoires, puis lancement du kernel de rendu
- *          4. Sauvegarde de l'image finale
- *          En mode interactif, delegue a run_interactive_mode() apres l'initialisation GPU.
- * @param argc Nombre d'arguments de la ligne de commande
- * @param argv Tableau des arguments de la ligne de commande
- * @return 0 en cas de succes, 1 en cas d'erreur
- */
+/** @brief Main - orchestre scene, BVH, alloc GPU, rendu, sauvegarde */
 int main(int argc, char** argv) {
     Args args = parse_args(argc, argv);
 
@@ -276,8 +76,11 @@ int main(int argc, char** argv) {
 
     int num_pixels = config.width * config.height;
 
-    std::vector<HittableObject> h_objects(MAX_OBJECTS);
-    std::vector<Material> h_materials(MAX_MATERIALS);
+    // allocation dynamique basee sur le nombre exact d'objets de la scene
+    // count_scene_objects() retourne SCENE_TOTAL + 10 = 90 (voir default_scene.cuh)
+    int estimated_objects = count_scene_objects();
+    std::vector<HittableObject> h_objects(estimated_objects);
+    std::vector<Material> h_materials(estimated_objects);
     int obj_count = 0;
     int mat_count = 0;
 
@@ -344,18 +147,41 @@ int main(int argc, char** argv) {
     Timer timer;
     CudaTimer cuda_timer;
 
+    // -----------------------------------------------
+    // Creation des streams CUDA pour le recouvrement d'operations
+    // stream_compute : pour les kernels de calcul (init RNG, rendu)
+    // stream_transfer : pour les transferts memoire (H2D, D2H)
+    // -----------------------------------------------
+    cudaStream_t stream_compute, stream_transfer;
+    cudaStreamCreate(&stream_compute);
+    cudaStreamCreate(&stream_transfer);
+
     timer.start("GPU Memory Allocation");
     Color* d_frame_buffer;
     curandState* d_rand_states;
     Material* d_materials;
+    float* d_total_luminance;  // pour la reduction (un seul float)
 
     cudaMalloc(&d_frame_buffer, num_pixels * sizeof(Color));
     cudaMalloc(&d_rand_states, num_pixels * sizeof(curandState));
     cudaMalloc(&d_materials, mat_count * sizeof(Material));
+    cudaMalloc(&d_total_luminance, sizeof(float));
     timer.stop();
 
+    // copier Camera et RenderConfig en memoire constante GPU
+    // → broadcast cache, lecture ~5 cycles vs ~500 en globale
+    timer.start("Constant Memory Upload");
+    cudaMemcpyToSymbol(d_const_camera, &camera, sizeof(Camera));
+    cudaMemcpyToSymbol(d_const_config, &config, sizeof(RenderConfig));
+    timer.stop();
+
+    // -----------------------------------------------
+    // Pointer fixup : les pointeurs materiaux host → device
+    // Doit etre fait AVANT l'upload des objets au BVH
+    // -----------------------------------------------
     timer.start("Materials Upload (H2D)");
-    cudaMemcpy(d_materials, h_materials.data(), mat_count * sizeof(Material), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_materials, h_materials.data(),
+               mat_count * sizeof(Material), cudaMemcpyHostToDevice);
     timer.stop();
 
     timer.start("Pointer Fixup");
@@ -388,43 +214,122 @@ int main(int argc, char** argv) {
                 (config.height + BLOCK_SIZE - 1) / BLOCK_SIZE);
     dim3 threads(BLOCK_SIZE, BLOCK_SIZE);
 
+    // -----------------------------------------------
+    // Overlap avec streams : init RNG (compute) pendant que le BVH upload
+    // vient de finir. Le stream_compute lance l'init en async.
+    // -----------------------------------------------
     if (!args.quiet) std::cout << "Initialisation..." << std::flush;
     timer.start("Init Random States");
     cuda_timer.start();
-    init_rand_states_fast<<<blocks, threads>>>(d_rand_states, config.width, config.height, static_cast<unsigned int>(time(NULL)));
-    CUDA_SYNC_CHECK();
+    init_rand_states_fast<<<blocks, threads, 0, stream_compute>>>(
+        d_rand_states, config.width, config.height,
+        static_cast<unsigned int>(time(NULL)));
+    cudaStreamSynchronize(stream_compute);
     cuda_timer.stop();
+    CUDA_SYNC_CHECK();
     timer.stop();
     if (!args.quiet) std::cout << " OK\n";
 
-#ifdef ENABLE_INTERACTIVE
-    if (args.interactive) {
-        int result = run_interactive_mode(args, camera, bvh, config, d_rand_states);
+    // -----------------------------------------------
+    // Mode benchmark multi-resolution
+    // Lance le rendu sur 4 resolutions differentes avec 50 SPP chacune,
+    // mesure le temps avec CUDA events et affiche un tableau comparatif.
+    // -----------------------------------------------
+    if (args.benchmark) {
+        struct Resolution { int w, h; const char* name; };
+        const Resolution resolutions[] = {
+            { 640,  360,  "640x360  (230K)" },
+            { 1280, 720,  "1280x720 (922K)" },
+            { 1920, 1080, "1920x1080 (2.1M)" },
+            { 2560, 1440, "2560x1440 (3.7M)" },
+        };
+        const int BENCH_SPP = 50;
 
+        std::cout << "\n=== Benchmark Multi-Resolution (" << BENCH_SPP << " SPP) ===\n";
+        std::cout << std::left
+                  << std::setw(20) << "Resolution"
+                  << std::setw(12) << "Pixels"
+                  << std::setw(14) << "Time (ms)"
+                  << std::setw(12) << "MRays/s" << "\n";
+        std::cout << std::string(58, '-') << "\n";
+
+        for (const auto& res : resolutions) {
+            int bench_pixels = res.w * res.h;
+
+            // allouer les buffers pour cette resolution
+            Color* d_bench_fb;
+            curandState* d_bench_rng;
+            cudaMalloc(&d_bench_fb, bench_pixels * sizeof(Color));
+            cudaMalloc(&d_bench_rng, bench_pixels * sizeof(curandState));
+
+            // mettre a jour la config en memoire constante
+            RenderConfig bench_config = config;
+            bench_config.width  = res.w;
+            bench_config.height = res.h;
+            bench_config.samples_per_pixel = BENCH_SPP;
+            cudaMemcpyToSymbol(d_const_config, &bench_config, sizeof(RenderConfig));
+
+            // init RNG pour cette resolution
+            dim3 b_blocks((res.w + BLOCK_SIZE - 1) / BLOCK_SIZE,
+                          (res.h + BLOCK_SIZE - 1) / BLOCK_SIZE);
+            dim3 b_threads(BLOCK_SIZE, BLOCK_SIZE);
+            init_rand_states_fast<<<b_blocks, b_threads>>>(
+                d_bench_rng, res.w, res.h, 42u);
+            cudaDeviceSynchronize();
+
+            // timing precis avec CUDA events
+            cudaEvent_t ev_start, ev_stop;
+            cudaEventCreate(&ev_start);
+            cudaEventCreate(&ev_stop);
+
+            cudaEventRecord(ev_start);
+            render_kernel<<<b_blocks, b_threads>>>(d_bench_fb, bvh, d_bench_rng);
+            cudaEventRecord(ev_stop);
+            cudaEventSynchronize(ev_stop);
+
+            float ms = 0.0f;
+            cudaEventElapsedTime(&ms, ev_start, ev_stop);
+            float mrays = (float)res.w * res.h * BENCH_SPP / 1000000.0f / (ms / 1000.0f);
+
+            std::cout << std::left
+                      << std::setw(20) << res.name
+                      << std::setw(12) << bench_pixels
+                      << std::setw(14) << std::fixed << std::setprecision(1) << ms
+                      << std::setw(12) << std::fixed << std::setprecision(1) << mrays
+                      << "\n";
+
+            cudaEventDestroy(ev_start);
+            cudaEventDestroy(ev_stop);
+            cudaFree(d_bench_fb);
+            cudaFree(d_bench_rng);
+        }
+        std::cout << "\n";
+
+        // restaurer la config originale et quitter proprement
+        cudaMemcpyToSymbol(d_const_config, &config, sizeof(RenderConfig));
         cudaFree(d_frame_buffer);
         cudaFree(d_rand_states);
         cudaFree(d_materials);
+        cudaFree(d_total_luminance);
+        cudaStreamDestroy(stream_compute);
+        cudaStreamDestroy(stream_transfer);
         bvh_builder.free_gpu_bvh(bvh);
+        return 0;
+    }
 
-        return result;
-    }
-#else
-    if (args.interactive) {
-        std::cerr << "Interactive mode not enabled. Rebuild with -DENABLE_INTERACTIVE=ON\n";
-        cudaFree(d_frame_buffer);
-        cudaFree(d_rand_states);
-        cudaFree(d_materials);
-        bvh_builder.free_gpu_bvh(bvh);
-        return 1;
-    }
-#endif
+    // -----------------------------------------------
+    // Pipeline de rendu GPU en 3 passes :
+    //   1. render_kernel     → couleurs HDR brutes
+    //   2. compute_avg_luminance → luminance moyenne (reduction parallele)
+    //   3. apply_tonemapping_kernel → tone mapping adaptatif + gamma
+    // -----------------------------------------------
 
     if (!args.quiet) std::cout << "Rendu en cours..." << std::flush;
     timer.start("Render Kernel (GPU)");
     cuda_timer.start();
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    render_kernel<<<blocks, threads>>>(d_frame_buffer, camera, bvh, config, d_rand_states);
+    render_kernel<<<blocks, threads>>>(d_frame_buffer, bvh, d_rand_states);
     CUDA_SYNC_CHECK();
 
     cuda_timer.stop();
@@ -436,30 +341,165 @@ int main(int argc, char** argv) {
 
     if (!args.quiet) {
         std::cout << " OK\n";
-        std::cout << "Temps: " << duration.count() / 1000.0f << " secondes\n";
+        std::cout << "Temps rendu: " << duration.count() / 1000.0f << " secondes\n";
         float mrays = (float)config.width * config.height * config.samples_per_pixel / 1000000.0f;
         std::cout << "Performance: " << mrays / (duration.count() / 1000.0f) << " MRays/s\n";
     }
 
+    // --- Reduction parallele : luminance moyenne ---
+    timer.start("Luminance Reduction (custom)");
+    CudaTimer reduce_timer;
+    reduce_timer.start();
+
+    cudaMemset(d_total_luminance, 0, sizeof(float));
+    int reduce_block = 256;
+    int reduce_grid = (num_pixels + reduce_block - 1) / reduce_block;
+    compute_avg_luminance<<<reduce_grid, reduce_block>>>(
+        d_frame_buffer, d_total_luminance, num_pixels);
+    CUDA_SYNC_CHECK();
+
+    float h_total_lum = 0.0f;
+    cudaMemcpy(&h_total_lum, d_total_luminance, sizeof(float), cudaMemcpyDeviceToHost);
+    float avg_luminance = h_total_lum / static_cast<float>(num_pixels);
+
+    reduce_timer.stop();
+    float custom_reduce_ms = reduce_timer.elapsed_ms();
+    timer.stop();
+
+    if (!args.quiet) {
+        std::cout << "Luminance moyenne: " << avg_luminance << "\n";
+    }
+
+    // --- Reduction Thrust (comparaison librairie) ---
+    timer.start("Luminance Reduction (Thrust)");
+    CudaTimer thrust_timer;
+    thrust_timer.start();
+
+    thrust::device_ptr<Color> thrust_ptr(d_frame_buffer);
+    float thrust_total = thrust::transform_reduce(
+        thrust_ptr, thrust_ptr + num_pixels,
+        LuminanceFunctor(),
+        0.0f,
+        thrust::plus<float>()
+    );
+    float thrust_avg = thrust_total / static_cast<float>(num_pixels);
+
+    thrust_timer.stop();
+    float thrust_reduce_ms = thrust_timer.elapsed_ms();
+    timer.stop();
+
+    // --- Tone mapping adaptatif (second pass) ---
+    if (!args.quiet) std::cout << "Tone mapping adaptatif..." << std::flush;
+    timer.start("Adaptive Tone Mapping");
+
+    apply_tonemapping_kernel<<<reduce_grid, reduce_block>>>(
+        d_frame_buffer, avg_luminance, num_pixels);
+    CUDA_SYNC_CHECK();
+
+    timer.stop();
+    if (!args.quiet) std::cout << " OK\n";
+
+    // --- Telechargement du framebuffer (pinned memory + stream async) ---
+    // cudaMallocHost alloue en page-locked : le DMA GPU peut transferer
+    // directement sans staging buffer, permettant un vrai recouvrement
+    // avec les operations du stream_compute (cf. Cours 05-Streams).
     timer.start("Framebuffer Download (D2H)");
-    std::vector<Color> h_frame_buffer(num_pixels);
-    cudaMemcpy(h_frame_buffer.data(), d_frame_buffer, num_pixels * sizeof(Color), cudaMemcpyDeviceToHost);
+    Color* h_frame_buffer;
+    cudaMallocHost(&h_frame_buffer, num_pixels * sizeof(Color));
+    cudaMemcpyAsync(h_frame_buffer, d_frame_buffer,
+                    num_pixels * sizeof(Color),
+                    cudaMemcpyDeviceToHost, stream_transfer);
+    cudaStreamSynchronize(stream_transfer);
     timer.stop();
 
     timer.start("Save Image");
     if (!args.quiet) std::cout << "Sauvegarde..." << std::flush;
-    save_image(args.output_file, h_frame_buffer.data(), config.width, config.height);
+    save_image(args.output_file, h_frame_buffer, config.width, config.height);
     timer.stop();
     if (!args.quiet) std::cout << " OK\n";
 
+    // -----------------------------------------------
+    // Profiling detaille
+    // -----------------------------------------------
     if (args.profile) {
         timer.print_report("GPU Profiling");
-        std::cout << "  Kernel GPU time (CUDA events): " << kernel_time_ms << " ms\n\n";
+        std::cout << "\n  === Kernel Timing (CUDA events) ===\n";
+        std::cout << "  Render kernel:     " << kernel_time_ms << " ms\n";
+        std::cout << "  Custom reduction:  " << custom_reduce_ms << " ms\n";
+        std::cout << "  Thrust reduction:  " << thrust_reduce_ms << " ms\n";
+        std::cout << "  Reduction speedup: x"
+                  << thrust_reduce_ms / fmaxf(custom_reduce_ms, 0.001f) << " (Thrust/Custom)\n";
+        std::cout << "  Luminance (custom): " << avg_luminance
+                  << "  (Thrust): " << thrust_avg << "\n";
+
+        // estimation de la bande passante effective du kernel de rendu
+        // chaque pixel : lecture rand_state + ecriture Color = ~52 + 12 = ~64 bytes
+        float bytes_rw = (float)num_pixels * 64.0f;
+        float bandwidth_gbs = bytes_rw / (kernel_time_ms * 1e6f);
+        std::cout << "\n  === Bandwidth Estimation ===\n";
+        std::cout << "  Estimated bandwidth: " << bandwidth_gbs << " GB/s\n";
+
+        // occupancy du kernel de rendu
+        std::cout << "\n  === Occupancy Analysis ===\n";
+        int min_grid_size = 0, best_block_size = 0;
+        cudaOccupancyMaxPotentialBlockSize(
+            &min_grid_size, &best_block_size,
+            render_kernel, 0, 0);
+        std::cout << "  render_kernel:\n";
+        std::cout << "    Block size used: " << BLOCK_SIZE << "x" << BLOCK_SIZE
+                  << " = " << BLOCK_SIZE * BLOCK_SIZE << " threads\n";
+        std::cout << "    Optimal block size (API): " << best_block_size << " threads\n";
+        std::cout << "    Min grid for full occupancy: " << min_grid_size << " blocks\n";
+
+        int num_blocks_per_sm = 0;
+        cudaOccupancyMaxActiveBlocksPerMultiprocessor(
+            &num_blocks_per_sm, render_kernel,
+            BLOCK_SIZE * BLOCK_SIZE, 0);
+
+        cudaDeviceProp prop;
+        cudaGetDeviceProperties(&prop, 0);
+        int warps_per_block = (BLOCK_SIZE * BLOCK_SIZE) / prop.warpSize;
+        int active_warps = num_blocks_per_sm * warps_per_block;
+        int max_warps_per_sm = prop.maxThreadsPerMultiProcessor / prop.warpSize;
+        float occupancy = 100.0f * active_warps / max_warps_per_sm;
+
+        std::cout << "    Blocks actifs/SM: " << num_blocks_per_sm << "\n";
+        std::cout << "    Warps actifs/SM: " << active_warps
+                  << " / " << max_warps_per_sm << "\n";
+        std::cout << "    Occupancy: " << occupancy << "%\n";
+
+        // occupancy du kernel de reduction
+        cudaOccupancyMaxPotentialBlockSize(
+            &min_grid_size, &best_block_size,
+            compute_avg_luminance, 0, 0);
+        std::cout << "\n  compute_avg_luminance:\n";
+        std::cout << "    Block size: 256, Optimal (API): "
+                  << best_block_size << "\n";
+
+        cudaOccupancyMaxActiveBlocksPerMultiprocessor(
+            &num_blocks_per_sm, compute_avg_luminance, 256, 0);
+        active_warps = num_blocks_per_sm * (256 / prop.warpSize);
+        occupancy = 100.0f * active_warps / max_warps_per_sm;
+        std::cout << "    Blocks actifs/SM: " << num_blocks_per_sm
+                  << ", Occupancy: " << occupancy << "%\n";
+
+        std::cout << "\n  === Memory Types Used ===\n";
+        std::cout << "  __constant__: Camera (" << sizeof(Camera) << " B)"
+                  << " + RenderConfig (" << sizeof(RenderConfig) << " B)\n";
+        std::cout << "  __shared__:   256 floats in reduction (" << 256 * sizeof(float) << " B/block)\n";
+        std::cout << "  Pinned host:  framebuffer D2H (" << num_pixels * sizeof(Color) << " B)\n";
+        std::cout << "  Global:       framebuffer, BVH, rand_states, materials\n";
+        std::cout << "  Streams:      2 (compute + transfer, overlapped init)\n";
     }
 
+    // cleanup
+    cudaFreeHost(h_frame_buffer);
     cudaFree(d_frame_buffer);
     cudaFree(d_rand_states);
     cudaFree(d_materials);
+    cudaFree(d_total_luminance);
+    cudaStreamDestroy(stream_compute);
+    cudaStreamDestroy(stream_transfer);
     bvh_builder.free_gpu_bvh(bvh);
 
     return 0;

@@ -1,0 +1,645 @@
+% =============================================================================
+% Rapport Final : Ray Tracer CUDA/CPU
+% =============================================================================
+\documentclass[12pt,a4paper]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,fit,backgrounds}
+
+% --- Geometry ---
+\geometry{margin=2.5cm}
+
+% --- Code style ---
+\definecolor{codebg}{RGB}{245,245,248}
+\definecolor{codecomment}{RGB}{100,120,140}
+\definecolor{codekeyword}{RGB}{0,100,180}
+\definecolor{codestring}{RGB}{180,60,40}
+
+\lstdefinestyle{cudastyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{codekeyword}\bfseries,
+    commentstyle=\color{codecomment}\itshape,
+    stringstyle=\color{codestring},
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{gray!40},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt,
+    tabsize=4,
+    showstringspaces=false,
+    language=C++,
+    morekeywords={__global__,__device__,__host__,__forceinline__,__constant__,__shared__,
+                  dim3,curandState,Color,Ray,BVH,HitRecord,
+                  Interval,RenderConfig,Camera,Material,
+                  MaterialType,CPURandom,Vec3,Point3,AABB,BVHNode},
+    literate={->}{$\rightarrow$}1
+}
+\lstset{style=cudastyle}
+
+% --- Headers ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Ray Tracer CUDA/CPU}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Title ---
+\title{
+    \vspace{-1cm}
+    {\normalsize Universit\'{e} de Reims Champagne-Ardenne --- Master Informatique}\\[0.1cm]
+    {\normalsize Module : Programmation GPU}\\[0.4cm]
+    \textbf{Ray Tracer Haute Performance}\\[0.3cm]
+    \large Architecture CPU/GPU avec CUDA et OpenMP\\[0.2cm]
+    \normalsize Projet HPC -- Romeo2025
+}
+\author{Nicolas Marano}
+\date{Mars 2026}
+
+% =============================================================================
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\vspace{0.5cm}
+\begin{abstract}
+Ce rapport d\'{e}taille le d\'{e}veloppement d'un moteur de ray tracing exploitant le GPU (CUDA) et le CPU (OpenMP). L'accent est mis sur les optimisations CUDA : exploitation de la hi\'{e}rarchie m\'{e}moire (constante, partag\'{e}e, globale coalesc\'{e}e), r\'{e}duction parall\`{e}le avec primitives warp-level, CUDA streams pour le recouvrement calcul/transfert, et analyse d'occupancy. Le moteur atteint \textbf{1\,479 MRays/s} sur NVIDIA GH200 H100, avec un speedup de \textbf{21--39$\times$} par rapport au CPU ARM Neoverse V2.
+\end{abstract}
+
+\tableofcontents
+\vspace{0.5cm}
+
+% =============================================================================
+\section{Introduction}
+% =============================================================================
+
+La synth\`{e}se d'images par path tracing est particuli\`{e}rement co\^{u}teuse en ressources calculatoires. Chaque pixel n\'{e}cessite le lancement de dizaines de rayons (\'{e}chantillonnage Monte Carlo), suivis de rebond en rebond. L'ind\'{e}pendance entre pixels rend ce calcul parall\'{e}lisable sur GPU.
+
+J'ai d\'{e}velopp\'{e} trois impl\'{e}mentations partageant le m\^{e}me algorithme de rendu :
+\begin{enumerate}
+    \item \textbf{CPU s\'{e}quentiel / OpenMP} : les lignes de l'image sont distribu\'{e}es sur les c\oe urs CPU via \texttt{\#pragma omp parallel for}, servant de r\'{e}f\'{e}rence et de version portable.
+    \item \textbf{GPU pur (CUDA)} : chaque thread calcule un pixel complet, exploitant les milliers de c\oe urs du GPU avec m\'{e}moire constante, partag\'{e}e et globale coalesc\'{e}e.
+    \item \textbf{GPU hybride (streams)} : deux \texttt{cudaStream\_t} permettent le recouvrement des transferts m\'{e}moire Host$\leftrightarrow$Device avec le calcul GPU.
+\end{enumerate}
+
+Le moteur a \'{e}t\'{e} test\'{e} sur mon PC portable (RTX 4070 Laptop) et le cluster HPC Romeo2025 (NVIDIA GH200 H100). Le code source complet est disponible sur : \url{https://github.com/Gotman08/RayTracing.git}
+
+% =============================================================================
+\section{Architecture g\'{e}n\'{e}rale du raytraceur}
+% =============================================================================
+
+\subsection{Organisation modulaire}
+
+Le projet est structur\'{e} en biblioth\`{e}ques d'en-t\^{e}tes (\texttt{.cuh}) organis\'{e}es par domaine fonctionnel, favorisant la r\'{e}utilisation du code entre les chemins GPU et CPU.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lp{9cm}}
+\toprule
+\textbf{Module} & \textbf{Contenu} \\
+\midrule
+Utilitaires core  & \texttt{vec3}, \texttt{ray}, \texttt{aabb}, \texttt{interval}, \texttt{timer}, g\'{e}n\'{e}rateur al\'{e}atoire \\
+G\'{e}om\'{e}trie         & \texttt{sphere}, \texttt{plane}, interface \texttt{hittable} \\
+Mat\'{e}riaux         & \texttt{lambertian}, \texttt{metal}, \texttt{dielectric} \\
+Acc\'{e}l\'{e}ration      & Arbre BVH (variantes GPU et CPU) \\
+Rendu             & Renderers GPU/CPU, tone mapping, dispatch de mat\'{e}riaux \\
+Cam\'{e}ra            & Cam\'{e}ra perspective avec DoF et motion blur \\
+\bottomrule
+\end{tabular}
+\caption{Six modules partageant les m\^{e}mes en-t\^{e}tes \texttt{.cuh} entre GPU et CPU}
+\end{table}
+
+\subsection{Algorithme de rendu}
+
+Le c\oe ur du moteur est la fonction \texttt{ray\_color}, qui suit les rebonds d'un rayon de mani\`{e}re \textbf{it\'{e}rative} (pas de r\'{e}cursion, car la pile d'appels GPU est limit\'{e}e). \`{A} chaque rebond, l'att\'{e}nuation est multipli\'{e}e par la couleur du mat\'{e}riau ; si le rayon atteint le ciel, sa couleur est pond\'{e}r\'{e}e par l'att\'{e}nuation accumul\'{e}e.
+
+Le dispatch des mat\'{e}riaux utilise un \texttt{switch} sur une \'{e}num\'{e}ration au lieu de fonctions virtuelles, car les vtables ne sont pas support\'{e}es sur GPU. Trois comportements physiques sont impl\'{e}ment\'{e}s : diffusion lambertienne, r\'{e}flexion m\'{e}tallique avec rugosit\'{e}, et r\'{e}fraction di\'{e}lectrique (loi de Snell + approximation de Schlick).
+
+\subsection{Structure d'acc\'{e}l\'{e}ration BVH}
+
+Le \textbf{BVH} (\textit{Bounding Volume Hierarchy}) r\'{e}duit la complexit\'{e} d'intersection de $O(n)$ \`{a} $O(\log n)$ par rayon. Il est construit sur CPU par approche \textit{top-down} (m\'{e}diane sur l'axe le plus long) et stock\'{e} sous forme de \textbf{tableau plat} avec indices entiers (pas de pointeurs), permettant un transfert direct vers le GPU. La travers\'{e}e est it\'{e}rative avec une pile locale de 64 \'{e}l\'{e}ments.
+
+Les couleurs HDR sont compress\'{e}es via le \textbf{tone mapping de Reinhard} ($x \mapsto x/(1+x)$) puis converties en sRGB par correction gamma ($\gamma = 2.2$).
+
+\subsection{Flux de donn\'{e}es Host $\leftrightarrow$ Device}
+
+La figure~\ref{fig:flux_h2d} pr\'{e}sente le sch\'{e}ma de flux de donn\'{e}es entre le CPU et le GPU, incluant les transferts m\'{e}moire et le fixup des pointeurs.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    box/.style={draw, rounded corners, minimum width=3.8cm, minimum height=0.55cm,
+                font=\footnotesize\ttfamily},
+    hostbox/.style={box, fill=blue!8},
+    devbox/.style={box, fill=green!8},
+    arr/.style={-{Stealth[length=2mm]}, thick},
+    h2d/.style={arr, blue!70},
+    d2h/.style={arr, orange!70},
+    lbl/.style={font=\scriptsize, midway},
+]
+
+% Host column
+\node[font=\bfseries\small] (htitle) {HOST (CPU)};
+\node[hostbox, below=0.3cm of htitle] (hmat) {h\_materials[]};
+\node[hostbox, below=0.15cm of hmat] (hobj) {h\_objects[]};
+\node[hostbox, below=0.15cm of hobj] (hcam) {Camera};
+\node[hostbox, below=0.15cm of hcam] (hcfg) {RenderConfig};
+\node[hostbox, below=0.5cm of hcfg] (hfb) {h\_frame\_buffer[]};
+
+% Device column
+\node[font=\bfseries\small, right=4.5cm of htitle] (dtitle) {DEVICE (GPU)};
+\node[devbox, below=0.3cm of dtitle] (dmat) {d\_materials[]};
+\node[devbox, below=0.15cm of dmat] (dbvh) {BVH (nodes + prims)};
+\node[devbox, below=0.15cm of dbvh, fill=purple!10] (dcam) {\_\_constant\_\_ cam};
+\node[devbox, below=0.15cm of dcam, fill=purple!10] (dcfg) {\_\_constant\_\_ cfg};
+\node[devbox, below=0.5cm of dcfg] (dfb) {d\_frame\_buffer[]};
+
+% Arrows H->D
+\draw[h2d] (hmat.east) -- node[lbl, above] {\scriptsize cudaMemcpy} (dmat.west);
+\draw[h2d] (hobj.east) -- node[lbl, above] {\scriptsize BVH build + upload} (dbvh.west);
+\draw[h2d] (hcam.east) -- node[lbl, above] {\scriptsize cudaMemcpyToSymbol} (dcam.west);
+\draw[h2d] (hcfg.east) -- node[lbl, above] {\scriptsize cudaMemcpyToSymbol} (dcfg.west);
+
+% Arrow D->H
+\draw[d2h] (dfb.west) -- node[lbl, below] {\scriptsize cudaMemcpyAsync D$\to$H} (hfb.east);
+
+% Pointer fixup annotation
+\node[font=\scriptsize\itshape, text=red!60!black, below=0.05cm of hobj, xshift=2.2cm]
+    {pointer fixup H$\to$D};
+
+% Bus annotation
+\node[font=\scriptsize, text=gray, below=2.8cm of htitle, xshift=2.3cm]
+    {$\longleftrightarrow$ PCI-e bus $\longleftrightarrow$};
+
+% Actions
+\node[font=\scriptsize\itshape, below=0.15cm of hfb, text=blue!60!black] {save\_image()};
+\node[font=\scriptsize\itshape, below=0.15cm of dfb, text=green!50!black] {render\_kernel()};
+\end{tikzpicture}
+\caption{Le fixup de pointeurs (en rouge) est la seule \'{e}tape non triviale du pipeline de transfert H$\to$D}
+\label{fig:flux_h2d}
+\end{figure}
+
+% =============================================================================
+\section{Impl\'{e}mentation GPU et optimisations CUDA}
+% =============================================================================
+
+\subsection{Grille d'ex\'{e}cution et mapping}
+
+Le kernel principal associe \textbf{un thread CUDA \`{a} un pixel}. Les threads sont organis\'{e}s en blocs 2D de $16 \times 16 = 256$ threads :
+
+\begin{lstlisting}[caption={Lancement du kernel de rendu}]
+constexpr int BLOCK_SIZE = 16;
+dim3 blocks((width + BLOCK_SIZE - 1) / BLOCK_SIZE,
+            (height + BLOCK_SIZE - 1) / BLOCK_SIZE);
+dim3 threads(BLOCK_SIZE, BLOCK_SIZE);
+render_kernel<<<blocks, threads>>>(d_frame_buffer,
+    camera, bvh, config, d_rand_states);
+\end{lstlisting}
+
+Chaque thread effectue la totalit\'{e} du travail pour son pixel : g\'{e}n\'{e}ration des rayons, multi-\'{e}chantillonnage (SPP), accumulation et tone mapping. Cette strat\'{e}gie maximise l'ind\'{e}pendance et \'{e}limine toute synchronisation inter-threads.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    block/.style={draw, minimum width=1.1cm, minimum height=1.1cm, font=\tiny, align=center},
+    warp/.style={draw, minimum width=0.28cm, minimum height=0.28cm, font=\tiny},
+]
+\definecolor{w0}{RGB}{66,133,244}
+\definecolor{w1}{RGB}{234,67,53}
+\definecolor{w2}{RGB}{251,188,4}
+\definecolor{w3}{RGB}{52,168,83}
+\definecolor{w4}{RGB}{154,100,215}
+\definecolor{w5}{RGB}{0,172,193}
+\definecolor{w6}{RGB}{255,112,67}
+\definecolor{w7}{RGB}{141,110,99}
+
+% Grid (4x3 blocks)
+\node[font=\small\bfseries] at (2, 4.2) {Grid ($\lceil W/16\rceil \times \lceil H/16\rceil$)};
+\foreach \bx in {0,1,2,3} {
+    \foreach \by in {0,1,2} {
+        \pgfmathsetmacro{\highlight}{ifthenelse(\bx==1 && \by==1, 1, 0)}
+        \ifnum\bx=1 \ifnum\by=1
+            \node[block, fill=green!15, thick, draw=green!50!black] at (\bx*1.3, \by*1.3) {Block\\(\bx,\by)};
+        \else
+            \node[block, fill=gray!8] at (\bx*1.3, \by*1.3) {(\bx,\by)};
+        \fi\else
+            \node[block, fill=gray!8] at (\bx*1.3, \by*1.3) {(\bx,\by)};
+        \fi
+    }
+}
+
+% Arrow to zoom
+\draw[-{Stealth}, thick, green!50!black] (2.2, 1.3) -- (5.3, 2.5);
+
+% Zoomed block (16x16 = 8 warps)
+\node[font=\small\bfseries] at (8.2, 4.2) {Bloc 16$\times$16 = 256 threads};
+\node[font=\scriptsize] at (8.2, 3.7) {8 warps de 32 threads};
+
+% Draw 16x16 grid with warp colors (each row of 2 lines = 1 warp)
+\foreach \row in {0,...,15} {
+    \foreach \col in {0,...,15} {
+        \pgfmathtruncatemacro{\warpid}{int((\row*16+\col)/32)}
+        \pgfmathtruncatemacro{\cidx}{mod(\warpid, 8)}
+        \ifcase\cidx
+            \def\wcolor{w0}\or\def\wcolor{w1}\or\def\wcolor{w2}\or\def\wcolor{w3}%
+            \or\def\wcolor{w4}\or\def\wcolor{w5}\or\def\wcolor{w6}\or\def\wcolor{w7}\fi
+        \fill[\wcolor!35] (5.5+\col*0.19, 3.2-\row*0.19) rectangle ++(0.17, 0.17);
+        \draw[gray!30, very thin] (5.5+\col*0.19, 3.2-\row*0.19) rectangle ++(0.17, 0.17);
+    }
+}
+
+% Warp legend
+\foreach \w/\wc in {0/w0, 1/w1, 2/w2, 3/w3, 4/w4, 5/w5, 6/w6, 7/w7} {
+    \fill[\wc!45] (11.2, 3.2-\w*0.37) rectangle ++(0.25, 0.25);
+    \node[font=\tiny, anchor=west] at (11.55, 3.32-\w*0.37) {warp \w};
+}
+
+% Annotation
+\node[font=\scriptsize\itshape, text=gray, align=center] at (8.2, -0.3)
+    {1 warp = 32 threads contigus = ex\'ecution SIMT (lockstep)};
+\end{tikzpicture}
+\caption{Avec des blocs 16$\times$16, les threads d'un warp couvrent des colonnes contigu\"{e}s --- cl\'{e} de la coalescence}
+\label{fig:grid_warps}
+\end{figure}
+
+\subsection{Optimisation de la hi\'{e}rarchie m\'{e}moire}
+
+L'exploitation de la hi\'{e}rarchie m\'{e}moire est d\'{e}terminante pour les performances GPU~[1]. Le tableau~\ref{tab:mem_hierarchy} r\'{e}sume le compromis latence/capacit\'{e}.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Le ratio 1:80 entre la latence des registres et la VRAM justifie le placement en \texttt{\_\_constant\_\_}}
+\begin{tabular}{llll}
+\toprule
+\textbf{Niveau} & \textbf{Latence} & \textbf{Port\'{e}e} & \textbf{Donn\'{e}es du projet} \\
+\midrule
+Registres & $\sim$0 cycles & Thread & ray, rec, attenuation, stack[64] \\
+\texttt{\_\_shared\_\_} & $\sim$5 cycles & Bloc & sdata[256] (r\'{e}duction luminance) \\
+\texttt{\_\_constant\_\_} & $\sim$5 cycles & Grille & Camera (120 B), RenderConfig (64 B) \\
+L1 / Texture & $\sim$5 cycles & SM & cache automatique (acc\`{e}s BVH) \\
+Globale (VRAM) & 400+ cycles & Device & framebuffer, BVH, curandState \\
+\bottomrule
+\end{tabular}
+\label{tab:mem_hierarchy}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    layer/.style={draw, rounded corners=3pt, minimum height=0.8cm, align=center, font=\footnotesize},
+    annot/.style={font=\scriptsize\itshape, text=gray!70!black, anchor=west},
+]
+
+% Layers (pyramid: narrower at top, wider at bottom)
+\node[layer, fill=green!35, minimum width=4cm] (reg) at (0, 4) {Registres};
+\node[layer, fill=green!20, minimum width=5.5cm] (sh)  at (0, 3) {\texttt{\_\_shared\_\_}};
+\node[layer, fill=yellow!25, minimum width=7cm] (cst) at (0, 2) {\texttt{\_\_constant\_\_}};
+\node[layer, fill=orange!15, minimum width=8.5cm] (l1)  at (0, 1) {L1 / Texture cache};
+\node[layer, fill=red!12, minimum width=10cm] (glb) at (0, 0) {M\'emoire globale (VRAM)};
+
+% Left: speed labels
+\node[font=\scriptsize, text=green!50!black, anchor=east] at (-5.3, 4) {$\sim$0 cycles};
+\node[font=\scriptsize, text=green!50!black, anchor=east] at (-5.3, 3) {$\sim$5 cycles};
+\node[font=\scriptsize, text=yellow!60!black, anchor=east] at (-5.3, 2) {$\sim$5 cycles};
+\node[font=\scriptsize, text=orange!60!black, anchor=east] at (-5.3, 1) {$\sim$5 cycles};
+\node[font=\scriptsize, text=red!50!black, anchor=east] at (-5.3, 0) {400+ cycles};
+
+% Right: usage annotations
+\node[annot] at (2.3, 4) {ray, rec, attenuation, BVH stack[64]};
+\node[annot] at (3, 3) {sdata[256] (r\'eduction luminance)};
+\node[annot] at (3.7, 2) {Camera (120 B), RenderConfig (64 B)};
+\node[annot] at (4.5, 1) {cache automatique (acc\`es BVH)};
+\node[annot] at (5.3, 0) {framebuffer, BVH, curandState, mat\'eriaux};
+
+% Side labels
+\draw[{Stealth}-{Stealth}, thick, gray] (-5.8, -0.3) -- (-5.8, 4.3);
+\node[font=\scriptsize, text=gray, rotate=90, anchor=center] at (-6.3, 2) {Rapide $\leftarrow$ Latence $\rightarrow$ Lent};
+
+\draw[{Stealth}-{Stealth}, thick, gray] (10.3, -0.3) -- (10.3, 4.3);
+\node[font=\scriptsize, text=gray, rotate=90, anchor=center] at (10.8, 2) {Petit $\leftarrow$ Taille $\rightarrow$ Grand};
+\end{tikzpicture}
+\caption{Chaque niveau de la pyramide correspond \`{a} un type de donn\'{e}e sp\'{e}cifique du ray tracer}
+\label{fig:mem_pyramid}
+\end{figure}
+
+\paragraph{M\'{e}moire constante.}
+Le cache constant broadcast la valeur \`{a} tout le warp en un seul cycle~[1]. La \texttt{Camera} ($\sim$120 octets) et la \texttt{RenderConfig} ($\sim$64 octets) sont lues \textbf{identiquement par tous les threads} --- cas d'usage id\'{e}al :
+
+\begin{lstlisting}[caption={Utilisation de la m\'{e}moire constante}]
+__constant__ Camera d_const_camera;
+__constant__ RenderConfig d_const_config;
+cudaMemcpyToSymbol(d_const_camera, &camera,
+                   sizeof(Camera));
+\end{lstlisting}
+
+Taille totale : $\sim$184 octets, bien en dessous de la limite de 64 KB.
+
+\paragraph{Coalescence des acc\`{e}s m\'{e}moire.}
+Pour garantir la coalescence des acc\`{e}s~[1], l'index lin\'{e}aire du pixel est $j \times W + i$, avec les threads organis\'{e}s selon $x$ (dimension rapide du bloc $16\times16$). Les threads $t_0, \ldots, t_{15}$ d'un warp correspondent \`{a} des colonnes cons\'{e}cutives sur la m\^{e}me ligne : leurs adresses dans le framebuffer et le tableau \texttt{curandState} sont \textbf{contigu\"{e}s}, garantissant une bande passante maximale.
+
+\paragraph{M\'{e}moire partag\'{e}e et r\'{e}duction parall\`{e}le.}
+La m\'{e}moire \texttt{\_\_shared\_\_} est utilis\'{e}e dans le kernel de r\'{e}duction parall\`{e}le pour calculer la luminance moyenne (n\'{e}cessaire au tone mapping adaptatif). Chaque bloc de 256 threads utilise un tableau partag\'{e} de 1~KB ($256 \times 4$ octets) pour effectuer une r\'{e}duction en arbre binaire :
+
+\begin{lstlisting}[caption={Kernel de r\'{e}duction parall\`{e}le}]
+__global__ void compute_avg_luminance(
+    const Color* frame_buffer,
+    float* d_total_luminance, int num_pixels) {
+    __shared__ float sdata[256];
+    int tid = threadIdx.x;
+    int gid = blockIdx.x * blockDim.x + threadIdx.x;
+    sdata[tid] = (gid < num_pixels) ?
+        luminance(frame_buffer[gid]) : 0.0f;
+    __syncthreads();
+    for (unsigned int s = blockDim.x/2; s > 0; s >>= 1) {
+        if (tid < s) sdata[tid] += sdata[tid + s];
+        __syncthreads();
+    }
+    if (tid == 0) atomicAdd(d_total_luminance, sdata[0]);
+}
+\end{lstlisting}
+
+Les 5 derni\`{e}res it\'{e}rations de la r\'{e}duction (strides $\leq 32$) n'impliquent qu'un seul warp. L'instruction \texttt{\_\_shfl\_down\_sync} \'{e}change des valeurs de \textbf{registres} directement entre threads du m\^{e}me warp, sans passer par la m\'{e}moire partag\'{e}e :
+
+\begin{lstlisting}[caption={R\'{e}duction warp-level avec \_\_shfl\_down\_sync}]
+if (tid < 32) {
+    float val = sdata[tid] + sdata[tid + 32];
+    val += __shfl_down_sync(0xffffffff, val, 16);
+    val += __shfl_down_sync(0xffffffff, val, 8);
+    val += __shfl_down_sync(0xffffffff, val, 4);
+    val += __shfl_down_sync(0xffffffff, val, 2);
+    val += __shfl_down_sync(0xffffffff, val, 1);
+    if (tid == 0) atomicAdd(d_total_luminance, val);
+}
+\end{lstlisting}
+
+Le masque \texttt{0xffffffff} indique que les 32 threads participent. Cette optimisation supprime 5 barri\`{e}res \texttt{\_\_syncthreads()} et 5 s\'{e}ries d'acc\`{e}s m\'{e}moire partag\'{e}e. La librairie \textbf{Thrust} propose \texttt{thrust::transform\_reduce} pour la m\^{e}me op\'{e}ration en une ligne, mais le kernel custom offre un contr\^{o}le fin sur la shared memory et les registres.
+
+\paragraph{G\'{e}n\'{e}ration de nombres al\'{e}atoires (Wang hash).}
+Le profiling a r\'{e}v\'{e}l\'{e} que \texttt{curand\_init} repr\'{e}sentait $\sim$10\% du temps total. L'initialisation a \'{e}t\'{e} remplac\'{e}e par le \textbf{hachage de Wang}, une initialisation en $O(1)$ par pixel utilisant des op\'{e}rations XOR et multiplications :
+
+\begin{lstlisting}[caption={Initialisation rapide via Wang hash}]
+__device__ __forceinline__
+unsigned int wang_hash(unsigned int seed) {
+    seed = (seed ^ 61) ^ (seed >> 16);
+    seed *= 9;  seed = seed ^ (seed >> 4);
+    seed *= 0x27d4eb2d;
+    return seed ^ (seed >> 15);
+}
+\end{lstlisting}
+
+\subsection{Limitation de la divergence de warp}
+
+Sur GPU NVIDIA, les 32 threads d'un warp s'ex\'{e}cutent en lockstep. Lorsqu'ils prennent des branches diff\'{e}rentes, les deux chemins sont s\'{e}rialis\'{e}s. Trois sources de divergence ont \'{e}t\'{e} identifi\'{e}es :
+
+\begin{enumerate}
+    \item \textbf{Dispatch de mat\'{e}riaux} : le \texttt{switch(mat.type)} cause de la divergence quand des pixels voisins touchent des mat\'{e}riaux diff\'{e}rents. L'impact est maximal aux fronti\`{e}res entre objets.
+    \item \textbf{Travers\'{e}e BVH} : le test \texttt{if (node.is\_leaf)} diverge car les rayons d'un m\^{e}me warp atteignent des profondeurs diff\'{e}rentes dans l'arbre.
+    \item \textbf{Guard de bordure} : \texttt{if (i >= width || j >= height)} n'affecte que les threads de bord (impact n\'{e}gligeable --- padding implicite \`{a} z\'{e}ro via early return).
+\end{enumerate}
+
+L'utilisation d'un dispatch par \texttt{enum/switch} au lieu de fonctions virtuelles (vtables) permet au compilateur de mieux pr\'{e}dire les branches. Un tri des rayons par mat\'{e}riau pourrait r\'{e}duire la divergence du cas 1, mais au prix d'une synchronisation globale non justifi\'{e}e pour notre sc\`{e}ne.
+
+% =============================================================================
+\section{Approche hybride : recouvrement calculs/transferts}
+% =============================================================================
+
+\subsection{Probl\`{e}me du goulot PCI-Express}
+
+Le bus PCI-Express entre le CPU (host) et le GPU (device) constitue un goulot d'\'{e}tranglement potentiel : les transferts m\'{e}moire H2D et D2H occupent le bus de mani\`{e}re exclusive si lanc\'{e}s de mani\`{e}re synchrone. Le principe est d'utiliser des \textbf{CUDA streams} pour superposer les transferts avec le calcul~[2].
+
+\subsection{Impl\'{e}mentation \`{a} 2 streams}
+
+Deux \texttt{cudaStream\_t} sont utilis\'{e}s pour recouvrir les transferts m\'{e}moire avec le calcul :
+\begin{itemize}
+    \item \texttt{stream\_compute} : kernels (init RNG, rendu, r\'{e}duction, tone mapping)
+    \item \texttt{stream\_transfer} : transferts m\'{e}moire (H2D mat\'{e}riaux/BVH, D2H framebuffer)
+\end{itemize}
+
+\subsection{Points de recouvrement}
+
+Le \textbf{premier recouvrement} superpose l'upload des mat\'{e}riaux (\texttt{cudaMemcpyAsync} sur \texttt{stream\_transfer}) avec l'initialisation curand (\texttt{stream\_compute}). Le \textbf{second} lance le t\'{e}l\'{e}chargement asynchrone du framebuffer (D2H) pendant que le CPU pr\'{e}pare la sauvegarde. Le gain est modeste car le kernel domine ($\sim$84\%), mais la technique d\'{e}montre la ma\^{i}trise de l'ex\'{e}cution asynchrone.
+
+\textbf{M\'{e}moire pinned :} comme sp\'{e}cifi\'{e} dans la documentation CUDA~[2,4], \texttt{cudaMemcpyAsync} n\'{e}cessite de la m\'{e}moire \textit{page-locked} c\^{o}t\'{e} host pour un transfert v\'{e}ritablement asynchrone. Sans cela, le driver CUDA effectue une copie interm\'{e}diaire bloquante vers un buffer interne pinn\'{e}. Le framebuffer host (le plus gros buffer D2H) est donc allou\'{e} via \texttt{cudaMallocHost} :
+
+\begin{lstlisting}[caption={Pinned memory pour le framebuffer}]
+Color* h_frame_buffer;
+cudaMallocHost(&h_frame_buffer, num_pixels * sizeof(Color));
+cudaMemcpyAsync(h_frame_buffer, d_frame_buffer,
+    num_pixels * sizeof(Color),
+    cudaMemcpyDeviceToHost, stream_transfer);
+\end{lstlisting}
+
+Les petits buffers (mat\'{e}riaux, $\sim$quelques Ko) restent en m\'{e}moire paginable : leur taille ne justifie pas le co\^{u}t de la m\'{e}moire pinned (non-swappable, r\'{e}duit la RAM disponible pour l'OS).
+
+\paragraph{Difficult\'{e} rencontr\'{e}e.}
+La premi\`{e}re version utilisait un \texttt{std::vector<Color>} pour le framebuffer host. Le \texttt{cudaMemcpyAsync} semblait fonctionner, mais le profiling montrait un temps D2H identique avec et sans stream s\'{e}par\'{e}. Apr\`{e}s investigation, le probl\`{e}me venait du fait que le driver CUDA, face \`{a} de la m\'{e}moire paginable, effectue en interne une copie bloquante vers un staging buffer pinn\'{e} avant de lancer le DMA~--- rendant l'\texttt{Async} purement cosmétique. Le passage \`{a} \texttt{cudaMallocHost} a r\'{e}solu le probl\`{e}me et rendu le recouvrement effectif.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    block/.style={draw, rounded corners=2pt, minimum height=0.6cm, font=\scriptsize\ttfamily, align=center},
+    comp/.style={block, fill=green!20},
+    xfer/.style={block, fill=blue!15},
+    sync/.style={draw, dashed, red!60, thick},
+    overlap/.style={draw=none, fill=orange!10, rounded corners=2pt},
+    lbl/.style={font=\footnotesize\bfseries, anchor=east},
+]
+
+% Labels
+\node[lbl] at (-0.2, 0) {stream\_compute};
+\node[lbl] at (-0.2, -1.2) {stream\_transfer};
+
+% Time axis
+\draw[-{Stealth}, gray, thick] (0, -2.2) -- (14, -2.2) node[right, font=\scriptsize] {temps};
+\foreach \x in {0,2,...,12} { \draw[gray, thin] (\x, -2.1) -- (\x, -2.3); }
+
+% Overlap zones
+\fill[orange!8] (0, -1.55) rectangle (2.5, 0.35);
+\node[font=\tiny\itshape, text=orange!70!black] at (1.25, -1.85) {overlap 1};
+
+\fill[orange!8] (12, -1.55) rectangle (14, 0.35);
+\node[font=\tiny\itshape, text=orange!70!black] at (13, -1.85) {overlap 2};
+
+% stream_compute
+\node[comp, minimum width=2cm] at (1, 0) {init\_rand\\\_states};
+\node[comp, minimum width=6cm] at (6.5, 0) {render\_kernel};
+\node[comp, minimum width=1.3cm] at (10.5, 0) {reduce};
+\node[comp, minimum width=1.3cm] at (12, 0) {tonemap};
+
+% stream_transfer
+\node[xfer, minimum width=2cm] at (1, -1.2) {materials\\H$\to$D};
+\node[xfer, minimum width=1.5cm] at (3, -1.2) {BVH\\H$\to$D};
+\node[xfer, minimum width=1.5cm] at (13.2, -1.2) {FB\\D$\to$H};
+
+% Sync points
+\draw[sync] (2.5, 0.4) -- (2.5, -1.6) node[below, font=\tiny, text=red!60] {sync};
+\draw[sync] (9.5, 0.4) -- (9.5, -0.4);
+\end{tikzpicture}
+\caption{Le render\_kernel domine le timeline --- le gain des streams porte sur les $\sim$4\% de transferts restants}
+\label{fig:streams}
+\end{figure}
+
+% =============================================================================
+\section{Mesures de performance, profilage et analyse du speedup}
+% =============================================================================
+
+\subsection{M\'{e}thodologie de mesure}
+
+Deux niveaux de mesure sont utilis\'{e}s :
+\begin{itemize}
+    \item \textbf{Host-side} (\texttt{std::chrono}) : mesure du temps \textit{wall clock} de bout en bout, incluant allocations m\'{e}moire et transferts. Justification : cette m\'{e}trique refl\`{e}te le temps r\'{e}el per\c{c}u par l'utilisateur.
+    \item \textbf{Device-side} (\texttt{cudaEvent\_t}) : mesure du temps pur kernel avec pr\'{e}cision microseconde. Justification : isole le temps de calcul GPU des transferts et du surco\^{u}t host.
+\end{itemize}
+
+Les classes \texttt{Timer} (CPU) et \texttt{CudaTimer} (GPU) encapsulent ces m\'{e}canismes. Les m\'{e}triques sont collect\'{e}es via le flag \texttt{--profile} :
+\begin{itemize}
+    \item \textbf{MRays/s} : $\frac{W \times H \times SPP}{temps}$ (rayons primaires par seconde)
+    \item \textbf{Speedup} : $S = T_{CPU} / T_{GPU}$
+\end{itemize}
+
+\textbf{Plateformes de test} : (1) PC portable --- RTX 4070 Laptop (5888 c\oe urs CUDA, 8 Go GDDR6X), CPU x86 20 c\oe urs via WSL2 ; (2) Cluster Romeo --- GH200 H100 (120 Go HBM3, architecture Hopper), CPU ARM Neoverse V2 (16 threads OpenMP), CUDA 12.6.
+
+\subsection{Profiling GPU}
+
+\begin{table}[H]
+\centering
+\caption{Le kernel absorbe 84\% du temps --- les transferts ne sont pas le goulot d'\'{e}tranglement (800$\times$600, 100 SPP)}
+\begin{tabular}{lcc}
+\toprule
+\textbf{\'{E}tape} & \textbf{Temps (ms)} & \textbf{Proportion} \\
+\midrule
+Allocation m\'{e}moire GPU & 3.56 & 1.37\% \\
+Upload mat\'{e}riaux (H2D) & 1.78 & 0.69\% \\
+Construction BVH (CPU) & 0.15 & 0.06\% \\
+Upload BVH (H2D) & 0.19 & 0.07\% \\
+Init \'{e}tats al\'{e}atoires & 24.13 & 9.31\% \\
+\textbf{Kernel de rendu} & \textbf{219.06} & \textbf{84.49\%} \\
+Download framebuffer (D2H) & 10.31 & 3.98\% \\
+\bottomrule
+\end{tabular}
+\label{tab:profiling}
+\end{table}
+
+Le kernel domine ($\sim$84\%), confirmant que les transferts ne sont pas un goulot d'\'{e}tranglement. Sur le GH200 en 1080p @ 500 SPP, les transferts H2D + D2H restent $<$0.2\%, coh\'{e}rent avec la bande passante HBM3 (4 To/s).
+
+\subsection{R\'{e}sultats et speedup}
+
+Sur le \textbf{PC portable}, le throughput GPU atteint $\sim$270 MRays/s en 1080p, avec un speedup de \textbf{73--165$\times$} (CPU limit\'{e} par WSL2). Sur le \textbf{GH200}, le throughput culmine \`{a} \textbf{1\,479 MRays/s} en 4K, avec un speedup GPU/CPU de \textbf{21--39$\times$} (tableaux~\ref{tab:benchmarks_romeo_gpu} et \ref{tab:benchmarks_romeo_cpu} en annexe).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../output/chart_gpu_comparison.png}
+    \caption{Le GH200 est $\sim$5$\times$ plus rapide que la RTX 4070, l'\'{e}cart se creuse au-del\`{a} de 1080p}
+    \label{fig:gpu_comparison}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{../output/chart_cpu_vs_gpu.png}
+    \caption{En 1080p le CPU ARM sature \`{a} 36 MRays/s pendant que le H100 atteint 1\,411 MRays/s}
+    \label{fig:cpu_vs_gpu}
+\end{figure}
+
+\subsection{Occupancy et caract\'{e}risation compute-bound}
+
+L'occupancy (ratio warps actifs / warps max par SM) est calcul\'{e}e via l'API CUDA :
+
+\begin{lstlisting}[caption={Calcul d'occupancy}]
+int num_blocks_per_sm;
+cudaOccupancyMaxActiveBlocksPerMultiprocessor(
+    &num_blocks_per_sm, render_kernel,
+    BLOCK_SIZE * BLOCK_SIZE, 0);
+\end{lstlisting}
+
+La bande passante effective est estim\'{e}e \`{a} $\sim$64 octets/pixel (lecture \texttt{curandState} + \'{e}criture \texttt{Color}). Elle reste bien en dessous du pic th\'{e}orique (272 Go/s pour RTX 4070, 4 To/s pour GH200), confirmant que le kernel est \textbf{compute-bound}. Le throughput sature \`{a} $\sim$1\,450 MRays/s au-del\`{a} de 1080p : en basse r\'{e}solution, les 132 SM du H100 ne sont pas enti\`{e}rement satur\'{e}s ; \`{a} partir de 1080p, le GPU est pleinement exploit\'{e}.
+
+\subsection{Comparaison avec Thrust}
+
+La r\'{e}duction custom (kernel + \texttt{\_\_shfl\_down\_sync}) a \'{e}t\'{e} compar\'{e}e \`{a} \texttt{thrust::transform\_reduce}. Le kernel custom offre un avantage en contr\^{o}le et en performance pour de petits buffers, tandis que Thrust est plus concis et portable entre architectures.
+
+\subsection{Discussion : sensibilit\'{e} du speedup \`{a} la baseline}
+
+Le speedup varie fortement : 73--165$\times$ sur le laptop contre 21--39$\times$ sur Romeo. Le GH200 est pourtant 5.3$\times$ plus rapide en absolu --- la diff\'{e}rence vient du CPU de r\'{e}f\'{e}rence : le Neoverse V2 atteint 33--36 MRays/s contre 1.7--3.0 MRays/s sous WSL2 (surco\^{u}t Hyper-V, caches serveur vs. mobile, DDR5 native). \textbf{Un speedup GPU doit toujours \^{e}tre interpr\'{e}t\'{e} en regard de la baseline CPU choisie.}
+
+% =============================================================================
+\section{Conclusion}
+% =============================================================================
+
+Ce projet a permis d'\'{e}valuer concr\`{e}tement l'impact des optimisations mat\'{e}rielles sur un moteur de rendu Monte Carlo. Le speedup mesur\'{e} est de 21--39$\times$ sur le GH200, pour un throughput de 1\,479 MRays/s en 4K.
+
+La d\'{e}marche d'optimisation a suivi un cheminement en trois \'{e}tapes. La premi\`{e}re a consist\'{e} \`{a} r\'{e}soudre les probl\`{e}mes d'acc\`{e}s m\'{e}moire~[1] : placement de la Camera et du RenderConfig en m\'{e}moire constante pour le broadcast warp, et indexation row-major garantissant la coalescence des \'{e}critures dans le framebuffer. La seconde \'{e}tape a cibl\'{e} le calcul pur, en rempla\c{c}ant les cinq derni\`{e}res it\'{e}rations de la r\'{e}duction par des \'{e}changes de registres intra-warp (\texttt{\_\_shfl\_down\_sync}), supprimant autant de barri\`{e}res \texttt{\_\_syncthreads()}. La troisi\`{e}me \'{e}tape a cherch\'{e} \`{a} masquer les transferts PCI-Express restants~[2] via deux CUDA streams et l'allocation pinned du framebuffer host. Le gain effectif reste modeste ($\sim$4\% du temps total) mais illustre la d\'{e}marche d'optimisation syst\'{e}matique. L'analyse d'occupancy et la caract\'{e}risation compute-bound~[3] confirment que le kernel de rendu sature les unit\'{e}s de calcul bien avant la bande passante m\'{e}moire.
+
+Le d\'{e}bogage a repos\'{e} sur \texttt{cudaGetLastError()} et Compute Sanitizer (\texttt{compute-sanitizer --tool memcheck}).
+
+\textbf{Limites et perspectives :} l'importance sampling et la construction BVH sur GPU (LBVH) permettraient d'am\'{e}liorer convergence et performances. L'\'{e}tendre la m\'{e}moire pinned aux buffers H2D (mat\'{e}riaux, BVH) compl\'{e}terait le recouvrement bi-directionnel.
+
+Code source : \url{https://github.com/Gotman08/RayTracing.git}
+
+% =============================================================================
+\section*{R\'{e}f\'{e}rences}
+% =============================================================================
+
+\begin{enumerate}
+    \item[{[1]}] Programmation GPU --- Cours~03 : Bonnes pratiques et optimisations CUDA. URCA, 2026.
+    \item[{[2]}] Programmation GPU --- Cours~05 : Transferts asynchrones et recouvrement par streams. URCA, 2026.
+    \item[{[3]}] Programmation GPU --- Cours~02 : Fondamentaux CUDA et gestion de l'ex\'{e}cution. URCA, 2026.
+    \item[{[4]}] NVIDIA CUDA C++ Programming Guide, version 12.6. NVIDIA Corporation, 2025.
+\end{enumerate}
+
+% =============================================================================
+\appendix
+\section{Donn\'{e}es brutes de benchmark}
+% =============================================================================
+
+\begin{table}[H]
+\centering
+\caption{Le throughput sature autour de 1\,450 MRays/s d\`{e}s le 1080p --- les 132 SM sont alors pleinement occup\'{e}s}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{R\'{e}solution} & \textbf{SPP} & \textbf{Temps (s)} & \textbf{MRays/s} \\
+\midrule
+640$\times$480 & 100 & 0.045 & 683 \\
+1280$\times$720 & 100 & 0.073 & 1\,262 \\
+1920$\times$1080 & 100 & 0.147 & 1\,411 \\
+1920$\times$1080 & 500 & 0.719 & 1\,442 \\
+3840$\times$2160 & 100 & 0.569 & 1\,458 \\
+3840$\times$2160 & 500 & 2.804 & 1\,479 \\
+\bottomrule
+\end{tabular}
+\label{tab:benchmarks_romeo_gpu}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Le Neoverse V2 plafonne \`{a} 36 MRays/s --- le speedup cro\^{i}t avec la r\'{e}solution car le GPU monte en charge}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{R\'{e}solution} & \textbf{SPP} & \textbf{CPU (s)} & \textbf{CPU MRays/s} & \textbf{GPU (s)} & \textbf{Speedup} \\
+\midrule
+640$\times$480 & 100 & 0.933 & 33 & 0.045 & 21$\times$ \\
+1280$\times$720 & 100 & 2.558 & 36 & 0.073 & 35$\times$ \\
+1920$\times$1080 & 100 & 5.805 & 36 & 0.147 & 39$\times$ \\
+\bottomrule
+\end{tabular}
+\label{tab:benchmarks_romeo_cpu}
+\end{table}
+
+\end{document}

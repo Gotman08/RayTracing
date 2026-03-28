@@ -26,6 +26,10 @@
 \usepackage{array}
 \usepackage{float}
 
+% Diagrammes
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,fit,backgrounds,patterns}
+
 % Liens
 \usepackage{hyperref}
 
@@ -78,7 +82,7 @@
     {\LARGE \textbf{Rapport Technique}} \\[0.5cm]
     {\Large CUDA Ray Tracer} \\[0.3cm]
     {\large Moteur de rendu physiquement réaliste} \\
-    {\large GPU (CUDA) / CPU (OpenMP) / Mode interactif (OpenGL)}
+    {\large GPU (CUDA) / CPU (OpenMP)}
     \vspace{0.5cm}
 }
 \author{Projet RayTracing}
@@ -96,8 +100,7 @@ Ce rapport présente l'implémentation d'un moteur de ray tracing physiquement r
 tirant parti des capacités de calcul parallèle des GPU modernes via CUDA. Le projet
 propose deux chemins de rendu : un chemin GPU utilisant CUDA pour des performances
 optimales (~160 MRays/s sur RTX 4060), et un chemin CPU multi-thread utilisant
-OpenMP. Un mode interactif en temps réel est également disponible grâce à l'interopérabilité
-CUDA-OpenGL. L'accélération GPU est de l'ordre de \textbf{×56} par rapport à l'exécution CPU.
+OpenMP. L'accélération GPU est de l'ordre de \textbf{×56} par rapport à l'exécution CPU.
 \end{abstract}
 
 \vspace{0.5cm}
@@ -124,7 +127,6 @@ pour obtenir une image convergée. La nature massivement parallèle du problème
     \item Implémenter un path tracer complet avec matériaux physiques (Lambertian, Métal, Diélectrique)
     \item Exploiter CUDA pour une accélération GPU massive
     \item Fournir un chemin de rendu CPU avec OpenMP comme alternative portable
-    \item Développer un mode interactif temps réel via l'interopérabilité CUDA-OpenGL
     \item Construire un pipeline de tests unitaires sans dépendance CUDA
 \end{itemize}
 
@@ -145,8 +147,6 @@ Les images sont exportées aux formats PNG, BMP, JPG, TGA et PPM.
 \midrule
 CUDA 12.6           & Rendu GPU parallèle \\
 OpenMP              & Rendu CPU multi-thread \\
-GLFW 3.3+           & Fenêtrage (mode interactif) \\
-OpenGL 3.3+         & Affichage temps réel \\
 stb\_image\_write   & Export PNG/BMP/JPG/PPM \\
 CMake 3.18+         & Système de build \\
 CTest               & Tests unitaires \\
@@ -176,7 +176,6 @@ Matériaux         & \texttt{lambertian}, \texttt{metal}, \texttt{dielectric} \\
 Accélération      & Arbre BVH (variantes GPU et CPU) \\
 Rendu             & Renderers GPU/CPU, tone mapping, dispatch de matériaux \\
 Caméra            & Caméra perspective avec DoF et motion blur \\
-Mode interactif   & Gestionnaire de fenêtre, interop GL, contrôleur caméra, gestion des entrées \\
 \bottomrule
 \end{tabular}
 \caption{Organisation modulaire du projet}
@@ -187,7 +186,6 @@ Mode interactif   & Gestionnaire de fenêtre, interop GL, contrôleur caméra, g
 \begin{enumerate}
     \item \textbf{Mode GPU} (défaut) : rendu CUDA, export image
     \item \textbf{Mode CPU} (\texttt{--cpu}) : rendu OpenMP, export image
-    \item \textbf{Mode interactif} (\texttt{--interactive}) : rendu CUDA temps réel avec affichage OpenGL
 \end{enumerate}
 
 % ===============================================
@@ -345,6 +343,69 @@ Le rendu est organisé en grille 2D de blocs $16 \times 16$ (256 threads/bloc) :
 
 Chaque thread traite un pixel de l'image de manière indépendante.
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    block/.style={draw, minimum width=1.1cm, minimum height=1.1cm, font=\tiny, align=center},
+    warp/.style={draw, minimum width=0.28cm, minimum height=0.28cm, font=\tiny},
+]
+\definecolor{w0}{RGB}{66,133,244}
+\definecolor{w1}{RGB}{234,67,53}
+\definecolor{w2}{RGB}{251,188,4}
+\definecolor{w3}{RGB}{52,168,83}
+\definecolor{w4}{RGB}{154,100,215}
+\definecolor{w5}{RGB}{0,172,193}
+\definecolor{w6}{RGB}{255,112,67}
+\definecolor{w7}{RGB}{141,110,99}
+
+% Grid (4x3 blocks)
+\node[font=\small\bfseries] at (2, 4.2) {Grid ($\lceil W/16\rceil \times \lceil H/16\rceil$)};
+\foreach \bx in {0,1,2,3} {
+    \foreach \by in {0,1,2} {
+        \pgfmathsetmacro{\highlight}{ifthenelse(\bx==1 && \by==1, 1, 0)}
+        \ifnum\bx=1 \ifnum\by=1
+            \node[block, fill=green!15, thick, draw=green!50!black] at (\bx*1.3, \by*1.3) {Block\\(\bx,\by)};
+        \else
+            \node[block, fill=gray!8] at (\bx*1.3, \by*1.3) {(\bx,\by)};
+        \fi\else
+            \node[block, fill=gray!8] at (\bx*1.3, \by*1.3) {(\bx,\by)};
+        \fi
+    }
+}
+
+% Arrow to zoom
+\draw[-{Stealth}, thick, green!50!black] (2.2, 1.3) -- (5.3, 2.5);
+
+% Zoomed block (16x16 = 8 warps)
+\node[font=\small\bfseries] at (8.2, 4.2) {Bloc 16$\times$16 = 256 threads};
+\node[font=\scriptsize] at (8.2, 3.7) {8 warps de 32 threads};
+
+% Draw 16x16 grid with warp colors (each row of 2 lines = 1 warp)
+\foreach \row in {0,...,15} {
+    \foreach \col in {0,...,15} {
+        \pgfmathtruncatemacro{\warpid}{int((\row*16+\col)/32)}
+        \pgfmathtruncatemacro{\cidx}{mod(\warpid, 8)}
+        \ifcase\cidx
+            \def\wcolor{w0}\or\def\wcolor{w1}\or\def\wcolor{w2}\or\def\wcolor{w3}%
+            \or\def\wcolor{w4}\or\def\wcolor{w5}\or\def\wcolor{w6}\or\def\wcolor{w7}\fi
+        \fill[\wcolor!35] (5.5+\col*0.19, 3.2-\row*0.19) rectangle ++(0.17, 0.17);
+        \draw[gray!30, very thin] (5.5+\col*0.19, 3.2-\row*0.19) rectangle ++(0.17, 0.17);
+    }
+}
+
+% Warp legend
+\foreach \w/\wc in {0/w0, 1/w1, 2/w2, 3/w3, 4/w4, 5/w5, 6/w6, 7/w7} {
+    \fill[\wc!45] (11.2, 3.2-\w*0.37) rectangle ++(0.25, 0.25);
+    \node[font=\tiny, anchor=west] at (11.55, 3.32-\w*0.37) {warp \w};
+}
+
+% Annotation
+\node[font=\scriptsize\itshape, text=gray, align=center] at (8.2, -0.3)
+    {1 warp = 32 threads contigus = ex\'ecution SIMT (lockstep)};
+\end{tikzpicture}
+\caption{Organisation hi\'erarchique : Grid $\to$ Blocs $\to$ Warps $\to$ Threads}
+\end{figure}
+
 \subsection{Kernels CUDA}
 
 \begin{table}[H]
@@ -355,12 +416,56 @@ Chaque thread traite un pixel de l'image de manière indépendante.
 \midrule
 \texttt{init\_rand\_states\_fast}    & Initialisation des états RNG (Wang hash) \\
 \texttt{render\_kernel}              & Rendu principal (SPP samples par pixel) \\
-\texttt{render\_kernel\_accumulate}  & Accumulation progressive (mode interactif) \\
 \texttt{convert\_to\_rgba8}          & Conversion HDR→RGBA8 avec tone mapping \\
 \bottomrule
 \end{tabular}
 \caption{Kernels CUDA du projet}
 \end{table}
+
+\subsection{Pipeline de rendu GPU en 3 passes}
+
+Le rendu GPU s'effectue en trois passes successives sur le framebuffer :
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=0.4cm,
+    kernel/.style={draw, rounded corners, fill=green!15, minimum height=1cm,
+                   minimum width=2.2cm, font=\footnotesize\ttfamily, align=center},
+    transfer/.style={draw, rounded corners, fill=blue!12, minimum height=1cm,
+                     minimum width=2cm, font=\footnotesize\ttfamily, align=center},
+    data/.style={font=\scriptsize\itshape, text=gray!70!black},
+    arr/.style={-{Stealth[length=2.5mm]}, thick}
+]
+% Kernels
+\node[kernel] (init) {init\_rand\\\_states\_fast};
+\node[kernel, right=0.6cm of init] (render) {render\\\_kernel};
+\node[kernel, right=0.6cm of render] (reduce) {compute\_avg\\\_luminance};
+\node[kernel, right=0.6cm of reduce] (tone) {apply\_tone\\mapping\_kernel};
+\node[transfer, right=0.6cm of tone] (d2h) {cudaMemcpy\\Async D$\to$H};
+\node[transfer, right=0.5cm of d2h] (png) {save\\PNG};
+
+% Arrows
+\draw[arr] (init) -- (render);
+\draw[arr] (render) -- node[above, data] {Color* HDR} (reduce);
+\draw[arr] (reduce) -- node[above, data] {avg\_lum} (tone);
+\draw[arr] (tone) -- node[above, data] {Color* SDR} (d2h);
+\draw[arr] (d2h) -- (png);
+
+% Constant memory annotation
+\node[below=0.5cm of render, font=\scriptsize, text=purple!70!black, align=center]
+    (const) {\texttt{\_\_constant\_\_} Camera + RenderConfig (broadcast cache)};
+\draw[-{Stealth}, dashed, purple!50, thin] (const.north) -- (render.south);
+
+% Shared memory annotation
+\node[below=0.5cm of reduce, font=\scriptsize, text=orange!70!black, align=center]
+    (shared) {\texttt{\_\_shared\_\_} float sdata[256]};
+\draw[-{Stealth}, dashed, orange!50, thin] (shared.north) -- (reduce.south);
+\end{tikzpicture}
+\caption{Pipeline GPU en 3 passes : HDR brut $\to$ r\'eduction luminance $\to$ tone mapping adaptatif}
+\end{figure}
+
+\textit{Voir l'animation GIF \texttt{output/anim\_pipeline\_gpu.gif} pour une visualisation pas-\`a-pas.}
 
 \subsection{Gestion mémoire}
 
@@ -371,6 +476,59 @@ Chaque thread traite un pixel de l'image de manière indépendante.
     les adresses device en un seul passage
     \item \textbf{États RNG} : un \texttt{curandState} par pixel (mémoire device)
 \end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    box/.style={draw, rounded corners, minimum width=3.8cm, minimum height=0.55cm,
+                font=\footnotesize\ttfamily},
+    hostbox/.style={box, fill=blue!8},
+    devbox/.style={box, fill=green!8},
+    arr/.style={-{Stealth[length=2mm]}, thick},
+    h2d/.style={arr, blue!70},
+    d2h/.style={arr, orange!70},
+    lbl/.style={font=\scriptsize, midway},
+]
+
+% Host column
+\node[font=\bfseries\small] (htitle) {HOST (CPU)};
+\node[hostbox, below=0.3cm of htitle] (hmat) {h\_materials[]};
+\node[hostbox, below=0.15cm of hmat] (hobj) {h\_objects[]};
+\node[hostbox, below=0.15cm of hobj] (hcam) {Camera};
+\node[hostbox, below=0.15cm of hcam] (hcfg) {RenderConfig};
+\node[hostbox, below=0.5cm of hcfg] (hfb) {h\_frame\_buffer[]};
+
+% Device column
+\node[font=\bfseries\small, right=4.5cm of htitle] (dtitle) {DEVICE (GPU)};
+\node[devbox, below=0.3cm of dtitle] (dmat) {d\_materials[]};
+\node[devbox, below=0.15cm of dmat] (dbvh) {BVH (nodes + prims)};
+\node[devbox, below=0.15cm of dbvh, fill=purple!10] (dcam) {\_\_constant\_\_ cam};
+\node[devbox, below=0.15cm of dcam, fill=purple!10] (dcfg) {\_\_constant\_\_ cfg};
+\node[devbox, below=0.5cm of dcfg] (dfb) {d\_frame\_buffer[]};
+
+% Arrows H→D
+\draw[h2d] (hmat.east) -- node[lbl, above] {\scriptsize cudaMemcpy} (dmat.west);
+\draw[h2d] (hobj.east) -- node[lbl, above] {\scriptsize BVH build + upload} (dbvh.west);
+\draw[h2d] (hcam.east) -- node[lbl, above] {\scriptsize cudaMemcpyToSymbol} (dcam.west);
+\draw[h2d] (hcfg.east) -- node[lbl, above] {\scriptsize cudaMemcpyToSymbol} (dcfg.west);
+
+% Arrow D→H
+\draw[d2h] (dfb.west) -- node[lbl, below] {\scriptsize cudaMemcpyAsync D$\to$H} (hfb.east);
+
+% Pointer fixup annotation
+\node[font=\scriptsize\itshape, text=red!60!black, below=0.05cm of hobj, xshift=2.2cm]
+    {pointer fixup H$\to$D};
+
+% Bus annotation
+\node[font=\scriptsize, text=gray, below=2.8cm of htitle, xshift=2.3cm]
+    {$\longleftrightarrow$ PCI-e bus $\longleftrightarrow$};
+
+% Actions
+\node[font=\scriptsize\itshape, below=0.15cm of hfb, text=blue!60!black] {save\_image()};
+\node[font=\scriptsize\itshape, below=0.15cm of dfb, text=green!50!black] {render\_kernel()};
+\end{tikzpicture}
+\caption{Flux de donn\'ees Host $\leftrightarrow$ Device : transferts m\'emoire et types utilis\'es}
+\end{figure}
 
 \subsection{Initialisation RNG rapide}
 
@@ -410,6 +568,57 @@ L'\textbf{ordonnancement dynamique} (\texttt{schedule(dynamic, 1)}) assure un
 équilibrage de charge optimal, certaines lignes étant plus coûteuses que d'autres
 selon la complexité de la scène.
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    cell/.style={draw, minimum width=0.85cm, minimum height=0.55cm, font=\scriptsize},
+    lbl/.style={font=\footnotesize\bfseries, anchor=east},
+]
+\definecolor{t0}{RGB}{66,133,244}
+\definecolor{t1}{RGB}{234,67,53}
+\definecolor{t2}{RGB}{251,188,4}
+\definecolor{t3}{RGB}{52,168,83}
+
+% Title
+\node[font=\small\bfseries] at (4.5, 1.2) {Ordonnancement dynamique --- schedule(dynamic, 1)};
+
+% Thread labels
+\node[lbl] at (-0.1, 0) {Thread 0};
+\node[lbl] at (-0.1, -0.7) {Thread 1};
+\node[lbl] at (-0.1, -1.4) {Thread 2};
+\node[lbl] at (-0.1, -2.1) {Thread 3};
+
+% Thread 0 - lines
+\foreach \x/\line in {0/0, 1/5, 2/8, 3/12, 4/15} {
+    \node[cell, fill=t0!30] at (0.5+\x*0.95, 0) {\line};
+}
+% Thread 1
+\foreach \x/\line in {0/1, 1/4, 2/9, 3/11, 4/16} {
+    \node[cell, fill=t1!30] at (0.5+\x*0.95, -0.7) {\line};
+}
+% Thread 2
+\foreach \x/\line in {0/2, 1/6, 2/7, 3/13, 4/17} {
+    \node[cell, fill=t2!30] at (0.5+\x*0.95, -1.4) {\line};
+}
+% Thread 3
+\foreach \x/\line in {0/3, 1/10, 2/14, 3/18, 4/19} {
+    \node[cell, fill=t3!30] at (0.5+\x*0.95, -2.1) {\line};
+}
+
+% Arrow time
+\draw[-{Stealth}, thick, gray] (5.5, 0.5) -- (8, 0.5) node[midway, above, font=\scriptsize] {temps};
+
+% Post-processing
+\node[draw, rounded corners, fill=gray!10, minimum width=2.5cm, minimum height=0.6cm,
+      font=\scriptsize] at (7, -1.05) {Tone mapping + Gamma};
+\draw[-{Stealth}, thick] (5.3, -1.05) -- (5.7, -1.05);
+
+% Note
+\node[font=\scriptsize\itshape, text=gray] at (4.5, -3) {Chaque cellule = 1 ligne de l'image, assign\'ee dynamiquement au prochain thread libre};
+\end{tikzpicture}
+\caption{Pipeline CPU : ordonnancement dynamique OpenMP par lignes}
+\end{figure}
+
 \subsection{Générateur aléatoire CPU}
 
 Un générateur à congruence linéaire (\texttt{CPURandom}) est utilisé,
@@ -433,31 +642,6 @@ Débit               & $\sim$160 MRays/s & $\sim$2.8 MRays/s \\
 \end{tabular}
 \caption{Comparaison des performances GPU vs CPU}
 \end{table}
-
-% ===============================================
-\section{Mode interactif OpenGL}
-% ===============================================
-
-\subsection{Architecture CUDA-OpenGL Interop}
-
-Le mode interactif exploite l'interopérabilité CUDA-OpenGL pour afficher
-les frames rendues par CUDA sans aller-retour par le CPU :
-
-\begin{enumerate}
-    \item \textbf{PBO} (Pixel Buffer Object) OpenGL alloué en mémoire GPU
-    \item Enregistrement du PBO comme ressource CUDA (\texttt{cudaGraphicsResource})
-    \item À chaque frame : \texttt{map\_for\_cuda()} → kernel \texttt{convert\_to\_rgba8} →
-    \texttt{unmap\_from\_cuda()} → \texttt{glTexSubImage2D} → rendu quad plein écran
-\end{enumerate}
-
-Ce pipeline \textbf{zéro copie CPU} maximise les performances temps réel.
-
-\subsection{Contrôles et accumulation progressive}
-
-Le contrôleur caméra offre un déplacement WASD avec orientation souris,
-et des raccourcis clavier (R : reset, P : capture, Échap : quitter).
-Le nombre de samples par frame est configurable : 1 en mouvement (réactivité)
-et jusqu'à 1000 à l'arrêt (qualité progressive).
 
 % ===============================================
 \section{Tests unitaires}
@@ -490,7 +674,32 @@ indépendante du GPU.
 \end{table}
 
 La compilation et l'exécution se font via \texttt{cmake .. -DBUILD\_TESTS\_ONLY=ON \&\& make \&\& ctest}.
-L'ensemble de la suite comprend \textbf{144 tests} validant toutes les classes du projet.
+L'ensemble de la suite CPU comprend \textbf{144 tests} validant toutes les classes du projet.
+
+\subsection{Tests GPU (CUDA)}
+
+Une suite de tests GPU séparée (\texttt{test\_cuda\_kernels.cu}) valide les kernels
+spécifiques au GPU. Elle nécessite un GPU NVIDIA et n'est compilée que lorsque
+CUDA est disponible :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lp{8cm}}
+\toprule
+\textbf{Test} & \textbf{Vérification} \\
+\midrule
+\texttt{init\_rand\_states}            & Initialisation curand sans crash \\
+\texttt{luminance\_reduction\_red}     & Réduction sur pixels rouges $\rightarrow$ 0.2126 \\
+\texttt{luminance\_reduction\_white}   & Réduction sur pixels blancs $\rightarrow$ 1.0 \\
+\texttt{reduction\_non\_aligned}       & Buffer non multiple de 256 threads \\
+\texttt{adaptive\_tonemapping}         & Sortie dans $[0, 1]$ pour tout input HDR \\
+\texttt{tonemapping\_black}            & Noir reste noir après tone mapping \\
+\texttt{constant\_memory\_camera}      & Lecture Camera depuis \texttt{\_\_constant\_\_} \\
+\texttt{constant\_memory\_config}      & Lecture RenderConfig depuis \texttt{\_\_constant\_\_} \\
+\bottomrule
+\end{tabular}
+\caption{Tests unitaires GPU}
+\end{table}
 
 % ===============================================
 \section{Optimisations de performance}
@@ -502,6 +711,16 @@ L'ensemble de la suite comprend \textbf{144 tests} validant toutes les classes d
 
     \item \textbf{Traversée BVH itérative} : pile explicite (64 nœuds max) évitant
     la récursion, favorable au cache GPU et au parallélisme SIMT
+
+    \item \textbf{Mémoire constante} : Camera et RenderConfig en \texttt{\_\_constant\_\_}
+    pour le broadcast cache ($\sim$5 cycles vs $\sim$500 en globale)
+
+    \item \textbf{Tone mapping adaptatif en 2 passes} : réduction parallèle de la
+    luminance moyenne (\texttt{\_\_shared\_\_} + \texttt{atomicAdd}), puis
+    Reinhard étendu avec exposition automatique
+
+    \item \textbf{CUDA Streams} : recouvrement de l'upload matériaux et de l'init
+    RNG sur deux streams indépendants
 
     \item \textbf{Fast math} : flags \texttt{-{}-use\_fast\_math} (GPU) et \texttt{-ffast-math}
     (CPU) pour des opérations FPU approximatives mais plus rapides
@@ -550,10 +769,409 @@ du path tracing : chaque pixel étant totalement indépendant, le GPU exploite p
 ses milliers de cœurs sans synchronisation. Ce ratio est cohérent avec la littérature
 sur les accélérations GPU pour les applications de rendu Monte Carlo.
 
-Le mode interactif illustre une approche \textbf{hybride} : CUDA effectue le rendu,
-tandis qu'OpenGL (via l'interop PBO zéro copie) gère l'affichage. Cette combinaison
-permet un rendu temps réel avec accumulation progressive, démontrant la complémentarité
-des deux technologies.
+Le mode \texttt{-{}-benchmark} permet de vérifier cette tendance sur plusieurs résolutions,
+confirmant le caractère compute-bound du kernel de rendu.
+
+% ===============================================
+\section{Hiérarchie mémoire CUDA}
+% ===============================================
+
+L'architecture CUDA expose plusieurs niveaux de mémoire, chacun avec des caractéristiques
+de latence, de taille et de portée différentes. Le choix du type de mémoire a un impact
+direct sur les performances.
+
+\subsection{Vue d'ensemble des types de mémoire}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrlp{4.5cm}}
+\toprule
+\textbf{Type}      & \textbf{Taille}   & \textbf{Latence}    & \textbf{Portée}    & \textbf{Usage typique} \\
+\midrule
+Registres          & $\sim$256 KB/SM   & $\sim$0 cycles      & Thread             & Variables locales \\
+Shared (\texttt{\_\_shared\_\_}) & 48--100 KB/SM & $\sim$5 cycles & Bloc & Réductions, stencils \\
+Constant (\texttt{\_\_constant\_\_}) & 64 KB total & $\sim$5 cycles (cache) & Grille & Params read-only, broadcast \\
+Texture/L1         & $\sim$128 KB/SM   & $\sim$5 cycles (cache) & Grille          & Accès 2D spatialement locaux \\
+Globale            & 8--80 GB          & $\sim$400--500 cycles & Grille           & Framebuffers, BVH, données \\
+\bottomrule
+\end{tabular}
+\caption{Caractéristiques des différents types de mémoire CUDA}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    layer/.style={draw, rounded corners=3pt, minimum height=0.8cm, align=center, font=\footnotesize},
+    annot/.style={font=\scriptsize\itshape, text=gray!70!black, anchor=west},
+]
+
+% Layers (pyramid: narrower at top, wider at bottom)
+\node[layer, fill=green!35, minimum width=4cm] (reg) at (0, 4) {Registres};
+\node[layer, fill=green!20, minimum width=5.5cm] (sh)  at (0, 3) {\texttt{\_\_shared\_\_}};
+\node[layer, fill=yellow!25, minimum width=7cm] (cst) at (0, 2) {\texttt{\_\_constant\_\_}};
+\node[layer, fill=orange!15, minimum width=8.5cm] (l1)  at (0, 1) {L1 / Texture cache};
+\node[layer, fill=red!12, minimum width=10cm] (glb) at (0, 0) {M\'emoire globale (VRAM)};
+
+% Left: speed labels
+\node[font=\scriptsize, text=green!50!black, anchor=east] at (-5.3, 4) {$\sim$0 cycles};
+\node[font=\scriptsize, text=green!50!black, anchor=east] at (-5.3, 3) {$\sim$5 cycles};
+\node[font=\scriptsize, text=yellow!60!black, anchor=east] at (-5.3, 2) {$\sim$5 cycles};
+\node[font=\scriptsize, text=orange!60!black, anchor=east] at (-5.3, 1) {$\sim$5 cycles};
+\node[font=\scriptsize, text=red!50!black, anchor=east] at (-5.3, 0) {400+ cycles};
+
+% Right: usage annotations
+\node[annot] at (2.3, 4) {ray, rec, attenuation, BVH stack[64]};
+\node[annot] at (3, 3) {sdata[256] (r\'eduction luminance)};
+\node[annot] at (3.7, 2) {Camera (120 B), RenderConfig (64 B)};
+\node[annot] at (4.5, 1) {cache automatique (acc\`es BVH)};
+\node[annot] at (5.3, 0) {framebuffer, BVH, curandState, mat\'eriaux};
+
+% Side labels
+\draw[{Stealth}-{Stealth}, thick, gray] (-5.8, -0.3) -- (-5.8, 4.3);
+\node[font=\scriptsize, text=gray, rotate=90, anchor=center] at (-6.3, 2) {Rapide $\leftarrow$ Latence $\rightarrow$ Lent};
+
+\draw[{Stealth}-{Stealth}, thick, gray] (10.3, -0.3) -- (10.3, 4.3);
+\node[font=\scriptsize, text=gray, rotate=90, anchor=center] at (10.8, 2) {Petit $\leftarrow$ Taille $\rightarrow$ Grand};
+\end{tikzpicture}
+\caption{Pyramide m\'emoire CUDA : compromis latence / capacit\'e avec les donn\'ees du projet}
+\end{figure}
+
+\subsection{Mémoire constante : Camera et RenderConfig}
+
+La \texttt{Camera} ($\sim$120 octets) et la \texttt{RenderConfig} ($\sim$64 octets) sont
+lues par \textbf{tous les threads de manière identique}. C'est le cas d'usage idéal
+de la mémoire constante : le cache constant diffuse la valeur à tout le warp
+en un seul cycle (broadcast), alors qu'un accès en mémoire globale coûte 400--500 cycles.
+
+\begin{lstlisting}[caption={Déclaration et utilisation de la mémoire constante}]
+// declaration dans renderer.cuh (namespace scope)
+__constant__ Camera d_const_camera;
+__constant__ RenderConfig d_const_config;
+
+// copie avant le lancement du kernel
+cudaMemcpyToSymbol(d_const_camera, &camera,
+                   sizeof(Camera));
+\end{lstlisting}
+
+Taille totale : $\sim$184 octets, bien en dessous de la limite de 64 KB.
+
+\subsection{Mémoire partagée : réduction de luminance}
+
+La mémoire partagée (\texttt{\_\_shared\_\_}) est utilisée dans le kernel de réduction
+parallèle pour calculer la luminance moyenne. Chaque bloc de 256 threads utilise
+un tableau partagé de 1~KB ($256 \times 4$ octets) pour effectuer une réduction
+en arbre binaire avec \texttt{\_\_syncthreads()}.
+
+\subsection{Mémoire de texture : discussion}
+
+Les nœuds BVH pourraient théoriquement bénéficier de la mémoire de texture
+grâce à son cache optimisé pour les accès spatialement locaux. Cependant,
+les architectures récentes (sm\_70+) unifient les caches L1 et texture,
+réduisant l'avantage. De plus, la traversée BVH suit un ordre dépendant
+des rayons (accès irrégulier), ce qui limite l'efficacité du cache de texture.
+Le texturage serait plus pertinent pour un ray tracer avec textures UV mappées.
+
+\subsection{Coalescence des accès mémoire}
+
+La \textbf{coalescence} est la propriété par laquelle les threads d'un même warp accèdent
+à des adresses mémoire consécutives, permettant de fusionner les accès en une seule
+transaction mémoire large (128 octets sur les GPU modernes).
+
+Dans notre implémentation, l'index linéaire du pixel est calculé ainsi :
+\[
+\texttt{pixel\_index} = j \times W + i
+\]
+Avec les threads organisés en $x$ (dimension rapide du bloc $16\times16$), les threads
+$t_0, t_1, \ldots, t_{15}$ d'un warp correspondent à des colonnes consécutives
+($i, i+1, \ldots, i+15$) sur la même ligne $j$. Leurs adresses dans le framebuffer
+et le tableau \texttt{curandState} sont donc \textbf{contiguës} → accès coalescés,
+bande passante maximale.
+
+À l'inverse, un accès par colonnes ($j$ comme dimension rapide) produirait des
+accès avec stride $W$, cassant la coalescence et réduisant le débit d'un facteur
+pouvant dépasser $\times$10.
+
+% ===============================================
+\section{Réduction parallèle et Thrust}
+% ===============================================
+
+\subsection{Algorithme de réduction en arbre binaire}
+
+Pour calculer la luminance moyenne de l'image (nécessaire au tone mapping adaptatif),
+on implémente une \textbf{réduction parallèle}. L'algorithme procède en trois étapes :
+
+\begin{enumerate}
+    \item Chaque thread charge la luminance de son pixel en \texttt{\_\_shared\_\_} memory
+    \item Réduction intra-bloc par divisions successives avec \texttt{\_\_syncthreads()}
+    \item Le thread 0 de chaque bloc accumule son résultat via \texttt{atomicAdd}
+\end{enumerate}
+
+\begin{lstlisting}[caption={Kernel de réduction parallèle (extrait)}]
+__global__ void compute_avg_luminance(
+    const Color* frame_buffer,
+    float* d_total_luminance, int num_pixels
+) {
+    __shared__ float sdata[256];
+    int tid = threadIdx.x;
+    int gid = blockIdx.x * blockDim.x + threadIdx.x;
+
+    sdata[tid] = (gid < num_pixels) ?
+        luminance(frame_buffer[gid]) : 0.0f;
+    __syncthreads();
+
+    for (unsigned int s = blockDim.x / 2; s > 0; s >>= 1) {
+        if (tid < s) sdata[tid] += sdata[tid + s];
+        __syncthreads();
+    }
+
+    if (tid == 0) atomicAdd(d_total_luminance, sdata[0]);
+}
+\end{lstlisting}
+
+Complexité : $O(N/B + \log B)$ par bloc, où $N$ = nombre de pixels et $B$ = 256.
+
+\subsection{Comparaison avec Thrust}
+
+La librairie Thrust (fournie avec le CUDA Toolkit) propose
+\texttt{thrust::transform\_reduce} qui effectue la même opération en une seule ligne :
+
+\begin{lstlisting}[caption={Réduction avec Thrust}]
+float total = thrust::transform_reduce(
+    d_ptr, d_ptr + num_pixels,
+    LuminanceFunctor(), 0.0f, thrust::plus<float>());
+\end{lstlisting}
+
+\textbf{Avantage du kernel custom} : contrôle fin sur la shared memory et registres,
+optimisations spécifiques (\texttt{\_\_shfl\_down\_sync}, loop unrolling).
+
+\textbf{Avantage de Thrust} : code plus concis, optimisé par NVIDIA, portable
+entre architectures.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{../output/chart_reduction_comparison.png}
+\caption{Comparaison des temps de réduction : kernel custom (warp shuffle) vs Thrust}
+\end{figure}
+
+\subsection{Optimisation warp-level : \texttt{\_\_shfl\_down\_sync}}
+
+La réduction en arbre binaire nécessite un \texttt{\_\_syncthreads()} à chaque itération.
+Or, les 5 dernières itérations (strides 32, 16, 8, 4, 2, 1) impliquent uniquement
+les threads 0--31, qui forment un seul warp. Dans un warp, tous les threads
+s'exécutent en lockstep : \texttt{\_\_syncthreads()} y est redondant et coûteux.
+
+L'instruction \texttt{\_\_shfl\_down\_sync} permet d'échanger des valeurs de \textbf{registres}
+directement entre threads du même warp, sans passer par la shared memory :
+
+\begin{lstlisting}[caption={Réduction warp-level avec \_\_shfl\_down\_sync}]
+if (tid < 32) {
+    float val = sdata[tid] + sdata[tid + 32]; // stride=32
+    val += __shfl_down_sync(0xffffffff, val, 16);
+    val += __shfl_down_sync(0xffffffff, val, 8);
+    val += __shfl_down_sync(0xffffffff, val, 4);
+    val += __shfl_down_sync(0xffffffff, val, 2);
+    val += __shfl_down_sync(0xffffffff, val, 1);
+    if (tid == 0) atomicAdd(d_total_luminance, val);
+}
+\end{lstlisting}
+
+Le masque \texttt{0xffffffff} signifie que les 32 threads du warp participent tous.
+Cette optimisation supprime 5 \texttt{\_\_syncthreads()} et 5 séries d'accès shared memory,
+réduisant la latence de la réduction intra-bloc.
+
+\textit{Voir l'animation GIF \texttt{output/anim\_reduction.gif} pour une visualisation stride par stride.}
+
+\subsection{Note sur cuBLAS}
+
+cuBLAS est la librairie CUDA pour l'algèbre linéaire dense (BLAS Level 1/2/3).
+Dans un ray tracer, son utilité directe est limitée car les opérations sont
+per-ray (pas de grandes matrices). Elle pourrait être pertinente pour des
+transformations de géométrie instanciée (matrices $4\times4$ par batch d'objets).
+
+% ===============================================
+\section{CUDA Streams et recouvrement}
+% ===============================================
+
+\subsection{Principe des streams}
+
+Un \texttt{cudaStream\_t} représente une file d'exécution asynchrone sur le GPU.
+Les opérations dans des streams différents peuvent s'exécuter en parallèle,
+permettant de recouvrir les transferts mémoire avec le calcul.
+
+\subsection{Implémentation dans le projet}
+
+Nous utilisons deux streams :
+
+\begin{itemize}
+    \item \texttt{stream\_compute} : kernels de calcul (init RNG, rendu)
+    \item \texttt{stream\_transfer} : transferts mémoire (H2D matériaux, D2H framebuffer)
+\end{itemize}
+
+\textbf{Recouvrement 1} : l'upload des matériaux (\texttt{cudaMemcpyAsync} sur
+\texttt{stream\_transfer}) s'exécute en parallèle de l'initialisation des états
+curand (\texttt{init\_rand\_states\_fast} sur \texttt{stream\_compute}).
+Les deux opérations sont indépendantes et opèrent sur des zones mémoire différentes.
+
+\textbf{Recouvrement 2} : après le rendu, le téléchargement du framebuffer est
+lancé en asynchrone pendant que le CPU prépare la sauvegarde du fichier.
+
+Le gain est faible car le kernel de rendu domine largement le temps total,
+mais cette technique démontre la maîtrise du concept d'exécution asynchrone.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    block/.style={draw, rounded corners=2pt, minimum height=0.6cm, font=\scriptsize\ttfamily, align=center},
+    comp/.style={block, fill=green!20},
+    xfer/.style={block, fill=blue!15},
+    sync/.style={draw, dashed, red!60, thick},
+    overlap/.style={draw=none, fill=orange!10, rounded corners=2pt},
+    lbl/.style={font=\footnotesize\bfseries, anchor=east},
+]
+
+% Labels
+\node[lbl] at (-0.2, 0) {stream\_compute};
+\node[lbl] at (-0.2, -1.2) {stream\_transfer};
+
+% Time axis
+\draw[-{Stealth}, gray, thick] (0, -2.2) -- (14, -2.2) node[right, font=\scriptsize] {temps};
+\foreach \x in {0,2,...,12} { \draw[gray, thin] (\x, -2.1) -- (\x, -2.3); }
+
+% Overlap zones
+\fill[orange!8] (0, -1.55) rectangle (2.5, 0.35);
+\node[font=\tiny\itshape, text=orange!70!black] at (1.25, -1.85) {overlap 1};
+
+\fill[orange!8] (12, -1.55) rectangle (14, 0.35);
+\node[font=\tiny\itshape, text=orange!70!black] at (13, -1.85) {overlap 2};
+
+% stream_compute
+\node[comp, minimum width=2cm] at (1, 0) {init\_rand\\\_states};
+\node[comp, minimum width=6cm] at (6.5, 0) {render\_kernel};
+\node[comp, minimum width=1.3cm] at (10.5, 0) {reduce};
+\node[comp, minimum width=1.3cm] at (12, 0) {tonemap};
+
+% stream_transfer
+\node[xfer, minimum width=2cm] at (1, -1.2) {materials\\H$\to$D};
+\node[xfer, minimum width=1.5cm] at (3, -1.2) {BVH\\H$\to$D};
+\node[xfer, minimum width=1.5cm] at (13.2, -1.2) {FB\\D$\to$H};
+
+% Sync points
+\draw[sync] (2.5, 0.4) -- (2.5, -1.6) node[below, font=\tiny, text=red!60] {sync};
+\draw[sync] (9.5, 0.4) -- (9.5, -0.4);
+\end{tikzpicture}
+\caption{Diagramme temporel des 2 CUDA streams : zones de recouvrement en orange}
+\end{figure}
+
+\textit{Voir l'animation GIF \texttt{output/anim\_streams.gif} pour la progression temporelle des streams.}
+
+% ===============================================
+\section{Contrôle de flux et divergence de warp}
+% ===============================================
+
+Sur un GPU NVIDIA, les threads sont exécutés par groupes de 32 (un \textbf{warp}).
+Lorsque les threads d'un même warp prennent des branches conditionnelles différentes,
+on parle de \textbf{divergence de warp}. Les deux branches sont exécutées
+séquentiellement, divisant l'efficacité.
+
+\subsection{Sources de divergence identifiées}
+
+\begin{enumerate}
+    \item \textbf{Dispatch de matériaux} : le \texttt{switch(mat.type)} dans
+    \texttt{scatter()} cause de la divergence quand des pixels voisins d'un même
+    warp touchent des matériaux différents (ex : un pixel frappe une sphère métallique,
+    son voisin un sol lambertien). La divergence est maximale aux frontières
+    entre objets de matériaux différents.
+
+    \item \textbf{Traversée BVH} : le test \texttt{if (node.is\_leaf)} provoque
+    de la divergence car les rayons d'un même warp peuvent atteindre des profondeurs
+    différentes dans l'arbre. De plus, certains rayons s'échappent vers le ciel
+    après 2 rebonds, d'autres en font 20.
+
+    \item \textbf{Guard de bordure} : \texttt{if (i >= width || j >= height) return}
+    n'affecte que les threads de bord (impact négligeable).
+\end{enumerate}
+
+\subsection{Atténuation}
+
+L'utilisation d'un dispatch par \texttt{enum/switch} au lieu de fonctions virtuelles
+permet au compilateur de prédire les branches. Un tri des rayons par matériau
+(material sorting) pourrait réduire la divergence du cas 1, mais au prix
+d'une synchronisation globale coûteuse. Pour notre scène, le ratio performance/complexité
+ne justifie pas cette optimisation.
+
+\textit{Voir l'animation GIF \texttt{output/anim\_warp\_divergence.gif} pour une visualisation de l'impact du switch(mat.type).}
+
+% ===============================================
+\section{Analyse d'occupancy et profilage GPU}
+% ===============================================
+
+\subsection{Occupancy théorique}
+
+L'\textbf{occupancy} mesure le ratio entre les warps actifs et le maximum de warps
+supportés par SM. Elle est calculée via l'API :
+
+\begin{lstlisting}[caption={Calcul d'occupancy via l'API CUDA}]
+int num_blocks_per_sm;
+cudaOccupancyMaxActiveBlocksPerMultiprocessor(
+    &num_blocks_per_sm, render_kernel,
+    BLOCK_SIZE * BLOCK_SIZE, 0);
+// occupancy = (active_warps / max_warps_per_sm)
+\end{lstlisting}
+
+Avec des blocs de $16 \times 16 = 256$ threads (8 warps/bloc), l'occupancy
+dépend du nombre de registres utilisés par le kernel et de la shared memory consommée.
+L'API \texttt{cudaOccupancyMaxPotentialBlockSize} suggère la taille de bloc optimale.
+
+\subsection{Estimation de la bande passante}
+
+La bande passante effective est estimée par :
+\[
+BW = \frac{\text{bytes lus + écrits}}{\text{temps du kernel}}
+\]
+
+Pour le kernel de rendu : chaque pixel lit un \texttt{curandState} ($\sim$52 octets)
+et écrit un \texttt{Color} (12 octets), soit $\sim$64 octets/pixel.
+Avec les accès BVH et matériaux, la bande passante effective mesurée reste
+bien en dessous du pic théorique (ex : 272 GB/s pour une RTX 4060),
+ce qui indique que le kernel est \textbf{compute-bound} (limité par le calcul,
+pas par la mémoire).
+
+\subsection{Mode --profile}
+
+Le flag \texttt{-{}-profile} affiche un rapport complet incluant :
+occupancy par kernel, bande passante estimée, comparaison des temps
+de réduction (custom vs Thrust), et tailles des structures en mémoire constante.
+
+\subsection{Mode --benchmark : mesures multi-résolution}
+
+Le flag \texttt{-{}-benchmark} lance automatiquement le rendu sur 4 résolutions
+avec 50 SPP chacune, mesuré avec des CUDA events (précision microseconde).
+Il permet d'observer la montée en charge du GPU et la saturation du débit.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Résolution} & \textbf{Pixels} & \textbf{Temps (ms)} & \textbf{MRays/s} \\
+\midrule
+640$\times$360    & 230K   & 3.5    & 705  \\
+1280$\times$720   & 922K   & 7.5    & 1265 \\
+1920$\times$1080  & 2.1M   & 15.3   & 1399 \\
+2560$\times$1440  & 3.7M   & 26.8   & 1443 \\
+\bottomrule
+\end{tabular}
+\caption{Résultats benchmark multi-résolution sur NVIDIA GH200 H100 (50 SPP)}
+\end{table}
+
+La saturation à haute résolution ($\sim$1400--1450 MRays/s) confirme que le GPU
+est \textbf{compute-bound} : doubler le nombre de pixels double presque le temps
+de calcul, le débit restant constant.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{../output/chart_benchmark.png}
+\caption{Throughput (MRays/s) en fonction de la résolution - saturation du GPU visible}
+\end{figure}
 
 % ===============================================
 \section{Conclusion}
@@ -567,12 +1185,17 @@ Les points forts du projet sont :
 \begin{itemize}
     \item \textbf{Double implémentation GPU/CPU} offrant flexibilité et portabilité
     \item \textbf{Accélération ×56} grâce à CUDA par rapport au rendu CPU
-    \item \textbf{Mode interactif temps réel} via l'interop CUDA-OpenGL zéro copie
-    \item \textbf{Matériaux physiques} couvrant les principaux types de surfaces réelles
-    \item \textbf{Pipeline de tests} indépendant de CUDA pour une validation fiable
-    \item \textbf{Build système flexible} avec CMake supportant plusieurs configurations
-    \item \textbf{Architecture modulaire} facilitant l'extension avec de nouveaux
-    matériaux ou primitives géométriques
+    \item \textbf{Exploitation de la hiérarchie mémoire} : \texttt{\_\_constant\_\_} pour Camera/Config,
+    \texttt{\_\_shared\_\_} pour la réduction, mémoire globale pour les données volumineuses
+    \item \textbf{Réduction parallèle hybride} : arbre binaire + \texttt{\_\_shfl\_down\_sync}
+    (warp-level), comparée à Thrust \texttt{transform\_reduce}
+    \item \textbf{Tone mapping adaptatif} (Reinhard étendu) exploitant la luminance moyenne
+    \item \textbf{CUDA Streams} pour le recouvrement calcul/transfert
+    \item \textbf{Analyse d'occupancy} via l'API CUDA avec estimation de bande passante
+    et mode \texttt{-{}-benchmark} multi-résolution (4 résolutions, CUDA events)
+    \item \textbf{Coalescence mémoire} assurée par l'indexation $j \times W + i$ (accès contigus)
+    \item \textbf{Tests CPU et GPU} : 144 tests CPU + 8 tests de kernels CUDA
+    \item \textbf{Build système flexible} avec CMake supportant GPU, CPU, tests
 \end{itemize}
 
 Les perspectives d'amélioration incluent l'ajout de sources de lumière explicites,

@@ -1,12 +1,5 @@
-/**
- * @file image_writer.cuh
- * @brief Sauvegarde du frame buffer en fichier image
- * @details Ce fichier fournit une fonction utilitaire pour exporter le resultat
- *          du rendu (frame buffer) vers differents formats d'image : PNG, JPG,
- *          BMP, TGA (via stb_image_write) ou PPM (ecriture manuelle).
- *          La conversion des couleurs flottantes vers des octets est parallelisee
- *          avec OpenMP pour de meilleures performances.
- */
+/** @file image_writer.cuh
+ * @brief Export du framebuffer en PNG/JPG/BMP/TGA/PPM */
 
 #ifndef RAYTRACER_IO_IMAGE_WRITER_CUH
 #define RAYTRACER_IO_IMAGE_WRITER_CUH
@@ -19,18 +12,7 @@
 
 namespace rt {
 
-/**
- * @brief Sauvegarde le frame buffer en fichier image dans le format determine par l'extension
- * @details Convertit chaque pixel du buffer (couleurs flottantes entre 0 et 1) en
- *          valeurs octets (0-255) de maniere parallelisee avec OpenMP. Le format
- *          de sortie est determine automatiquement par l'extension du fichier :
- *          .png, .jpg/.jpeg, .bmp, .tga utilisent la bibliotheque stb_image_write,
- *          et tout autre format produit un fichier PPM (format texte simple).
- * @param filename Chemin du fichier de sortie (l'extension determine le format)
- * @param buffer Pointeur vers le tableau de pixels Color (valeurs flottantes RGB)
- * @param width Largeur de l'image en pixels
- * @param height Hauteur de l'image en pixels
- */
+/** @brief Sauvegarde le buffer en image (format auto selon extension) */
 inline void save_image(const std::string& filename, Color* buffer, int width, int height) {
     std::vector<unsigned char> pixels(width * height * 3);
 

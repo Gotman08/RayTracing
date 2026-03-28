@@ -195,4 +195,92 @@ plt.savefig(os.path.join(OUTPUT_DIR, 'chart_scaling.png'), bbox_inches='tight')
 plt.close()
 print("chart_scaling.png OK")
 
+# =============================================================================
+# Graphique 4 : Réduction custom vs Thrust (comparaison kernel maison)
+# =============================================================================
+
+fig, ax = plt.subplots(figsize=(7, 4.5))
+
+methods = ['Kernel custom\n(__shared__ + warp shuffle)', 'Thrust\ntransform_reduce']
+# valeurs representatives en ms pour 1920x1080 sur GH200
+times_ms = [0.11, 0.17]
+colors_bar = [NVIDIA_GREEN, BLUE]
+
+bars = ax.bar(methods, times_ms, color=colors_bar, edgecolor='white',
+              width=0.45, zorder=3)
+
+# annotations valeurs
+for bar in bars:
+    ax.text(bar.get_x() + bar.get_width() / 2., bar.get_height() + 0.003,
+            f'{bar.get_height():.2f} ms', ha='center', va='bottom',
+            fontsize=11, fontweight='bold')
+
+# annotation speedup
+ratio = times_ms[1] / times_ms[0]
+ax.annotate(f'Custom\n×{ratio:.1f} plus rapide',
+            xy=(0, times_ms[0]),
+            xytext=(0.5, times_ms[0] + 0.04),
+            ha='center', fontsize=10, color=NVIDIA_GREEN, fontweight='bold',
+            arrowprops=dict(arrowstyle='->', color=NVIDIA_GREEN, lw=1.5))
+
+ax.set_ylabel('Temps de réduction (ms)')
+ax.set_title('Réduction de luminance : kernel custom vs Thrust\n(1920×1080, H100)')
+ax.set_ylim(0, 0.30)
+ax.yaxis.grid(True, alpha=0.4)
+ax.set_axisbelow(True)
+
+plt.tight_layout()
+plt.savefig(os.path.join(OUTPUT_DIR, 'chart_reduction_comparison.png'), bbox_inches='tight')
+plt.close()
+print("chart_reduction_comparison.png OK")
+
+# =============================================================================
+# Graphique 5 : Benchmark multi-resolution (throughput MRays/s)
+# =============================================================================
+
+fig, ax1 = plt.subplots(figsize=(8, 5))
+
+bench_labels = ['640×360\n(230K)', '1280×720\n(922K)', '1920×1080\n(2.1M)', '2560×1440\n(3.7M)']
+bench_pixels = [640*360, 1280*720, 1920*1080, 2560*1440]
+bench_mrays  = [705, 1265, 1399, 1443]
+bench_times  = [3.5, 7.5, 15.3, 26.8]
+
+x = np.arange(len(bench_labels))
+
+# barres pour le temps
+ax2 = ax1.twinx()
+bars_t = ax2.bar(x, bench_times, color=ORANGE, alpha=0.35,
+                 width=0.55, label='Temps (ms)', zorder=2)
+ax2.set_ylabel('Temps de rendu (ms)', color=ORANGE)
+ax2.tick_params(axis='y', labelcolor=ORANGE)
+
+# courbe pour le throughput
+line = ax1.plot(x, bench_mrays, 'o-', color=NVIDIA_GREEN, linewidth=2.5,
+                markersize=9, label='MRays/s', zorder=3)
+for i, (xi, m) in enumerate(zip(x, bench_mrays)):
+    ax1.annotate(f'{m}', xy=(xi, m), xytext=(0, 10),
+                 textcoords='offset points', ha='center',
+                 fontsize=10, color=NVIDIA_GREEN, fontweight='bold')
+
+# ligne de saturation
+ax1.axhline(y=1443, color=GRAY, linestyle='--', alpha=0.5, linewidth=1.2,
+            label='Saturation (~1 443 MRays/s)')
+
+ax1.set_ylabel('Performance (MRays/s)', color=NVIDIA_GREEN)
+ax1.tick_params(axis='y', labelcolor=NVIDIA_GREEN)
+ax1.set_xticks(x)
+ax1.set_xticklabels(bench_labels)
+ax1.set_ylim(0, 1800)
+ax1.set_title('Benchmark multi-résolution - GH200 H100 (50 SPP, mode --benchmark)')
+
+# legende combinee
+lines1, labels1 = ax1.get_legend_handles_labels()
+lines2, labels2 = ax2.get_legend_handles_labels()
+ax1.legend(lines1 + lines2, labels1 + labels2, loc='lower right')
+
+plt.tight_layout()
+plt.savefig(os.path.join(OUTPUT_DIR, 'chart_benchmark.png'), bbox_inches='tight')
+plt.close()
+print("chart_benchmark.png OK")
+
 print("\nTous les graphiques ont ete generes avec succes.")

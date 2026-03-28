@@ -12,8 +12,7 @@ A high-performance GPU-accelerated path tracer implemented in CUDA, with CPU fal
 - **Camera**: Configurable FOV, depth of field
 - **Post-processing**: Reinhard tone mapping, gamma correction
 - **Output**: PNG, JPG, BMP, TGA, PPM formats
-- **Interactive Mode**: Real-time rendering with WASD + mouse controls (optional)
-- **Profiling**: Built-in timing with `--profile` flag
+- **Profiling**: Built-in timing with `--profile` and `--benchmark` flags
 
 ## Requirements
 
@@ -23,11 +22,6 @@ A high-performance GPU-accelerated path tracer implemented in CUDA, with CPU fal
 - C++17 compatible compiler (GCC 9+)
 - NVIDIA GPU with compute capability 7.0+
 - OpenMP (optional, for `--cpu` mode)
-
-### Interactive Mode (optional)
-- GLFW 3.3+
-- OpenGL 3.3+
-- GLEW
 
 ### CPU-Only Build
 - CMake 3.18+
@@ -85,12 +79,7 @@ Rendering options:
   --quiet                Suppress progress output
   --help                 Show help
 
-Interactive mode (requires ENABLE_INTERACTIVE):
-  --interactive          Enable interactive mode (WASD + mouse)
-  --ispp <int>           Samples per frame during movement (default: 1)
-  --max-spp <int>        Max accumulated samples when still (default: 1000)
-  --sensitivity <float>  Mouse sensitivity (default: 0.002)
-  --speed <float>        Movement speed (default: 5.0)
+  --benchmark            Multi-resolution benchmark (4 resolutions, 50 SPP)
 ```
 
 ## Build Options
@@ -99,22 +88,8 @@ Interactive mode (requires ENABLE_INTERACTIVE):
 |--------|-------------|---------|
 | `BUILD_CPU_ONLY` | Build CPU-only version (no CUDA required) | OFF |
 | `BUILD_TESTS` | Build unit tests | OFF |
-| `ENABLE_INTERACTIVE` | Enable interactive mode (GLFW/OpenGL) | ON |
 | `ENABLE_FAST_MATH` | Enable fast math optimizations | ON |
 | `CMAKE_CUDA_ARCHITECTURES` | Target GPU architecture (70, 80, 90) | 90 |
-
-## Interactive Mode Controls
-
-| Key | Action |
-|-----|--------|
-| WASD | Move camera |
-| Mouse | Look around |
-| Space / Q | Move up |
-| Ctrl / E | Move down |
-| Shift | Fast movement |
-| R | Reset accumulation |
-| P | Take screenshot |
-| Esc | Quit |
 
 ## Project Structure
 
@@ -128,8 +103,7 @@ RayTracing/
 │   ├── acceleration/      # BVH, BVH Builder
 │   ├── camera/            # Camera
 │   ├── environment/       # Sky
-│   ├── rendering/         # Renderer, CPU Renderer, Tone mapping
-│   └── interactive/       # Window, GL Interop, Input (optional)
+│   └── rendering/         # Renderer, CPU Renderer, Tone mapping
 ├── src/                   # Source files
 │   ├── main.cu            # GPU entry point
 │   ├── main_cpu.cpp       # CPU-only entry point

@@ -167,7 +167,7 @@ def build():
     story.append(Paragraph('CUDA Ray Tracer', ParagraphStyle('T2', parent=title_style, fontSize=26, textColor=colors.HexColor('#0f3460'))))
     story.append(Spacer(1, 0.4*cm))
     story.append(Paragraph('Moteur de rendu physiquement réaliste', subtitle_style))
-    story.append(Paragraph('GPU (CUDA) / CPU (OpenMP) / Mode interactif (OpenGL)', subtitle_style))
+    story.append(Paragraph('GPU (CUDA) / CPU (OpenMP)', subtitle_style))
     story.append(Spacer(1, 0.8*cm))
     story.append(HRFlowable(width="80%", thickness=2, color=colors.HexColor('#1a1a2e'), spaceAfter=8))
     story.append(Paragraph('Projet RayTracing - Mars 2026', author_style))
@@ -179,7 +179,7 @@ def build():
         'tirant parti des capacités de calcul parallèle des GPU modernes via CUDA. Le projet '
         'propose deux chemins de rendu : un chemin GPU utilisant CUDA pour des performances '
         'optimales (~160 MRays/s sur RTX 4060), et un chemin CPU multi-thread utilisant OpenMP. '
-        'Un mode interactif en temps réel est disponible grâce à l\'interopérabilité CUDA-OpenGL. '
+        '
         'L\'accélération GPU est de l\'ordre de <b>×56</b> par rapport au rendu CPU.',
         abstract_style
     ))
@@ -209,7 +209,7 @@ def build():
         'Implémenter un path tracer complet avec matériaux physiques (Lambertian, Métal, Diélectrique)',
         'Exploiter CUDA pour une accélération GPU massive',
         'Fournir un chemin de rendu CPU avec OpenMP comme alternative portable',
-        'Développer un mode interactif temps réel via l\'interopérabilité CUDA-OpenGL',
+        'Mode benchmark multi-résolution pour l\'analyse de performance',
         'Construire un pipeline de tests unitaires sans dépendance CUDA',
     ]:
         story.append(Paragraph(f'• {obj}', bullet_style))
@@ -220,8 +220,6 @@ def build():
         [
             ['CUDA 12.6',       'Rendu GPU parallèle'],
             ['OpenMP',          'Rendu CPU multi-thread'],
-            ['GLFW 3.3+',       'Fenêtrage (mode interactif)'],
-            ['OpenGL 3.3+',     'Affichage temps réel'],
             ['stb_image_write', 'Export PNG/BMP/JPG/TGA/PPM'],
             ['CMake 3.18+',     'Système de build'],
             ['CTest',           'Tests unitaires'],
@@ -262,7 +260,7 @@ def build():
     for i, item in enumerate([
         '<b>Mode GPU</b> (défaut) : rendu CUDA, export image',
         '<b>Mode CPU</b> (--cpu) : rendu OpenMP, export image',
-        '<b>Mode interactif</b> (--interactive) : rendu CUDA temps réel avec affichage OpenGL',
+        '<b>Mode benchmark</b> (--benchmark) : benchmark multi-résolution avec CUDA events',
     ], 1):
         story.append(Paragraph(f'{i}. {item}', bullet_style))
 
@@ -497,58 +495,14 @@ def build():
     story.append(t)
     story.append(Paragraph('Tableau 5 - Comparaison des performances GPU vs CPU', caption_style))
 
-    # ---- 9. Mode interactif ----
-    story.append(Paragraph('9. Mode interactif OpenGL', h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#1a1a2e'), spaceAfter=10))
-
-    story.append(Paragraph('9.1 Architecture CUDA-OpenGL Interop', h2_style))
-    story.append(Paragraph(
-        'Le mode interactif exploite l\'interopérabilité CUDA-OpenGL pour afficher '
-        'les frames rendues par CUDA sans aller-retour par le CPU (pipeline zéro copie) :',
-        body_style
-    ))
-    for i, step in enumerate([
-        'PBO (Pixel Buffer Object) OpenGL alloué en mémoire GPU',
-        'Enregistrement du PBO comme ressource CUDA (cudaGraphicsResource)',
-        'map_for_cuda() → kernel convert_to_rgba8 → unmap_from_cuda()',
-        'Mise à jour texture OpenGL via glTexSubImage2D',
-        'Rendu d\'un quad plein écran en OpenGL',
-    ], 1):
-        story.append(Paragraph(f'{i}. {step}', bullet_style))
-
-    story.append(Paragraph('9.2 Accumulation progressive', h2_style))
-    story.append(Paragraph(
-        'Un buffer HDR accumule les contributions de chaque frame. Quand la caméra '
-        'est immobile, les samples s\'accumulent (jusqu\'à max-spp) pour une qualité '
-        'croissante. Tout mouvement de caméra remet le compteur à zéro.',
-        body_style
-    ))
-
-    story.append(Paragraph('9.3 Contrôles caméra', h2_style))
-    t = make_table(
-        ['Touche / Action', 'Effet'],
-        [
-            ['W / A / S / D',  'Déplacement avant / gauche / arrière / droite'],
-            ['Espace / Ctrl',  'Montée / descente'],
-            ['Shift',          'Vitesse ×2'],
-            ['Souris',         'Orientation du regard (sensibilité : 0.002)'],
-            ['R',              'Réinitialiser l\'accumulation'],
-            ['P',              'Capture d\'écran'],
-            ['Échap',          'Quitter'],
-        ],
-        col_widths=[5*cm, 11*cm]
-    )
-    story.append(t)
-    story.append(Paragraph('Tableau 6 - Contrôles du mode interactif', caption_style))
-
-    # ---- 10. Build ----
+    # ---- 9. Build ----
     story.append(Paragraph('10. Système de build (CMake)', h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#1a1a2e'), spaceAfter=10))
 
     t = make_table(
         ['Option CMake', 'Description'],
         [
-            ['(défaut)',              'Build GPU complet (CUDA + CPU + OpenGL)'],
+            ['(défaut)',              'Build GPU complet (CUDA + CPU)'],
             ['BUILD_CPU_ONLY=ON',     'Build CPU seul, sans CUDA'],
             ['BUILD_TESTS_ONLY=ON',   'Tests unitaires seuls, sans CUDA'],
         ],
@@ -572,7 +526,7 @@ def build():
         '# Build GPU Release\ncmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=90\n'
         'make -j$(nproc)\n\n'
         '# Rendu avec profiling\n./raytracer -w 1920 -h 1440 -s 500 -d 100 --profile -o output.png\n\n'
-        '# Mode interactif\n./raytracer --interactive --ispp 4 --max-spp 2000\n\n'
+        '# Mode benchmark\n./raytracer --benchmark\n\n'
         '# Build CPU uniquement\ncmake .. -DBUILD_CPU_ONLY=ON && make\n./raytracer --cpu -o output_cpu.png\n\n'
         '# Tests\ncmake .. -DBUILD_TESTS_ONLY=ON && make\n./raytracer_tests'
     ))
@@ -652,7 +606,7 @@ def build():
             ['d1b2f20',      'Suite de tests unitaires complète compilable sans CUDA'],
             ['10164b5',      'Support du rendu CPU avec OpenMP et optimisations supplémentaires'],
             ['d6e1518',      'Mise à jour de la documentation README'],
-            ['475bfe1 ✓',    'Interopérabilité OpenGL/CUDA et contrôles caméra temps réel (état actuel)'],
+            ['475bfe1 ✓',    'Pipeline complet GPU avec réduction parallèle et tone mapping adaptatif (état actuel)'],
         ],
         col_widths=[3.5*cm, 12.5*cm]
     )
@@ -676,7 +630,7 @@ def build():
     for item in [
         '<b>Double implémentation GPU/CPU</b> offrant flexibilité et portabilité',
         '<b>Accélération ×56</b> grâce à CUDA par rapport au rendu CPU',
-        '<b>Mode interactif temps réel</b> via l\'interop CUDA-OpenGL zéro copie',
+        '<b>Mode benchmark multi-résolution</b> avec CUDA events pour l\'analyse de performance',
         '<b>Matériaux physiques</b> couvrant les principaux types de surfaces réelles',
         '<b>Pipeline de tests</b> indépendant de CUDA pour une validation fiable',
         '<b>Build système flexible</b> avec CMake supportant plusieurs configurations',
