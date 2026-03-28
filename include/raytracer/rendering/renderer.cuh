@@ -21,9 +21,13 @@ namespace rt {
 // de maniere identique → le cache constant broadcast la valeur a tout le warp
 // en un seul cycle (~5 cycles vs ~500 en memoire globale).
 // Taille totale : ~184 octets, bien en dessous de la limite de 64 KB.
+// Stockage brut aligne pour eviter l'erreur "dynamic initialization is not
+// supported for a __constant__ variable" (CUDA >= 12).
 // -----------------------------------------------
-__constant__ Camera d_const_camera;
-__constant__ RenderConfig d_const_config;
+__constant__ char d_const_camera_buf[sizeof(Camera)];
+__constant__ char d_const_config_buf[sizeof(RenderConfig)];
+#define d_const_camera  (*(const Camera*)d_const_camera_buf)
+#define d_const_config  (*(const RenderConfig*)d_const_config_buf)
 
 /** @brief Trace un rayon dans la scene par rebonds iteratifs, retourne la couleur accumulee */
 __device__ inline Color ray_color(

@@ -171,8 +171,8 @@ int main(int argc, char** argv) {
     // copier Camera et RenderConfig en memoire constante GPU
     // → broadcast cache, lecture ~5 cycles vs ~500 en globale
     timer.start("Constant Memory Upload");
-    cudaMemcpyToSymbol(d_const_camera, &camera, sizeof(Camera));
-    cudaMemcpyToSymbol(d_const_config, &config, sizeof(RenderConfig));
+    cudaMemcpyToSymbol(d_const_camera_buf, &camera, sizeof(Camera));
+    cudaMemcpyToSymbol(d_const_config_buf, &config, sizeof(RenderConfig));
     timer.stop();
 
     // -----------------------------------------------
@@ -267,7 +267,7 @@ int main(int argc, char** argv) {
             bench_config.width  = res.w;
             bench_config.height = res.h;
             bench_config.samples_per_pixel = BENCH_SPP;
-            cudaMemcpyToSymbol(d_const_config, &bench_config, sizeof(RenderConfig));
+            cudaMemcpyToSymbol(d_const_config_buf, &bench_config, sizeof(RenderConfig));
 
             // init RNG pour cette resolution
             dim3 b_blocks((res.w + BLOCK_SIZE - 1) / BLOCK_SIZE,
@@ -306,7 +306,7 @@ int main(int argc, char** argv) {
         std::cout << "\n";
 
         // restaurer la config originale et quitter proprement
-        cudaMemcpyToSymbol(d_const_config, &config, sizeof(RenderConfig));
+        cudaMemcpyToSymbol(d_const_config_buf, &config, sizeof(RenderConfig));
         cudaFree(d_frame_buffer);
         cudaFree(d_rand_states);
         cudaFree(d_materials);

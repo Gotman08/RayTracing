@@ -142,7 +142,7 @@ TEST(CudaKernelsTest, ConstantMemoryCamera) {
     h_camera.image_height = 600;
     h_camera.defocus_angle = 0.5f;
 
-    cudaMemcpyToSymbol(d_const_camera, &h_camera, sizeof(Camera));
+    cudaMemcpyToSymbol(d_const_camera_buf, &h_camera, sizeof(Camera));
 
     Camera* d_out;
     cudaMalloc(&d_out, sizeof(Camera));
@@ -170,7 +170,7 @@ TEST(CudaKernelsTest, ConstantMemoryConfig) {
     h_config.samples_per_pixel = 64;
     h_config.max_depth = 10;
 
-    cudaMemcpyToSymbol(d_const_config, &h_config, sizeof(RenderConfig));
+    cudaMemcpyToSymbol(d_const_config_buf, &h_config, sizeof(RenderConfig));
 
     RenderConfig* d_out;
     cudaMalloc(&d_out, sizeof(RenderConfig));
