@@ -54,7 +54,7 @@ PROJECT_NUMBER         =
 # for a project that appears at the top of each page and should give viewers a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "Ray tracer GPU/CPU avec BVH, materiaux physiques et mode interactif"
+PROJECT_BRIEF          = "Offline CUDA and OpenMP path tracer with BVH, sphere and plane geometry"
 
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included
 # in the documentation. The maximum height of the logo should not exceed 55

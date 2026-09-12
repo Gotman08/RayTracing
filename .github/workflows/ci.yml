@@ -1,0 +1,21 @@
+name: CPU build and tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure CPU renderer and tests
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_CPU_ONLY=ON -DBUILD_TESTS=ON
+      - name: Build
+        run: cmake --build build --parallel 2
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+      - name: Render a small image
+        run: |
+          OMP_NUM_THREADS=2 ./build/raytracer -w 64 -h 36 -s 2 -d 5 -o output/smoke.png
+          python3 -c "import struct; p=open('output/smoke.png','rb').read(); assert p[:8] == bytes([137,80,78,71,13,10,26,10]); assert struct.unpack('>II',p[16:24]) == (64,36)"
