@@ -80,3 +80,5 @@ __pycache__/
 bench/results/*/render.png
 !bench/results/**/logs/*.log
 !bench/results/validation/*.log
+rapport/__pycache__/
+rapport/*.gif

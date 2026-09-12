@@ -1,117 +1,25 @@
-# Guide Romeo2025 - Ray Tracer CUDA
+# Romeo cluster notes
 
-## Configuration du Cluster
+These are adaptation notes for the historical Slurm scripts, not a validated cluster deployment guide. No Romeo job was submitted for the current report. Cluster performance is **non mesuré**, and local WSL2 results must not be extrapolated to GH200 or H100 hardware.
 
-Romeo2025 utilise des **Superchips GH200** qui combinent:
-- CPU ARM Grace
-- GPU H100 (384 Go HBM3 par nœud)
-- Architecture CUDA sm_90 (Hopper)
+Confirm the site's current partition, account, GPU request syntax and available compiler/CUDA modules with the cluster documentation. Values in `scripts/slurm/` are examples tied to the original coursework environment.
 
-## Modules à Charger
+## Build and verify on an allocated node
 
-```bash
-module purge
-module load cuda/12.6
-module load cmake/3.28
-module load gcc/13.2
-```
-
-## Compilation
+After loading a compatible toolchain, use CMake with the architecture of the allocated device:
 
 ```bash
-mkdir build && cd build
-cmake .. \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_CUDA_ARCHITECTURES=90
-make -j8
-```
-
-**Note**: L'architecture `90` cible spécifiquement les H100/GH200.
-
-## Soumission de Jobs
-
-### Configuration SLURM
-
-```bash
-#SBATCH --partition=gpu
-#SBATCH --account=VOTRE_COMPTE    # Modifier avec votre allocation
-#SBATCH --gres=gpu:1
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
-#SBATCH --time=02:00:00
-```
-
-### Soumettre un job
-
-```bash
-# Éditer le compte dans le script
-sed -i 's/your_account/VOTRE_COMPTE/' scripts/slurm/run_raytracer.slurm
-
-# Soumettre
-sbatch scripts/slurm/run_raytracer.slurm
-```
-
-### Session interactive
-
-```bash
-salloc -p gpu --account=VOTRE_COMPTE --gres=gpu:1 --time=01:00:00
-```
-
-## Vérification GPU
-
-```bash
-# Info GPU
 nvidia-smi
-
-# Test compilation
-./build/raytracer --info
+cmake -S . -B build_gpu -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_ARCHITECTURES=90 -DBUILD_TESTS=ON
+cmake --build build_gpu --parallel 4
+./build_gpu/raytracer --info
+ctest --test-dir build_gpu --output-on-failure
 ```
 
-Sortie attendue:
-```
-=== CUDA Device Information ===
-Device 0: NVIDIA H100
-  Compute capability: 9.0
-  Total global memory: ~80 GB
-  Multiprocessors: 132
-```
+The architecture value above is the original Hopper target; verify it for the actual allocation. It is not the value used for the local RTX 4070 measurements.
 
-## Performance Attendue
+## Scripts needing review
 
-Sur H100 avec ce ray tracer:
+`run_benchmark.slurm` passes `--scene scenes/benchmark.json`, but there is no scene loader and unknown options are ignored. It times complete process execution while older tables mix other timing scopes. `run_raytracer.slurm` and related examples also require site-specific review. Do not use their presence as proof that the current branch works on that cluster.
 
-| Résolution | SPP  | Temps estimé |
-|------------|------|--------------|
-| 1920x1080  | 100  | ~2-3s        |
-| 3840x2160  | 100  | ~8-10s       |
-| 1920x1080  | 1000 | ~20-25s      |
-
-## Dépannage
-
-### Erreur "out of memory"
-Réduire la résolution ou les samples:
-```bash
-./build/raytracer -w 1280 -h 720 -s 50
-```
-
-### Module non trouvé
-Vérifier les modules disponibles:
-```bash
-module avail cuda
-module avail cmake
-```
-
-### Compte SLURM incorrect
-Vérifier vos allocations:
-```bash
-sacctmgr show associations user=$USER
-```
-
-## Bonnes Pratiques
-
-1. **Tester localement d'abord** avec peu de samples
-2. **Utiliser --quiet** dans les jobs batch
-3. **Sauvegarder les outputs** dans des dossiers datés
-4. **Monitorer** avec `squeue -u $USER`
+For a fresh experiment, adapt [bench/run.sh](../bench/run.sh) to the job environment and give it a new results directory. Keep the raw outputs and environment metadata. Its ordinary-render invocations avoid the camera mismatch in the built-in multi-resolution benchmark.

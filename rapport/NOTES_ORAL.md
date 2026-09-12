@@ -1,3 +1,5 @@
+> Historical presentation notes. Feature claims, performance values and test counts below may be obsolete. See [the provenance notice](README.md) and [current results](../docs/results.md).
+
 # Notes pour l'oral - Problèmes rencontrés
 
 ## 1. Profiling NVIDIA sous WSL2
