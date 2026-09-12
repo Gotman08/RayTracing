@@ -72,3 +72,11 @@ textures/*
 !textures/.gitkeep
 hdri/*
 !hdri/.gitkeep
+
+# Python tools and reproducible benchmark evidence
+__pycache__/
+*.py[cod]
+.venv/
+bench/results/*/render.png
+!bench/results/**/logs/*.log
+!bench/results/validation/*.log
