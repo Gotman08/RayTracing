@@ -93,7 +93,9 @@ def main():
             ax.legend(frameon=False, labelcolor=foreground, loc="lower right")
         fig.supxlabel("50 samples/pixel, depth 20. Median and Q1–Q3 of five trials; one warmup excluded.\nRender stages differ: CPU includes tone mapping; GPU shows the HDR sampling kernel.",
                       color=foreground, fontsize=9)
-        fig.savefig(assets / f"bench-{theme}.svg", metadata={"Date": None}, facecolor=background)
+        svg = assets / f"bench-{theme}.svg"
+        fig.savefig(svg, metadata={"Date": None}, facecolor=background)
+        svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
         if args.preview_dir:
             preview = Path(args.preview_dir)
             preview.mkdir(parents=True, exist_ok=True)
