@@ -1,0 +1,25 @@
+Running main() from <repo>/build_gpu_audit/_deps/googletest-src/googletest/src/gtest_main.cc
+[==========] Running 8 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 8 tests from CudaKernelsTest
+[ RUN      ] CudaKernelsTest.InitRandStates
+[       OK ] CudaKernelsTest.InitRandStates (829 ms)
+[ RUN      ] CudaKernelsTest.LuminanceReductionRed
+[       OK ] CudaKernelsTest.LuminanceReductionRed (2 ms)
+[ RUN      ] CudaKernelsTest.LuminanceReductionWhite
+[       OK ] CudaKernelsTest.LuminanceReductionWhite (1 ms)
+[ RUN      ] CudaKernelsTest.AdaptiveTonemappingRange
+[       OK ] CudaKernelsTest.AdaptiveTonemappingRange (4 ms)
+[ RUN      ] CudaKernelsTest.ConstantMemoryCamera
+[       OK ] CudaKernelsTest.ConstantMemoryCamera (1 ms)
+[ RUN      ] CudaKernelsTest.ConstantMemoryConfig
+[       OK ] CudaKernelsTest.ConstantMemoryConfig (1 ms)
+[ RUN      ] CudaKernelsTest.LuminanceReductionNonAligned
+[       OK ] CudaKernelsTest.LuminanceReductionNonAligned (1 ms)
+[ RUN      ] CudaKernelsTest.TonemappingBlackScene
+[       OK ] CudaKernelsTest.TonemappingBlackScene (1 ms)
+[----------] 8 tests from CudaKernelsTest (842 ms total)
+
+[----------] Global test environment tear-down
+[==========] 8 tests from 1 test suite ran. (842 ms total)
+[  PASSED  ] 8 tests.

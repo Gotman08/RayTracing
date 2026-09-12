@@ -1,0 +1,26 @@
+Command: <repo>/build_gpu_audit/raytracer --cpu -w 800 -h 450 -s 50 -d 20 --profile -o <repo>/bench/results/wsl-2026-09-12/render.png
+OMP_NUM_THREADS=4 OMP_DYNAMIC=FALSE
+CPU Ray Tracer
+Resolution: 800x450
+Samples: 50
+Max Depth: 20
+Objects: 80
+Output: <repo>/bench/results/wsl-2026-09-12/render.png
+
+Construction du BVH... OK (159 noeuds)
+Rendu CPU en cours... OK
+Temps: 2.549 secondes
+Performance: 7.06159 MRays/s
+Sauvegarde... OK
+
+=== CPU Profiling ===
+  BVH Construction              0.045 ms  (0.002%)
+  Buffer Allocation             1.755 ms  (0.067%)
+  Render (CPU/OpenMP)        2549.011 ms  (97.408%)
+  Save Image                   66.036 ms  (2.523%)
+  ---------------------------------------------
+  TOTAL                      2616.846 ms
+
+
+Exit code: 0
+Wall milliseconds: 2626.836441

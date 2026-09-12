@@ -1,0 +1,119 @@
+{
+  "started_utc": "2026-09-12T05:02:01.954374+00:00",
+  "git_commit": "da97938449e4f246d817f6ae0f281edea3af9e0e",
+  "source_sha256": "f46b167bda08772b213146fbd2dd307d6fd9890bb861e4c4156b3c1e8fd0f5ec",
+  "binary_sha256": "fffa491f9d5d673ea37a53d9a938e6df7faf3941ad07f6e2d465c17273b7d7de",
+  "binary": "build_gpu_audit/raytracer",
+  "environment": {
+    "system": "Linux",
+    "release": "6.6.87.2-microsoft-standard-WSL2",
+    "python": "3.12.3",
+    "omp_threads": 4,
+    "omp_dynamic": false
+  },
+  "commands": [
+    {
+      "command": [
+        "lscpu"
+      ],
+      "returncode": 0,
+      "output": "Architecture:                         x86_64\nCPU op-mode(s):                       32-bit, 64-bit\nAddress sizes:                        46 bits physical, 48 bits virtual\nByte Order:                           Little Endian\nCPU(s):                               20\nOn-line CPU(s) list:                  0-19\nVendor ID:                            GenuineIntel\nModel name:                           13th Gen Intel(R) Core(TM) i9-13900H\nCPU family:                           6\nModel:                                186\nThread(s) per core:                   2\nCore(s) per socket:                   10\nSocket(s):                            1\nStepping:                             2\nBogoMIPS:                             5990.42\nFlags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize flush_l1d arch_capabilities\nVirtualization:                       VT-x\nHypervisor vendor:                    Microsoft\nVirtualization type:                  full\nL1d cache:                            480 KiB (10 instances)\nL1i cache:                            320 KiB (10 instances)\nL2 cache:                             12.5 MiB (10 instances)\nL3 cache:                             24 MiB (1 instance)\nNUMA node(s):                         1\nNUMA node0 CPU(s):                    0-19\nVulnerability Gather data sampling:   Not affected\nVulnerability Itlb multihit:          Not affected\nVulnerability L1tf:                   Not affected\nVulnerability Mds:                    Not affected\nVulnerability Meltdown:               Not affected\nVulnerability Mmio stale data:        Not affected\nVulnerability Reg file data sampling: Vulnerable: No microcode\nVulnerability Retbleed:               Mitigation; Enhanced IBRS\nVulnerability Spec rstack overflow:   Not affected\nVulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; RSB filling; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S\nVulnerability Srbds:                  Not affected\nVulnerability Tsx async abort:        Not affected"
+    },
+    {
+      "command": [
+        "free",
+        "-b"
+      ],
+      "returncode": 0,
+      "output": "total        used        free      shared  buff/cache   available\nMem:     16537268224   732278784 15084306432    16584704   948506624 15804989440\nSwap:     4294967296           0  4294967296"
+    },
+    {
+      "command": [
+        "cat",
+        "/etc/os-release"
+      ],
+      "returncode": 0,
+      "output": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo"
+    },
+    {
+      "command": [
+        "cmake",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "cmake version 3.28.3\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake)."
+    },
+    {
+      "command": [
+        "g++",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+    },
+    {
+      "command": [
+        "g++-12",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "g++-12 (Ubuntu 12.4.0-2ubuntu1~24.04.1) 12.4.0\nCopyright (C) 2022 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+    },
+    {
+      "command": [
+        "nvcc",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2023 NVIDIA Corporation\nBuilt on Fri_Jan__6_16:45:21_PST_2023\nCuda compilation tools, release 12.0, V12.0.140\nBuild cuda_12.0.r12.0/compiler.32267302_0"
+    },
+    {
+      "command": [
+        "nvidia-smi",
+        "--query-gpu=name,driver_version,memory.total,compute_cap",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "output": "NVIDIA GeForce RTX 4070 Laptop GPU, 616.56, 8188 MiB, 8.9"
+    }
+  ],
+  "protocol": {
+    "sizes": [
+      [
+        320,
+        180
+      ],
+      [
+        800,
+        450
+      ]
+    ],
+    "samples_per_pixel": 50,
+    "max_depth": 20,
+    "warmups_per_mode_size": 1,
+    "measured_trials_per_mode_size": 5,
+    "trial_order": "warmup then five measured; CPU then GPU each trial",
+    "compile_options": "Release; C++17; ENABLE_FAST_MATH=ON; CUDA architecture detected by run.sh",
+    "seed": "Scene srand(77), CPU row seed j*1337+42, GPU time(NULL); no common seed option exists."
+  },
+  "timing_scope": {
+    "wall_ms": "New process through image export and exit, including CUDA initialization for GPU.",
+    "render_ms": "CPU render (sampling plus ordinary tone mapping); GPU CUDA event for HDR sampling kernel, excluding adaptive tone mapping."
+  },
+  "limitations": [
+    "Different random generators and tone mapping; no claim of pixel equivalence.",
+    "CPU and GPU render-stage timings cover different work; headline comparisons use full process wall time.",
+    "Laptop power state and WSL scheduling may vary; five trials describe only this run.",
+    "The built-in --benchmark is not used because its camera is not reinitialized for each image size."
+  ],
+  "cmake_cache": [
+    "BUILD_CPU_ONLY:BOOL=OFF",
+    "CMAKE_BUILD_TYPE:STRING=Release",
+    "CMAKE_CUDA_ARCHITECTURES:UNINITIALIZED=89",
+    "CMAKE_CUDA_COMPILER:FILEPATH=/usr/bin/nvcc",
+    "CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++",
+    "CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG",
+    "ENABLE_FAST_MATH:BOOL=ON"
+  ],
+  "completed_utc": "2026-09-12T05:02:35.032908+00:00"
+}

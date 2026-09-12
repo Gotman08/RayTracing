@@ -1,0 +1,59 @@
+[  6%] Built target gtest
+[ 10%] Building CXX object _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o
+[ 13%] Building CXX object CMakeFiles/raytracer.dir/src/main_cpu.cpp.o
+[ 20%] Built target gtest_main
+[ 23%] Building CXX object CMakeFiles/raytracer_tests.dir/tests/test_materials.cpp.o
+[ 26%] Building CXX object CMakeFiles/raytracer_tests.dir/tests/test_camera.cpp.o
+In file included from <repo>/tests/test_materials.cpp:23:
+<repo>/include/raytracer/materials/material.cuh: In member function ‘rt::Color rt::Material::get_albedo(float, float, const rt::Point3&) const’:
+<repo>/include/raytracer/materials/material.cuh:50:48: warning: unused parameter ‘u’ [-Wunused-parameter]
+   50 |     __host__ __device__ Color get_albedo(float u, float v, const Point3& p) const {
+      |                                          ~~~~~~^
+<repo>/include/raytracer/materials/material.cuh:50:57: warning: unused parameter ‘v’ [-Wunused-parameter]
+   50 |     __host__ __device__ Color get_albedo(float u, float v, const Point3& p) const {
+      |                                                   ~~~~~~^
+<repo>/include/raytracer/materials/material.cuh:50:74: warning: unused parameter ‘p’ [-Wunused-parameter]
+   50 |     __host__ __device__ Color get_albedo(float u, float v, const Point3& p) const {
+      |                                                            ~~~~~~~~~~~~~~^
+<repo>/include/raytracer/materials/material.cuh: In member function ‘rt::Color rt::Material::emitted(float, float, const rt::Point3&) const’:
+<repo>/include/raytracer/materials/material.cuh:55:45: warning: unused parameter ‘u’ [-Wunused-parameter]
+   55 |     __host__ __device__ Color emitted(float u, float v, const Point3& p) const {
+      |                                       ~~~~~~^
+<repo>/include/raytracer/materials/material.cuh:55:54: warning: unused parameter ‘v’ [-Wunused-parameter]
+   55 |     __host__ __device__ Color emitted(float u, float v, const Point3& p) const {
+      |                                                ~~~~~~^
+<repo>/include/raytracer/materials/material.cuh:55:71: warning: unused parameter ‘p’ [-Wunused-parameter]
+   55 |     __host__ __device__ Color emitted(float u, float v, const Point3& p) const {
+      |                                                         ~~~~~~~~~~~~~~^
+[ 30%] Building CXX object CMakeFiles/raytracer_tests.dir/tests/test_material_dispatch.cpp.o
+[ 33%] Linking CXX executable raytracer
+[ 33%] Built target raytracer
+[ 36%] Linking CXX static library ../../../lib/libgmock.a
+[ 36%] Built target gmock
+[ 40%] Building CXX object _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o
+In file included from <repo>/include/raytracer/rendering/material_dispatch.cuh:10,
+                 from <repo>/tests/test_material_dispatch.cpp:23:
+<repo>/include/raytracer/materials/material.cuh: In member function ‘rt::Color rt::Material::get_albedo(float, float, const rt::Point3&) const’:
+<repo>/include/raytracer/materials/material.cuh:50:48: warning: unused parameter ‘u’ [-Wunused-parameter]
+   50 |     __host__ __device__ Color get_albedo(float u, float v, const Point3& p) const {
+      |                                          ~~~~~~^
+<repo>/include/raytracer/materials/material.cuh:50:57: warning: unused parameter ‘v’ [-Wunused-parameter]
+   50 |     __host__ __device__ Color get_albedo(float u, float v, const Point3& p) const {
+      |                                                   ~~~~~~^
+<repo>/include/raytracer/materials/material.cuh:50:74: warning: unused parameter ‘p’ [-Wunused-parameter]
+   50 |     __host__ __device__ Color get_albedo(float u, float v, const Point3& p) const {
+      |                                                            ~~~~~~~~~~~~~~^
+<repo>/include/raytracer/materials/material.cuh: In member function ‘rt::Color rt::Material::emitted(float, float, const rt::Point3&) const’:
+<repo>/include/raytracer/materials/material.cuh:55:45: warning: unused parameter ‘u’ [-Wunused-parameter]
+   55 |     __host__ __device__ Color emitted(float u, float v, const Point3& p) const {
+      |                                       ~~~~~~^
+<repo>/include/raytracer/materials/material.cuh:55:54: warning: unused parameter ‘v’ [-Wunused-parameter]
+   55 |     __host__ __device__ Color emitted(float u, float v, const Point3& p) const {
+      |                                                ~~~~~~^
+<repo>/include/raytracer/materials/material.cuh:55:71: warning: unused parameter ‘p’ [-Wunused-parameter]
+   55 |     __host__ __device__ Color emitted(float u, float v, const Point3& p) const {
+      |                                                         ~~~~~~~~~~~~~~^
+[ 43%] Linking CXX executable raytracer_tests
+[ 96%] Built target raytracer_tests
+[100%] Linking CXX static library ../../../lib/libgmock_main.a
+[100%] Built target gmock_main

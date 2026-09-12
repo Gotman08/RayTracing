@@ -1,0 +1,12 @@
+=== CUDA Device Information ===
+Number of CUDA devices: 1
+
+Device 0: NVIDIA GeForce RTX 4070 Laptop GPU
+  Compute capability: 8.9
+  Total global memory: 8.00 GB
+  Multiprocessors: 36
+  Max threads per block: 1024
+  Max threads per SM: 1536
+  Shared memory per block: 48.00 KB
+  Warp size: 32
+

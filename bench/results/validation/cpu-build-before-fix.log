@@ -1,0 +1,109 @@
+[  3%] Building CXX object CMakeFiles/raytracer.dir/src/main_cpu.cpp.o
+[  6%] Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
+In file included from <repo>/src/main_cpu.cpp:26:
+<repo>/include/raytracer/materials/lambertian.cuh: In function ‘bool rt::scatter_lambertian(const Material&, const Ray&, const HitRecord&, Color&, Ray&, curandState*)’:
+<repo>/include/raytracer/materials/lambertian.cuh:27:62: error: invalid user-defined conversion from ‘curandState*’ to ‘rt::CPURandom&’ [-fpermissive]
+   27 |     Vec3 scatter_direction = rec.normal + random_unit_vector(rand_state);
+      |                                                              ^~~~~~~~~~
+In file included from <repo>/src/main_cpu.cpp:17:
+<repo>/include/raytracer/core/random.cuh:19:5: note: candidate is: ‘rt::CPURandom::CPURandom(uint64_t)’ (near match)
+   19 |     CPURandom(uint64_t seed = 0) : gen(seed), dist(0.0f, 1.0f) {}
+      |     ^~~~~~~~~
+<repo>/include/raytracer/core/random.cuh:19:5: note:   conversion of argument 1 would be ill-formed:
+<repo>/include/raytracer/materials/lambertian.cuh:27:62: error: invalid conversion from ‘curandState*’ to ‘uint64_t’ {aka ‘long unsigned int’} [-fpermissive]
+   27 |     Vec3 scatter_direction = rec.normal + random_unit_vector(rand_state);
+      |                                                              ^~~~~~~~~~
+      |                                                              |
+      |                                                              curandState*
+<repo>/include/raytracer/materials/lambertian.cuh:27:62: error: invalid conversion from ‘curandState*’ to ‘uint64_t’ {aka ‘long unsigned int’} [-fpermissive]
+   27 |     Vec3 scatter_direction = rec.normal + random_unit_vector(rand_state);
+      |                                                              ^~~~~~~~~~
+      |                                                              |
+      |                                                              curandState*
+<repo>/include/raytracer/core/random.cuh:19:24: note:   initializing argument 1 of ‘rt::CPURandom::CPURandom(uint64_t)’
+   19 |     CPURandom(uint64_t seed = 0) : gen(seed), dist(0.0f, 1.0f) {}
+      |               ~~~~~~~~~^~~~~~~~
+<repo>/include/raytracer/materials/lambertian.cuh:27:61: error: conversion to non-const reference type ‘class rt::CPURandom&’ from rvalue of type ‘rt::CPURandom’ [-fpermissive]
+   27 |     Vec3 scatter_direction = rec.normal + random_unit_vector(rand_state);
+      |                                           ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+<repo>/include/raytracer/core/random.cuh:65:43: note:   initializing argument 1 of ‘rt::Vec3 rt::random_unit_vector(CPURandom&)’
+   65 | inline Vec3 random_unit_vector(CPURandom& rng) {
+      |                                ~~~~~~~~~~~^~~
+In file included from <repo>/src/main_cpu.cpp:27:
+<repo>/include/raytracer/materials/metal.cuh: In function ‘bool rt::scatter_metal(const Material&, const Ray&, const HitRecord&, Color&, Ray&, curandState*)’:
+<repo>/include/raytracer/materials/metal.cuh:29:73: error: invalid user-defined conversion from ‘curandState*’ to ‘rt::CPURandom&’ [-fpermissive]
+   29 |     reflected = unit_vector(reflected) + (mat.fuzz * random_unit_vector(rand_state));
+      |                                                                         ^~~~~~~~~~
+<repo>/include/raytracer/core/random.cuh:19:5: note: candidate is: ‘rt::CPURandom::CPURandom(uint64_t)’ (near match)
+   19 |     CPURandom(uint64_t seed = 0) : gen(seed), dist(0.0f, 1.0f) {}
+      |     ^~~~~~~~~
+<repo>/include/raytracer/core/random.cuh:19:5: note:   conversion of argument 1 would be ill-formed:
+<repo>/include/raytracer/materials/metal.cuh:29:73: error: invalid conversion from ‘curandState*’ to ‘uint64_t’ {aka ‘long unsigned int’} [-fpermissive]
+   29 |     reflected = unit_vector(reflected) + (mat.fuzz * random_unit_vector(rand_state));
+      |                                                                         ^~~~~~~~~~
+      |                                                                         |
+      |                                                                         curandState*
+<repo>/include/raytracer/materials/metal.cuh:29:73: error: invalid conversion from ‘curandState*’ to ‘uint64_t’ {aka ‘long unsigned int’} [-fpermissive]
+   29 |     reflected = unit_vector(reflected) + (mat.fuzz * random_unit_vector(rand_state));
+      |                                                                         ^~~~~~~~~~
+      |                                                                         |
+      |                                                                         curandState*
+<repo>/include/raytracer/core/random.cuh:19:24: note:   initializing argument 1 of ‘rt::CPURandom::CPURandom(uint64_t)’
+   19 |     CPURandom(uint64_t seed = 0) : gen(seed), dist(0.0f, 1.0f) {}
+      |               ~~~~~~~~~^~~~~~~~
+<repo>/include/raytracer/materials/metal.cuh:29:72: error: conversion to non-const reference type ‘class rt::CPURandom&’ from rvalue of type ‘rt::CPURandom’ [-fpermissive]
+   29 |     reflected = unit_vector(reflected) + (mat.fuzz * random_unit_vector(rand_state));
+      |                                                      ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+<repo>/include/raytracer/core/random.cuh:65:43: note:   initializing argument 1 of ‘rt::Vec3 rt::random_unit_vector(CPURandom&)’
+   65 | inline Vec3 random_unit_vector(CPURandom& rng) {
+      |                                ~~~~~~~~~~~^~~
+In file included from <repo>/src/main_cpu.cpp:28:
+<repo>/include/raytracer/materials/dielectric.cuh: In function ‘bool rt::scatter_dielectric(const Material&, const Ray&, const HitRecord&, Color&, Ray&, curandState*)’:
+<repo>/include/raytracer/materials/dielectric.cuh:45:56: error: ‘curand_uniform’ was not declared in this scope; did you mean ‘arc4random_uniform’?
+   45 |     if (cannot_refract || reflectance(cos_theta, ri) > curand_uniform(rand_state)) {
+      |                                                        ^~~~~~~~~~~~~~
+      |                                                        arc4random_uniform
+In file included from <repo>/src/main_cpu.cpp:29:
+<repo>/include/raytracer/camera/camera.cuh: In member function ‘rt::Ray rt::Camera::get_ray(int, int, curandState*) const’:
+<repo>/include/raytracer/camera/camera.cuh:72:20: error: ‘curand_uniform’ was not declared in this scope; did you mean ‘arc4random_uniform’?
+   72 |         float px = curand_uniform(rand_state) - 0.5f;
+      |                    ^~~~~~~~~~~~~~
+      |                    arc4random_uniform
+<repo>/include/raytracer/camera/camera.cuh: In member function ‘rt::Point3 rt::Camera::defocus_disk_sample(curandState*) const’:
+<repo>/include/raytracer/camera/camera.cuh:107:38: error: invalid user-defined conversion from ‘curandState*’ to ‘rt::CPURandom&’ [-fpermissive]
+  107 |         Vec3 p = random_in_unit_disk(rand_state);
+      |                                      ^~~~~~~~~~
+<repo>/include/raytracer/core/random.cuh:19:5: note: candidate is: ‘rt::CPURandom::CPURandom(uint64_t)’ (near match)
+   19 |     CPURandom(uint64_t seed = 0) : gen(seed), dist(0.0f, 1.0f) {}
+      |     ^~~~~~~~~
+<repo>/include/raytracer/core/random.cuh:19:5: note:   conversion of argument 1 would be ill-formed:
+<repo>/include/raytracer/camera/camera.cuh:107:38: error: invalid conversion from ‘curandState*’ to ‘uint64_t’ {aka ‘long unsigned int’} [-fpermissive]
+  107 |         Vec3 p = random_in_unit_disk(rand_state);
+      |                                      ^~~~~~~~~~
+      |                                      |
+      |                                      curandState*
+<repo>/include/raytracer/camera/camera.cuh:107:38: error: invalid conversion from ‘curandState*’ to ‘uint64_t’ {aka ‘long unsigned int’} [-fpermissive]
+  107 |         Vec3 p = random_in_unit_disk(rand_state);
+      |                                      ^~~~~~~~~~
+      |                                      |
+      |                                      curandState*
+<repo>/include/raytracer/core/random.cuh:19:24: note:   initializing argument 1 of ‘rt::CPURandom::CPURandom(uint64_t)’
+   19 |     CPURandom(uint64_t seed = 0) : gen(seed), dist(0.0f, 1.0f) {}
+      |               ~~~~~~~~~^~~~~~~~
+<repo>/include/raytracer/camera/camera.cuh:107:37: error: conversion to non-const reference type ‘class rt::CPURandom&’ from rvalue of type ‘rt::CPURandom’ [-fpermissive]
+  107 |         Vec3 p = random_in_unit_disk(rand_state);
+      |                  ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+<repo>/include/raytracer/core/random.cuh:89:44: note:   initializing argument 1 of ‘rt::Vec3 rt::random_in_unit_disk(CPURandom&)’
+   89 | inline Vec3 random_in_unit_disk(CPURandom& rng) {
+      |                                 ~~~~~~~~~~~^~~
+<repo>/src/main_cpu.cpp: In member function ‘int CPUBVHBuilder::build_recursive(int, int)’:
+<repo>/src/main_cpu.cpp:107:14: error: ‘sort’ is not a member of ‘std’; did you mean ‘sqrt’?
+  107 |         std::sort(primitives.begin() + start, primitives.begin() + end,
+      |              ^~~~
+      |              sqrt
+gmake[2]: *** [CMakeFiles/raytracer.dir/build.make:76: CMakeFiles/raytracer.dir/src/main_cpu.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:138: CMakeFiles/raytracer.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+[ 10%] Linking CXX static library ../../../lib/libgtest.a
+[ 10%] Built target gtest
+gmake: *** [Makefile:146: all] Error 2

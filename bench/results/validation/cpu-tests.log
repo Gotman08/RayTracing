@@ -1,0 +1,426 @@
+Internal ctest changing into directory: <repo>/build_cpu_audit
+Test project <repo>/build_cpu_audit
+        Start 129: ToneMappingTest.PreservesRatios
+        Start 144: BVHTest.BoundingBoxRoot
+        Start 145: HitRecordTest.FrontFaceWhenRayOpposesNormal
+        Start   6: Vec3Test.Subtraction
+  1/210 Test #144: BVHTest.BoundingBoxRoot ..........................   Passed    0.02 sec
+        Start 143: BVHTest.FindsClosestOfTwo
+  2/210 Test #129: ToneMappingTest.PreservesRatios ..................   Passed    0.08 sec
+        Start   4: Vec3Test.Negation
+  3/210 Test #145: HitRecordTest.FrontFaceWhenRayOpposesNormal ......   Passed    0.10 sec
+        Start  94: AABBTest.Centroid
+  4/210 Test   #6: Vec3Test.Subtraction .............................   Passed    0.13 sec
+        Start  99: AABBTest.LongestAxisY
+  5/210 Test #143: BVHTest.FindsClosestOfTwo ........................   Passed    0.15 sec
+        Start   5: Vec3Test.Addition
+  6/210 Test   #4: Vec3Test.Negation ................................   Passed    0.15 sec
+        Start  93: AABBTest.IntervalExcludes
+  7/210 Test  #94: AABBTest.Centroid ................................   Passed    0.12 sec
+        Start  98: AABBTest.LongestAxisX
+  8/210 Test  #99: AABBTest.LongestAxisY ............................   Passed    0.08 sec
+        Start  92: AABBTest.DiagonalRay
+  9/210 Test   #5: Vec3Test.Addition ................................   Passed    0.03 sec
+        Start  21: Vec3Test.Reflect
+ 10/210 Test  #93: AABBTest.IntervalExcludes ........................   Passed    0.03 sec
+        Start  20: Vec3Test.CrossAnticommutative
+ 11/210 Test  #98: AABBTest.LongestAxisX ............................   Passed    0.03 sec
+        Start  19: Vec3Test.Cross
+ 12/210 Test  #92: AABBTest.DiagonalRay .............................   Passed    0.07 sec
+        Start 140: BVHTest.SingleLeafHit
+ 13/210 Test  #21: Vec3Test.Reflect .................................   Passed    0.11 sec
+        Start 138: BVHTest.Empty
+ 14/210 Test  #20: Vec3Test.CrossAnticommutative ....................   Passed    0.11 sec
+        Start 128: ToneMappingTest.HighValue
+ 15/210 Test  #19: Vec3Test.Cross ...................................   Passed    0.07 sec
+        Start 147: HitRecordTest.NormalFlipsForBackFace
+ 16/210 Test #140: BVHTest.SingleLeafHit ............................   Passed    0.06 sec
+        Start 139: BVHTest.EmptyNoHit
+ 17/210 Test #138: BVHTest.Empty ....................................   Passed    0.10 sec
+        Start  97: AABBTest.SurfaceAreaRect
+ 18/210 Test #128: ToneMappingTest.HighValue ........................   Passed    0.10 sec
+        Start 127: ToneMappingTest.One
+ 19/210 Test #147: HitRecordTest.NormalFlipsForBackFace .............   Passed    0.09 sec
+        Start  29: RayTest.AtZero
+ 20/210 Test #139: BVHTest.EmptyNoHit ...............................   Passed    0.03 sec
+        Start 158: SkyTest.DefaultZenithColor
+ 21/210 Test  #97: AABBTest.SurfaceAreaRect .........................   Passed    0.03 sec
+        Start   7: Vec3Test.Multiplication
+ 22/210 Test #127: ToneMappingTest.One ..............................   Passed    0.11 sec
+        Start   8: Vec3Test.ScalarMultiplication
+ 23/210 Test  #29: RayTest.AtZero ...................................   Passed    0.12 sec
+        Start 122: CameraTest.RayFromCenter
+ 24/210 Test #158: SkyTest.DefaultZenithColor .......................   Passed    0.12 sec
+        Start 159: SkyTest.DefaultNoSun
+ 25/210 Test   #7: Vec3Test.Multiplication ..........................   Passed    0.08 sec
+        Start 160: SkyTest.CustomColors
+ 26/210 Test   #8: Vec3Test.ScalarMultiplication ....................   Passed    0.04 sec
+        Start   9: Vec3Test.Division
+ 27/210 Test #122: CameraTest.RayFromCenter .........................   Passed    0.07 sec
+        Start 149: HitRecordTest.ObliqueRayFrontFace
+ 28/210 Test #159: SkyTest.DefaultNoSun .............................   Passed    0.09 sec
+        Start  28: RayTest.WithTime
+ 29/210 Test #160: SkyTest.CustomColors .............................   Passed    0.11 sec
+        Start 161: SkyTest.GradientAtZenith
+ 30/210 Test   #9: Vec3Test.Division ................................   Passed    0.09 sec
+        Start 114: MaterialsTest.SchlickReflectanceAtGrazing
+ 31/210 Test #149: HitRecordTest.ObliqueRayFrontFace ................   Passed    0.07 sec
+        Start   3: Vec3Test.SingleValueConstructor
+ 32/210 Test  #28: RayTest.WithTime .................................   Passed    0.07 sec
+        Start 148: HitRecordTest.NormalPreservedForFrontFace
+ 33/210 Test #161: SkyTest.GradientAtZenith .........................   Passed    0.11 sec
+        Start  27: RayTest.ParameterizedConstructor
+ 34/210 Test #114: MaterialsTest.SchlickReflectanceAtGrazing ........   Passed    0.11 sec
+        Start 121: CameraTest.WithDefocus
+ 35/210 Test   #3: Vec3Test.SingleValueConstructor ..................   Passed    0.07 sec
+        Start 120: CameraTest.NoDefocus
+ 36/210 Test #148: HitRecordTest.NormalPreservedForFrontFace ........   Passed    0.07 sec
+        Start  13: Vec3Test.CompoundDivision
+ 37/210 Test  #27: RayTest.ParameterizedConstructor .................   Passed    0.04 sec
+        Start 113: MaterialsTest.SchlickReflectanceAtZero
+ 38/210 Test #121: CameraTest.WithDefocus ...........................   Passed    0.04 sec
+        Start  86: AABBTest.MergeConstructor
+ 39/210 Test #120: CameraTest.NoDefocus .............................   Passed    0.07 sec
+        Start 106: MaterialsTest.MaterialDefault
+ 40/210 Test  #13: Vec3Test.CompoundDivision ........................   Passed    0.11 sec
+        Start 104: MaterialsTest.CreateMetalFuzzClamp
+ 41/210 Test #113: MaterialsTest.SchlickReflectanceAtZero ...........   Passed    0.10 sec
+        Start 130: ToneMappingTest.Monotonic
+ 42/210 Test  #86: AABBTest.MergeConstructor ........................   Passed    0.08 sec
+        Start  81: PlaneTest.Diagonal
+ 43/210 Test #106: MaterialsTest.MaterialDefault ....................   Passed    0.03 sec
+        Start  68: SphereTest.OffsetCenter
+ 44/210 Test #104: MaterialsTest.CreateMetalFuzzClamp ...............   Passed    0.04 sec
+        Start  12: Vec3Test.CompoundMultiplication
+ 45/210 Test #130: ToneMappingTest.Monotonic ........................   Passed    0.09 sec
+        Start  82: PlaneTest.OffsetPoint
+ 46/210 Test  #81: PlaneTest.Diagonal ...............................   Passed    0.13 sec
+        Start  11: Vec3Test.CompoundAddition
+ 47/210 Test  #68: SphereTest.OffsetCenter ..........................   Passed    0.16 sec
+        Start 131: ToneMappingTest.GammaCorrectionZero
+ 48/210 Test  #12: Vec3Test.CompoundMultiplication ..................   Passed    0.20 sec
+        Start 105: MaterialsTest.CreateDielectric
+ 49/210 Test  #82: PlaneTest.OffsetPoint ............................   Passed    0.12 sec
+        Start  76: PlaneTest.RayIntervalExcludes
+ 50/210 Test  #11: Vec3Test.CompoundAddition ........................   Passed    0.10 sec
+        Start 112: MaterialsTest.MetalAttenuationIsAlbedo
+ 51/210 Test #131: ToneMappingTest.GammaCorrectionZero ..............   Passed    0.04 sec
+        Start  85: AABBTest.IntervalConstructor
+ 52/210 Test #105: MaterialsTest.CreateDielectric ...................   Passed    0.04 sec
+        Start  75: PlaneTest.RayFromBehind
+ 53/210 Test  #76: PlaneTest.RayIntervalExcludes ....................   Passed    0.08 sec
+        Start  61: SphereTest.RayTangent
+ 54/210 Test #112: MaterialsTest.MetalAttenuationIsAlbedo ...........   Passed    0.10 sec
+        Start  87: AABBTest.HitThroughCenter
+ 55/210 Test  #85: AABBTest.IntervalConstructor .....................   Passed    0.11 sec
+        Start 132: ToneMappingTest.GammaCorrectionOne
+ 56/210 Test  #75: PlaneTest.RayFromBehind ..........................   Passed    0.07 sec
+        Start  53: IntervalTest.ClampBelow
+ 57/210 Test  #61: SphereTest.RayTangent ............................   Passed    0.08 sec
+        Start  36: IntervalTest.DefaultConstructor
+ 58/210 Test  #87: AABBTest.HitThroughCenter ........................   Passed    0.12 sec
+        Start  41: IntervalTest.SizeZero
+ 59/210 Test #132: ToneMappingTest.GammaCorrectionOne ...............   Passed    0.12 sec
+        Start  67: SphereTest.NormalIsUnit
+ 60/210 Test  #53: IntervalTest.ClampBelow ..........................   Passed    0.11 sec
+        Start  18: Vec3Test.Dot
+ 61/210 Test  #36: IntervalTest.DefaultConstructor ..................   Passed    0.13 sec
+        Start  69: SphereTest.LargeRadius
+ 62/210 Test  #41: IntervalTest.SizeZero ............................   Passed    0.11 sec
+        Start  35: RayTest.ZDirection
+ 63/210 Test  #67: SphereTest.NormalIsUnit ..........................   Passed    0.11 sec
+        Start 115: MaterialsTest.DielectricScatterAlwaysTrue
+ 64/210 Test  #18: Vec3Test.Dot .....................................   Passed    0.06 sec
+        Start  74: PlaneTest.RayPointingAway
+ 65/210 Test  #69: SphereTest.LargeRadius ...........................   Passed    0.07 sec
+        Start 146: HitRecordTest.BackFaceWhenRayAlignedWithNormal
+ 66/210 Test  #35: RayTest.ZDirection ...............................   Passed    0.11 sec
+        Start  88: AABBTest.HitEdge
+ 67/210 Test #115: MaterialsTest.DielectricScatterAlwaysTrue ........   Passed    0.13 sec
+        Start  62: SphereTest.RayFromInside
+ 68/210 Test  #74: PlaneTest.RayPointingAway ........................   Passed    0.12 sec
+        Start  63: SphereTest.RayBehind
+ 69/210 Test #146: HitRecordTest.BackFaceWhenRayAlignedWithNormal ...   Passed    0.07 sec
+        Start 126: ToneMappingTest.Zero
+ 70/210 Test  #88: AABBTest.HitEdge .................................   Passed    0.07 sec
+        Start  40: IntervalTest.Size
+ 71/210 Test  #62: SphereTest.RayFromInside .........................   Passed    0.06 sec
+        Start  83: AABBTest.PointConstructor
+ 72/210 Test  #63: SphereTest.RayBehind .............................   Passed    0.06 sec
+        Start  37: IntervalTest.ValueConstructor
+ 73/210 Test #126: ToneMappingTest.Zero .............................   Passed    0.07 sec
+        Start 137: BVHTest.NodeDefault
+ 74/210 Test  #40: IntervalTest.Size ................................   Passed    0.08 sec
+        Start  60: SphereTest.RayMisses
+ 75/210 Test  #83: AABBTest.PointConstructor ........................   Passed    0.07 sec
+        Start  52: IntervalTest.ClampInside
+ 76/210 Test  #37: IntervalTest.ValueConstructor ....................   Passed    0.10 sec
+        Start  66: SphereTest.NormalFromInside
+ 77/210 Test #137: BVHTest.NodeDefault ..............................   Passed    0.11 sec
+        Start  80: PlaneTest.VerticalXz
+ 78/210 Test  #60: SphereTest.RayMisses .............................   Passed    0.10 sec
+        Start  51: IntervalTest.SurroundsNearMin
+ 79/210 Test  #52: IntervalTest.ClampInside .........................   Passed    0.06 sec
+        Start 107: MaterialsTest.MakeDielectricStatic
+ 80/210 Test  #66: SphereTest.NormalFromInside ......................   Passed    0.07 sec
+        Start  77: PlaneTest.NormalFrontFace
+ 81/210 Test  #80: PlaneTest.VerticalXz .............................   Passed    0.13 sec
+        Start  42: IntervalTest.SizeNegative
+ 82/210 Test  #51: IntervalTest.SurroundsNearMin ....................   Passed    0.13 sec
+        Start  34: RayTest.DiagonalDirection
+ 83/210 Test #107: MaterialsTest.MakeDielectricStatic ...............   Passed    0.12 sec
+        Start  43: IntervalTest.ContainsInside
+ 84/210 Test  #77: PlaneTest.NormalFrontFace ........................   Passed    0.04 sec
+        Start  39: IntervalTest.MergeDisjoint
+ 85/210 Test  #42: IntervalTest.SizeNegative ........................   Passed    0.11 sec
+        Start  59: SphereTest.RayThroughCenter
+ 86/210 Test  #34: RayTest.DiagonalDirection ........................   Passed    0.12 sec
+        Start  65: SphereTest.NormalAtFront
+ 87/210 Test  #43: IntervalTest.ContainsInside ......................   Passed    0.12 sec
+        Start  70: SphereTest.SmallRadius
+ 88/210 Test  #39: IntervalTest.MergeDisjoint .......................   Passed    0.10 sec
+        Start 100: AABBTest.LongestAxisZ
+ 89/210 Test  #59: SphereTest.RayThroughCenter ......................   Passed    0.13 sec
+        Start   1: Vec3Test.DefaultConstructor
+ 90/210 Test  #65: SphereTest.NormalAtFront .........................   Passed    0.13 sec
+        Start  84: AABBTest.PointConstructorReversed
+ 91/210 Test  #70: SphereTest.SmallRadius ...........................   Passed    0.13 sec
+        Start 134: ToneMappingTest.GammaCorrectionBrightensDarks
+ 92/210 Test #100: AABBTest.LongestAxisZ ............................   Passed    0.06 sec
+        Start 101: AABBTest.AxisInterval
+ 93/210 Test   #1: Vec3Test.DefaultConstructor ......................   Passed    0.13 sec
+        Start  54: IntervalTest.ClampAbove
+ 94/210 Test  #84: AABBTest.PointConstructorReversed ................   Passed    0.18 sec
+        Start  33: RayTest.AtUnitDirection
+ 95/210 Test #134: ToneMappingTest.GammaCorrectionBrightensDarks ....   Passed    0.18 sec
+        Start 119: CameraTest.CoordinateSystem
+ 96/210 Test #101: AABBTest.AxisInterval ............................   Passed    0.09 sec
+        Start 133: ToneMappingTest.GammaCorrectionMidtone
+ 97/210 Test  #54: IntervalTest.ClampAbove ..........................   Passed    0.12 sec
+        Start  55: IntervalTest.ClampAtBoundary
+ 98/210 Test  #33: RayTest.AtUnitDirection ..........................   Passed    0.11 sec
+        Start  15: Vec3Test.LengthSquared
+ 99/210 Test #119: CameraTest.CoordinateSystem ......................   Passed    0.11 sec
+        Start  64: SphereTest.RayIntervalExcludes
+100/210 Test #133: ToneMappingTest.GammaCorrectionMidtone ...........   Passed    0.06 sec
+        Start 108: MaterialsTest.LambertianScatterAlwaysTrue
+101/210 Test  #55: IntervalTest.ClampAtBoundary .....................   Passed    0.09 sec
+        Start  50: IntervalTest.SurroundsAtMax
+102/210 Test  #15: Vec3Test.LengthSquared ...........................   Passed    0.11 sec
+        Start  71: PlaneTest.RayPerpendicular
+103/210 Test  #64: SphereTest.RayIntervalExcludes ...................   Passed    0.16 sec
+        Start 135: ToneMappingTest.GammaCorrectionNegativeClamped
+104/210 Test #108: MaterialsTest.LambertianScatterAlwaysTrue ........   Passed    0.12 sec
+        Start 102: MaterialsTest.CreateLambertian
+105/210 Test  #50: IntervalTest.SurroundsAtMax ......................   Passed    0.09 sec
+        Start 136: ToneMappingTest.Gamma2KnownValue
+106/210 Test  #71: PlaneTest.RayPerpendicular .......................   Passed    0.06 sec
+        Start  14: Vec3Test.Length
+107/210 Test #135: ToneMappingTest.GammaCorrectionNegativeClamped ...   Passed    0.03 sec
+        Start  23: Vec3Test.UnitVector
+108/210 Test #102: MaterialsTest.CreateLambertian ...................   Passed    0.06 sec
+        Start  17: Vec3Test.NearZero
+109/210 Test #136: ToneMappingTest.Gamma2KnownValue .................   Passed    0.07 sec
+        Start  24: Vec3Test.Point3Alias
+110/210 Test  #14: Vec3Test.Length ..................................   Passed    0.11 sec
+        Start 116: MaterialsTest.DielectricAttenuationIsWhite
+111/210 Test  #17: Vec3Test.NearZero ................................   Passed    0.08 sec
+        Start 142: BVHTest.TwoNodeTree
+112/210 Test  #23: Vec3Test.UnitVector ..............................   Passed    0.19 sec
+        Start 167: SkyTest.SkyBlackFunction
+113/210 Test #116: MaterialsTest.DielectricAttenuationIsWhite .......   Passed    0.14 sec
+        Start  78: PlaneTest.NormalBackFace
+114/210 Test  #24: Vec3Test.Point3Alias .............................   Passed    0.15 sec
+        Start 124: CameraTest.ShutterTime
+115/210 Test #142: BVHTest.TwoNodeTree ..............................   Passed    0.12 sec
+        Start  30: RayTest.AtPositive
+116/210 Test #167: SkyTest.SkyBlackFunction .........................   Passed    0.06 sec
+        Start 141: BVHTest.SingleLeafMiss
+117/210 Test  #78: PlaneTest.NormalBackFace .........................   Passed    0.09 sec
+        Start  25: Vec3Test.ColorAlias
+118/210 Test #124: CameraTest.ShutterTime ...........................   Passed    0.11 sec
+        Start  16: Vec3Test.Normalized
+119/210 Test  #30: RayTest.AtPositive ...............................   Passed    0.09 sec
+        Start  31: RayTest.AtNegative
+120/210 Test #141: BVHTest.SingleLeafMiss ...........................   Passed    0.07 sec
+        Start  22: Vec3Test.RefractPerpendicular
+121/210 Test  #25: Vec3Test.ColorAlias ..............................   Passed    0.03 sec
+        Start 103: MaterialsTest.CreateMetal
+122/210 Test  #16: Vec3Test.Normalized ..............................   Passed    0.03 sec
+        Start 123: CameraTest.RayCornerDiverges
+123/210 Test  #31: RayTest.AtNegative ...............................   Passed    0.03 sec
+        Start 150: TextureTest.DefaultIsWhite
+124/210 Test  #22: Vec3Test.RefractPerpendicular ....................   Passed    0.08 sec
+        Start  38: IntervalTest.MergeConstructor
+125/210 Test #103: MaterialsTest.CreateMetal ........................   Passed    0.09 sec
+        Start  10: Vec3Test.IndexOperator
+126/210 Test #123: CameraTest.RayCornerDiverges .....................   Passed    0.11 sec
+        Start 109: MaterialsTest.LambertianAttenuationIsAlbedo
+127/210 Test #150: TextureTest.DefaultIsWhite .......................   Passed    0.06 sec
+        Start 169: GeometryUtilsTest.SouthPole
+128/210 Test  #38: IntervalTest.MergeConstructor ....................   Passed    0.06 sec
+        Start 110: MaterialsTest.LambertianScatterOriginAtHit
+129/210 Test  #10: Vec3Test.IndexOperator ...........................   Passed    0.03 sec
+        Start 179: CPURandomTest.Vec3MinMaxRange
+130/210 Test #109: MaterialsTest.LambertianAttenuationIsAlbedo ......   Passed    0.04 sec
+        Start  89: AABBTest.Miss
+131/210 Test #169: GeometryUtilsTest.SouthPole ......................   Passed    0.05 sec
+        Start 177: CPURandomTest.DifferentSeeds
+132/210 Test #110: MaterialsTest.LambertianScatterOriginAtHit .......   Passed    0.09 sec
+        Start  90: AABBTest.RayBehind
+133/210 Test #179: CPURandomTest.Vec3MinMaxRange ....................   Passed    0.10 sec
+        Start 125: CameraTest.FovAffectsSpread
+134/210 Test  #89: AABBTest.Miss ....................................   Passed    0.11 sec
+        Start 118: CameraTest.Dimensions
+135/210 Test #177: CPURandomTest.DifferentSeeds .....................   Passed    0.06 sec
+        Start  44: IntervalTest.ContainsAtMin
+136/210 Test  #90: AABBTest.RayBehind ...............................   Passed    0.06 sec
+        Start 178: CPURandomTest.Vec3ComponentsInRange
+137/210 Test #125: CameraTest.FovAffectsSpread ......................   Passed    0.08 sec
+        Start 117: CameraTest.Center
+138/210 Test #118: CameraTest.Dimensions ............................   Passed    0.10 sec
+        Start  45: IntervalTest.ContainsAtMax
+139/210 Test  #44: IntervalTest.ContainsAtMin .......................   Passed    0.09 sec
+        Start  95: AABBTest.CentroidOffset
+140/210 Test #178: CPURandomTest.Vec3ComponentsInRange ..............   Passed    0.07 sec
+        Start  96: AABBTest.SurfaceAreaCube
+141/210 Test #117: CameraTest.Center ................................   Passed    0.07 sec
+        Start 165: SkyTest.SunAddsIntensity
+142/210 Test  #45: IntervalTest.ContainsAtMax .......................   Passed    0.09 sec
+        Start  73: PlaneTest.RayParallel
+143/210 Test  #95: AABBTest.CentroidOffset ..........................   Passed    0.10 sec
+        Start  72: PlaneTest.RayOblique
+144/210 Test  #96: AABBTest.SurfaceAreaCube .........................   Passed    0.09 sec
+        Start 151: TextureTest.CustomColor
+145/210 Test #165: SkyTest.SunAddsIntensity .........................   Passed    0.05 sec
+        Start  56: IntervalTest.Expand
+146/210 Test  #73: PlaneTest.RayParallel ............................   Passed    0.03 sec
+        Start  32: RayTest.AtFractional
+147/210 Test  #72: PlaneTest.RayOblique .............................   Passed    0.03 sec
+        Start  46: IntervalTest.ContainsOutsideBelow
+148/210 Test #151: TextureTest.CustomColor ..........................   Passed    0.04 sec
+        Start 168: GeometryUtilsTest.NorthPole
+149/210 Test  #56: IntervalTest.Expand ..............................   Passed    0.03 sec
+        Start 152: TextureTest.ValueIgnoresUVAndPosition
+150/210 Test  #32: RayTest.AtFractional .............................   Passed    0.04 sec
+        Start  26: RayTest.DefaultConstructor
+151/210 Test  #46: IntervalTest.ContainsOutsideBelow ................   Passed    0.08 sec
+        Start 187: HittableObjectTest.PlaneDispatch
+152/210 Test #168: GeometryUtilsTest.NorthPole ......................   Passed    0.11 sec
+        Start  91: AABBTest.RayInside
+153/210 Test #152: TextureTest.ValueIgnoresUVAndPosition ............   Passed    0.11 sec
+        Start 189: HittableObjectTest.BboxSetCorrectly
+154/210 Test  #26: RayTest.DefaultConstructor .......................   Passed    0.09 sec
+        Start 154: SolidColorTest.FromColor
+155/210 Test #187: HittableObjectTest.PlaneDispatch .................   Passed    0.04 sec
+        Start  47: IntervalTest.ContainsOutsideAbove
+156/210 Test  #91: AABBTest.RayInside ...............................   Passed    0.04 sec
+        Start  79: PlaneTest.NormalIsUnit
+157/210 Test #189: HittableObjectTest.BboxSetCorrectly ..............   Passed    0.03 sec
+        Start 188: HittableObjectTest.SphereMiss
+158/210 Test #154: SolidColorTest.FromColor .........................   Passed    0.07 sec
+        Start 197: HittableListTest.HitMiss
+159/210 Test  #47: IntervalTest.ContainsOutsideAbove ................   Passed    0.09 sec
+        Start  48: IntervalTest.SurroundsInside
+160/210 Test  #79: PlaneTest.NormalIsUnit ...........................   Passed    0.11 sec
+        Start 203: BVHBuilderTest.BuildSingle
+161/210 Test #188: HittableObjectTest.SphereMiss ....................   Passed    0.07 sec
+        Start 153: SolidColorTest.DefaultIsBlack
+162/210 Test #197: HittableListTest.HitMiss .........................   Passed    0.07 sec
+        Start 186: HittableObjectTest.SphereDispatch
+163/210 Test  #48: IntervalTest.SurroundsInside .....................   Passed    0.03 sec
+        Start 191: HittableListTest.AddSphere
+164/210 Test #203: BVHBuilderTest.BuildSingle .......................   Passed    0.04 sec
+        Start  57: IntervalTest.ExpandZero
+165/210 Test #153: SolidColorTest.DefaultIsBlack ....................   Passed    0.03 sec
+        Start  58: IntervalTest.ExpandNegative
+166/210 Test #186: HittableObjectTest.SphereDispatch ................   Passed    0.08 sec
+        Start 192: HittableListTest.AddPlane
+167/210 Test #191: HittableListTest.AddSphere .......................   Passed    0.09 sec
+        Start 193: HittableListTest.AddMultiple
+168/210 Test  #57: IntervalTest.ExpandZero ..........................   Passed    0.11 sec
+        Start 163: SkyTest.GradientAtMiddle
+169/210 Test #192: HittableListTest.AddPlane ........................   Passed    0.05 sec
+        Start 171: GeometryUtilsTest.EquatorNegZ
+170/210 Test  #58: IntervalTest.ExpandNegative ......................   Passed    0.17 sec
+        Start 157: SkyTest.DefaultHorizonColor
+171/210 Test #193: HittableListTest.AddMultiple .....................   Passed    0.13 sec
+        Start 166: SkyTest.SkyGradientFunction
+172/210 Test #163: SkyTest.GradientAtMiddle .........................   Passed    0.13 sec
+        Start 204: BVHBuilderTest.BuildTwo
+173/210 Test #171: GeometryUtilsTest.EquatorNegZ ....................   Passed    0.04 sec
+        Start 205: BVHBuilderTest.BuildMultiSorting
+174/210 Test #157: SkyTest.DefaultHorizonColor ......................   Passed    0.04 sec
+        Start 199: MaterialDispatchTest.MetalDispatch
+175/210 Test #166: SkyTest.SkyGradientFunction ......................   Passed    0.04 sec
+        Start 111: MaterialsTest.MetalScatterReflectionDirection
+176/210 Test #204: BVHBuilderTest.BuildTwo ..........................   Passed    0.04 sec
+        Start 164: SkyTest.SetSunNormalizesDirection
+177/210 Test #205: BVHBuilderTest.BuildMultiSorting .................   Passed    0.13 sec
+        Start 185: HittableObjectTest.DefaultTypeIsSphere
+178/210 Test #199: MaterialDispatchTest.MetalDispatch ...............   Passed    0.13 sec
+        Start 156: SolidColorTest.ValueIsConstant
+179/210 Test #111: MaterialsTest.MetalScatterReflectionDirection ....   Passed    0.16 sec
+        Start 190: HittableListTest.EmptyListHitReturnsFalse
+180/210 Test #164: SkyTest.SetSunNormalizesDirection ................   Passed    0.10 sec
+        Start 201: MaterialDispatchTest.AttenuationMatchesAlbedo
+181/210 Test #185: HittableObjectTest.DefaultTypeIsSphere ...........   Passed    0.13 sec
+        Start  49: IntervalTest.SurroundsAtMin
+182/210 Test #156: SolidColorTest.ValueIsConstant ...................   Passed    0.15 sec
+        Start 195: HittableListTest.CapacityOverflow
+183/210 Test #190: HittableListTest.EmptyListHitReturnsFalse ........   Passed    0.11 sec
+        Start 162: SkyTest.GradientAtHorizon
+184/210 Test #201: MaterialDispatchTest.AttenuationMatchesAlbedo ....   Passed    0.07 sec
+        Start 175: CPURandomTest.FloatInCustomRange
+185/210 Test  #49: IntervalTest.SurroundsAtMin ......................   Passed    0.08 sec
+        Start 184: CPURandomTest.CosineDirectionUpperHemisphere
+186/210 Test #195: HittableListTest.CapacityOverflow ................   Passed    0.09 sec
+        Start 196: HittableListTest.ClosestHitSelection
+187/210 Test #162: SkyTest.GradientAtHorizon ........................   Passed    0.11 sec
+        Start 180: CPURandomTest.UnitVectorHasUnitLength
+188/210 Test #175: CPURandomTest.FloatInCustomRange .................   Passed    0.11 sec
+        Start 194: HittableListTest.BboxExpansion
+189/210 Test #184: CPURandomTest.CosineDirectionUpperHemisphere .....   Passed    0.06 sec
+        Start 176: CPURandomTest.SeedReproducibility
+190/210 Test #196: HittableListTest.ClosestHitSelection .............   Passed    0.08 sec
+        Start 170: GeometryUtilsTest.EquatorPosX
+191/210 Test #180: CPURandomTest.UnitVectorHasUnitLength ............   Passed    0.11 sec
+        Start 198: MaterialDispatchTest.LambertianDispatch
+192/210 Test #194: HittableListTest.BboxExpansion ...................   Passed    0.11 sec
+        Start 200: MaterialDispatchTest.DielectricDispatch
+193/210 Test #176: CPURandomTest.SeedReproducibility ................   Passed    0.07 sec
+        Start 173: GeometryUtilsTest.UVAlwaysInRange
+194/210 Test #170: GeometryUtilsTest.EquatorPosX ....................   Passed    0.04 sec
+        Start 181: CPURandomTest.InUnitSphereNormBound
+195/210 Test #198: MaterialDispatchTest.LambertianDispatch ..........   Passed    0.04 sec
+        Start 183: CPURandomTest.InUnitDiskProperties
+196/210 Test #200: MaterialDispatchTest.DielectricDispatch ..........   Passed    0.05 sec
+        Start 210: BVHBuilderTest.FreeCpuBvhNullsPointers
+197/210 Test #173: GeometryUtilsTest.UVAlwaysInRange ................   Passed    0.12 sec
+        Start 207: BVHBuilderTest.NodeRelationships
+198/210 Test #181: CPURandomTest.InUnitSphereNormBound ..............   Passed    0.12 sec
+        Start 155: SolidColorTest.FromRGB
+199/210 Test #183: CPURandomTest.InUnitDiskProperties ...............   Passed    0.12 sec
+        Start 202: BVHBuilderTest.BuildEmpty
+200/210 Test #210: BVHBuilderTest.FreeCpuBvhNullsPointers ...........   Passed    0.09 sec
+        Start 172: GeometryUtilsTest.EquatorPosZ
+201/210 Test #207: BVHBuilderTest.NodeRelationships .................   Passed    0.04 sec
+        Start 174: CPURandomTest.FloatInRange01
+202/210 Test #155: SolidColorTest.FromRGB ...........................   Passed    0.08 sec
+        Start 182: CPURandomTest.OnHemisphereSameDirection
+203/210 Test #202: BVHBuilderTest.BuildEmpty ........................   Passed    0.10 sec
+        Start 206: BVHBuilderTest.BboxCorrectness
+204/210 Test #172: GeometryUtilsTest.EquatorPosZ ....................   Passed    0.11 sec
+        Start 209: BVHBuilderTest.CreateCpuBvhClosestHit
+205/210 Test #174: CPURandomTest.FloatInRange01 .....................   Passed    0.07 sec
+        Start 208: BVHBuilderTest.CreateCpuBvh
+206/210 Test #182: CPURandomTest.OnHemisphereSameDirection ..........   Passed    0.09 sec
+        Start   2: Vec3Test.ValueConstructor
+207/210 Test #206: BVHBuilderTest.BboxCorrectness ...................   Passed    0.09 sec
+208/210 Test #209: BVHBuilderTest.CreateCpuBvhClosestHit ............   Passed    0.10 sec
+209/210 Test #208: BVHBuilderTest.CreateCpuBvh ......................   Passed    0.06 sec
+210/210 Test   #2: Vec3Test.ValueConstructor ........................   Passed    0.05 sec
+
+100% tests passed, 0 tests failed out of 210
+
+Total Test time (real) =   5.63 sec

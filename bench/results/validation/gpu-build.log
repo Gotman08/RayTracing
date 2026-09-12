@@ -1,0 +1,48 @@
+[ 33%] Building CUDA object CMakeFiles/raytracer.dir/src/main.cu.o
+<repo>/external/stb_image.h(4276): warning #550-D: variable "old_limit" was set but never used
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+<repo>/external/stb_image.h(5185): warning #550-D: variable "idata_limit_old" was set but never used
+
+<repo>/external/stb_image.h(6972): warning #550-D: variable "out_size" was set but never used
+
+<repo>/external/stb_image.h(6973): warning #550-D: variable "delays_size" was set but never used
+
+In function ‘bool rt::scatter_dielectric_cpu(const Material&, const Ray&, const HitRecord&, Color&, Ray&, CPURandom&)’,
+    inlined from ‘bool rt::scatter_cpu(const Material&, const Ray&, const HitRecord&, Color&, Ray&, CPURandom&)’ at <repo>/include/raytracer/rendering/material_dispatch.cuh:56:30,
+    inlined from ‘rt::Color rt::ray_color_cpu(const Ray&, const BVH&, int, const RenderConfig&, CPURandom&)’ at <repo>/include/raytracer/rendering/cpu_renderer.cuh:43:16,
+    inlined from ‘_ZN2rt10render_cpuEPNS_4Vec3ERKNS_6CameraERKNS_3BVHERKNS_12RenderConfigE._omp_fn.0’ at <repo>/include/raytracer/rendering/cpu_renderer.cuh:83:31:
+<repo>/include/raytracer/materials/dielectric.cuh:68:17: warning: ‘*(unsigned char*)((char*)&rec + offsetof(rt::HitRecord, rt::HitRecord::front_face))’ may be used uninitialized [-Wmaybe-uninitialized]
+   68 |     float ri = rec.front_face ? (1.0f / mat.ior) : mat.ior;
+      |            ~~~~~^~~~~~~~~~~
+<repo>/include/raytracer/rendering/cpu_renderer.cuh: In function ‘_ZN2rt10render_cpuEPNS_4Vec3ERKNS_6CameraERKNS_3BVHERKNS_12RenderConfigE._omp_fn.0’:
+<repo>/include/raytracer/rendering/cpu_renderer.cuh:37:11: note: ‘*(unsigned char*)((char*)&rec + offsetof(rt::HitRecord, rt::HitRecord::front_face))’ was declared here
+   37 |         HitRecord rec;
+      |           ^~~
+In function ‘bool rt::scatter_lambertian_cpu(const Material&, const Ray&, const HitRecord&, Color&, Ray&, CPURandom&)’,
+    inlined from ‘bool rt::scatter_cpu(const Material&, const Ray&, const HitRecord&, Color&, Ray&, CPURandom&)’ at <repo>/include/raytracer/rendering/material_dispatch.cuh:52:30,
+    inlined from ‘rt::Color rt::ray_color_cpu(const Ray&, const BVH&, int, const RenderConfig&, CPURandom&)’ at <repo>/include/raytracer/rendering/cpu_renderer.cuh:43:16,
+    inlined from ‘_ZN2rt10render_cpuEPNS_4Vec3ERKNS_6CameraERKNS_3BVHERKNS_12RenderConfigE._omp_fn.0’ at <repo>/include/raytracer/rendering/cpu_renderer.cuh:83:31:
+<repo>/include/raytracer/materials/lambertian.cuh:55:13: warning: ‘rec.rt::HitRecord::mat’ may be used uninitialized [-Wmaybe-uninitialized]
+   55 |     attenuation = mat.albedo;
+      |     ~~~~~~~~^~~~~~~~~~~~~~
+<repo>/include/raytracer/rendering/cpu_renderer.cuh: In function ‘_ZN2rt10render_cpuEPNS_4Vec3ERKNS_6CameraERKNS_3BVHERKNS_12RenderConfigE._omp_fn.0’:
+<repo>/include/raytracer/rendering/cpu_renderer.cuh:37:11: note: ‘rec.rt::HitRecord::mat’ was declared here
+   37 |         HitRecord rec;
+      |           ^~~
+[ 66%] Linking CUDA device code CMakeFiles/raytracer.dir/cmake_device_link.o
+nvlink warning : Skipping incompatible '/usr/lib/x86_64-linux-gnu/librt.a' when searching for -lrt
+nvlink warning : Skipping incompatible '/usr/lib/x86_64-linux-gnu/libpthread.a' when searching for -lpthread
+nvlink warning : Skipping incompatible '/usr/lib/x86_64-linux-gnu/libdl.a' when searching for -ldl
+[100%] Linking CUDA executable raytracer
+[100%] Built target raytracer
+[ 28%] Built target gtest
+[ 57%] Built target gtest_main
+[ 71%] Building CUDA object CMakeFiles/raytracer_gpu_tests.dir/tests/test_cuda_kernels.cu.o
+[ 85%] Linking CUDA device code CMakeFiles/raytracer_gpu_tests.dir/cmake_device_link.o
+nvlink warning : Skipping incompatible '/usr/lib/x86_64-linux-gnu/librt.a' when searching for -lrt
+nvlink warning : Skipping incompatible '/usr/lib/x86_64-linux-gnu/libpthread.a' when searching for -lpthread
+nvlink warning : Skipping incompatible '/usr/lib/x86_64-linux-gnu/libdl.a' when searching for -ldl
+[100%] Linking CXX executable raytracer_gpu_tests
+[100%] Built target raytracer_gpu_tests

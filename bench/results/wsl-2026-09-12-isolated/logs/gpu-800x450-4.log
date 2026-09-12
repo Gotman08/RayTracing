@@ -1,0 +1,68 @@
+Command: <repo>/build_gpu_audit/raytracer -w 800 -h 450 -s 50 -d 20 --profile -o <repo>/bench/results/wsl-2026-09-12-isolated/render.png
+OMP_NUM_THREADS=4 OMP_DYNAMIC=FALSE
+CUDA Ray Tracer
+Resolution: 800x450
+Samples: 50
+Max Depth: 20
+Objects: 80
+Output: <repo>/bench/results/wsl-2026-09-12-isolated/render.png
+
+Construction du BVH... OK (159 noeuds)
+Initialisation... OK
+Rendu en cours... OK
+Temps rendu: 0.078 secondes
+Performance: 230.769 MRays/s
+Luminance moyenne: 0.0652983
+Tone mapping adaptatif... OK
+Sauvegarde... OK
+
+=== GPU Profiling ===
+  GPU Memory Allocation         1.184 ms  (0.646%)
+  Constant Memory Upload       10.884 ms  (5.942%)
+  Materials Upload (H2D)        0.048 ms  (0.026%)
+  Pointer Fixup                 0.003 ms  (0.002%)
+  BVH Build (CPU)               0.023 ms  (0.013%)
+  BVH Upload (H2D)              0.089 ms  (0.048%)
+  Init Random States            1.373 ms  (0.750%)
+  Render Kernel (GPU)          78.525 ms  (42.866%)
+  Luminance Reduction (custom)     0.955 ms  (0.521%)
+  Luminance Reduction (Thrust)     4.168 ms  (2.275%)
+  Adaptive Tone Mapping         0.271 ms  (0.148%)
+  Framebuffer Download (D2H)     7.054 ms  (3.850%)
+  Save Image                   78.612 ms  (42.913%)
+  ---------------------------------------------
+  TOTAL                       183.189 ms
+
+
+  === Kernel Timing (CUDA events) ===
+  Render kernel:     78.182 ms
+  Custom reduction:  0.816 ms
+  Thrust reduction:  3.992 ms
+  Reduction speedup: x4.889 (Thrust/Custom)
+  Luminance (custom): 0.065  (Thrust): 0.065
+
+  === Bandwidth Estimation ===
+  Estimated bandwidth: 0.295 GB/s
+
+  === Occupancy Analysis ===
+  render_kernel:
+    Block size used: 16x16 = 256 threads
+    Optimal block size (API): 1024 threads
+    Min grid for full occupancy: 36 blocks
+    Blocks actifs/SM: 4
+    Warps actifs/SM: 32 / 48
+    Occupancy: 66.667%
+
+  compute_avg_luminance:
+    Block size: 256, Optimal (API): 768
+    Blocks actifs/SM: 6, Occupancy: 100.000%
+
+  === Memory Types Used ===
+  __constant__: Camera (176 B) + RenderConfig (128 B)
+  __shared__:   256 floats in reduction (1024 B/block)
+  Pinned host:  framebuffer D2H (5760000 B)
+  Global:       framebuffer, BVH, rand_states, materials
+  Streams:      2 (compute + transfer, overlapped init)
+
+Exit code: 0
+Wall milliseconds: 939.872230

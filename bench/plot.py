@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("results", nargs="?", default="bench/results/wsl-2026-09-12")
+    parser.add_argument("results", nargs="?", default="bench/results/wsl-2026-09-12-isolated")
     parser.add_argument("--preview-dir", help="Optional PNG previews for visual inspection")
     args = parser.parse_args()
     directory = ROOT / args.results
