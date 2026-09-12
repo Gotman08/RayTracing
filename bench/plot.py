@@ -23,6 +23,9 @@ def main():
         rows = list(csv.DictReader(handle))
     if not rows:
         raise ValueError("raw.csv contains no observations")
+    threads = sorted({int(row["threads"]) for row in rows})
+    if len(threads) != 1:
+        raise ValueError("A figure must use one CPU thread count")
     groups = {}
     for row in rows:
         if int(row["exit_code"]) != 0:
@@ -69,7 +72,7 @@ def main():
                 high = [row[metric]["q3"]-row[metric]["median"] for row in entries]
                 ax.errorbar(x, medians, yerr=[low, high], marker="o", linestyle="none",
                             markersize=6, capsize=5, color=colors[mode_index],
-                            label="CPU, 4 threads" if mode == "cpu" else "CUDA GPU")
+                            label=f"CPU, {threads[0]} threads" if mode == "cpu" else "CUDA GPU")
                 for position, median in zip(x, medians):
                     ax.annotate(f"{median:,.1f}", (position, median), xytext=(0, 12),
                                 textcoords="offset points", ha="center", color=colors[mode_index], fontsize=9)

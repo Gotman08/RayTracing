@@ -70,6 +70,7 @@ def main():
         for trial in range(6):
             for mode in modes:
                 image = output / "render.png"
+                image.unlink(missing_ok=True)
                 command = [str(binary)] + (["--cpu"] if mode == "cpu" else []) + ["-w",str(width),"-h",str(height),"-s","50","-d","20","--profile","-o",str(image)]
                 started = time.perf_counter_ns()
                 process = subprocess.run(command, cwd=ROOT, env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=180)
