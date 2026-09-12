@@ -23,6 +23,7 @@ __host__ __device__ inline float reflectance(float cosine, float ior) {
     return r0 + (1.0f - r0) * powf((1.0f - cosine), 5.0f);
 }
 
+#ifdef __CUDACC__
 /** @brief Scatter dielectrique GPU : reflexion totale ou refraction */
 __device__ inline bool scatter_dielectric(
     const Material& mat,
@@ -51,6 +52,8 @@ __device__ inline bool scatter_dielectric(
     scattered = Ray(rec.p, direction, r_in.time());
     return true;
 }
+
+#endif
 
 /** @brief Scatter dielectrique CPU (meme algo, rng CPU) */
 inline bool scatter_dielectric_cpu(

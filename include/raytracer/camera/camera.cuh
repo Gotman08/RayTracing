@@ -67,6 +67,7 @@ public:
         defocus_disk_v = v * defocus_radius;
     }
 
+#ifdef __CUDACC__
     /** @brief Genere un rayon GPU pour pixel (i,j) avec jitter + DoF */
     __device__ Ray get_ray(int i, int j, curandState* rand_state) const {
         float px = curand_uniform(rand_state) - 0.5f;
@@ -83,6 +84,8 @@ public:
 
         return Ray(ray_origin, ray_direction, ray_time);
     }
+
+#endif
 
     /** @brief Version CPU de get_ray (meme logique, rng CPU) */
     Ray get_ray_cpu(int i, int j, CPURandom& rng) const {
@@ -102,11 +105,14 @@ public:
     }
 
 private:
+#ifdef __CUDACC__
     /** @brief Sample sur le disque de defocus (GPU) */
     __device__ Point3 defocus_disk_sample(curandState* rand_state) const {
         Vec3 p = random_in_unit_disk(rand_state);
         return center + (p.x * defocus_disk_u) + (p.y * defocus_disk_v);
     }
+
+#endif
 
     /** @brief Sample sur le disque de defocus (CPU) */
     Point3 defocus_disk_sample_cpu(CPURandom& rng) const {

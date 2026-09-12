@@ -14,6 +14,7 @@
 
 namespace rt {
 
+#ifdef __CUDACC__
 /** @brief Scatter GPU - switch sur MaterialType (lambertian/metal/dielectric) */
 __device__ inline bool scatter(
     const Material& mat,
@@ -34,6 +35,8 @@ __device__ inline bool scatter(
             return false;
     }
 }
+
+#endif
 
 /** @brief Scatter CPU - meme dispatch, utilise CPURandom au lieu de curand */
 inline bool scatter_cpu(

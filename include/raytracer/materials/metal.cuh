@@ -16,6 +16,7 @@ __host__ __device__ inline Material create_metal(const Color& albedo, float fuzz
     return mat;
 }
 
+#ifdef __CUDACC__
 /** @brief Scatter metal GPU : reflexion + perturbation fuzz */
 __device__ inline bool scatter_metal(
     const Material& mat,
@@ -31,6 +32,8 @@ __device__ inline bool scatter_metal(
     attenuation = mat.albedo;
     return (dot(scattered.direction(), rec.normal) > 0);
 }
+
+#endif
 
 /** @brief Scatter metal CPU (meme algo, rng CPU) */
 inline bool scatter_metal_cpu(

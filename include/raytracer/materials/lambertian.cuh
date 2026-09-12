@@ -15,6 +15,7 @@ __host__ __device__ inline Material create_lambertian(const Color& albedo) {
     return mat;
 }
 
+#ifdef __CUDACC__
 /** @brief Scatter lambertien GPU (normale + vecteur aleatoire) */
 __device__ inline bool scatter_lambertian(
     const Material& mat,
@@ -33,6 +34,8 @@ __device__ inline bool scatter_lambertian(
     attenuation = mat.albedo;
     return true;
 }
+
+#endif
 
 /** @brief Scatter lambertien CPU (meme algo, rng CPU) */
 inline bool scatter_lambertian_cpu(
