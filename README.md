@@ -86,6 +86,14 @@ The CUDA install rule refers to a missing `scenes/` directory. Use the build-tre
 
 ## 8. Limits and scope
 
+| Category | Status | Reason |
+| --- | --- | --- |
+| GH200/H100 cluster performance | non mesuré | No cluster job was run for this report. |
+| Native Windows/MSVC | non mesuré | No native Windows build or execution was run; local validation used WSL2. |
+| Native Linux performance | non mesuré | No benchmark ran on native Linux; measurements used Ubuntu under WSL2. |
+| Energy use | non mesuré | Power and energy consumption were not instrumented or recorded. |
+| Image quality and convergence | non mesuré | No reference-image comparison, error metric or convergence experiment was run. |
+
 The benchmark covers one procedural scene and two image sizes on one laptop under WSL2. It measures neither image quality nor convergence against a reference renderer. GPU seeds depend on `time(NULL)`; CPU row seeds are fixed, and there is no common seed option. CPU and GPU tone mapping differ. Fast-math compilation is enabled.
 
 The printed `MRays/s` value counts primary samples (`width × height × samples`), not every bounce ray. No ray-throughput claim is made here. The old RTX 4060 and GH200 tables lack committed raw observations and are not carried into current results. CI is configured for Ubuntu CPU build/tests; hosted CI execution is pending the first publication of this branch. GPU coverage here is local, with the logs linked above.
