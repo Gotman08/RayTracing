@@ -43,12 +43,14 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 if(BUILD_CPU_ONLY)
     find_package(OpenMP REQUIRED)
 
-    include_directories(
+    add_executable(raytracer src/main_cpu.cpp)
+
+    target_include_directories(raytracer PRIVATE
         ${CMAKE_SOURCE_DIR}/include
+    )
+    target_include_directories(raytracer SYSTEM PRIVATE
         ${CMAKE_SOURCE_DIR}/external
     )
-
-    add_executable(raytracer src/main_cpu.cpp)
 
     target_compile_options(raytracer PRIVATE -Wall -O3)
     target_compile_definitions(raytracer PRIVATE CPU_ONLY=1)
@@ -90,6 +92,7 @@ if(NOT BUILD_TESTS_ONLY AND NOT BUILD_CPU_ONLY)
         --expt-relaxed-constexpr
         --extended-lambda
         -Xcompiler=-Wall
+        -diag-suppress=550
     )
 
     if(ENABLE_FAST_MATH)
@@ -102,13 +105,6 @@ if(NOT BUILD_TESTS_ONLY AND NOT BUILD_CPU_ONLY)
     # Debug flags
     set(CMAKE_CUDA_FLAGS_DEBUG "${CMAKE_CUDA_FLAGS_DEBUG} -G -g -O0")
 
-    # Include Directories (with CUDA)
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/include
-        ${CMAKE_SOURCE_DIR}/external
-        ${CUDAToolkit_INCLUDE_DIRS}
-    )
-
     # Source Files
     set(RAYTRACER_SOURCES
         src/main.cu
@@ -117,13 +113,20 @@ if(NOT BUILD_TESTS_ONLY AND NOT BUILD_CPU_ONLY)
     # Executable Target
     add_executable(raytracer ${RAYTRACER_SOURCES})
 
+    target_include_directories(raytracer PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
+        ${CUDAToolkit_INCLUDE_DIRS}
+    )
+    target_include_directories(raytracer SYSTEM PRIVATE
+        ${CMAKE_SOURCE_DIR}/external
+    )
+
     target_compile_options(raytracer PRIVATE
         $<$<COMPILE_LANGUAGE:CUDA>:${CUDA_NVCC_FLAGS_COMMON}>
     )
 
     set_target_properties(raytracer PROPERTIES
-        CUDA_SEPARABLE_COMPILATION ON
-        CUDA_RESOLVE_DEVICE_SYMBOLS ON
+        CUDA_SEPARABLE_COMPILATION OFF
     )
 
     # OpenMP for CPU rendering path
@@ -191,6 +194,8 @@ if(BUILD_TESTS OR BUILD_TESTS_ONLY)
 
     target_include_directories(raytracer_tests PRIVATE
         ${CMAKE_SOURCE_DIR}/include
+    )
+    target_include_directories(raytracer_tests SYSTEM PRIVATE
         ${CMAKE_SOURCE_DIR}/external
     )
 
@@ -217,8 +222,10 @@ if(BUILD_TESTS OR BUILD_TESTS_ONLY)
 
         target_include_directories(raytracer_gpu_tests PRIVATE
             ${CMAKE_SOURCE_DIR}/include
-            ${CMAKE_SOURCE_DIR}/external
             ${CUDAToolkit_INCLUDE_DIRS}
+        )
+        target_include_directories(raytracer_gpu_tests SYSTEM PRIVATE
+            ${CMAKE_SOURCE_DIR}/external
         )
 
         target_compile_options(raytracer_gpu_tests PRIVATE

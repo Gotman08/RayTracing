@@ -15,10 +15,10 @@ class Material;
 struct HitRecord {
     Point3 p;
     Vec3 normal;
-    Material* mat;
-    float t;
-    float u, v;      ///< Coords de texture
-    bool front_face;
+    Material* mat = nullptr;
+    float t = 0.0f;
+    float u = 0.0f, v = 0.0f;      ///< Coords de texture
+    bool front_face = false;
 
     /** @brief Oriente la normale du cote du rayon incident */
     __host__ __device__ void set_face_normal(const Ray& r, const Vec3& outward_normal) {
